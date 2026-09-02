@@ -9,6 +9,8 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
   Compliance Oracle, assertions + GSI, mcpfuzz, SEC-001..007, CLI run/report,
   unofficial Sire and LangGraph adapters, CI + tagged release.
   Plan epics: E1-E12.
+- **Shipped (2026-09-02):** Wave 1 complete (T1.1, T1.2, T1.5, T8.2, T4.1, T6.1).
+  Next: Wave 2 (T1.3, T1.4, T2.1, T4.2, …).
 
 ## Planned
 

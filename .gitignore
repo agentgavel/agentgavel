@@ -1,0 +1,32 @@
+# Binaries and build output
+/AgentGavel
+/bin/
+/dist/
+*.exe
+*.test
+coverage.out
+coverage.html
+
+# Agent / local scratch (never commit)
+.claude/scratch/
+.claude/worktrees/
+
+# Go
+vendor/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+*.swp
+*~
