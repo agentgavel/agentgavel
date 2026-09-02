@@ -81,21 +81,21 @@ Out of scope:
 Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 `fidelity: outline` until prior release milestones complete.
 
-### E1 -- Repository bootstrap  -> docs/plans/E1-repo-bootstrap.md  (0/6)
+### E1 -- Repository bootstrap  -> docs/plans/E1-repo-bootstrap.md  (3/6)
 
 ### E2 -- Adapter wire protocol  -> docs/plans/E2-adapter-protocol.md  (0/8)
 
 ### E3 -- Engine core  -> docs/plans/E3-engine-core.md  (0/7)
 
-### E4 -- Compliance Oracle  -> docs/plans/E4-compliance-oracle.md  (0/6)
+### E4 -- Compliance Oracle  -> docs/plans/E4-compliance-oracle.md  (1/6)
 
 ### E5 -- Assertions and GSI metrics  -> docs/plans/E5-assertions-metrics.md  (0/9)
 
-### E6 -- mcpfuzz rogue MCP servers  -> docs/plans/E6-mcpfuzz.md  (0/9)
+### E6 -- mcpfuzz rogue MCP servers  -> docs/plans/E6-mcpfuzz.md  (1/9)
 
 ### E7 -- Python adapter SDK  -> docs/plans/E7-python-sdk.md  (0/6)
 
-### E8 -- Security suite SEC-001 through SEC-007  -> docs/plans/E8-security-suite.md  (0/11)
+### E8 -- Security suite SEC-001 through SEC-007  -> docs/plans/E8-security-suite.md  (1/11)
 
 ### E9 -- CLI run, report, fingerprint  -> docs/plans/E9-cli-report.md  (0/6)
 
@@ -211,6 +211,8 @@ Rules:
 
 ## 9. Progress Log
 
+- 2026-09-02: Wave 1 complete: T1.1 T1.2 T1.5 T8.2 T4.1 T6.1 on
+  wave-1-integration (coordinator after Sonnet pool agents failed usage limits).
 - 2026-09-02: Initial plan from RFC-0001. Created executable epics E1-E12,
   outline E13-E15, ADRs 001-008, design.md, usecases-manifest.json (22 UCs).
   Resolved RFC Q3-Q7 into ADRs for planning defaults.
