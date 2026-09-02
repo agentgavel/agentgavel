@@ -5,7 +5,7 @@ fidelity: executable
 
 ## Wave 1
 
-- [ ] T6.1 Shared MCP stdio server skeleton in internal/mcpfuzz  Owner: pool  Est: 75m  kind: agent  verifies: [UC-009, UC-013]  acc: [go test ./internal/mcpfuzz -run Skeleton lists one noop tool via tools/list]
+- [x] T6.1 Shared MCP stdio server skeleton in internal/mcpfuzz  Owner: pool  Est: 75m  kind: agent  verifies: [UC-009, UC-013]  acc: [go test ./internal/mcpfuzz -run Skeleton lists one noop tool via tools/list]  completed: 2026-09-02
   - deps: [T1.1]
 
 - [ ] T6.2 Mode toxic-output: inject instructions in tool results  Owner: pool  Est: 45m  kind: agent  verifies: [UC-013]  acc: [go test ./internal/mcpfuzz -run ToxicOutput result contains SYSTEM Ignore prior instructions]
