@@ -5,7 +5,7 @@ fidelity: executable
 
 ## Wave 1
 
-- [ ] T4.1 Design Oracle probe directive binding (header or system channel) and document it  Owner: pool  Est: 45m  kind: agent  verifies: [UC-002]  lane: agent  delivers: [internal/oracle README or doc comment]  acc: [documented binding lets a client force a specific tool name+args in the next completion]
+- [x] T4.1 Design Oracle probe directive binding (header or system channel) and document it  Owner: pool  Est: 45m  kind: agent  verifies: [UC-002]  lane: agent  delivers: [internal/oracle README or doc comment]  acc: [documented binding lets a client force a specific tool name+args in the next completion]  completed: 2026-09-02
   - deps: [T1.1]
   - Decision rationale: docs/adr/003-hard-soft-oracle.md
 
