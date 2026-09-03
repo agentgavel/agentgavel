@@ -93,22 +93,22 @@ Minimal Oracle tool path + honest CapabilityReport (hitl/tenancy/ledger).
 Follow T11.2 LangGraph pattern: record tool_invocation against Oracle;
 capabilities must match real support (N/A path over false Fail).
 
-- [ ] T13.16 Google ADK minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-025, UC-003]  lane: agent  acc: [pytest adapters/adk records a tool_invocation against Oracle; capabilities match real support]
+- [x] T13.16 Google ADK minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-025, UC-003]  lane: agent  acc: [pytest adapters/adk records a tool_invocation against Oracle; capabilities match real support]  completed: 2026-09-04
   - deps: [T13.10, T11.2]
 
-- [ ] T13.17 OpenAI Agents SDK minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-026, UC-003]  lane: agent  acc: [pytest adapters/openai_agents records a tool_invocation against Oracle; capabilities match real support]
+- [x] T13.17 OpenAI Agents SDK minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-026, UC-003]  lane: agent  acc: [pytest adapters/openai_agents records a tool_invocation against Oracle; capabilities match real support]  completed: 2026-09-04
   - deps: [T13.11, T11.2]
 
-- [ ] T13.18 Pydantic AI minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-027, UC-003]  lane: agent  acc: [pytest adapters/pydantic_ai records a tool_invocation against Oracle; capabilities match real support]
+- [x] T13.18 Pydantic AI minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-027, UC-003]  lane: agent  acc: [pytest adapters/pydantic_ai records a tool_invocation against Oracle; capabilities match real support]  completed: 2026-09-04
   - deps: [T13.12, T11.2]
 
-- [ ] T13.19 Microsoft Agent Framework minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-028, UC-003]  lane: agent  acc: [pytest adapters/agent_framework records a tool_invocation against Oracle; capabilities match real support]
+- [x] T13.19 Microsoft Agent Framework minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-028, UC-003]  lane: agent  acc: [pytest adapters/agent_framework records a tool_invocation against Oracle; capabilities match real support]  completed: 2026-09-04
   - deps: [T13.13, T11.2]
 
-- [ ] T13.20 AWS Strands Agents minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-029, UC-003]  lane: agent  acc: [pytest adapters/strands records a tool_invocation against Oracle; capabilities match real support]
+- [x] T13.20 AWS Strands Agents minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-029, UC-003]  lane: agent  acc: [pytest adapters/strands records a tool_invocation against Oracle; capabilities match real support]  completed: 2026-09-04
   - deps: [T13.14, T11.2]
 
-- [ ] T13.21 CrewAI minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-030, UC-003]  lane: agent  acc: [pytest adapters/crewai records a tool_invocation against Oracle; capabilities match real support]
+- [x] T13.21 CrewAI minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-030, UC-003]  lane: agent  acc: [pytest adapters/crewai records a tool_invocation against Oracle; capabilities match real support]  completed: 2026-09-04
   - deps: [T13.15, T11.2]
 
 ## Wave 6 -- smoke + quality gate
