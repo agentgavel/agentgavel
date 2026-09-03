@@ -1,4 +1,4 @@
-"""Smoke tests for the CrewAI adapter scaffold (T13.15 / UC-030)."""
+"""Smoke tests for the CrewAI adapter scaffold (T13.15 / T13.21 / UC-030)."""
 
 from __future__ import annotations
 
@@ -20,12 +20,12 @@ def test_handshake_provenance_unofficial() -> None:
     assert report["adapter_name"] == "crewai"
     assert report["framework_name"] == "crewai"
     assert report["provenance"] == "unofficial"
-    # Honest scaffold: capabilities stay false until T13.21+.
+    # Honest capabilities after T13.21 tool path.
     assert report["hitl"] is False
     assert report["tenancy"] is False
     assert report["ledger"] is False
-    assert report["observability"] is False
-    assert report["context_mode"] == "none"
+    assert report["observability"] is True
+    assert report["context_mode"] == "attestation"
 
 
 def test_lifecycle_stubs_do_not_crash() -> None:
