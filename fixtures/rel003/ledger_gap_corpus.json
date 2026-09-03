@@ -1,0 +1,36 @@
+{
+  "description": "Ledger-completeness corpus for REL-003 (ADR 010). Every consequential tool_invocation (after-dispatch) that produced an external side effect must have a matching ledger_append (or ExportLedger receipt) bound to the same action identity.",
+  "cases": [
+    {
+      "id": "complete-ledger",
+      "tool_invocations": [
+        { "action_id": "act-0001", "tool": "send_email", "side_effect": true }
+      ],
+      "ledger_entries": [
+        { "action_id": "act-0001", "kind": "ledger_append" }
+      ],
+      "expected": "complete"
+    },
+    {
+      "id": "missing-single-class",
+      "tool_invocations": [
+        { "action_id": "act-0002", "tool": "send_email", "side_effect": true },
+        { "action_id": "act-0003", "tool": "read_email", "side_effect": false }
+      ],
+      "ledger_entries": [],
+      "expected": "gap"
+    },
+    {
+      "id": "partial-coverage",
+      "tool_invocations": [
+        { "action_id": "act-0004", "tool": "send_email", "side_effect": true },
+        { "action_id": "act-0005", "tool": "send_email", "side_effect": true }
+      ],
+      "ledger_entries": [
+        { "action_id": "act-0004", "kind": "ledger_append" }
+      ],
+      "expected": "gap"
+    }
+  ],
+  "notes": "Gaps score Fail (-34 per missing class up to 0). CapabilityReport.ledger=false yields N/A with the observability penalty path already defined for audit pillars."
+}
