@@ -104,7 +104,7 @@ until `v0.2.0` (T13.17).
 
 ### E12 -- v0.1 quality gate and release  -> docs/plans/E12-v01-release.md  (8/8)
 
-### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (24/26)
+### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (25/26)
 
 ### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (0/1)
 
@@ -140,11 +140,11 @@ Sync points: T13.6 (SEC-008..010 E2E), T13.8 (`--ci`), T13.24 (quality gate).
 - T13.16, T13.17, T13.18, T13.19, T13.20, T13.21
 
 ### Wave 19: v0.2 smoke + quality + ship (3 agents / humans)
-- T13.22, T13.23 (done); T13.24, T13.25 (human)
+- T13.22, T13.23, T13.24 (done); T13.25 (human)
 
 ## Roadmap
-- **Now:** Wave 19 smoke + lint shipped (T13.22, T13.23)
-- **Next:** T13.24 / T13.25
+- **Now:** Wave 19 quality gate shipped (T13.22–T13.24)
+- **Next:** T13.25 human tag `v0.2.0`
 
 ## 6. Timeline and Milestones
 
@@ -195,6 +195,7 @@ Rules:
 
 ## 9. Progress Log
 
+- 2026-09-04: T13.24 make test && make lint green on clean tree; E13 25/26.
 - 2026-09-04: Wave 19 T13.22 smoke + T13.23 gofmt/ruff clean shipped; E13 24/26.
 - 2026-09-04: Wave 18 T13.16–T13.21 §8.1 adapter tool paths shipped (adk, openai_agents, pydantic_ai, agent_framework, strands, crewai).
 - 2026-09-04: Wave 17 T13.10–T13.15 §8.1 adapter scaffolds shipped (adk, openai_agents, pydantic_ai, agent_framework, strands, crewai).
