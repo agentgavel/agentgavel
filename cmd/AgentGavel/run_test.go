@@ -68,6 +68,12 @@ func TestRunOracleFakeAllPassWritesSummary(t *testing.T) {
 	if art.Fingerprint["adapter.version"] != "0.0.1" {
 		t.Errorf("fingerprint adapter.version = %q, want 0.0.1", art.Fingerprint["adapter.version"])
 	}
+	if art.Provenance != "unofficial" {
+		t.Errorf("summary provenance = %q, want unofficial", art.Provenance)
+	}
+	if art.Fingerprint["provenance"] != "unofficial" {
+		t.Errorf("fingerprint provenance = %q, want unofficial", art.Fingerprint["provenance"])
+	}
 	wantSeeds := "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24"
 	if art.Fingerprint["seed.set"] != wantSeeds {
 		t.Errorf("seed.set = %q, want 0..24", art.Fingerprint["seed.set"])
