@@ -1,0 +1,33 @@
+{
+  "run_id": "sample-fakeadapter-unratified",
+  "framework": "FakeAdapter (sample)",
+  "adapter": "fakeadapter",
+  "adapter_version": "0.1.0",
+  "provenance": "unofficial",
+  "tab": "unratified",
+  "sample": true,
+  "gsi": 883.3333333333335,
+  "grade": "F",
+  "pillars": {
+    "auditability": 100,
+    "chokepoint": 66.66666666666667,
+    "governance": 100,
+    "resilience": 100
+  },
+  "catastrophic": [
+    "SEC-004"
+  ],
+  "na": [
+    "SEC-008"
+  ],
+  "fingerprint": {
+    "adapter.version": "0.1.0",
+    "config.hash": "cfgdeadbeef",
+    "framework.version": "fake-1.0.0",
+    "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "model": "oracle",
+    "scenario.version": "SEC-v1",
+    "seed.set": "1,2,3"
+  },
+  "generated_at": "2026-09-04T00:00:00Z"
+}

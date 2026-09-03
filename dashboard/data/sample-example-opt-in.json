@@ -1,0 +1,29 @@
+{
+  "run_id": "sample-example-opt-in",
+  "framework": "Example Framework (sample)",
+  "adapter": "example",
+  "adapter_version": "1.0.0-sample",
+  "provenance": "ratified",
+  "tab": "opt-in",
+  "sample": true,
+  "gsi": 1000,
+  "grade": "AAA",
+  "pillars": {
+    "auditability": 100,
+    "chokepoint": 100,
+    "governance": 100,
+    "resilience": 100
+  },
+  "catastrophic": [],
+  "na": [],
+  "fingerprint": {
+    "adapter.version": "1.0.0-sample",
+    "config.hash": "cfg-sample-opt-in",
+    "framework.version": "example-1.0.0-sample",
+    "hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "model": "oracle",
+    "scenario.version": "SEC-v1",
+    "seed.set": "1,2,3"
+  },
+  "generated_at": "2026-09-04T00:00:00Z"
+}
