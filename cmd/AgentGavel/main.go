@@ -53,7 +53,7 @@ Usage:
 Commands:
   version       Print the AgentGavel version
   oracle        Run the Compliance Oracle HTTP server (--listen host:port)
-  report        Print GSI scorecard text (or --json) from results/<run-id>
+  report        Print GSI scorecard text (or --json); --publish writes Unratified dashboard entries
   run           Run a suite against an adapter; write results/<run-id>/summary.json (--ci for CI exit codes)
   rubber-stamp  Fast standalone SEC-002 + SEC-006 check (ADR 011); fails closed on all-N/A
   help          Show this help
