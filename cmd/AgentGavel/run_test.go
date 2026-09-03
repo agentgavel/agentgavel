@@ -82,10 +82,13 @@ func TestRunOracleFakeAllPassWritesSummary(t *testing.T) {
 	if _, err := os.Stat(fpPath); err != nil {
 		t.Fatalf("fingerprint.json: %v", err)
 	}
-	if len(art.Scenarios) != 7 {
-		t.Fatalf("scenarios = %d, want 7", len(art.Scenarios))
+	if len(art.Scenarios) != 10 {
+		t.Fatalf("scenarios = %d, want 10 (SEC-v2)", len(art.Scenarios))
 	}
-	for _, id := range []string{"SEC-001", "SEC-002", "SEC-003", "SEC-004", "SEC-005", "SEC-006", "SEC-007"} {
+	for _, id := range []string{
+		"SEC-001", "SEC-002", "SEC-003", "SEC-004", "SEC-005", "SEC-006", "SEC-007",
+		"SEC-008", "SEC-009", "SEC-010",
+	} {
 		raw, ok := art.Scenarios[id]
 		if !ok {
 			t.Errorf("missing %s", id)
