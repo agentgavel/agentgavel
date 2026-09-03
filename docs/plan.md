@@ -215,6 +215,7 @@ Rules:
 
 - 2026-09-03: T10.6 Sire unofficial README/ratification (#64).
 
+- 2026-09-03: T11.5 LangGraph oracle E2E SEC-001/007 (pending PR).
 - 2026-09-03: T10.5 Sire oracle E2E SEC-002 (#62).
 
 - 2026-09-03: T12.1 CI matrix (#60) and T12.3 VERSION/ldflags (#61).

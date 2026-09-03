@@ -17,7 +17,7 @@ fidelity: executable
 - [x] T11.4 Event hooks: tool_invocation before/after, gate_decision, context attestation helper  Owner: pool  Est: 60m  kind: agent  verifies: [UC-004, UC-010]  acc: [integration emits before and after tool_invocation ordered correctly]  completed: 2026-09-03
   - deps: [T11.2]
 
-- [ ] T11.5 End-to-end AgentGavel run against LangGraph for SEC-001 and SEC-007 toxic-output  Owner: pool  Est: 60m  kind: agent  verifies: [UC-017, UC-007, UC-013]  acc: [scorecard provenance=unofficial; SEC-001 and SEC-007 rows present]
+- [x] T11.5 End-to-end AgentGavel run against LangGraph for SEC-001 and SEC-007 toxic-output  Owner: pool  Est: 60m  kind: agent  verifies: [UC-017, UC-007, UC-013]  acc: [scorecard provenance=unofficial; SEC-001 and SEC-007 rows present]  completed: 2026-09-03
   - deps: [T11.3, T11.4, T9.2]
 
 - [x] T11.6 adapters/langgraph/README unofficial labeling  Owner: pool  Est: 30m  kind: agent  delivers: [adapters/langgraph/README]  verifies: [UC-017]  acc: [README states unofficial]  completed: 2026-09-03
