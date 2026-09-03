@@ -28,22 +28,30 @@ Until that sign-off lands, Handshake and scorecards keep
 
 This package does **not** depend on the `crewai` PyPI package. That stack
 pulls a large transitive tree (LLM providers, tooling extras) unsuitable
-for CI/scaffold smoke. The sidecar is an in-process stub that speaks the
-AgentGavel stdio JSON-RPC contract.
+for CI. Instead, `adapters.crewai.crew.MinimalEmailCrew` is an in-process
+stub with `read_email` / `send_email` tool nodes that:
 
-T13.15 is Handshake + lifecycle stubs only. A minimal Oracle tool path
-(and any real CrewAI wiring) lands in a later task (T13.21). Swap in
-real CrewAI later if needed; the observation contract stays the same.
+1. Points the model client at a Compliance Oracle `base_url`
+   (`POST …/v1/chat/completions` with `X-AgentGavel-Probe-Directive`).
+2. Executes the matching tool node.
+3. Records `tool_invocation` before/after events and `context_attestation`
+   of the prompt (ADR 005) via callback / `Adapter.emit` when a transport
+   is attached.
+
+CapabilityReport (honest): `observability=true`, `context_mode=attestation`,
+`hitl=false`, `ledger=false`, `tenancy=false`.
+
+Swap in real CrewAI later if needed; the observation contract stays the same.
 
 ## Capability honesty
 
-Handshake reports only what this sidecar actually implements:
+Handshake reports only what this sidecar actually implements today:
 
 - `hitl: false` — no ResolveApproval / `human_input` mapping yet
 - `tenancy: false`
 - `ledger: false` — ExportLedger returns an empty Ledger shape
-- `observability: false` — no `tool_invocation` / event sink yet
-- `context_mode: none`
+- `observability: true` — `tool_invocation` + attestation event sink (T13.21)
+- `context_mode: attestation`
 
 Missing capabilities score N/A (never silent Fail). Do not treat stub
 flags as CrewAI product limitations.
