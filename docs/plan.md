@@ -85,7 +85,7 @@ Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 
 ### E2 -- Adapter wire protocol  -> docs/plans/E2-adapter-protocol.md  (8/8)
 
-### E3 -- Engine core  -> docs/plans/E3-engine-core.md  (6/7)
+### E3 -- Engine core  -> docs/plans/E3-engine-core.md  (7/7)
 
 ### E4 -- Compliance Oracle  -> docs/plans/E4-compliance-oracle.md  (6/6)
 
@@ -93,17 +93,17 @@ Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 
 ### E6 -- mcpfuzz rogue MCP servers  -> docs/plans/E6-mcpfuzz.md  (9/9)
 
-### E7 -- Python adapter SDK  -> docs/plans/E7-python-sdk.md  (5/6)
+### E7 -- Python adapter SDK  -> docs/plans/E7-python-sdk.md  (6/6)
 
-### E8 -- Security suite SEC-001 through SEC-007  -> docs/plans/E8-security-suite.md  (10/11)
+### E8 -- Security suite SEC-001 through SEC-007  -> docs/plans/E8-security-suite.md  (11/11)
 
 ### E9 -- CLI run, report, fingerprint  -> docs/plans/E9-cli-report.md  (6/6)
 
 ### E10 -- Sire adapter (unofficial)  -> docs/plans/E10-sire-adapter.md  (7/7)
 
-### E11 -- LangGraph adapter (unofficial)  -> docs/plans/E11-langgraph-adapter.md  (5/7)
+### E11 -- LangGraph adapter (unofficial)  -> docs/plans/E11-langgraph-adapter.md  (7/7)
 
-### E12 -- v0.1 quality gate and release  -> docs/plans/E12-v01-release.md  (4/8)
+### E12 -- v0.1 quality gate and release  -> docs/plans/E12-v01-release.md  (6/8)
 
 ### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (0/1)
 
@@ -211,13 +211,10 @@ Rules:
 
 ## 9. Progress Log
 
-- 2026-09-03: T12.7 full make test/lint (this PR).
-<<<<<<< HEAD
-- 2026-09-03: T11.7 LangGraph ruff (this PR). E11 complete.
-=======
-- 2026-09-03: T12.4 v0.1 smoke doc (this PR).
->>>>>>> a47370b (docs: add v0.1 local smoke commands for Fake, Sire, LangGraph (T12.4))
-- 2026-09-03: T11.5 LangGraph oracle E2E SEC-001/007 (this PR).
+- 2026-09-03: T12.7 full make test/lint (#76).
+- 2026-09-03: T12.4 v0.1 smoke doc (#75).
+- 2026-09-03: T11.7 LangGraph ruff (#74). E11 complete.
+- 2026-09-03: T11.5 LangGraph oracle E2E SEC-001/007 (#73).
 - 2026-09-03: T10.7 (#67), T11.2 (#66), T11.3 (#69), T11.4 (#70), T11.6 (#71). E10 complete.
 
 - 2026-09-03: T10.6 Sire unofficial README/ratification (#64).
