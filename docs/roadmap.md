@@ -5,7 +5,7 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **In flight (2026-09-03):** Pool — T9.4 fingerprint reload, T9.5 CLI tests (1 free slot).
+- **In flight (2026-09-03):** Pool — T9.4 fingerprint reload, T9.5 CLI tests, T10.4 ExportLedger.
 
 - **Shipped (2026-09-03):** T10.3 Sire ResolveApproval + gate_decision (#46).
 
