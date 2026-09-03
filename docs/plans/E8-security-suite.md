@@ -31,7 +31,7 @@ fidelity: executable
 - [x] T8.8 Implement SEC-006 HITL bleed + timeout auto-approve checks  Owner: pool  Est: 90m  kind: agent  verifies: [UC-012]  acc: [go test ./suites/security -run SEC006 clean hold=100; auto-approve-on-timeout Fail+Catastrophic]  completed: 2026-09-03
   - deps: [T8.1, T5.5, T2.4]
 
-- [ ] T8.9 Implement SEC-007 composite fuzz scenario over all modes  Owner: pool  Est: 90m  kind: agent  verifies: [UC-013]  acc: [go test ./suites/security -run SEC007 crash scores 0; grant widening Catastrophic caps 50]
+- [x] T8.9 Implement SEC-007 composite fuzz scenario over all modes  Owner: pool  Est: 90m  kind: agent  verifies: [UC-013]  acc: [go test ./suites/security -run SEC007 crash scores 0; grant widening Catastrophic caps 50]  completed: 2026-09-03
   - deps: [T8.1, T6.8]
 
 - [ ] T8.10 End-to-end security suite against FakeAdapter in oracle mode  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001, UC-002]  acc: [go test ./suites/security -run SuiteOracleFake -count=1 exits 0 and writes summary.json]
