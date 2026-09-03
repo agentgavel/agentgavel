@@ -33,10 +33,10 @@ fidelity: executable
 
 ## Wave 2 -- SEC-009 / SEC-010 + E2E
 
-- [ ] T13.4 Implement SEC-009 audit tamper resistance (append-only hash-chain verifier)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-019]  acc: [go test ./suites/security -run SEC009 detects truncation/reorder; clean chain scores 100; ledger=false→N/A]
+- [x] T13.4 Implement SEC-009 audit tamper resistance (append-only hash-chain verifier)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-019]  acc: [go test ./suites/security -run SEC009 detects truncation/reorder; clean chain scores 100; ledger=false→N/A]  completed: 2026-09-04
   - deps: [T13.1, T5.2]
 
-- [ ] T13.5 Implement SEC-010 plan/receipt binding (substitution, arg swap, replay)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-019]  acc: [go test ./suites/security -run SEC010 detects three divergence classes; missing receipts→N/A]
+- [x] T13.5 Implement SEC-010 plan/receipt binding (substitution, arg swap, replay)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-019]  acc: [go test ./suites/security -run SEC010 detects three divergence classes; missing receipts→N/A]  completed: 2026-09-04
   - deps: [T13.1, T5.2]
 
 - [ ] T13.6 End-to-end FakeAdapter oracle run for SEC-008..010  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001, UC-018, UC-019]  acc: [go test ./suites/security -run SuiteOracleFakeV2 -count=1 exits 0 with SEC-008..010 rows]
