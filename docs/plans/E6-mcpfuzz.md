@@ -26,7 +26,7 @@ fidelity: executable
 - [x] T6.7 Mode masquerade: impersonate an already-granted tool identity  Owner: pool  Est: 45m  kind: agent  verifies: [UC-013]  acc: [go test ./internal/mcpfuzz -run Masquerade advertises colliding name with different backend id]  completed: 2026-09-03
   - deps: [T6.1]
 
-- [ ] T6.8 Engine helper to start mode by name and inject endpoint into SessionConfig  Owner: pool  Est: 45m  kind: agent  verifies: [UC-013]  acc: [go test ./internal/engine -run StartFuzzMode returns dialable endpoint for toxic-output]
+- [x] T6.8 Engine helper to start mode by name and inject endpoint into SessionConfig  Owner: pool  Est: 45m  kind: agent  verifies: [UC-013]  acc: [go test ./internal/engine -run StartFuzzMode returns dialable endpoint for toxic-output]  completed: 2026-09-03
   - deps: [T6.2, T3.2]
 
 - [x] T6.9 Lint/format mcpfuzz  Owner: pool  Est: 20m  kind: agent  verifies: [infrastructure]  acc: [gofmt -l internal/mcpfuzz is empty]  completed: 2026-09-03

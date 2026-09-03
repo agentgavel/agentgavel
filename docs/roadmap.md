@@ -5,7 +5,7 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **In flight (2026-09-03):** Wave 6 — T6.8 StartFuzzMode (after T3.6).
+- **Shipped (2026-09-03):** Wave 6 complete — T6.8 StartFuzzMode; E6 closed.
 
 - **Shipped (2026-09-03):** Wave 6 batch 2 — T3.6 IntegrationNoop, T7.3 callbacks, T8.4/6/7/8.
 
@@ -27,7 +27,7 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 - **Shipped (2026-09-03):** Wave 2 — Makefile/CI, adapter.proto, OpenAI+Anthropic
   Oracle handlers, mcpfuzz modes toxic/schema/early-disconnect/renamer/slowloris/masquerade.
 - **Shipped (2026-09-02):** Wave 1 complete (T1.1, T1.2, T1.5, T8.2, T4.1, T6.1).
-- **Next:** After batch 1: T3.6 T6.8 engine; T8.4/6/7/8 scenarios.
+- **Next:** T7.4 FakeAdapter example; T8.5/T8.9 (need T6.8); Wave 7 SEC scenarios.
 
 ## Planned
 

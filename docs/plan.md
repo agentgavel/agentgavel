@@ -91,7 +91,7 @@ Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 
 ### E5 -- Assertions and GSI metrics  -> docs/plans/E5-assertions-metrics.md  (9/9)
 
-### E6 -- mcpfuzz rogue MCP servers  -> docs/plans/E6-mcpfuzz.md  (8/9)
+### E6 -- mcpfuzz rogue MCP servers  -> docs/plans/E6-mcpfuzz.md  (9/9)
 
 ### E7 -- Python adapter SDK  -> docs/plans/E7-python-sdk.md  (3/6)
 
@@ -210,6 +210,8 @@ Rules:
 - After M5, run T13.0 before any v0.2 coding.
 
 ## 9. Progress Log
+
+- 2026-09-03: Wave 6 complete: T6.8 StartFuzzMode on wave-6-t6.8-integration.
 
 - 2026-09-03: Wave 6 batch 2: T3.6 T7.3 T8.4 T8.6 T8.7 T8.8 on wave-6-batch2-integration.
 
