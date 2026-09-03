@@ -95,7 +95,7 @@ Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 
 ### E7 -- Python adapter SDK  -> docs/plans/E7-python-sdk.md  (5/6)
 
-### E8 -- Security suite SEC-001 through SEC-007  -> docs/plans/E8-security-suite.md  (9/11)
+### E8 -- Security suite SEC-001 through SEC-007  -> docs/plans/E8-security-suite.md  (10/11)
 
 ### E9 -- CLI run, report, fingerprint  -> docs/plans/E9-cli-report.md  (2/6)
 
@@ -210,6 +210,8 @@ Rules:
 - After M5, run T13.0 before any v0.2 coding.
 
 ## 9. Progress Log
+
+- 2026-09-03: T8.11 suites/security gofmt verified clean (#39).
 
 - 2026-09-03: T10.1 unofficial Sire adapter scaffold merged (#36).
 
