@@ -14,7 +14,7 @@ fidelity: executable
 - [x] T12.3 VERSION file / ldflags version injection verified in binary  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [AgentGavel version prints release version when ldflags set]  completed: 2026-09-03
   - deps: [T1.1, T12.2]
 
-- [ ] T12.4 Write docs/manual/v0.1-smoke.md with exact commands for Fake, Sire, LangGraph  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/v0.1-smoke.md]  verifies: [UC-001, UC-016, UC-017]  acc: [smoke doc lists commands and expected provenance labels]
+- [x] T12.4 Write docs/manual/v0.1-smoke.md with exact commands for Fake, Sire, LangGraph  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/v0.1-smoke.md]  verifies: [UC-001, UC-016, UC-017]  acc: [smoke doc lists commands and expected provenance labels]  completed: 2026-09-03
   - deps: [T10.5, T11.5, T9.3]
 
 - [x] T12.5 Append docs/devlog.md entry for v0.1 plan execution start/finish template  Owner: pool  Est: 20m  kind: agent  delivers: [devlog seed entry]  verifies: [infrastructure]  acc: [devlog has dated stub section for v0.1]  completed: 2026-09-03

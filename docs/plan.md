@@ -211,7 +211,11 @@ Rules:
 
 ## 9. Progress Log
 
+<<<<<<< HEAD
 - 2026-09-03: T11.7 LangGraph ruff (this PR). E11 complete.
+=======
+- 2026-09-03: T12.4 v0.1 smoke doc (this PR).
+>>>>>>> a47370b (docs: add v0.1 local smoke commands for Fake, Sire, LangGraph (T12.4))
 - 2026-09-03: T11.5 LangGraph oracle E2E SEC-001/007 (this PR).
 - 2026-09-03: T10.7 (#67), T11.2 (#66), T11.3 (#69), T11.4 (#70), T11.6 (#71). E10 complete.
 
