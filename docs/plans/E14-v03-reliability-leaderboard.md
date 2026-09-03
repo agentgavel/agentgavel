@@ -114,7 +114,7 @@ fidelity: executable
   - `dashboard/data/schema.json`: JSON Schema draft-07; enums `provenance ∈ {ratified, provisional, unofficial}`, `tab ∈ {opt-in, unratified}`. `index.json` starts as `[]`.
   - `dashboard/README.md`: how to serve locally (`python3 -m http.server -d dashboard 8000`) and that `report --publish` is the only writer of `data/`.
 
-- [ ] T14.19 Add .github/workflows/pages.yml deploying dashboard/ to GitHub Pages  Owner: pool  Est: 45m  kind: agent  verifies: [UC-022]  acc: [.github/workflows/pages.yml exists with on.push.branches main + paths dashboard/** + workflow_dispatch, permissions pages:write and id-token:write, actions/upload-pages-artifact path dashboard, and actions/deploy-pages; `gh workflow view pages.yml` resolves after merge]  deps: [T14.9]
+- [x] T14.19 Add .github/workflows/pages.yml deploying dashboard/ to GitHub Pages  Owner: pool  Est: 45m  kind: agent  verifies: [UC-022]  acc: [.github/workflows/pages.yml exists with on.push.branches main + paths dashboard/** + workflow_dispatch, permissions pages:write and id-token:write, actions/upload-pages-artifact path dashboard, and actions/deploy-pages; `gh workflow view pages.yml` resolves after merge]  deps: [T14.9]  completed: 2026-09-05
   - Two jobs (`build` uploads the artifact, `deploy` runs `actions/deploy-pages@v4` with environment `github-pages`), `concurrency: group: pages, cancel-in-progress: false`.
   - The workflow cannot succeed until Pages is enabled (T14.20); do not mark T14.19 done by a green run — the file and its parse are the acceptance.
 
