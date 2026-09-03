@@ -93,9 +93,9 @@ Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 
 ### E6 -- mcpfuzz rogue MCP servers  -> docs/plans/E6-mcpfuzz.md  (9/9)
 
-### E7 -- Python adapter SDK  -> docs/plans/E7-python-sdk.md  (4/6)
+### E7 -- Python adapter SDK  -> docs/plans/E7-python-sdk.md  (5/6)
 
-### E8 -- Security suite SEC-001 through SEC-007  -> docs/plans/E8-security-suite.md  (8/11)
+### E8 -- Security suite SEC-001 through SEC-007  -> docs/plans/E8-security-suite.md  (9/11)
 
 ### E9 -- CLI run, report, fingerprint  -> docs/plans/E9-cli-report.md  (2/6)
 
@@ -210,6 +210,8 @@ Rules:
 - After M5, run T13.0 before any v0.2 coding.
 
 ## 9. Progress Log
+
+- 2026-09-03: T7.6 ruff (#33) and T8.10 SuiteOracleFake (#34).
 
 - 2026-09-03: T7.5 Go+Python FakeAdapter integration merged (#30).
 

@@ -5,7 +5,9 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **In flight (2026-09-03):** Pool — T7.6 ruff, T8.10 SuiteOracleFake, T10.1 Sire scaffold.
+- **In flight (2026-09-03):** Pool — T10.1 Sire adapter scaffold.
+
+- **Shipped (2026-09-03):** T7.6 ruff on sdk/python (#33); T8.10 SuiteOracleFake E2E (#34).
 
 - **Shipped (2026-09-03):** Wave close — T7.5 (#30), T8.9 (#27), T12.5 (#26).
 
@@ -15,7 +17,7 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 - **Shipped (2026-09-03):** Wave 7 batch — T7.4 FakeAdapter example, T8.5 SEC-003, T3.7 gofmt (already clean).
 
-- **Next:** After this wave: T7.6 ruff; T8.10 suite E2E (needs T7.5+T8.9); then T9.2 CLI run.
+- **Next:** After this wave: T8.11 lint; T9.2 CLI run; T7.6 ruff if still open.
 
 - **Shipped (2026-09-03):** Wave 6 complete — T6.8 StartFuzzMode; E6 closed.
 
