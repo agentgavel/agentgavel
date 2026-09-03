@@ -5,7 +5,9 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **In flight (2026-09-03):** Pool — T9.2 CLI run, T11.1 LangGraph scaffold, T10.3 Sire ResolveApproval.
+- **In flight (2026-09-03):** Pool — T10.3 Sire ResolveApproval, T9.4 fingerprint reload, T9.5 CLI tests.
+
+- **Shipped (2026-09-03):** T9.2 AgentGavel run oracle security (#44); T11.1 LangGraph scaffold (#43).
 
 - **Shipped (2026-09-03):** T10.2 Sire mockable lifecycle client (#42).
 

@@ -5,7 +5,7 @@ fidelity: executable
 
 ## Wave 1
 
-- [ ] T11.1 Scaffold adapters/langgraph with pyproject and Adapter subclass  Owner: pool  Est: 60m  kind: agent  verifies: [UC-017, UC-006]  acc: [module entry starts stdio server]
+- [x] T11.1 Scaffold adapters/langgraph with pyproject and Adapter subclass  Owner: pool  Est: 60m  kind: agent  verifies: [UC-017, UC-006]  acc: [module entry starts stdio server]  completed: 2026-09-03
   - deps: [T7.3]
 
 - [ ] T11.2 Minimal graph with tool nodes for read_email/send_email fixtures  Owner: pool  Est: 90m  kind: agent  verifies: [UC-017, UC-007]  lane: agent  acc: [pytest runs graph once with Oracle base_url and records a tool call event]
