@@ -9,32 +9,31 @@ is fully compromised.
 
 Objectives:
 - Implement `docs/RFC-0001.md` end to end across releases v0.1, v0.2, v0.3, v1.0.
-- Ship a trustworthy Go engine, adapter wire protocol, Python SDK, Compliance
-  Oracle, security suite SEC-001..007, and unofficial Sire + LangGraph adapters
-  as the v0.1 frontier.
-- Keep later releases as outline epics expanded after each tag (rolling wave).
+- v0.1 shipped (`v0.1.0`): Go engine, protocol, Python SDK, Oracle, SEC-001..007,
+  unofficial Sire + LangGraph adapters.
+- Frontier is now v0.2 (E13 executable): SEC-008..010, governance scaffold,
+  AutoGen/CrewAI unofficial adapters, `--ci`, scenario governance process.
+- Keep v0.3/v1.0 as outline epics expanded after each tag (rolling wave).
 
-Non goals (v0.1):
-- Governance and reliability suites (v0.2 / v0.3).
-- AutoGen / CrewAI adapters (v0.2).
-- Public leaderboard and rubber-stamp CLI (v0.3).
+Non goals (v0.2):
+- Reliability suite, rubber-stamp CLI, public leaderboard (v0.3).
 - Public submission bounty (v1.0).
 - Per-framework exploit code (forbidden by RFC section 0).
 
 Constraints and assumptions:
-- Greenfield repo `github.com/agentgavel/agentgavel` (no application code yet).
+- Module/repo: `github.com/agentgavel/agentgavel`.
 - Neutrality rules in RFC section 0 are binding.
-- Open questions Q3-Q7 resolved in ADRs 002, 004, 005, 006, 007 (recommended
-  defaults accepted for planning; founder may override before v0.1 tag).
-- No hosted production service until E14; v0.1 "done" means tagged GitHub
+- Open questions Q3-Q7 resolved in ADRs 002, 004, 005, 006, 007; SEC-008
+  semantic judge in ADR 009.
+- No hosted production service until E14; release "done" means tagged GitHub
   release + CI green + documented local smoke.
 
 Success metrics:
-- `AgentGavel run` produces fingerprint + GSI scorecard for FakeAdapter.
-- SEC-001..007 predicates covered by automated tests.
+- `AgentGavel run` / `run --ci` produce fingerprint + GSI scorecard for FakeAdapter.
+- SEC-001..010 predicates covered by automated tests (SEC-v2).
 - Soft rates use >=25 seeds with Wilson intervals.
-- Sire and LangGraph adapters labeled unofficial on scorecards.
-- RFC v0.1 scope marked shippable via T12.8.
+- Sire, LangGraph, AutoGen, CrewAI adapters labeled unofficial on scorecards.
+- Scenario governance comment window documented before catalog changes publish.
 
 ## 2. Discovery Summary
 
@@ -43,43 +42,42 @@ Work type: Engineering (greenfield).
 Graph scan: no `.code-review-graph/graph.db` yet; skipped. Manual scan: only
 `docs/RFC-0001.md` present. Use cases derived from the RFC.
 
-Use cases: 22 total (12 P0, 7 P1, 3 P2), all PLANNED.
-Manifest: `.claude/scratch/usecases-manifest.json`.
+Use cases: 26 total (see manifest). Manifest: `.claude/scratch/usecases-manifest.json`.
 
-Gaps to close in v0.1: protocol, engine, oracle, assertions/metrics, mcpfuzz,
-Python SDK, SEC-001..007, CLI, two unofficial adapters, CI/release.
+Gaps to close in v0.2: SEC-008..010, governance suite scaffold, `--ci` mode,
+scenario governance docs, unofficial AutoGen + CrewAI adapters.
 
-Research notes (from RFC + ADRs):
-- Tech: Go engine; JSON-RPC stdio default; Python SDK; Oracle as HTTP base_url.
-- Risk: adapter honesty, Oracle special-casing, soft-run cost, author bias.
-- Arch: sidecar contract; scenario YAML + Go predicates; pillar GSI.
+Research notes (from RFC + ADRs + v0.1 apply):
+- Tech: Go engine; JSON-RPC stdio; Python SDK; Oracle HTTP; SEC-v2 catalog.
+- Risk: adapter honesty, semantic-canary judge nondeterminism (ADR 009), soft-run cost.
+- Arch: sidecar contract; CapabilityReport N/A; unofficial provenance (ADR 007).
 
 ## 3. Scope and Deliverables
 
 In scope:
-- Full RFC release plan (v0.1 executable now; v0.2-v1.0 as outline epics).
-- ADRs capturing architecture and open-question resolutions.
+- Full RFC release plan (v0.1 complete; v0.2 executable; v0.3-v1.0 outline).
+- ADRs including 009 (SEC-008 semantic canary judge).
 - Design doc and roadmap sync.
 
 Out of scope:
-- Changing Sire product code inside `sirerun/sire` except via the gavel adapter.
+- Changing Sire product code inside `sirerun/sire` except via the adapter.
 - Marketing site beyond dashboard/ in v0.3+.
 
 | ID | Deliverable | Acceptance |
 | ---- | ---- | ---- |
-| D1 | Go module + AgentGavel CLI | build + version |
-| D2 | Protocol + Python SDK | cross-language Handshake |
-| D3 | Compliance Oracle | OpenAI + Anthropic shaped tool calls |
-| D4 | SEC-001..007 suite | FakeAdapter oracle suite green |
-| D5 | GSI scorecard + fingerprint | report command |
-| D6 | Unofficial Sire + LangGraph adapters | provenance label |
-| D7 | v0.1.0 GitHub release | tag + binaries |
-| D8 | Later releases | outline epics E13-E15 |
+| D1–D7 | v0.1 harness + release | tag `v0.1.0` shipped |
+| D8 | SEC-008..010 (SEC-v2) | FakeAdapter oracle green |
+| D9 | Governance suite scaffold | GOV-v0 + GOV-001 stub |
+| D10 | Unofficial AutoGen + CrewAI | provenance label |
+| D11 | `run --ci` + scenario governance docs | exit codes + comment window |
+| D12 | v0.2.0 GitHub release | tag + binaries |
+| D13 | Later releases | outline epics E14-E15 |
 
 ## 4. Checkable Work Breakdown
 
-Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
-`fidelity: outline` until prior release milestones complete.
+Split layout. E1-E12 complete (`fidelity: executable`, all tasks done). E13 is
+`fidelity: executable` (v0.2 frontier). E14-E15 remain `fidelity: outline`
+until `v0.2.0` (T13.17).
 
 ### E1 -- Repository bootstrap  -> docs/plans/E1-repo-bootstrap.md  (6/6)
 
@@ -105,7 +103,7 @@ Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 
 ### E12 -- v0.1 quality gate and release  -> docs/plans/E12-v01-release.md  (8/8)
 
-### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (0/1)
+### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (1/18)
 
 ### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (0/1)
 
@@ -113,59 +111,31 @@ Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 
 ## 5. Parallel Work
 
-Tracks (v0.1):
-- Track A: Bootstrap + protocol (E1, E2)
-- Track B: Oracle (E4) -- parallel after T1.1
-- Track C: Assertions/metrics (E5) -- parallel after T2.2
-- Track D: mcpfuzz (E6) -- parallel after T1.1
-- Track E: Engine (E3) -- after T2.4
-- Track F: Python SDK (E7) -- after T2.3
-- Track G: Suites (E8) -- after assertions + engine + mcpfuzz
-- Track H: CLI (E9) -- after engine suite
-- Track I/J: Adapters (E10, E11) -- after SDK + CLI
-- Track K: Release (E12) -- after adapters
+Tracks (v0.2):
+- Track L: SEC-v2 scenarios (T13.1–T13.6)
+- Track M: Governance scaffold + CI + process docs (T13.7–T13.9)
+- Track N: AutoGen / CrewAI adapters (T13.10–T13.14)
+- Track O: Quality + tag (T13.15–T13.17)
 
-Sync points: T2.4 (protocol usable), T7.5 (cross-language), T8.10 (suite E2E),
-T12.7 (quality gate).
+Sync points: T13.6 (SEC-008..010 E2E), T13.8 (`--ci`), T13.16 (quality gate).
 
-### Wave 1: Foundation (6 agents)
-- T1.1, T1.2, T1.5, T4.1, T6.1, T8.2
+### Wave 13: E13 planning (done)
+- T13.0
 
-### Wave 2: Protocol + early packages (8 agents)
-- T1.3, T1.4, T2.1, T4.2, T4.3, T5.1, T6.2, T6.3
+### Wave 14: SEC-v2 batch A (3 agents)
+- T13.1, T13.2, T13.3
 
-### Wave 3: Protocol complete + fuzz modes (10 agents)
-- T2.2, T2.3, T4.4, T5.2, T5.3, T6.4, T6.5, T6.6, T6.7, T1.6
+### Wave 15: SEC-v2 batch B + E2E (3 agents)
+- T13.4, T13.5, T13.6
 
-### Wave 4: Session + metrics + SDK start (9 agents)
-- T2.4, T2.5, T2.6, T5.4, T5.5, T5.6, T7.1, T4.5, T6.8
+### Wave 16: Governance + CI + process (3 agents)
+- T13.7, T13.8, T13.9
 
-### Wave 5: Engine + SDK + suite loader (10 agents)
-- T3.1, T3.2, T3.3, T3.4, T3.5, T5.7, T5.8, T7.2, T8.1, T2.7
+### Wave 17: AutoGen + CrewAI (5 agents)
+- T13.10, T13.11, T13.12, T13.13, T13.14
 
-### Wave 6: Integration seam (8 agents)
-- T3.6, T7.3, T7.4, T5.9, T4.6, T6.9, T2.8, T3.7
-
-### Wave 7: Scenarios batch A (7 agents)
-- T7.5, T8.3, T8.4, T8.5, T8.6, T8.7, T7.6
-
-### Wave 8: Scenarios batch B + CLI (6 agents)
-- T8.8, T8.9, T9.1, T9.2, T8.10, T8.11
-
-### Wave 9: Report + adapters scaffold (8 agents)
-- T9.3, T9.4, T9.5, T10.1, T11.1, T10.2, T11.2, T9.6
-
-### Wave 10: Adapter completion (8 agents)
-- T10.3, T10.4, T11.3, T11.4, T10.5, T11.5, T10.6, T11.6
-
-### Wave 11: Release gate (6 agents)
-- T10.7, T11.7, T12.1, T12.2, T12.3, T12.5
-
-### Wave 12: Ship (4 agents / humans)
-- T12.4, T12.7, T12.6 (human), T12.8 (human)
-
-### Wave 13: Next-horizon planning (1 agent)
-- T13.0 (after T12.8)
+### Wave 18: v0.2 quality + ship (3 agents / humans)
+- T13.15, T13.16, T13.17 (human)
 
 ## 6. Timeline and Milestones
 
@@ -177,8 +147,9 @@ T12.7 (quality gate).
 | M4 | Unofficial adapters | Waves 9-10 | T10.5, T11.5 green |
 | M5 | v0.1.0 release | Waves 11-12 | T12.8 done |
 | M6 | v0.2 planned | T13.0 | E13 executable |
-| M7 | v0.3 planned | T14.0 | E14 executable |
-| M8 | v1.0 planned | T15.0 | E15 executable |
+| M7 | v0.2.0 release | Waves 14-18 | T13.17 done |
+| M8 | v0.3 planned | T14.0 | E14 executable |
+| M9 | v1.0 planned | T15.0 | E15 executable |
 
 ## 7. Risk Register
 
@@ -189,7 +160,8 @@ T12.7 (quality gate).
 | R3 | Sire/LangGraph API mismatch | Adapter N/A heavy | High | Honest CapabilityReport; FakeAdapter proves harness |
 | R4 | Stdio event framing bugs | Flaky suite | Med | Cross-language golden tests early (T7.5) |
 | R5 | Q3 attestation sensitivity loss | False Soft/Hard | Med | Label context_mode; local raw default |
-| R6 | Scope creep into v0.2 during v0.1 | Delay | Med | Outline epics only; reject SEC-008 until T13.0 |
+| R6 | Scope creep into v0.3 during v0.2 | Delay | Med | Outline E14 until T13.17 |
+| R7 | SEC-008 paraphrase miss on CI matcher | False Soft/Pass | Med | ADR 009 optional LLM judge; label modes |
 
 ## 8. Operating Procedure
 
@@ -207,75 +179,27 @@ Rules:
 - Never add per-framework exploit code; probes stay in `fixtures/`.
 - Small focused commits; do not mix Go and Python adapter dirs in one commit
   when hooks forbid it.
-- After M5, run T13.0 before any v0.2 coding.
+- After M7, run T14.0 before any v0.3 coding.
 
 ## 9. Progress Log
 
+- 2026-09-04: T13.0 expanded E13 to executable (18 tasks); ADR 009 SEC-008 judge (this PR).
 - 2026-09-04: T12.8 cut v0.1.0; release assets on GitHub. E12 complete.
 - 2026-09-03: T12.6 RFC-0001 Status → Implemented (v0.1 scope) (#78).
-- 2026-09-03: Module/repo rename `gavel` → `agentgavel` (github.com/agentgavel/agentgavel) before v0.1.0 tag (#80).
+- 2026-09-03: Module/repo rename `gavel` → `agentgavel` (#80); brand mark (#81).
 - 2026-09-03: T12.7 full make test/lint (#76).
 - 2026-09-03: T12.4 v0.1 smoke doc (#75).
-- 2026-09-03: T11.7 LangGraph ruff (#74). E11 complete.
-- 2026-09-03: T11.5 LangGraph oracle E2E SEC-001/007 (#73).
-- 2026-09-03: T10.7 (#67), T11.2 (#66), T11.3 (#69), T11.4 (#70), T11.6 (#71). E10 complete.
-
-- 2026-09-03: T10.6 Sire unofficial README/ratification (#64).
-
-- 2026-09-03: T10.5 Sire oracle E2E SEC-002 (#62).
-
-- 2026-09-03: T12.1 CI matrix (#60) and T12.3 VERSION/ldflags (#61).
-
-- 2026-09-03: T12.2 GoReleaser release workflow (#56).
-
-- 2026-09-03: T9.6 cmd gofmt clean (#53); T10.4 ExportLedger honesty (#54). E9 closed.
-
-- 2026-09-03: T9.4 run --fingerprint reload (#51).
-
-- 2026-09-03: T9.5 CLI binary tests (#48).
-
-- 2026-09-03: T10.3 Sire ResolveApproval + gate_decision emit (#46).
-
-- 2026-09-03: T9.2 AgentGavel run (#44) and T11.1 LangGraph scaffold (#43).
-
-- 2026-09-03: T10.2 Sire mockable lifecycle client merged (#42).
-
-- 2026-09-03: T8.11 suites/security gofmt verified clean (#39).
-
-- 2026-09-03: T10.1 unofficial Sire adapter scaffold merged (#36).
-
-- 2026-09-03: T7.6 ruff (#33) and T8.10 SuiteOracleFake (#34).
-
-- 2026-09-03: T7.5 Go+Python FakeAdapter integration merged (#30).
-
-- 2026-09-03: T8.9 SEC-007 composite fuzz merged (#27).
-
-- 2026-09-03: T12.5 v0.1 devlog stub merged (#26).
-
-- 2026-09-03: Wave 6 complete: T6.8 StartFuzzMode on wave-6-t6.8-integration.
-
-- 2026-09-03: Wave 6 batch 2: T3.6 T7.3 T8.4 T8.6 T8.7 T8.8 on wave-6-batch2-integration.
-
-- 2026-09-03: Wave 6 batch 1: T3.5 T7.2 T8.3 T9.3 on wave-6-integration (agent lane after kazi stuck).
-
-- 2026-09-03: Wave 5: T3.2 T7.1 T8.1 T9.1 on wave-5-integration (kazi stuck;
-  completed via agent-lane worktrees; fingerprint Model field fixed on land).
-- 2026-09-03: Wave 2: T1.3 T1.4 T1.6 T2.1 T4.2 T4.3 T4.5 T6.2-T6.7.
-- 2026-09-02: Wave 1 complete: T1.1 T1.2 T1.5 T8.2 T4.1 T6.1 on
-  wave-1-integration (coordinator after Sonnet pool agents failed usage limits).
-- 2026-09-02: Initial plan from RFC-0001. Created executable epics E1-E12,
-  outline E13-E15, ADRs 001-008, design.md, usecases-manifest.json (22 UCs).
-  Resolved RFC Q3-Q7 into ADRs for planning defaults.
+- 2026-09-03: Waves 1–12 complete (E1–E12). See git history for per-task PRs.
 
 ## 10. Hand off Notes
 
 - Spec: `docs/RFC-0001.md`. Design: `docs/design.md`.
-- ADRs under `docs/adr/` -- especially transport (002), oracle (003), scoring
-  (004), attestations (005), leaderboard (006), ratification (007).
-- Start apply at Wave 1 tasks; do not expand E13 until T12.8.
+- ADRs under `docs/adr/` -- especially 005 (attestations), 007 (ratification),
+  009 (SEC-008 semantic canary judge).
+- Start apply at Wave 14 (T13.1+); do not expand E14 until T13.17.
 - kazi is on PATH; engineering tasks carry `acc:` for JIT lane.
 - Claim resource for plan rewrites: `R-plan-md`.
-- Remote: `git@github.com:agentgavel/agentgavel.git` (empty history at plan time).
+- Remote: `git@github.com:agentgavel/agentgavel.git`.
 
 ## 11. Appendix
 

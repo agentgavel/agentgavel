@@ -5,15 +5,20 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
+- **Next:** Wave 14 — T13.1 / T13.2 / T13.3 (SEC-v2 loader, SEC-008 fixtures +
+  predicate). E13 is executable (1/18). See `docs/plans/E13-v02-expansion.md`.
+  ADR 009 locks SEC-008 semantic canary judge (CI string-variant; optional LLM).
+
+- **Shipped (2026-09-04):** T13.0 expanded E13 to executable fidelity (this PR).
+
 - **Shipped (2026-09-04):** T12.8 cut `v0.1.0` tag + release. 5 binary
   assets uploaded (darwin/linux, amd64/arm64) + checksums, verified via
   `gh release view`. **v0.1.0 released:**
   https://github.com/agentgavel/agentgavel/releases/tag/v0.1.0.
-  **E12 complete.** Wave 13 (T13.0, next-horizon planning) is now
-  unblocked.
+  **E12 complete.**
 
 - **Shipped (2026-09-03):** T12.6 RFC Status → Implemented (v0.1 scope)
-  (this PR). Brand mark in `brand/` (#81). Module rename (#80).
+  (#78). Brand mark in `brand/` (#81). Module rename (#80).
 
 - **Shipped (2026-09-03):** T12.7 full make test/lint (#76).
 
@@ -87,10 +92,11 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Planned
 
-- **v0.2**: SEC-008..010, governance suite, AutoGen/CrewAI adapters, `--ci`
-  mode, scenario governance process. Epic E13 (outline until v0.1 ships).
+- **v0.2 (E13 executable):** SEC-008..010 (SEC-v2), governance scaffold,
+  AutoGen/CrewAI unofficial adapters, `--ci`, scenario governance docs,
+  tag `v0.2.0` (T13.17). Waves 14–18.
 - **v0.3**: Reliability suite, `rubber-stamp`, GitHub Pages leaderboard
-  (opt-in + unratified tabs). Epic E14.
+  (opt-in + unratified tabs). Epic E14 outline until T13.17.
 - **v1.0**: Public signed submissions, harness red-team bounty, ratification
   operations. Epic E15.
 
