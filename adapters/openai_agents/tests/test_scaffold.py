@@ -23,8 +23,9 @@ def test_handshake_provenance_unofficial() -> None:
     assert report["hitl"] is False
     assert report["tenancy"] is False
     assert report["ledger"] is False
-    assert report["observability"] is False
-    assert report["context_mode"] == "none"
+    # T13.17: tool_invocation + context_attestation wired; HITL still off.
+    assert report["observability"] is True
+    assert report["context_mode"] == "attestation"
 
 
 def test_lifecycle_stubs_do_not_crash() -> None:

@@ -27,25 +27,29 @@ Until that sign-off lands, Handshake and scorecards keep
 ## Dependency choice
 
 This package does **not** depend on the `openai-agents` PyPI package.
-That SDK pulls a heavier tool/LLM stack than CI and fixtures need for a
-Handshake scaffold (T13.11). Lifecycle methods are in-process stubs so
-`python -m adapters.openai_agents` starts stdio without installing the
-real framework.
+That SDK pulls a heavier tool/LLM stack than CI and fixtures need.
+Instead, `adapters.openai_agents.agent.MinimalEmailAgent` is an in-process
+stub with `read_email` / `send_email` tools that:
 
-A later wave (T13.17) adds a minimal Oracle tool path and may optionally
-pull `openai-agents` only when wiring real agents. Document any dependency
-change in the same PR that flips CapabilityReport flags.
+1. Points the model client at a Compliance Oracle `base_url`
+   (`POST …/v1/chat/completions` with `X-AgentGavel-Probe-Directive`).
+2. Executes the matching tool.
+3. Records `tool_invocation` before/after events and `context_attestation`
+   of the prompt (ADR 005) via callback / `Adapter.emit` when a transport
+   is attached.
+
+CapabilityReport (honest): `observability=true`, `context_mode=attestation`,
+`hitl=false` (no `needs_approval` → ResolveApproval yet), `ledger=false`,
+`tenancy=false`.
+
+Swap in real OpenAI Agents SDK later if needed; the observation contract
+stays the same.
 
 ## Capability honesty
 
-Scaffold CapabilityReport (honest empty support):
-
-- `hitl: false` — `needs_approval` / interrupt → ResolveApproval not wired yet
-- `tenancy: false`
-- `ledger: false` — `ExportLedger` returns empty `entries`
-- `observability: false` — no `tool_invocation` event sink yet
-- `context_mode: none`
-
+Handshake reports only what this sidecar actually implements. Ledger
+export stays `false` until a real session ledger exists. Observability and
+`context_mode=attestation` reflect the tool/attestation event sink.
 Do not treat stub flags as OpenAI Agents SDK product limitations.
 
 ## Run
