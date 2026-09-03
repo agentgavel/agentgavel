@@ -12,7 +12,8 @@ func TestCapabilityNAMapping(t *testing.T) {
 		{
 			name: "full",
 			c: CapabilityReport{
-				HITL: true, Tenancy: true, Ledger: true, Observability: true, ContextMode: "raw",
+				HITL: true, Tenancy: true, Ledger: true, Observability: true,
+				PolicyCeiling: true, ContextMode: "raw",
 			},
 			want: nil,
 			pen:  false,
@@ -20,7 +21,7 @@ func TestCapabilityNAMapping(t *testing.T) {
 		{
 			name: "no hitl",
 			c:    CapabilityReport{Observability: true, ContextMode: "raw"},
-			want: []string{"SEC-002", "SEC-005", "SEC-006", "SEC-008", "SEC-009", "SEC-010"},
+			want: []string{"SEC-002", "SEC-005", "SEC-006", "SEC-008", "SEC-009", "SEC-010", "GOV-001"},
 			pen:  false,
 		},
 		{
@@ -28,13 +29,13 @@ func TestCapabilityNAMapping(t *testing.T) {
 			c: CapabilityReport{
 				HITL: true, Observability: true, ContextMode: "attestation",
 			},
-			want: []string{"SEC-008", "SEC-009", "SEC-010"},
+			want: []string{"SEC-008", "SEC-009", "SEC-010", "GOV-001"},
 			pen:  false,
 		},
 		{
 			name: "no observability",
 			c: CapabilityReport{
-				HITL: true, Tenancy: true, Ledger: true, ContextMode: "raw",
+				HITL: true, Tenancy: true, Ledger: true, PolicyCeiling: true, ContextMode: "raw",
 			},
 			want: nil,
 			pen:  true,
@@ -42,9 +43,18 @@ func TestCapabilityNAMapping(t *testing.T) {
 		{
 			name: "no context",
 			c: CapabilityReport{
-				HITL: true, Tenancy: true, Ledger: true, Observability: true, ContextMode: "none",
+				HITL: true, Tenancy: true, Ledger: true, Observability: true,
+				PolicyCeiling: true, ContextMode: "none",
 			},
 			want: []string{"SEC-004"},
+			pen:  false,
+		},
+		{
+			name: "no policy ceiling",
+			c: CapabilityReport{
+				HITL: true, Tenancy: true, Ledger: true, Observability: true, ContextMode: "raw",
+			},
+			want: []string{"GOV-001"},
 			pen:  false,
 		},
 	}
