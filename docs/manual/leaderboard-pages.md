@@ -8,12 +8,15 @@ the public web. Policy: [ADR 006](../adr/006-leaderboard-policy.md)
 ## What gets published
 
 The site is vanilla HTML/CSS/JS under `dashboard/` (no build step). GitHub
-Pages serves that directory as static files.
+Pages serves that directory as static files: marketing home at `/`,
+leaderboard at `/leaderboard/`.
 
 | Path | Role |
 | --- | --- |
-| `dashboard/index.html` | Two tabs: `#opt-in` and `#unratified` |
-| `dashboard/app.js` / `style.css` | Load `data/index.json` and render tables |
+| `dashboard/index.html` | Marketing home |
+| `dashboard/site.css` / `site.js` | Marketing layout + mobile menu |
+| `dashboard/leaderboard/index.html` | Two tabs: `#opt-in` and `#unratified` |
+| `dashboard/leaderboard/app.js` / `style.css` | Load `../data/index.json` and render tables |
 | `dashboard/data/index.json` | JSON array of entry filenames |
 | `dashboard/data/<run_id>.json` | One scorecard entry (`data/schema.json`) |
 
@@ -40,6 +43,7 @@ Expected pattern after Pages is enabled (founder task T14.20):
 
 ```text
 https://agentgavel.github.io/agentgavel/
+https://agentgavel.github.io/agentgavel/leaderboard/
 ```
 
 Entry list:
@@ -50,9 +54,10 @@ https://agentgavel.github.io/agentgavel/data/index.json
 
 Until T14.20 enables the repository Pages setting (`build_type=workflow`)
 and a successful `pages.yml` run, that URL may not resolve. Do not treat
-it as live until the founder smoke check (`curl` for `id="opt-in"` /
-`id="unratified"` and a JSON `index.json`) passes. If the live URL
-differs from the pattern above, record the actual URL here after T14.20.
+it as live until the founder smoke check (`curl` for
+`/leaderboard/` containing `id="opt-in"` / `id="unratified"` and a JSON
+`index.json`) passes. If the live URL differs from the pattern above,
+record the actual URL here after T14.20.
 
 ## Opt-in vs Unratified (ADR 006)
 
@@ -137,6 +142,6 @@ From the repository root (no Pages account needed):
 python3 -m http.server -d dashboard 8000
 ```
 
-Open <http://127.0.0.1:8000/>. You should see both Opt-in and Unratified
-sections; with the committed samples, both tables have at least one
-labeled sample row.
+Open <http://127.0.0.1:8000/> for the marketing home and
+<http://127.0.0.1:8000/leaderboard/> for Opt-in and Unratified. With the
+committed samples, both tables have at least one labeled sample row.

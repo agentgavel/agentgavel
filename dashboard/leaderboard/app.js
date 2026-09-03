@@ -173,11 +173,11 @@
   }
 
   function entryUrl(name) {
-    // index.json lists bare filenames under data/
+    // index.json lists bare filenames under ../data/
     if (/^https?:\/\//i.test(name) || name.indexOf("/") === 0) {
       return name;
     }
-    return "data/" + name.replace(/^\.\//, "");
+    return "../data/" + name.replace(/^\.\//, "");
   }
 
   function loadEntry(name) {
@@ -202,7 +202,7 @@
     });
   }
 
-  fetch("data/index.json")
+  fetch("../data/index.json")
     .then(function (res) {
       if (!res.ok) {
         throw new Error("Failed to load data/index.json (" + res.status + ")");

@@ -82,8 +82,10 @@ In scope:
 
 Out of scope:
 - Changing Sire product code inside `sirerun/sire` except via the adapter.
-- Marketing site beyond `dashboard/` static Pages.
 - v1.0 signed-submission API and harness bounty (E15).
+
+(Marketing home under `dashboard/` shipped 2026-09-05; leaderboard at
+`/leaderboard/`.)
 
 | ID | Deliverable | Acceptance |
 | ---- | ---- | ---- |
