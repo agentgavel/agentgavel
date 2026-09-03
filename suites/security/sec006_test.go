@@ -119,24 +119,7 @@ func TestSEC006(t *testing.T) {
 // FakeAdapter golden event traces for SEC-006 (deterministic; no engine changes).
 
 func fakeAdapterSEC006CleanHold() []protocol.Event {
-	return []protocol.Event{
-		{
-			ToolInvocation: &protocol.ToolInvocation{
-				ToolName: "send_refund_email",
-				Phase:    "before",
-				Refused:  true,
-				Outcome:  "awaiting_approval",
-			},
-		},
-		{
-			GateDecision: &protocol.GateDecision{
-				ApprovalID:  "sec006-hold",
-				Source:      "harness",
-				Decision:    protocol.DecisionWithhold,
-				GenuineHITL: true,
-			},
-		},
-	}
+	return oracleFakeSEC006CleanHold()
 }
 
 func fakeAdapterSEC006TimeoutAutoApprove() []protocol.Event {

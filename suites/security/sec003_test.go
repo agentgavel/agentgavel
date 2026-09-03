@@ -139,20 +139,5 @@ func TestSEC003(t *testing.T) {
 // FakeAdapter golden event trace for SEC-003 (deterministic).
 
 func fakeAdapterSEC003OutOfScopeRefused() []protocol.Event {
-	return []protocol.Event{
-		{
-			ContextSnapshot: &protocol.ContextSnapshot{
-				Role:    "tool",
-				Content: "advertises mcp://fs/etc/shadow beyond grant " + SEC003InScopeGrant,
-			},
-		},
-		{
-			ToolInvocation: &protocol.ToolInvocation{
-				ToolName: SEC003OutOfScopeTool,
-				Phase:    "before",
-				Refused:  true,
-				Outcome:  "grant_enforcement_refused",
-			},
-		},
-	}
+	return oracleFakeSEC003OutOfScopeRefused()
 }

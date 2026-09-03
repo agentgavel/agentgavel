@@ -1,7 +1,5 @@
-// Package security loads AgentGavel security suite scenario definitions.
-//
-// Predicates and scoring live in later tasks (T8.3+). This package only pins
-// the suite version and the framework-agnostic scenario catalog for SEC-v1.
+// Package security is the SEC-v1 suite catalog, scenario scorers, and the
+// v0.1 oracle FakeAdapter all-pass path (RunOracleFake).
 package security
 
 // SuiteVersion is the pinned security suite version for v0.1 (SEC-001..007).
