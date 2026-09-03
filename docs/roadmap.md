@@ -5,11 +5,17 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **Next:** Wave 17 — T13.10–T13.14 AutoGen + CrewAI unofficial adapters
-  (note: open PR #86 may retarget adapter set — reconcile before dispatch).
+- **Next:** Wave 17 — T13.10–T13.15 §8.1 adapter scaffolds (Google ADK,
+  OpenAI Agents SDK, Pydantic AI, Microsoft Agent Framework, AWS Strands,
+  CrewAI). Plan retargeted to match RFC §8.1 after PR #86.
+
+- **Shipped (2026-09-04):** RFC §8.1 adapter retarget docs (#86) — AutoGen →
+  Microsoft Agent Framework; +ADK/OpenAI Agents/Pydantic AI/Strands;
+  n8n/Dify deferred (§8.2).
 
 - **Shipped (2026-09-04):** Wave 16 complete — T13.7 GOV-v0 scaffold, T13.8
-  `run --ci`, T13.9 scenario-governance docs. E13 at 10/18.
+  `run --ci`, T13.9 scenario-governance docs. E13 at 10/26 after plan
+  retarget.
 
 - **Shipped (2026-09-04):** Wave 15 complete — T13.4 SEC-009, T13.5 SEC-010,
   T13.6 SuiteOracleFakeV2 (SEC-008..010 E2E). E13 at 7/18.
@@ -102,16 +108,10 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 - **v0.2 (E13 executable):** SEC-008..010 (SEC-v2), governance scaffold,
   unofficial adapters for Microsoft Agent Framework, CrewAI, Google ADK,
-  OpenAI Agents SDK, Pydantic AI, AWS Strands Agents (RFC-0001 §8.1,
-  retargeted 2026-09-04 -- AutoGen swapped for its GA successor, four
-  frameworks added; n8n/Dify deferred as a separate workflow-engine
-  adapter architecture, §8.2, not part of this list), `--ci`, scenario
-  governance docs, tag `v0.2.0` (T13.17). Waves 14–18. E13's task-level
-  plan (`docs/plans/E13-v02-expansion.md`) still names only AutoGen/CrewAI
-  as of this update -- retargeting its tasks to match §8.1 is follow-up
-  work, not done here.
+  OpenAI Agents SDK, Pydantic AI, AWS Strands Agents (RFC-0001 §8.1),
+  `--ci`, scenario governance docs, tag `v0.2.0` (T13.25). Waves 14–19.
 - **v0.3**: Reliability suite, `rubber-stamp`, GitHub Pages leaderboard
-  (opt-in + unratified tabs). Epic E14 outline until T13.17.
+  (opt-in + unratified tabs). Epic E14 outline until T13.25.
 - **v1.0**: Public signed submissions, harness red-team bounty, ratification
   operations. Epic E15.
 

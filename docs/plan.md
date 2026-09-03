@@ -12,7 +12,8 @@ Objectives:
 - v0.1 shipped (`v0.1.0`): Go engine, protocol, Python SDK, Oracle, SEC-001..007,
   unofficial Sire + LangGraph adapters.
 - Frontier is now v0.2 (E13 executable): SEC-008..010, governance scaffold,
-  AutoGen/CrewAI unofficial adapters, `--ci`, scenario governance process.
+  six RFC §8.1 unofficial adapters (ADK, OpenAI Agents, Pydantic AI,
+  Microsoft Agent Framework, Strands, CrewAI), `--ci`, scenario governance.
 - Keep v0.3/v1.0 as outline epics expanded after each tag (rolling wave).
 
 Non goals (v0.2):
@@ -32,7 +33,7 @@ Success metrics:
 - `AgentGavel run` / `run --ci` produce fingerprint + GSI scorecard for FakeAdapter.
 - SEC-001..010 predicates covered by automated tests (SEC-v2).
 - Soft rates use >=25 seeds with Wilson intervals.
-- Sire, LangGraph, AutoGen, CrewAI adapters labeled unofficial on scorecards.
+- Sire, LangGraph, and all six §8.1 adapters labeled unofficial on scorecards.
 - Scenario governance comment window documented before catalog changes publish.
 
 ## 2. Discovery Summary
@@ -45,7 +46,7 @@ Graph scan: no `.code-review-graph/graph.db` yet; skipped. Manual scan: only
 Use cases: 26 total (see manifest). Manifest: `.claude/scratch/usecases-manifest.json`.
 
 Gaps to close in v0.2: SEC-008..010, governance suite scaffold, `--ci` mode,
-scenario governance docs, unofficial AutoGen + CrewAI adapters.
+scenario governance docs, unofficial adapters for all six RFC §8.1 targets.
 
 Research notes (from RFC + ADRs + v0.1 apply):
 - Tech: Go engine; JSON-RPC stdio; Python SDK; Oracle HTTP; SEC-v2 catalog.
@@ -68,7 +69,7 @@ Out of scope:
 | D1–D7 | v0.1 harness + release | tag `v0.1.0` shipped |
 | D8 | SEC-008..010 (SEC-v2) | FakeAdapter oracle green |
 | D9 | Governance suite scaffold | GOV-v0 + GOV-001 stub |
-| D10 | Unofficial AutoGen + CrewAI | provenance label |
+| D10 | Unofficial §8.1 adapters (×6) | provenance label |
 | D11 | `run --ci` + scenario governance docs | exit codes + comment window |
 | D12 | v0.2.0 GitHub release | tag + binaries |
 | D13 | Later releases | outline epics E14-E15 |
@@ -103,7 +104,7 @@ until `v0.2.0` (T13.17).
 
 ### E12 -- v0.1 quality gate and release  -> docs/plans/E12-v01-release.md  (8/8)
 
-### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (10/18)
+### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (10/26)
 
 ### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (0/1)
 
@@ -114,10 +115,11 @@ until `v0.2.0` (T13.17).
 Tracks (v0.2):
 - Track L: SEC-v2 scenarios (T13.1–T13.6)
 - Track M: Governance scaffold + CI + process docs (T13.7–T13.9)
-- Track N: AutoGen / CrewAI adapters (T13.10–T13.14)
-- Track O: Quality + tag (T13.15–T13.17)
+- Track N: §8.1 adapter scaffolds (T13.10–T13.15)
+- Track O: §8.1 adapter tool paths (T13.16–T13.21)
+- Track P: Smoke + quality + tag (T13.22–T13.25)
 
-Sync points: T13.6 (SEC-008..010 E2E), T13.8 (`--ci`), T13.16 (quality gate).
+Sync points: T13.6 (SEC-008..010 E2E), T13.8 (`--ci`), T13.24 (quality gate).
 
 ### Wave 13: E13 planning (done)
 - T13.0
@@ -131,11 +133,14 @@ Sync points: T13.6 (SEC-008..010 E2E), T13.8 (`--ci`), T13.16 (quality gate).
 ### Wave 16: Governance + CI + process (3 agents)
 - T13.7, T13.8, T13.9
 
-### Wave 17: AutoGen + CrewAI (5 agents)
-- T13.10, T13.11, T13.12, T13.13, T13.14
+### Wave 17: §8.1 adapter scaffolds (6 agents)
+- T13.10, T13.11, T13.12, T13.13, T13.14, T13.15
 
-### Wave 18: v0.2 quality + ship (3 agents / humans)
-- T13.15, T13.16, T13.17 (human)
+### Wave 18: §8.1 adapter tool paths (6 agents)
+- T13.16, T13.17, T13.18, T13.19, T13.20, T13.21
+
+### Wave 19: v0.2 smoke + quality + ship (3 agents / humans)
+- T13.22, T13.23, T13.24, T13.25 (human)
 
 ## 6. Timeline and Milestones
 
@@ -147,7 +152,7 @@ Sync points: T13.6 (SEC-008..010 E2E), T13.8 (`--ci`), T13.16 (quality gate).
 | M4 | Unofficial adapters | Waves 9-10 | T10.5, T11.5 green |
 | M5 | v0.1.0 release | Waves 11-12 | T12.8 done |
 | M6 | v0.2 planned | T13.0 | E13 executable |
-| M7 | v0.2.0 release | Waves 14-18 | T13.17 done |
+| M7 | v0.2.0 release | Waves 14-19 | T13.25 done |
 | M8 | v0.3 planned | T14.0 | E14 executable |
 | M9 | v1.0 planned | T15.0 | E15 executable |
 
@@ -160,7 +165,8 @@ Sync points: T13.6 (SEC-008..010 E2E), T13.8 (`--ci`), T13.16 (quality gate).
 | R3 | Sire/LangGraph API mismatch | Adapter N/A heavy | High | Honest CapabilityReport; FakeAdapter proves harness |
 | R4 | Stdio event framing bugs | Flaky suite | Med | Cross-language golden tests early (T7.5) |
 | R5 | Q3 attestation sensitivity loss | False Soft/Hard | Med | Label context_mode; local raw default |
-| R6 | Scope creep into v0.3 during v0.2 | Delay | Med | Outline E14 until T13.17 |
+| R6 | Scope creep into v0.3 during v0.2 | Delay | Med | Outline E14 until T13.25 |
+| R8 | Six §8.1 adapters stretch v0.2 | Delay | Med | Parallel waves 17–18; LangGraph-style stubs keep CI light |
 | R7 | SEC-008 paraphrase miss on CI matcher | False Soft/Pass | Med | ADR 009 optional LLM judge; label modes |
 
 ## 8. Operating Procedure
@@ -180,11 +186,15 @@ Rules:
 - Small focused commits; do not mix Go and Python adapter dirs in one commit
   when hooks forbid it.
 - After M7, run T14.0 before any v0.3 coding.
+- Adapter dirs for §8.1: `adk`, `openai_agents`, `pydantic_ai`,
+  `agent_framework`, `strands`, `crewai` (never `autogen`).
 
 ## 9. Progress Log
 
-- 2026-09-04: Wave 14 T13.1–T13.3 SEC-v2 catalog + SEC-008 fixtures/predicate (this PR).
-- 2026-09-04: T13.0 expanded E13 to executable (18 tasks); ADR 009 SEC-008 judge (#84).
+- 2026-09-04: Retargeted E13 Wave 4–6 to RFC §8.1 (six adapters; T13.10–T13.25).
+- 2026-09-04: Wave 16 T13.7–T13.9 GOV + `--ci` + scenario-governance docs.
+- 2026-09-04: Wave 14 T13.1–T13.3 SEC-v2 catalog + SEC-008 fixtures/predicate.
+- 2026-09-04: T13.0 expanded E13 to executable; ADR 009 SEC-008 judge (#84).
 - 2026-09-04: T12.8 cut v0.1.0; release assets on GitHub. E12 complete.
 - 2026-09-03: T12.6 RFC-0001 Status → Implemented (v0.1 scope) (#78).
 - 2026-09-03: Module/repo rename `gavel` → `agentgavel` (#80); brand mark (#81).
@@ -197,7 +207,7 @@ Rules:
 - Spec: `docs/RFC-0001.md`. Design: `docs/design.md`.
 - ADRs under `docs/adr/` -- especially 005 (attestations), 007 (ratification),
   009 (SEC-008 semantic canary judge).
-- Start apply at Wave 14 (T13.1+); do not expand E14 until T13.17.
+- Start apply at Wave 17 (T13.10+ scaffolds); do not expand E14 until T13.25.
 - kazi is on PATH; engineering tasks carry `acc:` for JIT lane.
 - Claim resource for plan rewrites: `R-plan-md`.
 - Remote: `git@github.com:agentgavel/agentgavel.git`.
