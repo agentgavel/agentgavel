@@ -1,5 +1,9 @@
 # AgentGavel
 
+<p align="center">
+  <img src="brand/logo-lockup.svg" alt="AgentGavel" width="360" height="64"/>
+</p>
+
 Adversarial benchmarking for AI agent **governance and security** — not task
 completion.
 
@@ -11,6 +15,7 @@ side effects, and tamper-evident provenance for consequential actions.
 | --- | --- |
 | Spec | [RFC 0001](docs/RFC-0001.md) |
 | Repo | [github.com/agentgavel/agentgavel](https://github.com/agentgavel/agentgavel) |
+| Brand | [brand/](brand/) |
 | License | [Apache-2.0](LICENSE) |
 
 ## Why it exists
