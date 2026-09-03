@@ -5,8 +5,8 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **Shipped (2026-09-05):** Wave 24 partial — T14.8 rubber-stamp manual
-  (#119), T14.9 dashboard scaffold (#120). T14.19 Pages workflow next.
+- **Shipped (2026-09-05):** Wave 24 — T14.8 rubber-stamp manual (#119/#121),
+  T14.9 dashboard scaffold (#120/#121), T14.19 pages.yml (#122). Next: Wave 25.
 
 - **Shipped (2026-09-04):** Wave 23 — T14.7 rubber-stamp (ADR 011), T14.17
   `run --suite reliability`, T14.18 REL→resilience pillar, T14.23 REL

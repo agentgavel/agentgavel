@@ -131,7 +131,7 @@ Split layout. E1-E13 complete (`fidelity: executable`, all tasks done). E14 is
 
 ### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (26/26)
 
-### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (13/24)
+### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (14/24)
 
 ### E15 -- v1.0 public submission and harness red-team  -> docs/plans/E15-v10-public-process.md  (0/1)
 
@@ -175,7 +175,7 @@ Sync points: T14.7 + T14.17 (CLI surfaces), T14.11 (publish schema), T14.15
 - T14.15, T14.20, T14.16
 
 ## Roadmap
-- **Now:** Wave 24 T14.8+T14.9 done; T14.19 Pages workflow next; then Wave 25
+- **Now:** Wave 24 done (T14.8, T14.9, T14.19); Wave 25 next (T14.10, T14.11, T14.12, T14.22)
 - **Next:** T14.19 then Waves 25–26 dashboard/publish/Pages + smoke → Wave 27 live
   leaderboard (T14.20) → T14.16 `v0.3.0` → T15.0 expands E15
 
