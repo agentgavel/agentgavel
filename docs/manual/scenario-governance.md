@@ -7,7 +7,7 @@ in AgentGavel.
 ## Lifecycle
 
 1. **Propose.** Anyone may propose a new `SEC` or `GOV` scenario by
-   opening a draft in `internal/scenarios/` and filing a governance
+   opening a draft under `suites/security/` or `suites/governance/` and filing a governance
    proposal that names the scenario ID, threat model, and oracle
    coverage. A proposal must identify itself as `SEC` or `GOV` in its
    title so reviewers can route it to the right domain owner.
