@@ -10,7 +10,8 @@ import json
 import sys
 import threading
 from collections import deque
-from typing import Any, BinaryIO, Callable, Mapping, MutableMapping, TextIO
+from collections.abc import Callable, Mapping, MutableMapping
+from typing import Any, BinaryIO, TextIO
 
 # Method names match internal/protocol/stdio.go.
 METHOD_HANDSHAKE = "Handshake"
@@ -96,7 +97,9 @@ class StdioConn:
                     continue
                 if "error" in msg and msg["error"] is not None:
                     err = msg["error"]
-                    raise RPCError(int(err.get("code", INTERNAL_ERROR)), str(err.get("message", "")))
+                    raise RPCError(
+                        int(err.get("code", INTERNAL_ERROR)), str(err.get("message", ""))
+                    )
                 return msg.get("result")
 
     def handshake(
@@ -136,9 +139,7 @@ class StdioConn:
     def reply(self, req_id: Any, result: Any) -> None:
         """Write a success response for id."""
         with self._write_mu:
-            self._write_locked(
-                {"jsonrpc": JSONRPC_VERSION, "id": req_id, "result": result}
-            )
+            self._write_locked({"jsonrpc": JSONRPC_VERSION, "id": req_id, "result": result})
 
     def reply_error(self, req_id: Any, code: int, message: str) -> None:
         """Write an error response for id."""

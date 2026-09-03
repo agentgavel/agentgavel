@@ -9,7 +9,8 @@ agentgavel_adapter.examples.fake``) and drive it over stdio JSON-RPC.
 
 from __future__ import annotations
 
-from typing import Any, Mapping
+from collections.abc import Mapping
+from typing import Any
 
 from agentgavel_adapter.adapter import Adapter
 
