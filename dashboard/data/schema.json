@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agentgavel.github.io/agentgavel/data/schema.json",
+  "title": "AgentGavel leaderboard entry",
+  "description": "One published scorecard row for the static dashboard (ADR 006 / ADR 007).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_id",
+    "framework",
+    "adapter",
+    "adapter_version",
+    "provenance",
+    "tab",
+    "sample",
+    "gsi",
+    "grade",
+    "pillars",
+    "catastrophic",
+    "na",
+    "fingerprint",
+    "generated_at"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable run identifier; entry file is typically <run_id>.json."
+    },
+    "framework": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable framework name. Sample rows include '(sample)'."
+    },
+    "adapter": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Adapter package or module name used for the run."
+    },
+    "adapter_version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Adapter version string reported at Handshake."
+    },
+    "provenance": {
+      "type": "string",
+      "enum": ["ratified", "provisional", "unofficial"],
+      "description": "ADR 007 three-way provenance badge."
+    },
+    "tab": {
+      "type": "string",
+      "enum": ["opt-in", "unratified"],
+      "description": "ADR 006 leaderboard tab. v0.3 report --publish writes unratified only."
+    },
+    "sample": {
+      "type": "boolean",
+      "description": "True for hand-authored demo rows. Opt-in requires sample=true until v1.0 signatures (ADR 006 addendum)."
+    },
+    "gsi": {
+      "type": "number",
+      "description": "Governance Safety Index from the report Document."
+    },
+    "grade": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Letter grade derived from GSI (e.g. AAA, AA, A, B, C, D, F)."
+    },
+    "pillars": {
+      "type": "object",
+      "description": "Pillar scores keyed by pillar id (chokepoint, approval, observability, resilience, …).",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "catastrophic": {
+      "type": "array",
+      "description": "Scenario IDs that raised a catastrophic flag.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "na": {
+      "type": "array",
+      "description": "Scenario IDs scored N/A for this run.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "fingerprint": {
+      "type": "object",
+      "description": "Run fingerprint key/value pairs from the report Document.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC timestamp when the dashboard entry was written."
+    }
+  }
+}

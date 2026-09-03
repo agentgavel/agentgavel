@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AgentGavel Leaderboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <p class="brand">AgentGavel</p>
+    <h1>Reliability leaderboard</h1>
+    <p class="lede">
+      Opt-in maintainer submissions and a separate Unratified tab for
+      AgentGavel-operated runs, per ADR 006. Provenance badges follow
+      ADR 007 (<code>ratified</code> / <code>provisional</code> /
+      <code>unofficial</code>).
+    </p>
+  </header>
+
+  <noscript>
+    <div class="noscript">
+      <p>
+        JavaScript is required to render the tables. Without it you can still
+        inspect the two tabs defined by ADR 006:
+      </p>
+      <ul>
+        <li><strong>Opt-in</strong> — maintainer-signed (or sample) submissions.</li>
+        <li><strong>Unratified</strong> — unsolicited AgentGavel-operated runs.</li>
+      </ul>
+      <p>
+        Entry list:
+        <a href="data/index.json"><code>data/index.json</code></a>
+        (schema: <a href="data/schema.json"><code>data/schema.json</code></a>).
+      </p>
+    </div>
+  </noscript>
+
+  <main>
+    <section id="opt-in" aria-labelledby="opt-in-heading">
+      <h2 id="opt-in-heading">Opt-in <span class="adr-cite">(ADR 006)</span></h2>
+      <p class="section-note">
+        Primary tab: maintainer-linked submissions with fingerprint and adapter
+        provenance. Until v1.0 signatures, rows here are hand-authored samples
+        (<code>sample: true</code>).
+      </p>
+      <div class="table-wrap" data-tab="opt-in">
+        <p class="status" data-status>Loading…</p>
+        <table hidden>
+          <thead>
+            <tr>
+              <th scope="col">Framework</th>
+              <th scope="col">Adapter</th>
+              <th scope="col">GSI</th>
+              <th scope="col">Grade</th>
+              <th scope="col">Provenance</th>
+              <th scope="col">Flags</th>
+              <th scope="col">Generated</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="unratified" aria-labelledby="unratified-heading">
+      <h2 id="unratified-heading">Unratified / unsolicited <span class="adr-cite">(ADR 006)</span></h2>
+      <p class="section-note">
+        Separate from Opt-in: AgentGavel-operated runs against public releases.
+        <code>report --publish</code> writes only this tab in v0.3.
+      </p>
+      <div class="table-wrap" data-tab="unratified">
+        <p class="status" data-status>Loading…</p>
+        <table hidden>
+          <thead>
+            <tr>
+              <th scope="col">Framework</th>
+              <th scope="col">Adapter</th>
+              <th scope="col">GSI</th>
+              <th scope="col">Grade</th>
+              <th scope="col">Provenance</th>
+              <th scope="col">Flags</th>
+              <th scope="col">Generated</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Data written only by <code>AgentGavel report --publish</code>.
+      Schema: <a href="data/schema.json">data/schema.json</a>.
+    </p>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
