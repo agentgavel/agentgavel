@@ -5,7 +5,13 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **Next:** T13.25 human tag `v0.2.0` (founder).
+- **Next:** T14.0 expand E14 (v0.3 reliability / rubber-stamp / leaderboard)
+  to executable fidelity.
+
+- **Shipped (2026-09-04):** T13.25 cut `v0.2.0` tag + release. 5 binary
+  assets uploaded (darwin/linux, amd64/arm64) + checksums. **v0.2.0 released:**
+  https://github.com/agentgavel/agentgavel/releases/tag/v0.2.0.
+  **E13 complete.**
 
 - **Shipped (2026-09-04):** T13.24 full `make test` && `make lint` green on
   clean tree. E13 at 25/26.
@@ -110,12 +116,9 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Planned
 
-- **v0.2 (E13 executable):** SEC-008..010 (SEC-v2), governance scaffold,
-  unofficial adapters for Microsoft Agent Framework, CrewAI, Google ADK,
-  OpenAI Agents SDK, Pydantic AI, AWS Strands Agents (RFC-0001 §8.1),
-  `--ci`, scenario governance docs, tag `v0.2.0` (T13.25). Waves 14–19.
+- **v0.2 (E13):** shipped as `v0.2.0` (T13.25).
 - **v0.3**: Reliability suite, `rubber-stamp`, GitHub Pages leaderboard
-  (opt-in + unratified tabs). Epic E14 outline until T13.25.
+  (opt-in + unratified tabs). Next: T14.0 expand E14 to executable.
 - **v1.0**: Public signed submissions, harness red-team bounty, ratification
   operations. Epic E15.
 
