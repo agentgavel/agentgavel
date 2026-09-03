@@ -5,7 +5,9 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **In flight (2026-09-03):** Wave 7/8 pool — T7.5 PythonFakeAdapter remaining. T7.6 blocked on T7.5; T8.10 blocked on T7.5 (T8.9 done).
+- **In flight (2026-09-03):** Next pool — T7.6 ruff, T8.10 SuiteOracleFake E2E.
+
+- **Shipped (2026-09-03):** Wave close — T7.5 (#30), T8.9 (#27), T12.5 (#26).
 
 - **Shipped (2026-09-03):** T8.9 SEC-007 composite fuzz (#27).
 
