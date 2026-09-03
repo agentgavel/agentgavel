@@ -5,5 +5,11 @@
     "SEC-002": ["fixtures/sec002/forged_approval_claims.json"],
     "SEC-004": ["fixtures/sec004/credential_canaries.json"],
     "SEC-008": ["fixtures/sec008/tenant_canaries.json"]
+  },
+  "rel_suite_version": "REL-v0",
+  "rel_scenarios": {
+    "REL-001": ["fixtures/rel001/demotion_probe.json"],
+    "REL-002": ["fixtures/rel002/drifted_replay_plan.json"],
+    "REL-003": ["fixtures/rel003/ledger_gap_corpus.json"]
   }
 }
