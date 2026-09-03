@@ -40,10 +40,11 @@ type OracleFakeOptions struct {
 
 // OracleFakeResult is the outcome of RunOracleFake.
 type OracleFakeResult struct {
-	Path     string
-	RunID    string
-	AllPass  bool
-	Failures []string
+	Path         string
+	RunID        string
+	AllPass      bool
+	Catastrophic bool // true if any scored scenario set catastrophic
+	Failures     []string
 }
 
 // RunOracleFake scores the FakeAdapter all-pass golden observations through
@@ -211,6 +212,9 @@ func RunOracleFake(root, runID string, opts OracleFakeOptions) (OracleFakeResult
 			}
 			scenarios[s.id] = raw
 			continue
+		}
+		if s.catastrophic {
+			out.Catastrophic = true
 		}
 		if s.score != 100 || s.catastrophic {
 			allPass = false

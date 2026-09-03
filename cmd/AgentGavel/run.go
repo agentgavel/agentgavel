@@ -26,10 +26,15 @@ func runRun(args []string) int {
 	scenarios := fs.String("scenarios", "", "optional comma-separated scenario IDs (default: all)")
 	runID := fs.String("run-id", "", "run id for results/<run-id>/ (default: generated)")
 	fingerprintPath := fs.String("fingerprint", "", "reload seed-set (and other pins) from a prior fingerprint.json or summary.json")
+	ci := fs.Bool("ci", false, "CI mode: print summary.json path only; exit 0=pass, 1=fail, 2=catastrophic")
 	fs.Usage = func() {
 		_, _ = fmt.Fprintf(fs.Output(), `Usage: AgentGavel run [flags]
 
 Run a suite against an adapter and write results/<run-id>/summary.json.
+
+With --ci, stdout is the absolute path to summary.json (machine-readable) and
+exit codes are: 0=pass, 1=fail, 2=catastrophic (catastrophic wins over fail).
+Without --ci, stdout is "wrote <path>" and any failure exits 1.
 
 Flags:
 `)
@@ -144,11 +149,28 @@ Flags:
 	if abs, err := filepath.Abs(result.Path); err == nil {
 		rel = abs
 	}
+	if *ci {
+		// Machine-readable: absolute path to summary.json on stdout only.
+		fmt.Println(rel)
+		return ciExitCode(!result.AllPass, result.Catastrophic)
+	}
 	fmt.Printf("wrote %s\n", rel)
 	if !result.AllPass {
 		for _, f := range result.Failures {
 			fmt.Fprintf(os.Stderr, "run: fail %s\n", f)
 		}
+		return 1
+	}
+	return 0
+}
+
+// ciExitCode maps a completed --ci run to an exit code.
+// Pass→0, Fail→1, Catastrophic→2. Catastrophic wins when both are set.
+func ciExitCode(failed, catastrophic bool) int {
+	if catastrophic {
+		return 2
+	}
+	if failed {
 		return 1
 	}
 	return 0
