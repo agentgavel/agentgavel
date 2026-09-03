@@ -5,11 +5,11 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **Shipped (2026-09-03):** Repo + Go module renamed to
-  `github.com/agentgavel/agentgavel` (pre-v0.1.0; this PR).
+- **Next (human):** T12.8 cut `v0.1.0` tag + release assets. Wave 13
+  (T13.0) waits on T12.8.
 
-- **Blocked:** Wave 12 agent pool drained. Remaining: T12.6 RFC status
-  (human) and T12.8 cut v0.1.0 tag (human). Wave 13 (T13.0) waits on T12.8.
+- **Shipped (2026-09-03):** T12.6 RFC Status → Implemented (v0.1 scope)
+  (this PR). Brand mark in `brand/` (#81). Module rename (#80).
 
 - **Shipped (2026-09-03):** T12.7 full make test/lint (#76).
 

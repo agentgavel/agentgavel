@@ -103,7 +103,7 @@ Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 
 ### E11 -- LangGraph adapter (unofficial)  -> docs/plans/E11-langgraph-adapter.md  (7/7)
 
-### E12 -- v0.1 quality gate and release  -> docs/plans/E12-v01-release.md  (6/8)
+### E12 -- v0.1 quality gate and release  -> docs/plans/E12-v01-release.md  (7/8)
 
 ### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (0/1)
 
@@ -211,7 +211,8 @@ Rules:
 
 ## 9. Progress Log
 
-- 2026-09-03: Module/repo rename `gavel` → `agentgavel` (github.com/agentgavel/agentgavel) before v0.1.0 tag (this PR).
+- 2026-09-03: T12.6 RFC-0001 Status → Implemented (v0.1 scope) (this PR).
+- 2026-09-03: Module/repo rename `gavel` → `agentgavel` (github.com/agentgavel/agentgavel) before v0.1.0 tag (#80).
 - 2026-09-03: T12.7 full make test/lint (#76).
 - 2026-09-03: T12.4 v0.1 smoke doc (#75).
 - 2026-09-03: T11.7 LangGraph ruff (#74). E11 complete.

@@ -20,9 +20,9 @@ fidelity: executable
 - [x] T12.5 Append docs/devlog.md entry for v0.1 plan execution start/finish template  Owner: pool  Est: 20m  kind: agent  delivers: [devlog seed entry]  verifies: [infrastructure]  acc: [devlog has dated stub section for v0.1]  completed: 2026-09-03
   - deps: [T1.5]
 
-- [ ] T12.6 Update RFC-0001 status line to note v0.1 implementation in progress/complete when gated  Owner: pool  Est: 20m  kind: human  delivers: [RFC status bump]  verifies: [infrastructure]  acc: [RFC Status field reflects v0.1 shipping state]
+- [x] T12.6 Update RFC-0001 status line to note v0.1 implementation in progress/complete when gated  Owner: pool  Est: 20m  kind: human  delivers: [RFC status bump]  verifies: [infrastructure]  acc: [RFC Status field reflects v0.1 shipping state]  completed: 2026-09-03
   - deps: [T12.4]
-  - Note: human confirms public messaging.
+  - Note: human confirms public messaging (merge of this PR).
 
 - [x] T12.7 Full make test && make lint on clean tree; fix stragglers  Owner: pool  Est: 60m  kind: agent  verifies: [infrastructure]  acc: [make test and make lint exit 0]  completed: 2026-09-03
   - deps: [T12.1, T8.11, T9.6, T10.7, T11.7]
