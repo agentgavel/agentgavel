@@ -17,7 +17,7 @@ fidelity: executable
 - [x] T3.4 Implement run artifact writer: JSON results dir with per-scenario and fingerprint stub  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001, UC-015]  acc: [engine write produces results/<run-id>/summary.json readable by encoding/json]  completed: 2026-09-03
   - deps: [T3.1]
 
-- [ ] T3.5 Wire oracle vs model mode session config (base_url injection)  Owner: pool  Est: 45m  kind: agent  verifies: [UC-002]  acc: [SessionConfig in launcher sets ModelBaseURL from mode; unit test asserts oracle URL when mode=oracle]
+- [x] T3.5 Wire oracle vs model mode session config (base_url injection)  Owner: pool  Est: 45m  kind: agent  verifies: [UC-002]  acc: [SessionConfig in launcher sets ModelBaseURL from mode; unit test asserts oracle URL when mode=oracle]  completed: 2026-09-03
   - deps: [T3.2]
   - Decision rationale: docs/adr/003-hard-soft-oracle.md
 

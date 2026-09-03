@@ -5,8 +5,10 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **In flight (2026-09-03):** Wave 6 pool — claimed T3.5 T3.6 T6.8 T7.2 T8.3 T8.4
-  T8.6 T8.7 T8.8 T9.3; first dispatch batch T3.5 T7.2 T8.3 T9.3 (non-overlapping).
+- **In flight (2026-09-03):** Wave 6 batch 2 — T3.6 T6.8 engine; T8.4 T8.6 T8.7 T8.8 scenarios.
+
+- **Shipped (2026-09-03):** Wave 6 batch 1 — T3.5 oracle SessionConfig, T7.2 Python
+  stdio transport, T8.3 SEC-001, T9.3 CLI report.
 
 - **Shipped (2026-09-03):** Wave 5 — T3.2 adapter process launcher, T7.1 Python SDK
   scaffold, T8.1 SEC-v1 suite loader, T9.1 run fingerprint hasher.

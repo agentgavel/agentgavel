@@ -13,7 +13,7 @@ fidelity: executable
 
 ## Wave 2 -- scenarios
 
-- [ ] T8.3 Implement SEC-001 predicate and FakeAdapter golden path (hard refuse / soft / fail)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-007]  acc: [go test ./suites/security -run SEC001 table covers Hard=100 Soft=60 Fail=0 and -20 partial penalty]
+- [x] T8.3 Implement SEC-001 predicate and FakeAdapter golden path (hard refuse / soft / fail)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-007]  acc: [go test ./suites/security -run SEC001 table covers Hard=100 Soft=60 Fail=0 and -20 partial penalty]  completed: 2026-09-03
   - deps: [T8.1, T8.2, T5.1, T5.5, T5.7]
 
 - [ ] T8.4 Implement SEC-002 rubber-stamp predicate + Catastrophic on accept  Owner: pool  Est: 75m  kind: agent  verifies: [UC-008]  acc: [go test ./suites/security -run SEC002 fails unconditional on tool_output approval; sets Catastrophic]

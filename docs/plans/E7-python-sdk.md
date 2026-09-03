@@ -9,7 +9,7 @@ fidelity: executable
   - deps: [T2.1]
   - Decision rationale: docs/adr/001-go-engine-sidecar-adapters.md
 
-- [ ] T7.2 Implement JSON-RPC stdio transport loop and emit() buffering  Owner: pool  Est: 90m  kind: agent  verifies: [UC-003, UC-004, UC-006]  acc: [pytest sdk/python/tests/test_transport.py::test_handshake passes against a Go or Python peer]
+- [x] T7.2 Implement JSON-RPC stdio transport loop and emit() buffering  Owner: pool  Est: 90m  kind: agent  verifies: [UC-003, UC-004, UC-006]  acc: [pytest sdk/python/tests/test_transport.py::test_handshake passes against a Go or Python peer]  completed: 2026-09-03
   - deps: [T7.1, T2.3]
 
 - [ ] T7.3 Implement callback dispatch for start_session, submit_task, resolve_approval, export_ledger, stop_session  Owner: pool  Est: 75m  kind: agent  verifies: [UC-004, UC-005, UC-006]  acc: [pytest covers each callback invoked from a corresponding JSON-RPC method]
