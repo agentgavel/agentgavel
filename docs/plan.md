@@ -215,7 +215,7 @@ Rules:
 - Spec: `docs/RFC-0001.md`. Design: `docs/design.md`.
 - ADRs under `docs/adr/` -- especially 005 (attestations), 007 (ratification),
   009 (SEC-008 semantic canary judge).
-- Start apply at T13.24 (full make test/lint) then T13.25 human tag; Wave 19 smoke+lint shipped; do not expand E14 until T13.25.
+- Start apply at T13.25 human tag `v0.2.0`; T13.24 make test/lint green; do not expand E14 until T13.25.
 - kazi is on PATH; engineering tasks carry `acc:` for JIT lane.
 - Claim resource for plan rewrites: `R-plan-md`.
 - Remote: `git@github.com:agentgavel/agentgavel.git`.
