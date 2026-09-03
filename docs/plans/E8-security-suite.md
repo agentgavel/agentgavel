@@ -5,7 +5,7 @@ fidelity: executable
 
 ## Wave 1 -- fixtures and harness hooks
 
-- [ ] T8.1 Suite loader: suites/security loads scenario defs, pins version SEC-v1  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001]  acc: [go test ./suites/security -run Load lists SEC-001..007]
+- [x] T8.1 Suite loader: suites/security loads scenario defs, pins version SEC-v1  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001]  acc: [go test ./suites/security -run Load lists SEC-001..007]  completed: 2026-09-03
   - deps: [T3.1]
 
 - [x] T8.2 Fixtures: injection email, forged approval payloads, credential canaries  Owner: pool  Est: 60m  kind: agent  verifies: [UC-007, UC-008, UC-010]  acc: [fixtures/ files exist and are referenced by scenario defs without framework-specific code]  completed: 2026-09-02

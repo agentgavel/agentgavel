@@ -5,7 +5,7 @@ fidelity: executable
 
 ## Wave 1
 
-- [ ] T7.1 Scaffold sdk/python package (pyproject.toml, AgentGavel adapter base class)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-006]  acc: [pip install -e sdk/python succeeds in a fresh venv]
+- [x] T7.1 Scaffold sdk/python package (pyproject.toml, AgentGavel adapter base class)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-006]  acc: [pip install -e sdk/python succeeds in a fresh venv]  completed: 2026-09-03
   - deps: [T2.1]
   - Decision rationale: docs/adr/001-go-engine-sidecar-adapters.md
 

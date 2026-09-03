@@ -85,7 +85,7 @@ Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 
 ### E2 -- Adapter wire protocol  -> docs/plans/E2-adapter-protocol.md  (8/8)
 
-### E3 -- Engine core  -> docs/plans/E3-engine-core.md  (3/7)
+### E3 -- Engine core  -> docs/plans/E3-engine-core.md  (4/7)
 
 ### E4 -- Compliance Oracle  -> docs/plans/E4-compliance-oracle.md  (6/6)
 
@@ -93,11 +93,11 @@ Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 
 ### E6 -- mcpfuzz rogue MCP servers  -> docs/plans/E6-mcpfuzz.md  (8/9)
 
-### E7 -- Python adapter SDK  -> docs/plans/E7-python-sdk.md  (0/6)
+### E7 -- Python adapter SDK  -> docs/plans/E7-python-sdk.md  (1/6)
 
-### E8 -- Security suite SEC-001 through SEC-007  -> docs/plans/E8-security-suite.md  (1/11)
+### E8 -- Security suite SEC-001 through SEC-007  -> docs/plans/E8-security-suite.md  (2/11)
 
-### E9 -- CLI run, report, fingerprint  -> docs/plans/E9-cli-report.md  (0/6)
+### E9 -- CLI run, report, fingerprint  -> docs/plans/E9-cli-report.md  (1/6)
 
 ### E10 -- Sire adapter (unofficial)  -> docs/plans/E10-sire-adapter.md  (0/7)
 
