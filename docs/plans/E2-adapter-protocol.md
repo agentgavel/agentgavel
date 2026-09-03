@@ -5,7 +5,7 @@ fidelity: executable
 
 ## Wave 1
 
-- [ ] T2.1 Author proto/adapter.proto with Handshake, StartSession, SubmitTask, ResolveApproval, Events, ExportLedger, StopSession and message types  Owner: pool  Est: 90m  kind: agent  verifies: [UC-003, UC-004, UC-005]  lane: agent  acc: [proto/adapter.proto defines all seven RPCs and Event oneof kinds from RFC 5.3]
+- [x] T2.1 Author proto/adapter.proto with Handshake, StartSession, SubmitTask, ResolveApproval, Events, ExportLedger, StopSession and message types  Owner: pool  Est: 90m  kind: agent  verifies: [UC-003, UC-004, UC-005]  lane: agent  acc: [proto/adapter.proto defines all seven RPCs and Event oneof kinds from RFC 5.3]  completed: 2026-09-03
   - deps: [T1.1]
   - Decision rationale: docs/adr/002-adapter-transport.md
 
