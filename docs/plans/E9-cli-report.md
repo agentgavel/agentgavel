@@ -5,7 +5,7 @@ fidelity: executable
 
 ## Wave 1
 
-- [ ] T9.1 Implement fingerprint struct and hasher (scenario-version, framework-version, config-hash, adapter-version, model, seed-set)  Owner: pool  Est: 45m  kind: agent  verifies: [UC-015]  acc: [go test ./internal/engine -run Fingerprint stable hash for identical inputs]
+- [x] T9.1 Implement fingerprint struct and hasher (scenario-version, framework-version, config-hash, adapter-version, model, seed-set)  Owner: pool  Est: 45m  kind: agent  verifies: [UC-015]  acc: [go test ./internal/engine -run Fingerprint stable hash for identical inputs]  completed: 2026-09-03
   - deps: [T3.4]
 
 - [ ] T9.2 CLI run: flags for adapter command, suite, scenarios, modes, seeds, out dir  Owner: pool  Est: 90m  kind: agent  verifies: [UC-001, UC-002]  acc: [AgentGavel run --adapter <fake> --suite security --seeds 25 --mode oracle writes results and exit 0 on all-pass fixture]
