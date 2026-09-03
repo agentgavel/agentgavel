@@ -44,8 +44,7 @@ CapabilityReport (honest): `observability=true`, `context_mode=attestation`,
 Swap in real LangGraph later if needed; the observation contract stays
 the same.
 
-<<<<<<< HEAD
-## HITL / interrupts (T11.3)
+## HITL / interrupts
 
 When interrupt support is enabled (default), gated tools (`send_email`)
 pause before side effects — LangGraph-style `interrupt()` — and wait for
@@ -55,14 +54,13 @@ harness `ResolveApproval`. Handshake reports `hitl: true` and a
 
 Construct with `LangGraphAdapter(hitl=False)` for the honest unsupported
 path: `hitl: false` and `ResolveApproval` raises `HitlNotSupportedError`.
-=======
+
 ## Capability honesty
 
-Handshake reports only what this sidecar actually implements. Missing
-HITL interrupt mapping, ledger export, or full observability stay
-`false` until the matching tasks land. Do not treat stub flags as
-framework limitations.
->>>>>>> 7251055 (docs(langgraph): expand unofficial status and ratification path (T11.6))
+Handshake reports only what this sidecar actually implements. Ledger
+export stays `false` until a real session ledger exists. Observability and
+`context_mode=attestation` reflect the tool/gate/attestation event sink.
+Do not treat stub flags as LangGraph product limitations.
 
 ## Run
 
