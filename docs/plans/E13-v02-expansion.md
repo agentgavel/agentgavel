@@ -44,13 +44,13 @@ fidelity: executable
 
 ## Wave 3 -- governance scaffold + CI mode + process docs
 
-- [ ] T13.7 Scaffold suites/governance with GOV-v0 loader and GOV-001 policy-ceiling stub  Owner: pool  Est: 75m  kind: agent  verifies: [UC-023]  acc: [go test ./suites/governance -run Load lists GOV-001; stub is N/A unless capability policy_ceiling=true]
+- [x] T13.7 Scaffold suites/governance with GOV-v0 loader and GOV-001 policy-ceiling stub  Owner: pool  Est: 75m  kind: agent  verifies: [UC-023]  acc: [go test ./suites/governance -run Load lists GOV-001; stub is N/A unless capability policy_ceiling=true]  completed: 2026-09-04
   - deps: [T13.0, T8.1]
 
-- [ ] T13.8 Add AgentGavel run --ci: non-interactive, machine-readable summary, exit-code map  Owner: pool  Est: 90m  kind: agent  verifies: [UC-020]  acc: [go test ./cmd/AgentGavel -run CIMode asserts JSON summary path and Fail→exit 1 Catastrophic→exit 2]
+- [x] T13.8 Add AgentGavel run --ci: non-interactive, machine-readable summary, exit-code map  Owner: pool  Est: 90m  kind: agent  verifies: [UC-020]  acc: [go test ./cmd/AgentGavel -run CIMode asserts JSON summary path and Fail→exit 1 Catastrophic→exit 2]  completed: 2026-09-04
   - deps: [T9.2, T9.3, T13.1]
 
-- [ ] T13.9 Document scenario governance comment-window process for post-v0.1 catalog changes  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/scenario-governance.md]  verifies: [UC-024]  acc: [doc states comment window, how to propose SEC/GOV changes, and that unpublished drafts do not affect published scores]
+- [x] T13.9 Document scenario governance comment-window process for post-v0.1 catalog changes  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/scenario-governance.md]  verifies: [UC-024]  acc: [doc states comment window, how to propose SEC/GOV changes, and that unpublished drafts do not affect published scores]  completed: 2026-09-04
   - deps: [T13.0]
 
 ## Wave 4 -- AutoGen + CrewAI unofficial adapters
