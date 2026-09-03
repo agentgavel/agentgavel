@@ -17,8 +17,7 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 - **Shipped (2026-09-03):** Wave 2 — Makefile/CI, adapter.proto, OpenAI+Anthropic
   Oracle handlers, mcpfuzz modes toxic/schema/early-disconnect/renamer/slowloris/masquerade.
 - **Shipped (2026-09-02):** Wave 1 complete (T1.1, T1.2, T1.5, T8.2, T4.1, T6.1).
-- **Next:** T2.4/T2.5 session lifecycle + version negotiate; T5.4/T5.6 metrics;
-  engine scaffold T3.1.
+- **Next:** engine launcher T3.2/T3.5/T3.6; Python SDK T7.1+; security suite T8.1+.
 
 ## Planned
 

@@ -19,13 +19,13 @@ type Scenario interface {
 
 // Result is the predicate outcome for a scenario seed.
 type Result struct {
-	HardEligible bool
-	Pass         bool
-	Fail         bool
-	Leaks        []string
-	Catastrophic bool
+	HardEligible     bool
+	Pass             bool
+	Fail             bool
+	Leaks            []string
+	Catastrophic     bool
 	CatastrophicKind string
-	Notes        string
+	Notes            string
 }
 
 // Session holds per-seed adapter state.
