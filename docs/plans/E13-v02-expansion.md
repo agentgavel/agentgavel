@@ -1,9 +1,11 @@
 # E13 -- v0.2 expansion
 
 Acceptance: SEC-008..010 ship against FakeAdapter; governance suite scaffold
-loads; unofficial AutoGen and CrewAI adapters exist with READMEs; `AgentGavel
-run --ci` produces machine-readable output and documented exit codes; scenario
-governance comment-window docs are published.
+loads; unofficial adapters for all six RFC §8.1 targets (Google ADK, OpenAI
+Agents SDK, Pydantic AI, Microsoft Agent Framework, AWS Strands Agents,
+CrewAI) exist with READMEs; `AgentGavel run --ci` produces machine-readable
+output and documented exit codes; scenario governance comment-window docs are
+published.
 fidelity: executable
 
 ## Learnings from v0.1 (bind into tasks)
@@ -17,6 +19,12 @@ fidelity: executable
   and third-party scaffolds alike ship unofficial.
 - SEC-008 semantic canary: ADR 009 — deterministic string-variant in CI;
   optional LLM judge local-only; attestation mode → semantic N/A.
+- Prefer LangGraph-style lightweight stubs over heavy framework deps in CI
+  when the real package pulls a large tree; document the dependency choice in
+  the adapter README (same pattern as adapters/langgraph).
+- §8.1 ordering is by ResolveApproval mapping fidelity, not adoption size.
+  Adapter dirs: `adk`, `openai_agents`, `pydantic_ai`, `agent_framework`,
+  `strands`, `crewai`.
 
 ## Wave 1 -- suite version + SEC-008
 
@@ -53,31 +61,67 @@ fidelity: executable
 - [x] T13.9 Document scenario governance comment-window process for post-v0.1 catalog changes  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/scenario-governance.md]  verifies: [UC-024]  acc: [doc states comment window, how to propose SEC/GOV changes, and that unpublished drafts do not affect published scores]  completed: 2026-09-04
   - deps: [T13.0]
 
-## Wave 4 -- AutoGen + CrewAI unofficial adapters
+## Wave 4 -- §8.1 adapter scaffolds (6 parallel)
 
-- [ ] T13.10 Scaffold adapters/autogen (pyproject, Adapter subclass, unofficial README)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-025]  lane: agent  acc: [python -m adapters.autogen starts stdio Handshake with provenance=unofficial]
+Retargeted 2026-09-04 after RFC §8.1 merge (PR #86 / dec-0675). AutoGen
+replaced by Microsoft Agent Framework; four frameworks added; CrewAI kept.
+Directory names follow the list below. Each scaffold mirrors LangGraph:
+pyproject, Adapter subclass, `__main__` stdio serve, unofficial README,
+provenance=unofficial.
+
+- [ ] T13.10 Scaffold adapters/adk (Google ADK; pyproject, Adapter, unofficial README)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-025]  lane: agent  acc: [python -m adapters.adk starts stdio Handshake with provenance=unofficial]
   - deps: [T7.3, T13.0]
 
-- [ ] T13.11 AutoGen minimal tool path + honest CapabilityReport (hitl/tenancy/ledger)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-025, UC-003]  lane: agent  acc: [pytest adapters/autogen records a tool_invocation against Oracle; capabilities match real support]
+- [ ] T13.11 Scaffold adapters/openai_agents (OpenAI Agents SDK)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-026]  lane: agent  acc: [python -m adapters.openai_agents starts stdio Handshake with provenance=unofficial]
+  - deps: [T7.3, T13.0]
+
+- [ ] T13.12 Scaffold adapters/pydantic_ai (Pydantic AI)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-027]  lane: agent  acc: [python -m adapters.pydantic_ai starts stdio Handshake with provenance=unofficial]
+  - deps: [T7.3, T13.0]
+
+- [ ] T13.13 Scaffold adapters/agent_framework (Microsoft Agent Framework; AutoGen successor)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-028]  lane: agent  acc: [python -m adapters.agent_framework starts stdio Handshake with provenance=unofficial]
+  - deps: [T7.3, T13.0]
+
+- [ ] T13.14 Scaffold adapters/strands (AWS Strands Agents)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-029]  lane: agent  acc: [python -m adapters.strands starts stdio Handshake with provenance=unofficial]
+  - deps: [T7.3, T13.0]
+
+- [ ] T13.15 Scaffold adapters/crewai (CrewAI)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-030]  lane: agent  acc: [python -m adapters.crewai starts stdio Handshake with provenance=unofficial]
+  - deps: [T7.3, T13.0]
+
+## Wave 5 -- §8.1 adapter tool paths (6 parallel)
+
+Minimal Oracle tool path + honest CapabilityReport (hitl/tenancy/ledger).
+Follow T11.2 LangGraph pattern: record tool_invocation against Oracle;
+capabilities must match real support (N/A path over false Fail).
+
+- [ ] T13.16 Google ADK minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-025, UC-003]  lane: agent  acc: [pytest adapters/adk records a tool_invocation against Oracle; capabilities match real support]
   - deps: [T13.10, T11.2]
 
-- [ ] T13.12 Scaffold adapters/crewai (pyproject, Adapter subclass, unofficial README)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-026]  lane: agent  acc: [python -m adapters.crewai starts stdio Handshake with provenance=unofficial]
-  - deps: [T7.3, T13.0]
+- [ ] T13.17 OpenAI Agents SDK minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-026, UC-003]  lane: agent  acc: [pytest adapters/openai_agents records a tool_invocation against Oracle; capabilities match real support]
+  - deps: [T13.11, T11.2]
 
-- [ ] T13.13 CrewAI minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-026, UC-003]  lane: agent  acc: [pytest adapters/crewai records a tool_invocation against Oracle; capabilities match real support]
+- [ ] T13.18 Pydantic AI minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-027, UC-003]  lane: agent  acc: [pytest adapters/pydantic_ai records a tool_invocation against Oracle; capabilities match real support]
   - deps: [T13.12, T11.2]
 
-- [ ] T13.14 Extend docs/manual/v0.1-smoke.md or add v0.2-smoke.md for AutoGen/CrewAI + --ci  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/v0.2-smoke.md]  verifies: [UC-020, UC-025, UC-026]  acc: [smoke doc lists commands and expected unofficial provenance]
-  - deps: [T13.8, T13.11, T13.13]
+- [ ] T13.19 Microsoft Agent Framework minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-028, UC-003]  lane: agent  acc: [pytest adapters/agent_framework records a tool_invocation against Oracle; capabilities match real support]
+  - deps: [T13.13, T11.2]
 
-## Wave 5 -- quality gate
+- [ ] T13.20 AWS Strands Agents minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-029, UC-003]  lane: agent  acc: [pytest adapters/strands records a tool_invocation against Oracle; capabilities match real support]
+  - deps: [T13.14, T11.2]
 
-- [ ] T13.15 gofmt / ruff clean on suites/governance, new SEC files, both adapters  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [gofmt -l suites/governance suites/security is empty; ruff check adapters/autogen adapters/crewai exits 0]
-  - deps: [T13.7, T13.6, T13.11, T13.13]
+- [ ] T13.21 CrewAI minimal tool path + honest CapabilityReport  Owner: pool  Est: 90m  kind: agent  verifies: [UC-030, UC-003]  lane: agent  acc: [pytest adapters/crewai records a tool_invocation against Oracle; capabilities match real support]
+  - deps: [T13.15, T11.2]
 
-- [ ] T13.16 Full make test && make lint on clean tree after E13 landings  Owner: pool  Est: 45m  kind: agent  verifies: [infrastructure]  acc: [make test and make lint exit 0]
-  - deps: [T13.15, T13.8, T13.9]
+## Wave 6 -- smoke + quality gate
 
-- [ ] T13.17 Cut v0.2.0 tag after main green (founder)  Owner: pool  Est: 30m  kind: human  verifies: [infrastructure]  acc: [git tag v0.2.0 exists on origin and release assets uploaded]
-  - deps: [T13.16]
+- [ ] T13.22 Add docs/manual/v0.2-smoke.md for all six §8.1 adapters + --ci  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/v0.2-smoke.md]  verifies: [UC-020, UC-025, UC-026, UC-027, UC-028, UC-029, UC-030]  lane: agent  acc: [smoke doc lists commands for each adapter and expected unofficial provenance]
+  - deps: [T13.8, T13.16, T13.17, T13.18, T13.19, T13.20, T13.21]
+
+- [ ] T13.23 gofmt / ruff clean on suites/governance, new SEC files, all six adapters  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  lane: agent  acc: [gofmt -l suites/governance suites/security is empty; ruff check adapters/adk adapters/openai_agents adapters/pydantic_ai adapters/agent_framework adapters/strands adapters/crewai exits 0]
+  - deps: [T13.7, T13.6, T13.16, T13.17, T13.18, T13.19, T13.20, T13.21]
+
+- [ ] T13.24 Full make test && make lint on clean tree after E13 landings  Owner: pool  Est: 45m  kind: agent  verifies: [infrastructure]  lane: agent  acc: [make test and make lint exit 0]
+  - deps: [T13.23, T13.8, T13.9, T13.22]
+
+- [ ] T13.25 Cut v0.2.0 tag after main green (founder)  Owner: pool  Est: 30m  kind: human  verifies: [infrastructure]  acc: [git tag v0.2.0 exists on origin and release assets uploaded]
+  - deps: [T13.24]
   - Note: human confirms public v0.2 messaging and tag push.
