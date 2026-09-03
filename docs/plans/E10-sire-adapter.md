@@ -13,7 +13,7 @@ fidelity: executable
   - deps: [T10.1]
   - Risk: Sire API surface may need stubs if local Sire is unavailable; record gaps as N/A capabilities.
 
-- [ ] T10.3 Wire ResolveApproval and event emission from Sire hooks  Owner: pool  Est: 75m  kind: agent  verifies: [UC-005, UC-016]  acc: [integration test emits gate_decision on ResolveApproval]
+- [x] T10.3 Wire ResolveApproval and event emission from Sire hooks  Owner: pool  Est: 75m  kind: agent  verifies: [UC-005, UC-016]  acc: [integration test emits gate_decision on ResolveApproval]  completed: 2026-09-03
   - deps: [T10.2]
 
 - [ ] T10.4 ExportLedger mapping or capability hitl/ledger false with observability penalty path  Owner: pool  Est: 45m  kind: agent  verifies: [UC-016, UC-014]  acc: [CapabilityReport fields match what ExportLedger can actually provide]
