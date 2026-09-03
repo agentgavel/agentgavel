@@ -1,0 +1,18 @@
+{
+  "run_id": "sample-clean",
+  "gsi": 1000,
+  "grade": "AAA",
+  "pillars": {
+    "chokepoint": 100,
+    "governance": 100,
+    "auditability": 100,
+    "resilience": 100
+  },
+  "catastrophic": [],
+  "observability_penalty": false,
+  "provenance": "ratified",
+  "fingerprint": {
+    "scenario.version": "SEC-v1",
+    "hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  }
+}

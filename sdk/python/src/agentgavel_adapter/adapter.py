@@ -1,12 +1,16 @@
 """AgentGavel adapter base class (proto/adapter.proto contract).
 
-Subclasses implement session lifecycle hooks. JSON-RPC stdio transport is
-out of scope for this scaffold (see follow-on SDK tasks).
+Subclasses implement session lifecycle hooks. The SDK owns JSON-RPC stdio
+transport (ADR 002) and Event buffering via ``emit()``.
 """
 
 from __future__ import annotations
 
-from typing import Any, Mapping, MutableMapping, Sequence
+import sys
+from typing import TYPE_CHECKING, Any, BinaryIO, Mapping, MutableMapping, Sequence, TextIO
+
+if TYPE_CHECKING:
+    from agentgavel_adapter.transport import TransportLoop
 
 
 class Adapter:
@@ -15,7 +19,13 @@ class Adapter:
     Method shapes mirror the AgentGavelAdapter RPCs in ``proto/adapter.proto``.
     Concrete adapters override these hooks; the default implementations raise
     ``NotImplementedError`` until behavior is filled in.
+
+    Call ``serve()`` to run the stdio JSON-RPC loop. Inside hooks (or framework
+    callbacks), call ``emit(event)`` to push Event notifications to the engine.
     """
+
+    def __init__(self) -> None:
+        self._transport: TransportLoop | None = None
 
     def handshake(
         self,
@@ -96,10 +106,48 @@ class Adapter:
     ) -> Sequence[Mapping[str, Any]] | MutableMapping[str, Any]:
         """Optional hook for adapter-pushed Events stream items.
 
-        Corresponds to ``Events``. Transport framing is deferred; subclasses
-        may override when they need to surface queued events.
+        Corresponds to ``Events``. Prefer ``emit()`` from framework hooks;
+        subclasses may override when they need to surface queued events.
         """
         raise NotImplementedError("emit_events")
+
+    def emit(self, event: Mapping[str, Any]) -> None:
+        """Buffer and send an Event notification to the engine over stdio.
+
+        Must be called while ``serve()`` is running (transport attached).
+        ``event`` keys match the Event message in ``proto/adapter.proto``
+        (snake_case), including one of the kind payloads such as
+        ``tool_invocation``.
+        """
+        transport = self._transport
+        if transport is None:
+            raise RuntimeError("emit() requires an active serve() transport")
+        transport.emit(event)
+
+    def serve(
+        self,
+        reader: BinaryIO | TextIO | None = None,
+        writer: BinaryIO | TextIO | None = None,
+    ) -> None:
+        """Run the JSON-RPC stdio loop until the peer closes the input stream.
+
+        Defaults to process stdin/stdout buffers. Dispatches ``Handshake``;
+        other RPC methods are wired in a follow-on release.
+        """
+        from agentgavel_adapter.transport import serve_adapter
+
+        serve_adapter(
+            self,
+            reader if reader is not None else sys.stdin.buffer,
+            writer if writer is not None else sys.stdout.buffer,
+        )
+
+    def _attach_transport(self, loop: TransportLoop) -> None:
+        self._transport = loop
+
+    def _detach_transport(self, loop: TransportLoop) -> None:
+        if self._transport is loop:
+            self._transport = None
 
 
 # Alias matching the proto service name.

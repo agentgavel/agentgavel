@@ -5,6 +5,11 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
+- **In flight (2026-09-03):** Wave 6 batch 2 — T3.6 T6.8 engine; T8.4 T8.6 T8.7 T8.8 scenarios.
+
+- **Shipped (2026-09-03):** Wave 6 batch 1 — T3.5 oracle SessionConfig, T7.2 Python
+  stdio transport, T8.3 SEC-001, T9.3 CLI report.
+
 - **Shipped (2026-09-03):** Wave 5 — T3.2 adapter process launcher, T7.1 Python SDK
   scaffold, T8.1 SEC-v1 suite loader, T9.1 run fingerprint hasher.
 
@@ -20,7 +25,7 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 - **Shipped (2026-09-03):** Wave 2 — Makefile/CI, adapter.proto, OpenAI+Anthropic
   Oracle handlers, mcpfuzz modes toxic/schema/early-disconnect/renamer/slowloris/masquerade.
 - **Shipped (2026-09-02):** Wave 1 complete (T1.1, T1.2, T1.5, T8.2, T4.1, T6.1).
-- **Next:** T3.5/T3.6 engine integration; T7.2 SDK transport; SEC-001..007 scenarios.
+- **Next:** After batch 1: T3.6 T6.8 engine; T8.4/6/7/8 scenarios.
 
 ## Planned
 
