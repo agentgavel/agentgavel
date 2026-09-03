@@ -5,7 +5,7 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **In flight (2026-09-03):** Next pool — T7.6 ruff, T8.10 SuiteOracleFake E2E.
+- **In flight (2026-09-03):** Pool — T7.6 ruff, T8.10 SuiteOracleFake, T10.1 Sire scaffold.
 
 - **Shipped (2026-09-03):** Wave close — T7.5 (#30), T8.9 (#27), T12.5 (#26).
 
