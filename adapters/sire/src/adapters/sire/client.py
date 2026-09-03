@@ -44,6 +44,7 @@ def empty_ledger(session_id: str) -> dict[str, Any]:
     """Return a protocol ``Ledger`` mapping with no entries."""
     return {"session_id": session_id, "entries": []}
 
+
 # AgentGavel Decision wire names → Sire Decision.verb (interfaces.md).
 _SIRE_VERB = {
     "approve": "approve",
@@ -183,9 +184,7 @@ class StubSireClient:
                 "principal": principal,
             }
         )
-        self.calls.append(
-            ("resolve_approval", (session_id, approval_id, wire, principal))
-        )
+        self.calls.append(("resolve_approval", (session_id, approval_id, wire, principal)))
 
     def export_ledger(self, session_id: str) -> Mapping[str, Any]:
         self._require(session_id)
@@ -256,9 +255,7 @@ class HttpSireClient:
         if isinstance(body, Mapping):
             run_id = body.get("runId") or body.get("run_id")
         if not run_id:
-            raise SireClientError(
-                f"POST {path} must return runId (Sire RunRef); got {body!r}"
-            )
+            raise SireClientError(f"POST {path} must return runId (Sire RunRef); got {body!r}")
         record["run_id"] = str(run_id)
 
     def resolve_approval(
