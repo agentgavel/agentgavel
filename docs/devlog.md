@@ -1,3 +1,12 @@
+## 2026-09-03 -- v0.1 plan execution (stub)
+
+Stub for the RFC-0001 / `docs/plan.md` v0.1 execution pass across epics E1–E12.
+
+- **Start:** _YYYY-MM-DD — fill when Wave execution formally opens (or note already underway)._
+- **Finish:** _YYYY-MM-DD — fill when v0.1 acceptance criteria are met; do not claim finish yet._
+
+Scope reminder: protocol, oracle, engine, suites, CLI, CI, and docs/infra tasks tracked under E1–E12. Update this section in place when start/finish dates are known; leave historical Wave entries below untouched.
+
 ## 2026-09-03 -- Wave 4 protocol session, metrics, engine scaffold
 
 Session Client lifecycle + version reject, tool_invocation order checks, attestation leak scanner, GSI/grades/catastrophic caps, Wilson intervals, engine Scenario interfaces, seed scheduler (25 seeds/4 workers), run artifact writer.
