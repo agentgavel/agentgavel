@@ -13,7 +13,7 @@ Objectives:
   unofficial Sire + LangGraph adapters.
 - v0.2 shipped (`v0.2.0`): SEC-008..010, GOV-v0 scaffold, six RFC §8.1 unofficial
   adapters, `run --ci`, scenario governance.
-- Frontier is now v0.3 (E14 executable, 7/24 after Wave 22): REL-v0 shipped
+- Frontier is now v0.3 (E14 executable, 13/24 after Wave 24): REL-v0 shipped
   as predicates + FakeAdapter E2E (ADR 010); remaining work is `rubber-stamp`
   (ADR 011), REL CLI wiring, GSI pillar mapping, and the GitHub Pages
   leaderboard (ADR 006 + addendum).
@@ -131,7 +131,7 @@ Split layout. E1-E13 complete (`fidelity: executable`, all tasks done). E14 is
 
 ### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (26/26)
 
-### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (11/24)
+### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (13/24)
 
 ### E15 -- v1.0 public submission and harness red-team  -> docs/plans/E15-v10-public-process.md  (0/1)
 
@@ -175,8 +175,8 @@ Sync points: T14.7 + T14.17 (CLI surfaces), T14.11 (publish schema), T14.15
 - T14.15, T14.20, T14.16
 
 ## Roadmap
-- **Now:** Wave 23 done (T14.7, T14.17, T14.18, T14.23); Wave 24 next (T14.8, T14.9, T14.19)
-- **Next:** Waves 24–26 dashboard/publish/Pages + smoke → Wave 27 live
+- **Now:** Wave 24 T14.8+T14.9 done; T14.19 Pages workflow next; then Wave 25
+- **Next:** T14.19 then Waves 25–26 dashboard/publish/Pages + smoke → Wave 27 live
   leaderboard (T14.20) → T14.16 `v0.3.0` → T15.0 expands E15
 
 ## 6. Timeline and Milestones
