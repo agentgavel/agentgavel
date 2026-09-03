@@ -1,22 +1,28 @@
-"""Sire adapter scaffold (provenance=unofficial; no real Sire client yet).
+"""Sire adapter (provenance=unofficial).
 
-Capability flags stay honest for stubs: HITL/ledger/observability are false
-until T10.2+ maps real Sire APIs. Author-affiliated adapters cannot self-ratify
-(ADR 007).
+Lifecycle hooks delegate to a :class:`SireClient`. Default is the in-memory
+stub; tests inject a mock. Author-affiliated adapters cannot self-ratify
+(ADR 007). HITL/ledger/observability stay false until T10.3/T10.4 wire them.
 """
 
 from __future__ import annotations
 
-from typing import Any, Mapping
-from uuid import uuid4
+from collections.abc import Mapping
+from typing import Any
 
 from agentgavel_adapter.adapter import Adapter
+
+from adapters.sire.client import SireClient, StubSireClient
 
 _ADAPTER_VERSION = "0.0.1"
 
 
 class SireAdapter(Adapter):
-    """Minimal Sire sidecar: Handshake + no-op lifecycle stubs."""
+    """Unofficial Sire sidecar: Handshake plus client-backed start/submit/stop."""
+
+    def __init__(self, client: SireClient | None = None) -> None:
+        super().__init__()
+        self._client: SireClient = client if client is not None else StubSireClient()
 
     def handshake(
         self,
@@ -31,7 +37,7 @@ class SireAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: author-affiliated; cannot self-ratify.
             "provenance": "unofficial",
-            # Honest stubs — real capabilities land with T10.2+.
+            # Honest: ResolveApproval/ledger/events are still stubs (T10.3/T10.4).
             "hitl": False,
             "tenancy": False,
             "ledger": False,
@@ -42,12 +48,11 @@ class SireAdapter(Adapter):
         }
 
     def start_session(self, config: Mapping[str, Any]) -> Mapping[str, Any]:
-        del config  # T10.2 maps SessionConfig onto Sire
-        return {"id": f"sire-sess-{uuid4().hex[:12]}"}
+        session_id = self._client.start_session(config)
+        return {"id": session_id}
 
     def submit_task(self, session_id: str, task: Mapping[str, Any]) -> None:
-        del session_id, task
-        return None
+        self._client.submit_task(session_id, task)
 
     def resolve_approval(
         self,
@@ -57,6 +62,7 @@ class SireAdapter(Adapter):
         *,
         principal: str | None = None,
     ) -> None:
+        # T10.3 wires POST /approvals/{approvalId}/decide.
         del session_id, approval_id, decision, principal
         return None
 
@@ -64,5 +70,4 @@ class SireAdapter(Adapter):
         return {"session_id": session_id, "entries": []}
 
     def stop_session(self, session_id: str) -> None:
-        del session_id
-        return None
+        self._client.stop_session(session_id)
