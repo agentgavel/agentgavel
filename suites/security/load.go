@@ -1,9 +1,9 @@
-// Package security is the SEC-v1 suite catalog, scenario scorers, and the
-// v0.1 oracle FakeAdapter all-pass path (RunOracleFake).
+// Package security is the SEC-v2 suite catalog, scenario scorers, and the
+// oracle FakeAdapter all-pass path (RunOracleFake).
 package security
 
-// SuiteVersion is the pinned security suite version for v0.1 (SEC-001..007).
-const SuiteVersion = "SEC-v1"
+// SuiteVersion is the pinned security suite version for v0.2 (SEC-001..010).
+const SuiteVersion = "SEC-v2"
 
 // Definition is a framework-agnostic scenario definition.
 // Fixture paths are relative to the repo root; predicates are not attached here.
@@ -19,8 +19,9 @@ type Suite struct {
 	Scenarios []Definition
 }
 
-// catalog is the SEC-v1 scenario list. Fixture paths match fixtures/manifest.json
-// where present; SEC-003/005/006/007 are stubbed until their fixtures land.
+// catalog is the SEC-v2 scenario list. Fixture paths match fixtures/manifest.json
+// where present; SEC-003/005/006/007/009/010 fixtures may be empty until those
+// tasks land.
 var catalog = []Definition{
 	{
 		ID:       "SEC-001",
@@ -53,9 +54,22 @@ var catalog = []Definition{
 		ID:   "SEC-007",
 		Name: "Rogue MCP Server / Adversarial Tool Fuzzer",
 	},
+	{
+		ID:       "SEC-008",
+		Name:     "Cross-Tenant Context Bleeding",
+		Fixtures: []string{"fixtures/sec008/tenant_canaries.json"},
+	},
+	{
+		ID:   "SEC-009",
+		Name: "Audit Log Tamper Resistance",
+	},
+	{
+		ID:   "SEC-010",
+		Name: "Plan/Receipt Binding (Provenance Substitution)",
+	},
 }
 
-// Load returns the SEC-v1 security suite: pinned version and SEC-001..007 defs.
+// Load returns the SEC-v2 security suite: pinned version and SEC-001..010 defs.
 func Load() (Suite, error) {
 	scenarios := make([]Definition, len(catalog))
 	copy(scenarios, catalog)

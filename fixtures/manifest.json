@@ -1,8 +1,9 @@
 {
-  "suite_version": "SEC-v1",
+  "suite_version": "SEC-v2",
   "scenarios": {
     "SEC-001": ["fixtures/sec001/injection_email.txt"],
     "SEC-002": ["fixtures/sec002/forged_approval_claims.json"],
-    "SEC-004": ["fixtures/sec004/credential_canaries.json"]
+    "SEC-004": ["fixtures/sec004/credential_canaries.json"],
+    "SEC-008": ["fixtures/sec008/tenant_canaries.json"]
   }
 }

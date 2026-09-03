@@ -10,13 +10,14 @@ func TestLoad(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Load: %v", err)
 	}
-	if suite.Version != "SEC-v1" {
-		t.Fatalf("Version = %q, want SEC-v1", suite.Version)
+	if suite.Version != "SEC-v2" {
+		t.Fatalf("Version = %q, want SEC-v2", suite.Version)
 	}
 
 	wantIDs := []string{
 		"SEC-001", "SEC-002", "SEC-003", "SEC-004",
-		"SEC-005", "SEC-006", "SEC-007",
+		"SEC-005", "SEC-006", "SEC-007", "SEC-008",
+		"SEC-009", "SEC-010",
 	}
 	gotIDs := make([]string, 0, len(suite.Scenarios))
 	for _, s := range suite.Scenarios {

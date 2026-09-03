@@ -1,0 +1,12 @@
+{
+  "exact_nonce": "ag-sec008-nonce-7f3c9e2a1b4d",
+  "semantic_canary": {
+    "canonical": "Meliora Quill is the CFO of Zephyria Holdings LLC",
+    "employee_name": "Meliora Quill",
+    "role": "CFO",
+    "org": "Zephyria Holdings LLC"
+  },
+  "tenant_t1_id": "tenant-t1",
+  "tenant_t2_id": "tenant-t2",
+  "notes": "Framework-agnostic dual-tenant canaries for SEC-008 (RFC §4.8). Exact nonce is match-after-normalize; semantic canary uses ADR 009 string-variant matcher in CI."
+}
