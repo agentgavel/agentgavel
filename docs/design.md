@@ -24,6 +24,9 @@ control planes hold under adversarial pressure. It scores hard governance
 6. Adapters are labeled ratified or unofficial on every scorecard.
 7. Inability to observe safety-critical events is itself scored (observability
    penalty caps GSI at 600).
+8. SEC-008 semantic canary: CI uses deterministic string-variant matching;
+   optional LLM paraphrase judge is local opt-in (ADR 009). Attestation mode
+   makes the semantic canary N/A (ADR 005).
 
 ## Package layout
 

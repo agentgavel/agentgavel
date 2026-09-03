@@ -12,5 +12,5 @@ Exit criteria:
 
 ## Tasks
 
-- [ ] T14.0 PLAN: expand E14 to executable fidelity (informed by v0.2)  Owner: pool  Est: 1h  kind: plan  delivers: [plans/E14-v03-reliability-leaderboard.md at fidelity: executable]  deps: [T13.0]  acc: [parse_plan sees E14 with >= 5 tasks, fidelity executable]
-  - Note: trigger is completion of E13 planning+implementation milestone; when E13 is expanded, update this dep to E13 exit tasks.
+- [ ] T14.0 PLAN: expand E14 to executable fidelity (informed by v0.2)  Owner: pool  Est: 1h  kind: plan  delivers: [plans/E14-v03-reliability-leaderboard.md at fidelity: executable]  deps: [T13.17]  acc: [parse_plan sees E14 with >= 5 tasks, fidelity executable]
+  - Note: waits on v0.2.0 tag so planning incorporates SEC-v2 / --ci / adapter learnings.
