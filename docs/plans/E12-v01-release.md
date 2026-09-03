@@ -17,7 +17,7 @@ fidelity: executable
 - [ ] T12.4 Write docs/manual/v0.1-smoke.md with exact commands for Fake, Sire, LangGraph  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/v0.1-smoke.md]  verifies: [UC-001, UC-016, UC-017]  acc: [smoke doc lists commands and expected provenance labels]
   - deps: [T10.5, T11.5, T9.3]
 
-- [ ] T12.5 Append docs/devlog.md entry for v0.1 plan execution start/finish template  Owner: pool  Est: 20m  kind: agent  delivers: [devlog seed entry]  verifies: [infrastructure]  acc: [devlog has dated stub section for v0.1]
+- [x] T12.5 Append docs/devlog.md entry for v0.1 plan execution start/finish template  Owner: pool  Est: 20m  kind: agent  delivers: [devlog seed entry]  verifies: [infrastructure]  acc: [devlog has dated stub section for v0.1]  completed: 2026-09-03
   - deps: [T1.5]
 
 - [ ] T12.6 Update RFC-0001 status line to note v0.1 implementation in progress/complete when gated  Owner: pool  Est: 20m  kind: human  delivers: [RFC status bump]  verifies: [infrastructure]  acc: [RFC Status field reflects v0.1 shipping state]
