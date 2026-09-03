@@ -103,7 +103,7 @@ Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 
 ### E11 -- LangGraph adapter (unofficial)  -> docs/plans/E11-langgraph-adapter.md  (1/7)
 
-### E12 -- v0.1 quality gate and release  -> docs/plans/E12-v01-release.md  (1/8)
+### E12 -- v0.1 quality gate and release  -> docs/plans/E12-v01-release.md  (2/8)
 
 ### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (0/1)
 
@@ -210,6 +210,8 @@ Rules:
 - After M5, run T13.0 before any v0.2 coding.
 
 ## 9. Progress Log
+
+- 2026-09-03: T12.2 GoReleaser release workflow (#56).
 
 - 2026-09-03: T9.6 cmd gofmt clean (#53); T10.4 ExportLedger honesty (#54). E9 closed.
 

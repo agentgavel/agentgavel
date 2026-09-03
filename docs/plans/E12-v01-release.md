@@ -8,7 +8,7 @@ fidelity: executable
 - [ ] T12.1 Expand CI matrix: Go test/race, Python pytest SDK, ruff, fixture path checks  Owner: pool  Est: 75m  kind: agent  verifies: [infrastructure]  acc: [ci.yml jobs all required and pass on a PR branch]
   - deps: [T1.4, T7.5, T8.10]
 
-- [ ] T12.2 Add goreleaser or GitHub release workflow for static AgentGavel binaries  Owner: pool  Est: 60m  kind: agent  verifies: [infrastructure]  acc: [tag workflow builds linux/darwin amd64 arm64 artifacts]
+- [x] T12.2 Add goreleaser or GitHub release workflow for static AgentGavel binaries  Owner: pool  Est: 60m  kind: agent  verifies: [infrastructure]  acc: [tag workflow builds linux/darwin amd64 arm64 artifacts]  completed: 2026-09-03
   - deps: [T9.2]
 
 - [ ] T12.3 VERSION file / ldflags version injection verified in binary  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [AgentGavel version prints release version when ldflags set]
