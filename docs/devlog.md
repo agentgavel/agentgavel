@@ -1,6 +1,13 @@
 # Devlog
 
+## 2026-09-03 -- Wave 3 protocol codec, oracle CLI, assertions
+
+Landed internal/protocol types+JSON codec+stdio Handshake, CapabilityReport N/A
+helpers, AgentGavel oracle --listen with /healthz, and assertions for tool
+invocation, gate genuineness, credential leak encodings, and partial effects.
+
 ## 2026-09-03 -- Wave 2 Makefile, proto, Oracle handlers, mcpfuzz modes
+
 
 Landed Makefile (GOWORK=off), GitHub Actions CI, proto/adapter.proto (seven
 RPCs), OpenAI and Anthropic Compliance Oracle handlers with MissingDirective
