@@ -27,7 +27,7 @@ func runRun(args []string) int {
 	runID := fs.String("run-id", "", "run id for results/<run-id>/ (default: generated)")
 	fingerprintPath := fs.String("fingerprint", "", "reload seed-set (and other pins) from a prior fingerprint.json or summary.json")
 	fs.Usage = func() {
-		fmt.Fprintf(fs.Output(), `Usage: AgentGavel run [flags]
+		_, _ = fmt.Fprintf(fs.Output(), `Usage: AgentGavel run [flags]
 
 Run a suite against an adapter and write results/<run-id>/summary.json.
 

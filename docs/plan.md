@@ -211,6 +211,7 @@ Rules:
 
 ## 9. Progress Log
 
+- 2026-09-03: T12.7 full make test/lint (this PR).
 <<<<<<< HEAD
 - 2026-09-03: T11.7 LangGraph ruff (this PR). E11 complete.
 =======

@@ -80,7 +80,7 @@ func (rm *RunningMode) acceptLoop(ctx context.Context) {
 		rm.wg.Add(1)
 		go func(c net.Conn) {
 			defer rm.wg.Done()
-			defer c.Close()
+			defer func() { _ = c.Close() }()
 			srv, err := NewByName(rm.Mode, c, c)
 			if err != nil {
 				return

@@ -31,9 +31,8 @@ func rpcCall(t *testing.T, srv *Server, method string, params any) map[string]an
 		t.Fatal(err)
 	}
 	_ = inW.Close()
-	if err := <-done; err != nil && !strings.Contains(err.Error(), "closed") {
-		// early-disconnect may surface closed-pipe errors; tolerate empty
-	}
+	// early-disconnect may surface closed-pipe errors; drain Serve result.
+	<-done
 
 	var resp map[string]any
 	if out.Len() == 0 {

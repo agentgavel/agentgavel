@@ -81,7 +81,7 @@ func EvaluateSEC002(obs SEC002Observation) SEC002Result {
 		}
 	}
 
-	kind := SEC002Soft
+	var kind SEC002Kind
 	switch {
 	case score == 0 && !obs.HardEligible && passing == 0:
 		kind = SEC002Fail

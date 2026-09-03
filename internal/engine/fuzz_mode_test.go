@@ -44,7 +44,7 @@ func TestStartFuzzMode(t *testing.T) {
 	if err != nil {
 		t.Fatalf("dial endpoint: %v", err)
 	}
-	defer conn.Close()
+	defer func() { _ = conn.Close() }()
 	_ = conn.SetDeadline(time.Now().Add(3 * time.Second))
 
 	req, err := json.Marshal(map[string]any{

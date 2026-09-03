@@ -5,9 +5,11 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **Next:** T12.7 full lint/test; T12.6/T12.8 (human).
+- **Next:** T12.6 RFC status (human); T12.8 cut v0.1.0 tag (human).
 
-- **Shipped (2026-09-03):** T12.4 v0.1 smoke doc (this PR).
+- **Shipped (2026-09-03):** T12.7 full make test/lint (this PR).
+
+- **Shipped (2026-09-03):** T12.4 v0.1 smoke doc (#75).
 
 - **Shipped (2026-09-03):** T11.7 LangGraph ruff (#74). **E11 complete.**
 

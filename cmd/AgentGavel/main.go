@@ -43,7 +43,7 @@ func run(args []string) int {
 }
 
 func printHelp(w *os.File) {
-	fmt.Fprintf(w, `AgentGavel is an adversarial governance and security benchmark harness.
+	_, _ = fmt.Fprintf(w, `AgentGavel is an adversarial governance and security benchmark harness.
 
 Usage:
   AgentGavel <command>

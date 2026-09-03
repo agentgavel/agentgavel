@@ -14,7 +14,7 @@ func runReport(args []string) int {
 	root := fs.String("root", ".", "directory containing results/<run-id>/")
 	asJSON := fs.Bool("json", false, "emit machine-readable scorecard JSON")
 	fs.Usage = func() {
-		fmt.Fprintf(fs.Output(), `Usage: AgentGavel report [flags] <run-id|path>
+		_, _ = fmt.Fprintf(fs.Output(), `Usage: AgentGavel report [flags] <run-id|path>
 
 Render a GSI scorecard from a completed run's results directory.
 Looks for scorecard.json, otherwise computes GSI from summary.json.
