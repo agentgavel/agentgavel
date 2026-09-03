@@ -5,7 +5,9 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **In flight (2026-09-03):** Pool — T10.5 Sire E2E, T10.6 Sire README, T11.2 LangGraph tools.
+- **In flight (2026-09-03):** Pool — T10.6 Sire README, T11.2 LangGraph tools, T10.7 ruff adapters/sire.
+
+- **Shipped (2026-09-03):** T10.5 Sire oracle E2E SEC-002 (#62).
 
 - **Shipped (2026-09-03):** T12.1 CI matrix (#60); T12.3 VERSION/ldflags (#61).
 
