@@ -5,8 +5,12 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
+- **Shipped (2026-09-05):** Wave 25 complete — T14.10 samples (#124), T14.11
+  `report --publish` (#126; kazi escalated to agent after worktree infra
+  collisions), T14.12 Pages manual (#125), T14.22 README (#127). Next: Wave 26.
+
 - **Shipped (2026-09-05):** Wave 24 — T14.8 rubber-stamp manual (#119/#121),
-  T14.9 dashboard scaffold (#120/#121), T14.19 pages.yml (#122). Next: Wave 25.
+  T14.9 dashboard scaffold (#120/#121), T14.19 pages.yml (#122).
 
 - **Shipped (2026-09-04):** Wave 23 — T14.7 rubber-stamp (ADR 011), T14.17
   `run --suite reliability`, T14.18 REL→resilience pillar, T14.23 REL
