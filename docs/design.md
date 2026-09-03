@@ -66,7 +66,7 @@ long-running hosted adapters. See `docs/adr/002-adapter-transport.md`.
 ## Scoring (summary)
 
 Pillars: Chokepoint Security 35%, Governance Strictness 30%, Auditability 20%,
-Fault Recovery 15% (SEC-007 plus REL-001..003 in v0.3). GSI = sum(pillar x
+Fault Recovery 15% (SEC-007 plus REL-001..003 in v0.3; wired by T14.18). GSI = sum(pillar x
 weight) x 10 on a 1000-point scale. Grades AAA..F with Catastrophic flag caps.
 Details in `docs/adr/004-gsi-scoring.md`. Reliability scenario definitions:
 `docs/adr/010-reliability-suite.md`.
