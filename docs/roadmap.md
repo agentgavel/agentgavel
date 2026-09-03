@@ -5,9 +5,11 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **Next:** Wave 17 — T13.10–T13.15 §8.1 adapter scaffolds (Google ADK,
-  OpenAI Agents SDK, Pydantic AI, Microsoft Agent Framework, AWS Strands,
-  CrewAI). Plan retargeted to match RFC §8.1 after PR #86.
+- **Next:** T13.24 full `make test` / `make lint`, then T13.25 human tag
+  `v0.2.0`.
+
+- **Shipped (2026-09-04):** Wave 19 smoke + lint — T13.22 `docs/manual/v0.2-smoke.md`
+  (#106), T13.23 gofmt/ruff clean on governance/SEC/adapters. E13 at 24/26.
 
 - **Shipped (2026-09-04):** RFC §8.1 adapter retarget docs (#86) — AutoGen →
   Microsoft Agent Framework; +ADK/OpenAI Agents/Pydantic AI/Strands;
