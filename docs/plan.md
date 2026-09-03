@@ -211,7 +211,8 @@ Rules:
 
 ## 9. Progress Log
 
-- 2026-09-03: T12.6 RFC-0001 Status → Implemented (v0.1 scope) (this PR).
+- 2026-09-04: T12.8 cut v0.1.0; release assets on GitHub. E12 complete.
+- 2026-09-03: T12.6 RFC-0001 Status → Implemented (v0.1 scope) (#78).
 - 2026-09-03: Module/repo rename `gavel` → `agentgavel` (github.com/agentgavel/agentgavel) before v0.1.0 tag (#80).
 - 2026-09-03: T12.7 full make test/lint (#76).
 - 2026-09-03: T12.4 v0.1 smoke doc (#75).
