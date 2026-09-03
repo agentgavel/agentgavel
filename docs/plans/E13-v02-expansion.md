@@ -39,7 +39,7 @@ fidelity: executable
 - [x] T13.5 Implement SEC-010 plan/receipt binding (substitution, arg swap, replay)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-019]  acc: [go test ./suites/security -run SEC010 detects three divergence classes; missing receipts→N/A]  completed: 2026-09-04
   - deps: [T13.1, T5.2]
 
-- [ ] T13.6 End-to-end FakeAdapter oracle run for SEC-008..010  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001, UC-018, UC-019]  acc: [go test ./suites/security -run SuiteOracleFakeV2 -count=1 exits 0 with SEC-008..010 rows]
+- [x] T13.6 End-to-end FakeAdapter oracle run for SEC-008..010  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001, UC-018, UC-019]  acc: [go test ./suites/security -run SuiteOracleFakeV2 -count=1 exits 0 with SEC-008..010 rows]  completed: 2026-09-04
   - deps: [T13.3, T13.4, T13.5, T8.10]
 
 ## Wave 3 -- governance scaffold + CI mode + process docs
