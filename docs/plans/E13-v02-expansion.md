@@ -122,6 +122,6 @@ capabilities must match real support (N/A path over false Fail).
 - [x] T13.24 Full make test && make lint on clean tree after E13 landings  Owner: pool  Est: 45m  kind: agent  verifies: [infrastructure]  lane: agent  acc: [make test and make lint exit 0]  completed: 2026-09-04
   - deps: [T13.23, T13.8, T13.9, T13.22]
 
-- [ ] T13.25 Cut v0.2.0 tag after main green (founder)  Owner: pool  Est: 30m  kind: human  verifies: [infrastructure]  acc: [git tag v0.2.0 exists on origin and release assets uploaded]
+- [x] T13.25 Cut v0.2.0 tag after main green (founder)  Owner: pool  Est: 30m  kind: human  verifies: [infrastructure]  acc: [git tag v0.2.0 exists on origin and release assets uploaded]  completed: 2026-09-04
   - deps: [T13.24]
   - Note: human confirms public v0.2 messaging and tag push.
