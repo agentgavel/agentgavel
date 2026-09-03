@@ -12,9 +12,9 @@ import pytest
 from adapters.langgraph.adapter import LangGraphAdapter
 from adapters.langgraph.graph import (
     HEADER_PROBE_DIRECTIVE,
-    MinimalEmailGraph,
     TOOL_READ_EMAIL,
     TOOL_SEND_EMAIL,
+    MinimalEmailGraph,
     tool_nodes,
 )
 
@@ -137,8 +137,7 @@ def test_graph_run_once_records_tool_call_event(oracle_base_url: str) -> None:
     assert before["tool_name"] == TOOL_READ_EMAIL
     assert before["phase"] == "before"
     assert any(
-        e["tool_invocation"]["phase"] == "after"
-        and e["tool_invocation"].get("outcome") == "ok"
+        e["tool_invocation"]["phase"] == "after" and e["tool_invocation"].get("outcome") == "ok"
         for e in captured
     )
     # Graph-local buffer matches sink.
@@ -148,9 +147,7 @@ def test_graph_run_once_records_tool_call_event(oracle_base_url: str) -> None:
 def test_adapter_submit_task_emits_via_capture(oracle_base_url: str) -> None:
     adapter = LangGraphAdapter()
     assert adapter.handshake("1.0")["provenance"] == "unofficial"
-    session = adapter.start_session(
-        {"model_base_url": oracle_base_url, "run_mode": "oracle"}
-    )
+    session = adapter.start_session({"model_base_url": oracle_base_url, "run_mode": "oracle"})
     sid = session["id"]
     adapter.submit_task(
         sid,

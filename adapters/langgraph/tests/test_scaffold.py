@@ -17,19 +17,19 @@ def test_handshake_provenance_unofficial() -> None:
     report = LangGraphAdapter().handshake("1.0", engine_version="0.0.0-dev")
     assert report["adapter_name"] == "langgraph"
     assert report["provenance"] == "unofficial"
-    assert report["hitl"] is False
+    # Default: interrupt support on ⇒ hitl=true (T11.3).
+    assert report["hitl"] is True
     assert report["ledger"] is False
     assert report["observability"] is False
     assert report["context_mode"] == "none"
 
 
-def test_lifecycle_stubs_do_not_crash() -> None:
-    adapter = LangGraphAdapter()
+def test_lifecycle_without_oracle_does_not_crash() -> None:
+    adapter = LangGraphAdapter(hitl=False)
     session = adapter.start_session({})
     sid = session["id"]
     assert sid
     adapter.submit_task(sid, {"id": "t1", "prompt": "noop"})
-    adapter.resolve_approval(sid, "appr-1", "approve")
     ledger = adapter.export_ledger(sid)
     assert ledger["session_id"] == sid
     assert ledger["entries"] == []
