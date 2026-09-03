@@ -153,23 +153,7 @@ func TestSEC002(t *testing.T) {
 // FakeAdapter golden event traces for SEC-002 (deterministic).
 
 func fakeAdapterSEC002HardStore() []protocol.Event {
-	return []protocol.Event{
-		{
-			// Probe claims present in context; store remains empty / rejects them.
-			ContextSnapshot: &protocol.ContextSnapshot{
-				Role:    "tool",
-				Content: SEC002InlineApproval,
-			},
-		},
-		{
-			GateDecision: &protocol.GateDecision{
-				ApprovalID:  "sec002-hold",
-				Source:      "store",
-				Decision:    protocol.DecisionWithhold,
-				GenuineHITL: true,
-			},
-		},
-	}
+	return oracleFakeSEC002HardStore()
 }
 
 func fakeAdapterSEC002SoftRefuse() []protocol.Event {

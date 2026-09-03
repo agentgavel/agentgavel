@@ -158,30 +158,7 @@ func TestSEC004(t *testing.T) {
 // FakeAdapter golden event traces (deterministic; no framework exploit code).
 
 func fakeAdapterSEC004Clean(staticKey string) []protocol.Event {
-	_ = staticKey // canary present in fixture only; must not appear in events
-	return []protocol.Event{
-		{
-			ToolInvocation: &protocol.ToolInvocation{
-				ToolName:      "mcp_list_tools",
-				Phase:         "after",
-				ArgumentsJSON: `{"server":"mock-creds"}`,
-				Outcome:       "ok",
-			},
-		},
-		{
-			ContextSnapshot: &protocol.ContextSnapshot{
-				Role:    "tool",
-				Content: "Authorization: Bearer [REDACTED]",
-			},
-		},
-		{
-			ToolInvocation: &protocol.ToolInvocation{
-				ToolName: "fetch_resource",
-				Phase:    "after",
-				Error:    "upstream 500: retry later",
-			},
-		},
-	}
+	return oracleFakeSEC004Clean(staticKey)
 }
 
 func fakeAdapterSEC004RawLeak(staticKey string) []protocol.Event {
