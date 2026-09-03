@@ -6,17 +6,25 @@ not AgentGavel sessions. The mapping is best-effort:
 * ``start_session``     -> bind a Worker (``GET /workers/{workerId}``)
 * ``submit_task``       -> start a Run (``POST /workers/{workerId}/run``)
 * ``resolve_approval``  -> decide a Hold (``POST /approvals/{approvalId}/decide``)
+* ``export_ledger``     -> probe receipts (``GET /compliance/receipts``); no
+  session-scoped hash-linked AgentGavel Ledger yet (empty ``entries``)
 * ``stop_session``      -> cancel that Run (``POST /runs/{runId}/cancel``)
 
 Sire's decide body uses ``verb`` (``approve`` / ``deny`` / ``hold``). AgentGavel
 ``withhold`` maps to Sire ``hold``. A live client needs a bearer token, a
 tenant-scoped worker id, and a worker whose model ``base_url`` can be pointed
 at the Compliance Oracle.
+
+ExportLedger honesty: Sire's compliance receipts are tenant-scoped, not an
+AgentGavel session ledger (hash-linked ``LedgerEntry`` rows). Until a real
+session export exists, clients return Ledger-shaped ``{session_id, entries: []}``
+and CapabilityReport keeps ``ledger=false`` (SEC-009/010 N/A) plus
+``observability=false`` (GSI observability penalty / cap 600).
 """
 
 from __future__ import annotations
 
-from collections.abc import Mapping, MutableMapping
+from collections.abc import Mapping, MutableMapping, Sequence
 from typing import Any, Protocol
 from uuid import uuid4
 
@@ -28,6 +36,13 @@ PATH_GET_WORKER = "/workers/{worker_id}"
 PATH_RUN_WORKER = "/workers/{worker_id}/run"
 PATH_CANCEL_RUN = "/runs/{run_id}/cancel"
 PATH_DECIDE_APPROVAL = "/approvals/{approval_id}/decide"
+# Documented probe only — not a session-scoped AgentGavel ledger export.
+PATH_LIST_RECEIPTS = "/compliance/receipts"
+
+
+def empty_ledger(session_id: str) -> dict[str, Any]:
+    """Return a protocol ``Ledger`` mapping with no entries."""
+    return {"session_id": session_id, "entries": []}
 
 # AgentGavel Decision wire names → Sire Decision.verb (interfaces.md).
 _SIRE_VERB = {
@@ -95,6 +110,13 @@ class SireClient(Protocol):
         principal: str | None = None,
     ) -> None:
         """POST Sire ``/approvals/{approvalId}/decide`` for this adapter session."""
+
+    def export_ledger(self, session_id: str) -> Mapping[str, Any]:
+        """Return a protocol ``Ledger`` for the adapter session.
+
+        Must include ``session_id`` and ``entries`` (a sequence). Empty entries
+        are honest when Sire has no session-scoped hash-linked ledger export.
+        """
 
     def stop_session(self, session_id: str) -> None:
         """Cancel the session's run if one exists, then drop the binding."""
@@ -164,6 +186,12 @@ class StubSireClient:
         self.calls.append(
             ("resolve_approval", (session_id, approval_id, wire, principal))
         )
+
+    def export_ledger(self, session_id: str) -> Mapping[str, Any]:
+        self._require(session_id)
+        ledger = empty_ledger(session_id)
+        self.calls.append(("export_ledger", (session_id,)))
+        return ledger
 
     def stop_session(self, session_id: str) -> None:
         record = self._require(session_id)
@@ -250,6 +278,19 @@ class HttpSireClient:
             path,
             json={"verb": sire_decide_verb(decision)},
         )
+
+    def export_ledger(self, session_id: str) -> Mapping[str, Any]:
+        requester = self._require_requester()
+        self._require_session(session_id)
+        # Documented Sire surface (tenant receipts). Not session-scoped and not
+        # an AgentGavel hash-linked Ledger — do not invent LedgerEntry rows.
+        body = requester.request("GET", PATH_LIST_RECEIPTS)
+        if body is not None and not isinstance(body, (Mapping, Sequence)):
+            raise SireClientError(
+                f"GET {PATH_LIST_RECEIPTS} must return a list/object or empty; "
+                f"got {type(body).__name__}"
+            )
+        return empty_ledger(session_id)
 
     def stop_session(self, session_id: str) -> None:
         requester = self._require_requester()

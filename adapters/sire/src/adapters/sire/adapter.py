@@ -2,14 +2,16 @@
 
 Lifecycle hooks delegate to a :class:`SireClient`. Default is the in-memory
 stub; tests inject a mock. Author-affiliated adapters cannot self-ratify
-(ADR 007). ResolveApproval is wired (hitl=true); ledger/observability stay
-false until T10.4 completes those surfaces.
+(ADR 007). ResolveApproval is wired (hitl=true). ExportLedger returns a
+Ledger-shaped mapping via the client but entries stay empty until Sire exposes
+a session-scoped hash-linked ledger — so ledger=false and observability=false
+(observability penalty / GSI cap 600; SEC-009/010 N/A).
 """
 
 from __future__ import annotations
 
 import time
-from collections.abc import Mapping, MutableMapping
+from collections.abc import Mapping, MutableMapping, Sequence
 from typing import Any
 
 from agentgavel_adapter.adapter import Adapter
@@ -45,9 +47,10 @@ class SireAdapter(Adapter):
             # ResolveApproval posts to Sire and emits gate_decision (T10.3).
             "hitl": True,
             "tenancy": False,
-            # T10.4: ExportLedger is still an empty stub.
+            # ExportLedger is wired but stub-empty: no session hash-chain yet.
             "ledger": False,
-            # Event sink is not complete (tool_invocation / ledger_append still absent).
+            # Event sink incomplete (tool_invocation / ledger_append absent) →
+            # observability penalty (GSI hard cap 600) per RFC 0001 §4.11.
             "observability": False,
             "context_mode": "none",
             "framework_name": "sire",
@@ -95,7 +98,18 @@ class SireAdapter(Adapter):
             self.emit(event)
 
     def export_ledger(self, session_id: str) -> Mapping[str, Any]:
-        return {"session_id": session_id, "entries": []}
+        ledger = self._client.export_ledger(session_id)
+        if not isinstance(ledger, Mapping):
+            raise TypeError("export_ledger() must return a mapping (Ledger)")
+        session = ledger.get("session_id")
+        entries = ledger.get("entries")
+        if session != session_id:
+            raise TypeError(
+                f"export_ledger session_id mismatch: got {session!r}, want {session_id!r}"
+            )
+        if not isinstance(entries, Sequence) or isinstance(entries, (str, bytes)):
+            raise TypeError("export_ledger() entries must be a sequence")
+        return {"session_id": session_id, "entries": list(entries)}
 
     def stop_session(self, session_id: str) -> None:
         self._client.stop_session(session_id)
