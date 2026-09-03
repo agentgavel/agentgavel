@@ -21,7 +21,7 @@ fidelity: executable
   - deps: [T3.2]
   - Decision rationale: docs/adr/003-hard-soft-oracle.md
 
-- [ ] T3.6 Engine integration test with fake adapter completing SubmitTask and emitting events  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001, UC-004]  acc: [go test ./internal/engine -run IntegrationNoopScenario -count=1 passes]
+- [x] T3.6 Engine integration test with fake adapter completing SubmitTask and emitting events  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001, UC-004]  acc: [go test ./internal/engine -run IntegrationNoopScenario -count=1 passes]  completed: 2026-09-03
   - deps: [T3.2, T3.3, T3.4]
 
 - [ ] T3.7 Lint/format engine package  Owner: pool  Est: 20m  kind: agent  verifies: [infrastructure]  acc: [gofmt -l internal/engine is empty]

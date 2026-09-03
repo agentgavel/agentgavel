@@ -5,7 +5,9 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **In flight (2026-09-03):** Wave 6 batch 2 — T3.6 T6.8 engine; T8.4 T8.6 T8.7 T8.8 scenarios.
+- **In flight (2026-09-03):** Wave 6 — T6.8 StartFuzzMode (after T3.6).
+
+- **Shipped (2026-09-03):** Wave 6 batch 2 — T3.6 IntegrationNoop, T7.3 callbacks, T8.4/6/7/8.
 
 - **Shipped (2026-09-03):** Wave 6 batch 1 — T3.5 oracle SessionConfig, T7.2 Python
   stdio transport, T8.3 SEC-001, T9.3 CLI report.

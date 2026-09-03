@@ -12,7 +12,7 @@ fidelity: executable
 - [x] T7.2 Implement JSON-RPC stdio transport loop and emit() buffering  Owner: pool  Est: 90m  kind: agent  verifies: [UC-003, UC-004, UC-006]  acc: [pytest sdk/python/tests/test_transport.py::test_handshake passes against a Go or Python peer]  completed: 2026-09-03
   - deps: [T7.1, T2.3]
 
-- [ ] T7.3 Implement callback dispatch for start_session, submit_task, resolve_approval, export_ledger, stop_session  Owner: pool  Est: 75m  kind: agent  verifies: [UC-004, UC-005, UC-006]  acc: [pytest covers each callback invoked from a corresponding JSON-RPC method]
+- [x] T7.3 Implement callback dispatch for start_session, submit_task, resolve_approval, export_ledger, stop_session  Owner: pool  Est: 75m  kind: agent  verifies: [UC-004, UC-005, UC-006]  acc: [pytest covers each callback invoked from a corresponding JSON-RPC method]  completed: 2026-09-03
   - deps: [T7.2]
 
 - [ ] T7.4 Ship example FakeAdapter used by Go integration tests  Owner: pool  Est: 45m  kind: agent  verifies: [UC-006]  acc: [python -m agentgavel_adapter.examples.fake serves Handshake to Go test]

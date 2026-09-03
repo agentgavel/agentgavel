@@ -29,17 +29,45 @@ func main() {
 			})
 		case protocol.MethodStartSession:
 			_ = conn.Reply(req.ID, protocol.SessionID{ID: "sess-1"})
-		case protocol.MethodSubmitTask, protocol.MethodResolveApproval, protocol.MethodExportLedger:
-			if req.Method == protocol.MethodExportLedger {
-				var sid protocol.SessionID
-				_ = json.Unmarshal(req.Params, &sid)
-				_ = conn.Reply(req.ID, protocol.Ledger{
-					SessionID: sid.ID,
-					Entries:   []protocol.LedgerEntry{{ID: "e1", Kind: "task", UnixMs: 1}},
-				})
-				continue
-			}
+		case protocol.MethodSubmitTask:
+			var st protocol.SubmitTaskRequest
+			_ = json.Unmarshal(req.Params, &st)
+			// Reply first so Call returns; Event notifies stay buffered for DrainEvents.
 			_ = conn.Reply(req.ID, protocol.Empty{})
+			sid := st.SessionID
+			if sid == "" {
+				sid = "sess-1"
+			}
+			_ = conn.Notify(protocol.MethodEventNotify, protocol.Event{
+				SessionID: sid,
+				Seq:       1,
+				UnixMs:    1,
+				ToolInvocation: &protocol.ToolInvocation{
+					ToolName: "noop",
+					ToolID:   "1",
+					Phase:    "before",
+				},
+			})
+			_ = conn.Notify(protocol.MethodEventNotify, protocol.Event{
+				SessionID: sid,
+				Seq:       2,
+				UnixMs:    2,
+				ToolInvocation: &protocol.ToolInvocation{
+					ToolName: "noop",
+					ToolID:   "1",
+					Phase:    "after",
+					Outcome:  "ok",
+				},
+			})
+		case protocol.MethodResolveApproval:
+			_ = conn.Reply(req.ID, protocol.Empty{})
+		case protocol.MethodExportLedger:
+			var sid protocol.SessionID
+			_ = json.Unmarshal(req.Params, &sid)
+			_ = conn.Reply(req.ID, protocol.Ledger{
+				SessionID: sid.ID,
+				Entries:   []protocol.LedgerEntry{{ID: "e1", Kind: "task", UnixMs: 1}},
+			})
 		case protocol.MethodStopSession:
 			_ = conn.Reply(req.ID, protocol.Empty{})
 			return
