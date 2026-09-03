@@ -20,8 +20,8 @@ def test_handshake_provenance_unofficial() -> None:
     # Default: interrupt support on ⇒ hitl=true (T11.3).
     assert report["hitl"] is True
     assert report["ledger"] is False
-    assert report["observability"] is False
-    assert report["context_mode"] == "none"
+    assert report["observability"] is True
+    assert report["context_mode"] == "attestation"
 
 
 def test_lifecycle_without_oracle_does_not_crash() -> None:

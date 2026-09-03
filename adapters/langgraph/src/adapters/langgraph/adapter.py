@@ -3,8 +3,9 @@
 T11.2: minimal in-process email tool graph (read_email/send_email) aimed at
 the Compliance Oracle. T11.3: LangGraph-style interrupt mapping to
 ResolveApproval when interrupt support is enabled (``hitl=true``); when
-disabled, CapabilityReport keeps ``hitl=false`` honestly. Unofficial until a
-maintainer signs off (ADR 007).
+disabled, CapabilityReport keeps ``hitl=false`` honestly. T11.4: event hooks
+(``tool_invocation`` before/after, ``gate_decision``, hashed context
+attestations per ADR 005). Unofficial until a maintainer signs off (ADR 007).
 """
 
 from __future__ import annotations
@@ -16,6 +17,7 @@ from uuid import uuid4
 
 from agentgavel_adapter.adapter import Adapter
 
+from adapters.langgraph.events import build_tool_invocation, make_event
 from adapters.langgraph.graph import MinimalEmailGraph, invoke_tool_node
 from adapters.langgraph.interrupt import (
     HitlNotSupportedError,
@@ -71,8 +73,9 @@ class LangGraphAdapter(Adapter):
             "hitl": self._interrupt.enabled,
             "tenancy": False,
             "ledger": False,
-            "observability": False,
-            "context_mode": "none",
+            # tool_invocation before/after + gate_decision + context_attestation.
+            "observability": True,
+            "context_mode": "attestation",
             "framework_name": "langgraph",
             "framework_version": "stub-0.0.1",
         }
@@ -80,6 +83,7 @@ class LangGraphAdapter(Adapter):
     def start_session(self, config: Mapping[str, Any]) -> Mapping[str, Any]:
         session_id = f"langgraph-sess-{uuid4().hex[:12]}"
         self._sessions[session_id] = dict(config)
+        self._seq[session_id] = 0
         return {"id": session_id}
 
     def submit_task(self, session_id: str, task: Mapping[str, Any]) -> None:
@@ -165,6 +169,11 @@ class LangGraphAdapter(Adapter):
         self._interrupt.clear_session(session_id)
         self._seq.pop(session_id, None)
 
+    def _next_seq(self, session_id: str) -> int:
+        n = self._seq.get(session_id, 0) + 1
+        self._seq[session_id] = n
+        return n
+
     def _record_event(self, event: MutableMapping[str, Any]) -> None:
         # Stamp a session-monotonic seq so graph + ResolveApproval share one clock.
         sid = event.get("session_id")
@@ -173,11 +182,6 @@ class LangGraphAdapter(Adapter):
         self.emitted.append(event)
         if self._transport is not None:
             self.emit(event)
-
-    def _next_seq(self, session_id: str) -> int:
-        n = self._seq.get(session_id, 0) + 1
-        self._seq[session_id] = n
-        return n
 
     def _emit_tool_after(
         self,
@@ -188,17 +192,16 @@ class LangGraphAdapter(Adapter):
         outcome: str,
         refused: bool = False,
     ) -> None:
-        inv: dict[str, Any] = {
-            "tool_name": tool_name,
-            "tool_id": call_id,
-            "phase": "after",
-            "outcome": outcome,
-        }
-        if refused:
-            inv["refused"] = True
-        event: MutableMapping[str, Any] = {
-            "session_id": session_id,
-            "unix_ms": int(time.time() * 1000),
-            "tool_invocation": inv,
-        }
+        inv = build_tool_invocation(
+            tool_name,
+            call_id,
+            "after",
+            outcome=outcome,
+            refused=refused,
+        )
+        event = make_event(
+            session_id,
+            0,
+            tool_invocation_payload=inv,
+        )
         self._record_event(event)

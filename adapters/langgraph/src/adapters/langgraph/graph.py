@@ -1,11 +1,11 @@
-"""Minimal email tool graph for SEC fixtures (T11.2 / T11.3).
+"""Minimal email tool graph for SEC fixtures (T11.2 / T11.3 / T11.4).
 
 Dependency choice: this module is an in-process, langgraph-*compatible* stub.
 We deliberately do **not** depend on the ``langgraph`` PyPI package — it pulls
 LangChain and is heavy for CI. The stub still exposes tool nodes
 (``read_email`` / ``send_email``), accepts a model ``base_url`` aimed at the
-Compliance Oracle, and records ``tool_invocation`` events suitable for
-AgentGavel observation.
+Compliance Oracle, and records protocol events (context attestation +
+``tool_invocation`` before/after) suitable for AgentGavel observation.
 
 When an :class:`~adapters.langgraph.interrupt.InterruptSupport` is attached and
 enabled, gated tools (``send_email``) pause like LangGraph ``interrupt()`` and
@@ -15,7 +15,6 @@ defer side effects until ``ResolveApproval`` resumes them.
 from __future__ import annotations
 
 import json
-import time
 import urllib.error
 import urllib.request
 from collections.abc import Callable, Mapping, MutableMapping
@@ -23,6 +22,9 @@ from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from adapters.langgraph.interrupt import InterruptSupport
+
+from adapters.langgraph.attestation import context_attestation_payload
+from adapters.langgraph.events import build_tool_invocation, make_event
 
 TOOL_READ_EMAIL = "read_email"
 TOOL_SEND_EMAIL = "send_email"
@@ -119,6 +121,8 @@ class MinimalEmailGraph:
                 "arguments": {"mailbox": "inbox"},
             }
         )
+        # ADR 005: attest the prompt before tool dispatch (hosted-safe).
+        self._record_context_attestation(prompt)
         tool_name, arguments, call_id = self._complete_tool_call(
             prompt, directive, model
         )
@@ -207,10 +211,33 @@ class MinimalEmailGraph:
         node = _TOOL_NODES.get(tool_name)
         if node is None:
             raise KeyError(f"unknown tool node: {tool_name!r}")
-        self._record_tool(tool_name, call_id, "before")
-        result = node(arguments)
+        self._record_tool(tool_name, call_id, "before", arguments=arguments)
+        try:
+            result = node(arguments)
+        except Exception as exc:
+            self._record_tool(
+                tool_name,
+                call_id,
+                "after",
+                outcome="error",
+                error=str(exc),
+            )
+            raise
         self._record_tool(tool_name, call_id, "after", outcome="ok")
         return result
+
+    def _record_context_attestation(self, text: str) -> None:
+        if not text:
+            return
+        self._seq += 1
+        event = make_event(
+            self.session_id,
+            self._seq,
+            context_attestation_payload=context_attestation_payload(text),
+        )
+        self.events.append(event)
+        if self._on_event is not None:
+            self._on_event(event)
 
     def _record_tool(
         self,
@@ -218,22 +245,24 @@ class MinimalEmailGraph:
         tool_id: str,
         phase: str,
         *,
+        arguments: Mapping[str, Any] | None = None,
         outcome: str | None = None,
+        error: str | None = None,
     ) -> None:
         self._seq += 1
-        inv: dict[str, Any] = {
-            "tool_name": tool_name,
-            "tool_id": tool_id,
-            "phase": phase,
-        }
-        if outcome is not None:
-            inv["outcome"] = outcome
-        event: MutableMapping[str, Any] = {
-            "session_id": self.session_id,
-            "seq": self._seq,
-            "unix_ms": int(time.time() * 1000),
-            "tool_invocation": inv,
-        }
+        inv = build_tool_invocation(
+            tool_name,
+            tool_id,
+            phase,
+            arguments=arguments if phase == "before" else None,
+            outcome=outcome,
+            error=error,
+        )
+        event = make_event(
+            self.session_id,
+            self._seq,
+            tool_invocation_payload=inv,
+        )
         self.events.append(event)
         if self._on_event is not None:
             self._on_event(event)
