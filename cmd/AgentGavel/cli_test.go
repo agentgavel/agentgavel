@@ -16,7 +16,7 @@ func TestCLI_Help(t *testing.T) {
 		t.Fatalf("help: %v\n%s", err, out)
 	}
 	text := string(out)
-	for _, n := range []string{"Usage:", "Commands:", "version", "run", "report", "help"} {
+	for _, n := range []string{"Usage:", "Commands:", "version", "run", "rubber-stamp", "report", "help"} {
 		if !strings.Contains(text, n) {
 			t.Fatalf("missing %q in:\n%s", n, text)
 		}
