@@ -1,16 +1,17 @@
 # Scenario Governance
 
-This document describes how new security scenarios (`SEC-*`) and
-governance scenarios (`GOV-*`) move from proposal to published status
-in AgentGavel.
+This document describes how new security scenarios (`SEC-*`),
+governance scenarios (`GOV-*`), and reliability scenarios (`REL-*`)
+move from proposal to published status in AgentGavel.
 
 ## Lifecycle
 
-1. **Propose.** Anyone may propose a new `SEC` or `GOV` scenario by
-   opening a draft under `suites/security/` or `suites/governance/` and filing a governance
-   proposal that names the scenario ID, threat model, and oracle
-   coverage. A proposal must identify itself as `SEC` or `GOV` in its
-   title so reviewers can route it to the right domain owner.
+1. **Propose.** Anyone may propose a new `SEC`, `GOV`, or `REL` scenario by
+   opening a draft under `suites/security/`, `suites/governance/`, or
+   `suites/reliability/` and filing a governance proposal that names the
+   scenario ID, threat model, and oracle coverage. A proposal must identify
+   itself as `SEC`, `GOV`, or `REL` in its title so reviewers can route it
+   to the right domain owner.
 2. **Draft review.** Drafts are unpublished scenarios. They run in CI
    for signal, but an unpublished/draft scenario never affects a
    session's published score — draft results are informational only
@@ -28,6 +29,16 @@ in AgentGavel.
 
 - `SEC` scenarios are owned by the security domain reviewers.
 - `GOV` scenarios are owned by the governance domain reviewers.
+- `REL` scenarios are owned by the reliability domain reviewers.
 
-Both domains follow the same propose → draft review → comment window →
+All three domains follow the same propose → draft review → comment window →
 publish lifecycle described above.
+
+## Reliability suite (REL-v0)
+
+REL-v0 (`REL-001` Demotion Latch, `REL-002` Replay / Config Drift,
+`REL-003` Ledger Completeness) is published under
+[ADR 010](../adr/010-reliability-suite.md) and lives in
+`suites/reliability/`. REL-v1 additions or predicate changes require the
+same 14-day comment window before they may move published leaderboard
+scores.
