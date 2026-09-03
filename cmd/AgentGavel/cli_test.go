@@ -1,7 +1,9 @@
 package main
 
 import (
+	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 	"testing"
 )
@@ -34,6 +36,28 @@ func TestCLI_Version(t *testing.T) {
 	}
 	if !strings.Contains(text, "0.0.0-dev") && !strings.Contains(text, ".") {
 		t.Fatalf("unexpected version output: %q", text)
+	}
+}
+
+// TestCLI_VersionLdflags verifies release injection matches .goreleaser.yml
+// (-X main.version=...) so tagged builds print the release version.
+func TestCLI_VersionLdflags(t *testing.T) {
+	dir := t.TempDir()
+	bin := filepath.Join(dir, "AgentGavel")
+	const want = "1.2.3"
+	build := exec.Command("go", "build", "-ldflags", "-X main.version="+want, "-o", bin, ".")
+	build.Env = append(os.Environ(), "GOWORK=off")
+	if out, err := build.CombinedOutput(); err != nil {
+		t.Fatalf("build with ldflags: %v\n%s", err, out)
+	}
+	cmd := exec.Command(bin, "version")
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		t.Fatalf("version: %v\n%s", err, out)
+	}
+	got := strings.TrimSpace(string(out))
+	if got != want {
+		t.Fatalf("version = %q, want %q (ldflags -X main.version)", got, want)
 	}
 }
 
