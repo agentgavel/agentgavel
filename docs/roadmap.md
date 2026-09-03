@@ -5,10 +5,11 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **In flight:** Wave 15 close — T13.6 SuiteOracleFakeV2 (SEC-008..010 E2E).
+- **Next:** Wave 16 — T13.7 governance scaffold, T13.8 `run --ci`, T13.9
+  scenario-governance docs.
 
-- **Shipped (2026-09-04):** Wave 15 batch — T13.4 SEC-009 hash-chain verifier,
-  T13.5 SEC-010 plan/receipt binding. E13 at 6/18.
+- **Shipped (2026-09-04):** Wave 15 complete — T13.4 SEC-009, T13.5 SEC-010,
+  T13.6 SuiteOracleFakeV2 (SEC-008..010 E2E). E13 at 7/18.
 
 - **Shipped (2026-09-04):** Wave 14 — T13.1 SEC-v2 catalog, T13.2 SEC-008
   fixtures, T13.3 SEC-008 predicate (ADR 009).
