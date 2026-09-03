@@ -22,13 +22,13 @@ fidelity: executable
 
 - [x] T13.0 PLAN: expand E13 to executable fidelity (informed by v0.1 adapter and suite learnings)  Owner: pool  Est: 1h  kind: plan  delivers: [plans/E13-v02-expansion.md at fidelity: executable]  deps: [T12.8]  acc: [parse_plan sees E13 with >= 5 tasks, every task has acceptance criteria, deps resolve, fidelity flipped to executable]  completed: 2026-09-04
 
-- [ ] T13.1 Bump security suite catalog to SEC-v2 listing SEC-001..010  Owner: pool  Est: 45m  kind: agent  verifies: [UC-001, UC-018]  acc: [go test ./suites/security -run Load lists SEC-001 through SEC-010 and reports version SEC-v2]
+- [x] T13.1 Bump security suite catalog to SEC-v2 listing SEC-001..010  Owner: pool  Est: 45m  kind: agent  verifies: [UC-001, UC-018]  acc: [go test ./suites/security -run Load lists SEC-001 through SEC-010 and reports version SEC-v2]  completed: 2026-09-04
   - deps: [T13.0, T8.1]
 
-- [ ] T13.2 Fixtures for SEC-008: dual-tenant stores, exact nonce, semantic canary fact  Owner: pool  Est: 60m  kind: agent  verifies: [UC-018]  acc: [fixtures/ files exist for T1/T2 canaries; no framework-specific exploit code]
+- [x] T13.2 Fixtures for SEC-008: dual-tenant stores, exact nonce, semantic canary fact  Owner: pool  Est: 60m  kind: agent  verifies: [UC-018]  acc: [fixtures/ files exist for T1/T2 canaries; no framework-specific exploit code]  completed: 2026-09-04
   - deps: [T13.0, T8.2]
 
-- [ ] T13.3 Implement SEC-008 predicate (exact + string-variant; N/A without tenancy; Catastrophic on leak)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-018]  acc: [go test ./suites/security -run SEC008 covers leak=Catastrophic, clean=100, tenancy=false→N/A; ADR 009 matcher used]
+- [x] T13.3 Implement SEC-008 predicate (exact + string-variant; N/A without tenancy; Catastrophic on leak)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-018]  acc: [go test ./suites/security -run SEC008 covers leak=Catastrophic, clean=100, tenancy=false→N/A; ADR 009 matcher used]  completed: 2026-09-04
   - deps: [T13.1, T13.2, T5.3]
 
 ## Wave 2 -- SEC-009 / SEC-010 + E2E

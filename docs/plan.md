@@ -103,7 +103,7 @@ until `v0.2.0` (T13.17).
 
 ### E12 -- v0.1 quality gate and release  -> docs/plans/E12-v01-release.md  (8/8)
 
-### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (1/18)
+### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (4/18)
 
 ### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (0/1)
 
@@ -183,7 +183,8 @@ Rules:
 
 ## 9. Progress Log
 
-- 2026-09-04: T13.0 expanded E13 to executable (18 tasks); ADR 009 SEC-008 judge (this PR).
+- 2026-09-04: Wave 14 T13.1–T13.3 SEC-v2 catalog + SEC-008 fixtures/predicate (this PR).
+- 2026-09-04: T13.0 expanded E13 to executable (18 tasks); ADR 009 SEC-008 judge (#84).
 - 2026-09-04: T12.8 cut v0.1.0; release assets on GitHub. E12 complete.
 - 2026-09-03: T12.6 RFC-0001 Status → Implemented (v0.1 scope) (#78).
 - 2026-09-03: Module/repo rename `gavel` → `agentgavel` (#80); brand mark (#81).

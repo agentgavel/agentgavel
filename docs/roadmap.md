@@ -5,11 +5,12 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **Next:** Wave 14 — T13.1 / T13.2 / T13.3 (SEC-v2 loader, SEC-008 fixtures +
-  predicate). E13 is executable (1/18). See `docs/plans/E13-v02-expansion.md`.
-  ADR 009 locks SEC-008 semantic canary judge (CI string-variant; optional LLM).
+- **Next:** Wave 15 — T13.4 / T13.5 / T13.6 (SEC-009, SEC-010, SuiteOracleFakeV2).
 
-- **Shipped (2026-09-04):** T13.0 expanded E13 to executable fidelity (this PR).
+- **Shipped (2026-09-04):** Wave 14 — T13.1 SEC-v2 catalog, T13.2 SEC-008
+  fixtures, T13.3 SEC-008 predicate (ADR 009). E13 at 4/18.
+
+- **Shipped (2026-09-04):** T13.0 expanded E13 to executable fidelity (#84).
 
 - **Shipped (2026-09-04):** T12.8 cut `v0.1.0` tag + release. 5 binary
   assets uploaded (darwin/linux, amd64/arm64) + checksums, verified via
