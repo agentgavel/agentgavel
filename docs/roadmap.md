@@ -5,6 +5,9 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
+- **Shipped (2026-09-03):** Wave 4 — session lifecycle + version negotiate, E2 complete;
+  attestation leaks; GSI/hard-soft/Wilson metrics (E5 complete); engine Scenario/SeedScheduler/artifacts.
+
 - **v0.1 harness**: Go engine, JSON-RPC stdio adapter protocol, Python SDK,
   Compliance Oracle, assertions + GSI, mcpfuzz, SEC-001..007, CLI run/report,
   unofficial Sire and LangGraph adapters, CI + tagged release.

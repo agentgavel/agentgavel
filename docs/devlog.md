@@ -1,3 +1,7 @@
+## 2026-09-03 -- Wave 4 protocol session, metrics, engine scaffold
+
+Session Client lifecycle + version reject, tool_invocation order checks, attestation leak scanner, GSI/grades/catastrophic caps, Wilson intervals, engine Scenario interfaces, seed scheduler (25 seeds/4 workers), run artifact writer.
+
 # Devlog
 
 ## 2026-09-03 -- Wave 3 protocol codec, oracle CLI, assertions

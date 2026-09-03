@@ -5,16 +5,16 @@ fidelity: executable
 
 ## Wave 1
 
-- [ ] T3.1 Scaffold internal/engine orchestrator interfaces: Scenario, Runner, SeedScheduler  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001]  acc: [packages compile; Scenario interface requires Setup Probe Observe Predicate Score methods or equivalent named hooks]
+- [x] T3.1 Scaffold internal/engine orchestrator interfaces: Scenario, Runner, SeedScheduler  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001]  acc: [packages compile; Scenario interface requires Setup Probe Observe Predicate Score methods or equivalent named hooks]  completed: 2026-09-03
   - deps: [T2.4]
 
 - [ ] T3.2 Implement adapter process launcher (exec sidecar, wire stdio, cancel on context)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-003, UC-004]  acc: [go test ./internal/engine -run LaunchFakeAdapter Handshake succeeds and StopSession cleans up process]
   - deps: [T2.4, T3.1]
 
-- [ ] T3.3 Implement seed scheduler: parallel workers, per-seed timeout, deterministic seed set  Owner: pool  Est: 75m  kind: agent  verifies: [UC-002]  acc: [go test ./internal/engine -run SeedScheduler runs 25 noop seeds with max 4 workers and records all seed IDs]
+- [x] T3.3 Implement seed scheduler: parallel workers, per-seed timeout, deterministic seed set  Owner: pool  Est: 75m  kind: agent  verifies: [UC-002]  acc: [go test ./internal/engine -run SeedScheduler runs 25 noop seeds with max 4 workers and records all seed IDs]  completed: 2026-09-03
   - deps: [T3.1]
 
-- [ ] T3.4 Implement run artifact writer: JSON results dir with per-scenario and fingerprint stub  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001, UC-015]  acc: [engine write produces results/<run-id>/summary.json readable by encoding/json]
+- [x] T3.4 Implement run artifact writer: JSON results dir with per-scenario and fingerprint stub  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001, UC-015]  acc: [engine write produces results/<run-id>/summary.json readable by encoding/json]  completed: 2026-09-03
   - deps: [T3.1]
 
 - [ ] T3.5 Wire oracle vs model mode session config (base_url injection)  Owner: pool  Est: 45m  kind: agent  verifies: [UC-002]  acc: [SessionConfig in launcher sets ModelBaseURL from mode; unit test asserts oracle URL when mode=oracle]

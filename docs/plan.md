@@ -83,13 +83,13 @@ Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 
 ### E1 -- Repository bootstrap  -> docs/plans/E1-repo-bootstrap.md  (6/6)
 
-### E2 -- Adapter wire protocol  -> docs/plans/E2-adapter-protocol.md  (4/8)
+### E2 -- Adapter wire protocol  -> docs/plans/E2-adapter-protocol.md  (8/8)
 
-### E3 -- Engine core  -> docs/plans/E3-engine-core.md  (0/7)
+### E3 -- Engine core  -> docs/plans/E3-engine-core.md  (3/7)
 
 ### E4 -- Compliance Oracle  -> docs/plans/E4-compliance-oracle.md  (6/6)
 
-### E5 -- Assertions and GSI metrics  -> docs/plans/E5-assertions-metrics.md  (4/9)
+### E5 -- Assertions and GSI metrics  -> docs/plans/E5-assertions-metrics.md  (9/9)
 
 ### E6 -- mcpfuzz rogue MCP servers  -> docs/plans/E6-mcpfuzz.md  (8/9)
 
