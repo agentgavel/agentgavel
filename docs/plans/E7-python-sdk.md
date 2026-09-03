@@ -18,7 +18,7 @@ fidelity: executable
 - [x] T7.4 Ship example FakeAdapter used by Go integration tests  Owner: pool  Est: 45m  kind: agent  verifies: [UC-006]  acc: [python -m agentgavel_adapter.examples.fake serves Handshake to Go test]  completed: 2026-09-03
   - deps: [T7.3]
 
-- [ ] T7.5 Cross-language integration test: Go engine + Python FakeAdapter  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001, UC-006]  acc: [go test ./internal/engine -run PythonFakeAdapter passes]
+- [x] T7.5 Cross-language integration test: Go engine + Python FakeAdapter  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001, UC-006]  acc: [go test ./internal/engine -run PythonFakeAdapter passes]  completed: 2026-09-03
   - deps: [T7.4, T3.6]
 
 - [ ] T7.6 Python lint: ruff check + format on sdk/python  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [ruff check sdk/python exits 0]
