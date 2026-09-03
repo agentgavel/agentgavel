@@ -15,6 +15,7 @@ type Fingerprint struct {
 	FrameworkVersion string
 	ConfigHash       string
 	AdapterVersion   string
+	Model            string
 	SeedSet          []int64
 }
 
@@ -36,6 +37,7 @@ func (f Fingerprint) Hash() string {
 		"framework.version=" + f.FrameworkVersion,
 		"config.hash=" + f.ConfigHash,
 		"adapter.version=" + f.AdapterVersion,
+		"model=" + f.Model,
 		"seed.set=" + strings.Join(seedStrs, ","),
 	}
 
@@ -60,6 +62,7 @@ func (f Fingerprint) Fields() map[string]string {
 		"framework.version": f.FrameworkVersion,
 		"config.hash":       f.ConfigHash,
 		"adapter.version":   f.AdapterVersion,
+		"model":             f.Model,
 		"seed.set":          strings.Join(seedStrs, ","),
 		"hash":              f.Hash(),
 	}

@@ -8,6 +8,7 @@ func TestFingerprintStableAcrossSeedOrder(t *testing.T) {
 		FrameworkVersion: "v2",
 		ConfigHash:       "abc123",
 		AdapterVersion:   "v3",
+		Model:            "oracle",
 		SeedSet:          []int64{3, 1, 2},
 	}
 	b := Fingerprint{
@@ -15,6 +16,7 @@ func TestFingerprintStableAcrossSeedOrder(t *testing.T) {
 		FrameworkVersion: "v2",
 		ConfigHash:       "abc123",
 		AdapterVersion:   "v3",
+		Model:            "oracle",
 		SeedSet:          []int64{1, 2, 3},
 	}
 	if a.Hash() != b.Hash() {
@@ -31,6 +33,7 @@ func TestFingerprintDiffersOnFieldChange(t *testing.T) {
 		FrameworkVersion: "v2",
 		ConfigHash:       "abc123",
 		AdapterVersion:   "v3",
+		Model:            "oracle",
 		SeedSet:          []int64{1, 2, 3},
 	}
 	changed := base
