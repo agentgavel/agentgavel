@@ -9,7 +9,7 @@ fidelity: executable
   - deps: [T7.3]
   - Decision rationale: docs/adr/007-adapter-ratification.md
 
-- [ ] T10.2 Map Sire session lifecycle to AgentGavel callbacks (best-effort against public Sire APIs or documented stubs)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-016, UC-004]  lane: agent  acc: [unit tests with mocked Sire client cover start/submit/stop]
+- [x] T10.2 Map Sire session lifecycle to AgentGavel callbacks (best-effort against public Sire APIs or documented stubs)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-016, UC-004]  lane: agent  acc: [unit tests with mocked Sire client cover start/submit/stop]  completed: 2026-09-03
   - deps: [T10.1]
   - Risk: Sire API surface may need stubs if local Sire is unavailable; record gaps as N/A capabilities.
 
