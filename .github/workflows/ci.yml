@@ -19,13 +19,44 @@ jobs:
         run: test -z "$(gofmt -l .)"
       - name: vet
         run: go vet ./...
-      - name: test
-        run: go test ./...
+      - name: test (race)
+        run: go test -race ./...
       - name: build
         run: go build -o AgentGavel ./cmd/AgentGavel
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v6
+
+  python-sdk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sdk/python
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          version: latest
-          args: --timeout=5m
-        continue-on-error: true
+          python-version: "3.12"
+      - name: install
+        run: pip install -e ".[dev]"
+      - name: pytest
+        run: pytest -q
+
+  ruff:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sdk/python
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: install ruff
+        run: pip install "ruff>=0.8"
+      - name: ruff check
+        run: ruff check .
+
+  fixtures:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: fixture path checks
+        run: bash scripts/check-fixtures.sh
