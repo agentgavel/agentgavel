@@ -5,7 +5,10 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **In flight:** Wave 22 remainder — T14.6 FakeAdapter oracle E2E for REL-001..003.
+- **Shipped (2026-09-04):** Wave 22 — T14.6 FakeAdapter oracle E2E for
+  REL-001..003: `suites/reliability.RunOracleFakeREL` +
+  `TestSuiteOracleFakeREL` (`go test ./suites/reliability -run
+  ^TestSuiteOracleFakeREL$ -v` shows all three rows scoring 100). Wave 22 done.
 
 - **Shipped (2026-09-04):** Wave 22 predicates — T14.3 REL-001, T14.4 REL-002, T14.5 REL-003.
 
