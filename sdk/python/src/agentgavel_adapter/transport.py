@@ -31,6 +31,11 @@ METHOD_NOT_FOUND = -32601
 INVALID_PARAMS = -32602
 INTERNAL_ERROR = -32603
 
+# Empty proto response encodes as an empty JSON object.
+_EMPTY: dict[str, Any] = {}
+
+Handler = Callable[[Mapping[str, Any]], Any]
+
 
 class RPCError(Exception):
     """Raised when a peer returns a JSON-RPC error object."""
@@ -189,11 +194,16 @@ class TransportLoop:
         self,
         conn: StdioConn,
         *,
-        on_handshake: Callable[[Mapping[str, Any]], Mapping[str, Any]],
+        handlers: Mapping[str, Handler] | None = None,
+        on_handshake: Handler | None = None,
         event_buffer: EventBuffer | None = None,
     ) -> None:
+        resolved: dict[str, Handler] = dict(handlers or {})
+        if on_handshake is not None:
+            # Back-compat for T7.2 call sites that only wire Handshake.
+            resolved.setdefault(METHOD_HANDSHAKE, on_handshake)
         self._conn = conn
-        self._on_handshake = on_handshake
+        self._handlers = resolved
         self._events = event_buffer if event_buffer is not None else EventBuffer()
         self._closed = False
 
@@ -232,21 +242,28 @@ class TransportLoop:
             self._conn.reply_error(req_id, INVALID_PARAMS, "params must be an object")
             return True
 
+        handler = self._handlers.get(method)
+        if handler is None:
+            self._conn.reply_error(req_id, METHOD_NOT_FOUND, f"method not found: {method}")
+            self.flush_events()
+            return True
+
         try:
-            if method == METHOD_HANDSHAKE:
-                result = self._on_handshake(params)
-                self._conn.reply(req_id, result)
-            else:
-                # Full callback dispatch is T7.3; Handshake is the T7.2 surface.
-                self._conn.reply_error(req_id, METHOD_NOT_FOUND, f"method not found: {method}")
+            result = handler(params)
+            if result is None:
+                result = _EMPTY
+            self._conn.reply(req_id, result)
         except Exception as exc:  # noqa: BLE001 — surface as JSON-RPC error to peer
             self._conn.reply_error(req_id, INTERNAL_ERROR, str(exc))
+            self.flush_events()
+            return True
 
         self.flush_events()
-        return True
+        # StopSession ends the adapter serve loop (matches Go protocol fake).
+        return method != METHOD_STOP_SESSION
 
     def serve(self) -> None:
-        """Read requests until EOF."""
+        """Read requests until EOF or StopSession."""
         while not self._closed:
             req = self._conn.read_request()
             if req is None:
@@ -264,9 +281,9 @@ def serve_adapter(
     reader: BinaryIO | TextIO | None = None,
     writer: BinaryIO | TextIO | None = None,
 ) -> None:
-    """Run ``adapter`` on stdio until the engine closes the pipe.
+    """Run ``adapter`` on stdio until the engine closes the pipe or StopSession.
 
-    Wires Handshake dispatch and ``adapter.emit`` buffering onto the transport.
+    Wires Handshake + session lifecycle dispatch and ``adapter.emit`` buffering.
     """
     in_stream = reader if reader is not None else sys.stdin.buffer
     out_stream = writer if writer is not None else sys.stdout.buffer
@@ -274,7 +291,7 @@ def serve_adapter(
     buffer = EventBuffer()
     loop = TransportLoop(
         conn,
-        on_handshake=lambda params: _dispatch_handshake(adapter, params),
+        handlers=_adapter_handlers(adapter),
         event_buffer=buffer,
     )
     adapter._attach_transport(loop)  # noqa: SLF001 — intentional SDK hook
@@ -282,6 +299,17 @@ def serve_adapter(
         loop.serve()
     finally:
         adapter._detach_transport(loop)  # noqa: SLF001
+
+
+def _adapter_handlers(adapter: Any) -> dict[str, Handler]:
+    return {
+        METHOD_HANDSHAKE: lambda params: _dispatch_handshake(adapter, params),
+        METHOD_START_SESSION: lambda params: _dispatch_start_session(adapter, params),
+        METHOD_SUBMIT_TASK: lambda params: _dispatch_submit_task(adapter, params),
+        METHOD_RESOLVE_APPROVAL: lambda params: _dispatch_resolve_approval(adapter, params),
+        METHOD_EXPORT_LEDGER: lambda params: _dispatch_export_ledger(adapter, params),
+        METHOD_STOP_SESSION: lambda params: _dispatch_stop_session(adapter, params),
+    }
 
 
 def _dispatch_handshake(adapter: Any, params: Mapping[str, Any]) -> Mapping[str, Any]:
@@ -298,3 +326,71 @@ def _dispatch_handshake(adapter: Any, params: Mapping[str, Any]) -> Mapping[str,
     if not isinstance(result, Mapping):
         raise TypeError("handshake() must return a mapping (CapabilityReport)")
     return dict(result)
+
+
+def _dispatch_start_session(adapter: Any, params: Mapping[str, Any]) -> Mapping[str, Any]:
+    """Map StartSession params (SessionConfig) → adapter.start_session → SessionId."""
+    result = adapter.start_session(dict(params))
+    if not isinstance(result, Mapping):
+        raise TypeError("start_session() must return a mapping (SessionId)")
+    session_id = result.get("id")
+    if not isinstance(session_id, str) or not session_id:
+        raise ValueError("start_session() must return a mapping with non-empty id")
+    return dict(result)
+
+
+def _dispatch_submit_task(adapter: Any, params: Mapping[str, Any]) -> dict[str, Any]:
+    """Map SubmitTask params → adapter.submit_task → Empty."""
+    session_id = params.get("session_id")
+    if not isinstance(session_id, str) or not session_id:
+        raise ValueError("session_id is required")
+    task = params.get("task")
+    if not isinstance(task, Mapping):
+        raise ValueError("task must be an object")
+    adapter.submit_task(session_id, dict(task))
+    return dict(_EMPTY)
+
+
+def _dispatch_resolve_approval(adapter: Any, params: Mapping[str, Any]) -> dict[str, Any]:
+    """Map ResolveApproval params → adapter.resolve_approval → Empty."""
+    session_id = params.get("session_id")
+    if not isinstance(session_id, str) or not session_id:
+        raise ValueError("session_id is required")
+    approval_id = params.get("approval_id")
+    if not isinstance(approval_id, str) or not approval_id:
+        raise ValueError("approval_id is required")
+    decision = params.get("decision")
+    if decision is None:
+        raise ValueError("decision is required")
+    if not isinstance(decision, (str, int)):
+        raise ValueError("decision must be a string or int")
+    principal = params.get("principal")
+    if principal is not None and not isinstance(principal, str):
+        raise ValueError("principal must be a string when set")
+    adapter.resolve_approval(
+        session_id,
+        approval_id,
+        decision,
+        principal=principal,
+    )
+    return dict(_EMPTY)
+
+
+def _dispatch_export_ledger(adapter: Any, params: Mapping[str, Any]) -> Mapping[str, Any]:
+    """Map ExportLedger params (SessionId) → adapter.export_ledger → Ledger."""
+    session_id = params.get("id")
+    if not isinstance(session_id, str) or not session_id:
+        raise ValueError("id is required")
+    result = adapter.export_ledger(session_id)
+    if not isinstance(result, Mapping):
+        raise TypeError("export_ledger() must return a mapping (Ledger)")
+    return dict(result)
+
+
+def _dispatch_stop_session(adapter: Any, params: Mapping[str, Any]) -> dict[str, Any]:
+    """Map StopSession params (SessionId) → adapter.stop_session → Empty."""
+    session_id = params.get("id")
+    if not isinstance(session_id, str) or not session_id:
+        raise ValueError("id is required")
+    adapter.stop_session(session_id)
+    return dict(_EMPTY)

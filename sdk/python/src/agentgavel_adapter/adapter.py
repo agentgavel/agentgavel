@@ -129,10 +129,11 @@ class Adapter:
         reader: BinaryIO | TextIO | None = None,
         writer: BinaryIO | TextIO | None = None,
     ) -> None:
-        """Run the JSON-RPC stdio loop until the peer closes the input stream.
+        """Run the JSON-RPC stdio loop until EOF or ``StopSession``.
 
-        Defaults to process stdin/stdout buffers. Dispatches ``Handshake``;
-        other RPC methods are wired in a follow-on release.
+        Defaults to process stdin/stdout buffers. Dispatches Handshake,
+        StartSession, SubmitTask, ResolveApproval, ExportLedger, and
+        StopSession onto the corresponding adapter hooks.
         """
         from agentgavel_adapter.transport import serve_adapter
 
