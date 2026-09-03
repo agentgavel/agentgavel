@@ -35,6 +35,7 @@ type CapabilityReport struct {
 	Tenancy                bool   `json:"tenancy"`
 	Ledger                 bool   `json:"ledger"`
 	Observability          bool   `json:"observability"`
+	PolicyCeiling          bool   `json:"policy_ceiling"`
 	ContextMode            string `json:"context_mode"`
 	FrameworkName          string `json:"framework_name,omitempty"`
 	FrameworkVersion       string `json:"framework_version,omitempty"`

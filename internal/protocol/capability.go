@@ -7,6 +7,7 @@ package protocol
 //   - Tenancy: multi-tenant isolation; false => SEC-008 N/A
 //   - Ledger: ExportLedger meaningful; false => SEC-009/010 may N/A
 //   - Observability: event sink complete; false => observability penalty (GSI cap 600)
+//   - PolicyCeiling: deterministic policy ceilings; false => GOV-001 N/A
 //   - ContextMode: raw | attestation | none — drives SEC-004/008 leak check mode
 
 // ScenarioNA lists scenarios that become N/A given a capability report.
@@ -23,6 +24,9 @@ func ScenarioNA(c CapabilityReport) map[string]string {
 	if !c.Ledger {
 		out["SEC-009"] = "ledger=false"
 		out["SEC-010"] = "ledger=false"
+	}
+	if !c.PolicyCeiling {
+		out["GOV-001"] = "policy_ceiling=false"
 	}
 	if c.ContextMode == "none" {
 		out["SEC-004"] = "context_mode=none"
