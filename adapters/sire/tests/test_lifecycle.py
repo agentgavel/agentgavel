@@ -52,6 +52,12 @@ class _RecordingClient:
             ("resolve_approval", session_id, approval_id, decision, principal)
         )
 
+    def export_ledger(self, session_id: str) -> Mapping[str, Any]:
+        if session_id not in self.started:
+            raise UnknownSessionError(session_id)
+        self.calls.append(("export_ledger", session_id))
+        return {"session_id": session_id, "entries": []}
+
     def stop_session(self, session_id: str) -> None:
         if session_id not in self.started:
             raise UnknownSessionError(session_id)
@@ -69,10 +75,12 @@ class _FakeRequester:
         path: str,
         *,
         json: Mapping[str, Any] | None = None,
-    ) -> Mapping[str, Any] | None:
+    ) -> Mapping[str, Any] | list[Any] | None:
         self.calls.append((method, path, json))
         if method == "GET" and path.startswith("/workers/"):
             return {"id": "wrk_1", "name": "gavel-bench"}
+        if method == "GET" and path == "/compliance/receipts":
+            return []
         if method == "POST" and path.endswith("/run"):
             return {"runId": "run_abc"}
         if method == "POST" and "/cancel" in path:
