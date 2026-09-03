@@ -23,6 +23,7 @@ func main() {
 				AdapterVersion:         "0.0.1",
 				Provenance:             "unofficial",
 				HITL:                   true,
+				Tenancy:                true,
 				Ledger:                 true,
 				Observability:          true,
 				ContextMode:            "raw",
