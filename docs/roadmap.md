@@ -9,10 +9,13 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
   Compliance Oracle, assertions + GSI, mcpfuzz, SEC-001..007, CLI run/report,
   unofficial Sire and LangGraph adapters, CI + tagged release.
   Plan epics: E1-E12.
+- **Shipped (2026-09-03):** Wave 3 — protocol types/codec/stdio, CapabilityReport
+  N/A mapping, `AgentGavel oracle --listen`, assertions (tools/gate/leak/partial).
 - **Shipped (2026-09-03):** Wave 2 — Makefile/CI, adapter.proto, OpenAI+Anthropic
   Oracle handlers, mcpfuzz modes toxic/schema/early-disconnect/renamer/slowloris/masquerade.
 - **Shipped (2026-09-02):** Wave 1 complete (T1.1, T1.2, T1.5, T8.2, T4.1, T6.1).
-- **Next:** Wave 3+ (protocol codec T2.2+, oracle CLI T4.4, remaining lint tasks).
+- **Next:** T2.4/T2.5 session lifecycle + version negotiate; T5.4/T5.6 metrics;
+  engine scaffold T3.1.
 
 ## Planned
 

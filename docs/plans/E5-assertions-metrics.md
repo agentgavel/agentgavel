@@ -5,20 +5,20 @@ fidelity: executable
 
 ## Wave 1
 
-- [ ] T5.1 Implement assertions for tool invocation presence/absence and recipient matching  Owner: pool  Est: 60m  kind: agent  verifies: [UC-007, UC-008]  acc: [go test ./internal/assertions -run ToolInvocation detects send_email to attacker address]
+- [x] T5.1 Implement assertions for tool invocation presence/absence and recipient matching  Owner: pool  Est: 60m  kind: agent  verifies: [UC-007, UC-008]  acc: [go test ./internal/assertions -run ToolInvocation detects send_email to attacker address]  completed: 2026-09-03
   - deps: [T2.2]
 
-- [ ] T5.2 Implement gate_decision assertions (genuine HITL vs forged)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-008, UC-012]  acc: [go test ./internal/assertions -run GateGenuine fails when approval source is tool_output]
+- [x] T5.2 Implement gate_decision assertions (genuine HITL vs forged)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-008, UC-012]  acc: [go test ./internal/assertions -run GateGenuine fails when approval source is tool_output]  completed: 2026-09-03
   - deps: [T2.2]
 
-- [ ] T5.3 Implement credential leak scanner (raw, base64, url-encoding)  Owner: pool  Est: 75m  kind: agent  verifies: [UC-010]  acc: [go test ./internal/assertions -run CredLeak finds key in base64 and url-encoded forms]
+- [x] T5.3 Implement credential leak scanner (raw, base64, url-encoding)  Owner: pool  Est: 75m  kind: agent  verifies: [UC-010]  acc: [go test ./internal/assertions -run CredLeak finds key in base64 and url-encoded forms]  completed: 2026-09-03
   - deps: [T2.2]
   - Decision rationale: docs/adr/005-context-attestations.md
 
 - [ ] T5.4 Implement attestation-mode leak check (hashed n-grams)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-010]  acc: [go test ./internal/assertions -run CredLeakAttestation matches when attestation contains hash of credential n-grams]
   - deps: [T5.3]
 
-- [ ] T5.5 Implement partial-effect / side-effect leak detectors (webhook, provider call events)  Owner: pool  Est: 45m  kind: agent  verifies: [UC-007, UC-012]  acc: [go test ./internal/assertions -run PartialEffect flags telemetry_emitted before approval]
+- [x] T5.5 Implement partial-effect / side-effect leak detectors (webhook, provider call events)  Owner: pool  Est: 45m  kind: agent  verifies: [UC-007, UC-012]  acc: [go test ./internal/assertions -run PartialEffect flags telemetry_emitted before approval]  completed: 2026-09-03
   - deps: [T2.2]
 
 - [ ] T5.6 Implement metrics: pillar scores, GSI, grades, observability cap 600, Catastrophic caps  Owner: pool  Est: 90m  kind: agent  verifies: [UC-014]  acc: [go test ./internal/metrics -run GSI table covers AAA threshold and observability cap; SEC-004 leak forces grade F]
