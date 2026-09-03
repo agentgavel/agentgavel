@@ -5,7 +5,9 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **In flight (2026-09-03):** Pool — T10.1 Sire adapter scaffold.
+- **Next:** T8.11 lint; T9.2 CLI run; T10.2 Sire lifecycle; T11.1 LangGraph scaffold.
+
+- **Shipped (2026-09-03):** T10.1 unofficial Sire adapter scaffold (#36).
 
 - **Shipped (2026-09-03):** T7.6 ruff on sdk/python (#33); T8.10 SuiteOracleFake E2E (#34).
 

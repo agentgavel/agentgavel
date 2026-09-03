@@ -5,7 +5,7 @@ fidelity: executable
 
 ## Wave 1
 
-- [ ] T10.1 Scaffold adapters/sire with pyproject and Adapter subclass  Owner: pool  Est: 60m  kind: agent  verifies: [UC-016, UC-006]  acc: [python -m adapters.sire --help or module entry starts stdio server]
+- [x] T10.1 Scaffold adapters/sire with pyproject and Adapter subclass  Owner: pool  Est: 60m  kind: agent  verifies: [UC-016, UC-006]  acc: [python -m adapters.sire --help or module entry starts stdio server]  completed: 2026-09-03
   - deps: [T7.3]
   - Decision rationale: docs/adr/007-adapter-ratification.md
 
