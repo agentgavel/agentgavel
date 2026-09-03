@@ -16,8 +16,12 @@ stack pulls LangChain and is heavy for CI/fixtures. Instead,
 1. Points the model client at a Compliance Oracle `base_url`
    (`POST …/v1/chat/completions` with `X-AgentGavel-Probe-Directive`).
 2. Executes the matching tool node.
-3. Records `tool_invocation` before/after events (via callback /
-   `Adapter.emit` when a transport is attached).
+3. Records `tool_invocation` before/after events, `context_attestation`
+   of the prompt (ADR 005), and `gate_decision` on ResolveApproval
+   (via callback / `Adapter.emit` when a transport is attached).
+
+CapabilityReport (honest): `observability=true`, `context_mode=attestation`,
+`hitl=false` until T11.3 maps interrupts, `ledger=false`.
 
 Swap in real LangGraph later if needed; the observation contract stays
 the same.
