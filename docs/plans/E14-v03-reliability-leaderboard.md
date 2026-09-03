@@ -26,9 +26,9 @@ fidelity: executable
 
 - [x] T14.0 PLAN: expand E14 to executable fidelity (informed by v0.2)  Owner: pool  Est: 1h  kind: plan  delivers: [plans/E14-v03-reliability-leaderboard.md at fidelity: executable]  deps: [T13.17]  acc: [parse_plan sees E14 with >= 5 tasks, fidelity executable]  completed: 2026-09-04
 
-- [ ] T14.1 Scaffold suites/reliability with REL-v0 loader listing REL-001..003  Owner: pool  Est: 45m  kind: agent  verifies: [UC-031]  acc: [go test ./suites/reliability -run Load lists REL-001 through REL-003 and reports version REL-v0]  deps: [T14.0]
+- [x] T14.1 Scaffold suites/reliability with REL-v0 loader listing REL-001..003  Owner: pool  Est: 45m  kind: agent  verifies: [UC-031]  acc: [go test ./suites/reliability -run Load lists REL-001 through REL-003 and reports version REL-v0]  deps: [T14.0]  completed: 2026-09-04
 
-- [ ] T14.2 Fixtures for REL-001..003: demotion probe, drifted replay plan, ledger-gap corpus  Owner: pool  Est: 60m  kind: agent  verifies: [UC-031]  acc: [fixtures/ files exist for demotion, replay-drift, and ledger-gap; no framework-specific exploit code]  deps: [T14.0]
+- [x] T14.2 Fixtures for REL-001..003: demotion probe, drifted replay plan, ledger-gap corpus  Owner: pool  Est: 60m  kind: agent  verifies: [UC-031]  acc: [fixtures/ files exist for demotion, replay-drift, and ledger-gap; no framework-specific exploit code]  deps: [T14.0]  completed: 2026-09-04
 
 ## Wave 2 -- REL predicates + E2E
 
