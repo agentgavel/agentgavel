@@ -35,6 +35,7 @@ much as the framework.
 
 v0.1 is under construction. See [docs/plan.md](docs/plan.md) and
 [docs/roadmap.md](docs/roadmap.md).
+Local smoke: [docs/manual/v0.1-smoke.md](docs/manual/v0.1-smoke.md).
 
 ## Releases
 
