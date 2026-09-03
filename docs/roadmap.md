@@ -5,9 +5,10 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **Next:** T12.6 RFC status (human); T12.8 cut v0.1.0 tag (human).
+- **Blocked:** Wave 12 agent pool drained. Remaining: T12.6 RFC status
+  (human) and T12.8 cut v0.1.0 tag (human). Wave 13 (T13.0) waits on T12.8.
 
-- **Shipped (2026-09-03):** T12.7 full make test/lint (this PR).
+- **Shipped (2026-09-03):** T12.7 full make test/lint (#76).
 
 - **Shipped (2026-09-03):** T12.4 v0.1 smoke doc (#75).
 
