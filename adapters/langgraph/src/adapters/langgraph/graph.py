@@ -1,4 +1,4 @@
-"""Minimal email tool graph for SEC fixtures (T11.2).
+"""Minimal email tool graph for SEC fixtures (T11.2 / T11.3).
 
 Dependency choice: this module is an in-process, langgraph-*compatible* stub.
 We deliberately do **not** depend on the ``langgraph`` PyPI package — it pulls
@@ -6,6 +6,10 @@ LangChain and is heavy for CI. The stub still exposes tool nodes
 (``read_email`` / ``send_email``), accepts a model ``base_url`` aimed at the
 Compliance Oracle, and records ``tool_invocation`` events suitable for
 AgentGavel observation.
+
+When an :class:`~adapters.langgraph.interrupt.InterruptSupport` is attached and
+enabled, gated tools (``send_email``) pause like LangGraph ``interrupt()`` and
+defer side effects until ``ResolveApproval`` resumes them.
 """
 
 from __future__ import annotations
@@ -15,7 +19,10 @@ import time
 import urllib.error
 import urllib.request
 from collections.abc import Callable, Mapping, MutableMapping
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from adapters.langgraph.interrupt import InterruptSupport
 
 TOOL_READ_EMAIL = "read_email"
 TOOL_SEND_EMAIL = "send_email"
@@ -26,9 +33,11 @@ EventSink = Callable[[MutableMapping[str, Any]], None]
 
 _TOOL_NODES: dict[str, Callable[[Mapping[str, Any]], Mapping[str, Any]]] = {}
 
+_ToolNode = Callable[[Mapping[str, Any]], Mapping[str, Any]]
 
-def _register(name: str) -> Callable[[Callable[..., Mapping[str, Any]]], Callable[..., Mapping[str, Any]]]:
-    def deco(fn: Callable[..., Mapping[str, Any]]) -> Callable[..., Mapping[str, Any]]:
+
+def _register(name: str) -> Callable[[_ToolNode], _ToolNode]:
+    def deco(fn: _ToolNode) -> _ToolNode:
         _TOOL_NODES[name] = fn
         return fn
 
@@ -61,6 +70,14 @@ def tool_nodes() -> Mapping[str, Callable[[Mapping[str, Any]], Mapping[str, Any]
     return dict(_TOOL_NODES)
 
 
+def invoke_tool_node(tool_name: str, arguments: Mapping[str, Any]) -> Mapping[str, Any]:
+    """Execute a registered tool node (used after HITL approve)."""
+    node = _TOOL_NODES.get(tool_name)
+    if node is None:
+        raise KeyError(f"unknown tool node: {tool_name!r}")
+    return node(arguments)
+
+
 class MinimalEmailGraph:
     """One-pass graph: Oracle completion → tool node → recorded events."""
 
@@ -70,12 +87,14 @@ class MinimalEmailGraph:
         model_base_url: str,
         session_id: str = "graph-sess",
         on_event: EventSink | None = None,
+        interrupt_support: InterruptSupport | None = None,
     ) -> None:
         if not model_base_url or not str(model_base_url).strip():
             raise ValueError("model_base_url is required")
         self.model_base_url = str(model_base_url).rstrip("/")
         self.session_id = session_id
         self._on_event = on_event
+        self._interrupt = interrupt_support
         self.events: list[MutableMapping[str, Any]] = []
         self._seq = 0
 
@@ -86,7 +105,12 @@ class MinimalEmailGraph:
         probe_directive: Mapping[str, Any] | None = None,
         model: str = "oracle",
     ) -> Mapping[str, Any]:
-        """Run the graph once against the Oracle at ``model_base_url``."""
+        """Run the graph once against the Oracle at ``model_base_url``.
+
+        When interrupt support gates the chosen tool, returns
+        ``status="interrupted"`` with an ``approval_id`` and does **not**
+        execute the tool node until ResolveApproval resumes.
+        """
         directive = (
             dict(probe_directive)
             if probe_directive is not None
@@ -98,10 +122,29 @@ class MinimalEmailGraph:
         tool_name, arguments, call_id = self._complete_tool_call(
             prompt, directive, model
         )
+        support = self._interrupt
+        if support is not None and support.is_gated(tool_name):
+            pending = support.request(
+                self.session_id,
+                tool_name,
+                arguments,
+                call_id,
+            )
+            # Intent observed before the gate; no side effect yet.
+            self._record_tool(tool_name, call_id, "before")
+            return {
+                "tool_name": tool_name,
+                "arguments": arguments,
+                "status": "interrupted",
+                "approval_id": pending.approval_id,
+                "call_id": call_id,
+                "events": list(self.events),
+            }
         result = self._invoke_tool(tool_name, arguments, call_id)
         return {
             "tool_name": tool_name,
             "arguments": arguments,
+            "status": "completed",
             "result": result,
             "events": list(self.events),
         }

@@ -22,6 +22,17 @@ stack pulls LangChain and is heavy for CI/fixtures. Instead,
 Swap in real LangGraph later if needed; the observation contract stays
 the same.
 
+## HITL / interrupts (T11.3)
+
+When interrupt support is enabled (default), gated tools (`send_email`)
+pause before side effects — LangGraph-style `interrupt()` — and wait for
+harness `ResolveApproval`. Handshake reports `hitl: true` and a
+`gate_decision` event is emitted on resolve (`source=harness`,
+`genuine_hitl=true`).
+
+Construct with `LangGraphAdapter(hitl=False)` for the honest unsupported
+path: `hitl: false` and `ResolveApproval` raises `HitlNotSupportedError`.
+
 ## Run
 
 ```bash
