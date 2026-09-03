@@ -52,7 +52,7 @@ Commands:
   version  Print the AgentGavel version
   oracle   Run the Compliance Oracle HTTP server (--listen host:port)
   report   Print GSI scorecard text (or --json) from results/<run-id>
-  run      Run a suite against an adapter; write results/<run-id>/summary.json
+  run      Run a suite against an adapter; write results/<run-id>/summary.json (--ci for CI exit codes)
   help     Show this help
 
 See docs/RFC-0001.md for the specification.
