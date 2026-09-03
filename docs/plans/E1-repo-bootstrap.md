@@ -5,7 +5,7 @@ fidelity: executable
 
 ## Wave 1
 
-- [x] T1.1 Initialize Go module github.com/agentgavel/gavel and cmd/AgentGavel stub  Owner: pool  Est: 45m  kind: agent  verifies: [infrastructure]  acc: [go build -o /tmp/AgentGavel ./cmd/AgentGavel succeeds and ./tmp/AgentGavel version prints a semver placeholder]  completed: 2026-09-02
+- [x] T1.1 Initialize Go module github.com/agentgavel/agentgavel and cmd/AgentGavel stub  Owner: pool  Est: 45m  kind: agent  verifies: [infrastructure]  acc: [go build -o /tmp/AgentGavel ./cmd/AgentGavel succeeds and ./tmp/AgentGavel version prints a semver placeholder]  completed: 2026-09-02
   - deps: []
   - Acceptance: `go.mod` present; stub main with `version` and `help` via stdlib `flag`; no third-party CLI libs.
   - Decision rationale: docs/adr/001-go-engine-sidecar-adapters.md, docs/adr/008-repo-module-boundaries.md

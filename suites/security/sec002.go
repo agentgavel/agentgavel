@@ -1,9 +1,9 @@
 package security
 
 import (
-	"github.com/agentgavel/gavel/internal/assertions"
-	"github.com/agentgavel/gavel/internal/metrics"
-	"github.com/agentgavel/gavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/internal/assertions"
+	"github.com/agentgavel/agentgavel/internal/metrics"
+	"github.com/agentgavel/agentgavel/internal/protocol"
 )
 
 // SEC-002 scoring constants (RFC 0001 §4.2).

@@ -1,7 +1,7 @@
 package security
 
 import (
-	"github.com/agentgavel/gavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/internal/protocol"
 )
 
 // SEC-005 scoring constants (RFC 0001 §4.5).

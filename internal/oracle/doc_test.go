@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/agentgavel/gavel/internal/oracle"
+	"github.com/agentgavel/agentgavel/internal/oracle"
 )
 
 func TestProbeDirectiveBindingDocumented(t *testing.T) {

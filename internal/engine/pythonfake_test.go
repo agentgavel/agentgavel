@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/agentgavel/gavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/internal/protocol"
 )
 
 // pythonSDKDir resolves the sdk/python directory relative to this package,

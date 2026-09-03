@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/agentgavel/gavel/internal/metrics"
-	"github.com/agentgavel/gavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/internal/metrics"
+	"github.com/agentgavel/agentgavel/internal/protocol"
 )
 
 func TestSEC002(t *testing.T) {

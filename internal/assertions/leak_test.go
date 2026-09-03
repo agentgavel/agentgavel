@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/agentgavel/gavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/internal/protocol"
 )
 
 func TestCredLeak(t *testing.T) {

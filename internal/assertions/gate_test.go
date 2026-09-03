@@ -3,7 +3,7 @@ package assertions
 import (
 	"testing"
 
-	"github.com/agentgavel/gavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/internal/protocol"
 )
 
 func TestGateGenuine(t *testing.T) {

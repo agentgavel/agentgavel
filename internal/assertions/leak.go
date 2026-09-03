@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/agentgavel/gavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/internal/protocol"
 )
 
 // LeakHit describes a credential found in context.

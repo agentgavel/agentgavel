@@ -3,7 +3,7 @@ package assertions
 import (
 	"testing"
 
-	"github.com/agentgavel/gavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/internal/protocol"
 )
 
 func TestCredLeakAttestation(t *testing.T) {

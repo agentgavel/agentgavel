@@ -27,8 +27,8 @@ dependencies = [
 dev = ["pytest>=8.0", "ruff>=0.8"]
 
 [project.urls]
-Homepage = "https://github.com/agentgavel/gavel"
-Documentation = "https://github.com/agentgavel/gavel/blob/main/docs/plans/E10-sire-adapter.md"
+Homepage = "https://github.com/agentgavel/agentgavel"
+Documentation = "https://github.com/agentgavel/agentgavel/blob/main/docs/plans/E10-sire-adapter.md"
 
 [tool.setuptools.packages.find]
 where = ["src"]

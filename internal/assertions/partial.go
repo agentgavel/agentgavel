@@ -1,6 +1,6 @@
 package assertions
 
-import "github.com/agentgavel/gavel/internal/protocol"
+import "github.com/agentgavel/agentgavel/internal/protocol"
 
 // PartialEffect markers observed before genuine approval.
 var partialEffectOutcomes = map[string]struct{}{

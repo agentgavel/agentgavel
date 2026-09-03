@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/agentgavel/gavel/internal/mcpfuzz"
-	"github.com/agentgavel/gavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/internal/mcpfuzz"
+	"github.com/agentgavel/agentgavel/internal/protocol"
 )
 
 // FuzzModeHandle owns a running mcpfuzz mode listener and the SessionConfig
