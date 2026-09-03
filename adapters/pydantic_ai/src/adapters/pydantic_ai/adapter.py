@@ -1,19 +1,21 @@
 """Pydantic AI adapter (provenance=unofficial).
 
-T13.12: lightweight Handshake + lifecycle stubs. Does not depend on the
-``pydantic-ai`` PyPI package (heavy transitive tree). CapabilityReport keeps
-hitl/tenancy/ledger/observability false honestly until a later task wires
-real support (T13.18 tool path). Unofficial until a maintainer signs off
-(ADR 007).
+T13.18: minimal in-process email tool agent (read_email/send_email) that
+points ``model_base_url`` at the Compliance Oracle. Capability flags stay
+honest: HITL/ledger/observability remain false until later tasks map real
+deferred-tools / ledger / event-hook support. Unofficial until a maintainer
+signs off (ADR 007).
 """
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, MutableMapping
 from typing import Any
 from uuid import uuid4
 
 from agentgavel_adapter.adapter import Adapter
+
+from adapters.pydantic_ai.agent import MinimalEmailAgent
 
 _ADAPTER_VERSION = "0.0.1"
 
@@ -23,11 +25,12 @@ class HitlNotSupportedError(RuntimeError):
 
 
 class PydanticAIAdapter(Adapter):
-    """Unofficial Pydantic AI sidecar: Handshake + honest false capabilities."""
+    """Unofficial Pydantic AI sidecar: Handshake + Oracle-backed email agent."""
 
     def __init__(self) -> None:
         super().__init__()
         self._sessions: dict[str, dict[str, Any]] = {}
+        self.emitted: list[MutableMapping[str, Any]] = []
 
     def handshake(
         self,
@@ -42,7 +45,8 @@ class PydanticAIAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: unofficial until maintainer ratification.
             "provenance": "unofficial",
-            # Honest scaffold: no HITL / ledger / event sink yet (T13.18).
+            # Honest stubs — HITL/ledger/observability land in later tasks.
+            # Missing capabilities score N/A (never silent Fail).
             "hitl": False,
             "tenancy": False,
             "ledger": False,
@@ -58,10 +62,26 @@ class PydanticAIAdapter(Adapter):
         return {"id": session_id}
 
     def submit_task(self, session_id: str, task: Mapping[str, Any]) -> None:
-        if session_id not in self._sessions:
+        config = self._sessions.get(session_id)
+        if config is None:
             raise KeyError(f"unknown session: {session_id}")
-        # Scaffold: no Oracle / agent wiring yet (T13.18).
-        del task
+        base_url = str(config.get("model_base_url") or "").strip()
+        if not base_url:
+            # No Oracle binding yet — lifecycle no-op (scaffold behavior).
+            return
+        meta = task.get("metadata") if isinstance(task.get("metadata"), Mapping) else {}
+        directive = meta.get("probe_directive") if isinstance(meta, Mapping) else None
+        if directive is not None and not isinstance(directive, Mapping):
+            raise TypeError("task.metadata.probe_directive must be a mapping")
+        agent = MinimalEmailAgent(
+            model_base_url=base_url,
+            session_id=session_id,
+            on_event=self._record_event,
+        )
+        agent.run(
+            str(task.get("prompt") or ""),
+            probe_directive=directive,
+        )
 
     def resolve_approval(
         self,
@@ -75,8 +95,7 @@ class PydanticAIAdapter(Adapter):
         if session_id not in self._sessions:
             raise KeyError(f"unknown session: {session_id}")
         raise HitlNotSupportedError(
-            "Pydantic AI deferred-tools/HITL mapping not wired; "
-            "CapabilityReport.hitl is false"
+            "Pydantic AI deferred-tools/HITL mapping not wired; CapabilityReport.hitl is false"
         )
 
     def export_ledger(self, session_id: str) -> Mapping[str, Any]:
@@ -84,3 +103,8 @@ class PydanticAIAdapter(Adapter):
 
     def stop_session(self, session_id: str) -> None:
         self._sessions.pop(session_id, None)
+
+    def _record_event(self, event: MutableMapping[str, Any]) -> None:
+        self.emitted.append(event)
+        if self._transport is not None:
+            self.emit(event)

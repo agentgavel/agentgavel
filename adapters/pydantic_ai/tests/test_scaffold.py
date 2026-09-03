@@ -20,7 +20,7 @@ def test_handshake_provenance_unofficial() -> None:
     assert report["adapter_name"] == "pydantic_ai"
     assert report["framework_name"] == "pydantic-ai"
     assert report["provenance"] == "unofficial"
-    # Honest scaffold: capabilities stay false until T13.18+.
+    # Honest CapabilityReport: no false support claims (N/A over Fail).
     assert report["hitl"] is False
     assert report["tenancy"] is False
     assert report["ledger"] is False

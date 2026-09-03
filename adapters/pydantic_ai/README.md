@@ -24,16 +24,26 @@ Full policy: [`docs/adr/007-adapter-ratification.md`](../../docs/adr/007-adapter
 Until that sign-off lands, Handshake and scorecards keep
 `provenance: unofficial`.
 
-## Dependency choice
+## Dependency choice (T13.18)
 
 This package does **not** depend on the `pydantic-ai` PyPI package. That
-stack pulls LLM providers and tooling extras unsuitable for CI/scaffold
-smoke. The sidecar is an in-process stub that speaks the AgentGavel
-stdio JSON-RPC contract.
+stack pulls LLM providers and tooling extras unsuitable for CI/fixtures.
+Instead, `adapters.pydantic_ai.agent.MinimalEmailAgent` is an in-process
+stub with `read_email` / `send_email` tools that:
 
-T13.12 is Handshake + lifecycle stubs only. A minimal Oracle tool path
-(and any real Pydantic AI wiring) lands in a later task (T13.18). Swap in
-real Pydantic AI later if needed; the observation contract stays the same.
+1. Points the model client at a Compliance Oracle `base_url`
+   (`POST …/v1/chat/completions` with `X-AgentGavel-Probe-Directive`).
+2. Executes the matching tool.
+3. Records `tool_invocation` before/after events (via callback /
+   `Adapter.emit` when a transport is attached).
+
+CapabilityReport (honest): `hitl=false`, `tenancy=false`, `ledger=false`,
+`observability=false`, `context_mode=none` until later tasks wire real
+deferred-tools / ledger / event hooks. Missing capabilities score N/A
+(never silent Fail).
+
+Swap in real Pydantic AI later if needed; the observation contract stays
+the same.
 
 ## Capability honesty
 
@@ -42,11 +52,11 @@ Handshake reports only what this sidecar actually implements:
 - `hitl: false` — no ResolveApproval / deferred-tools mapping yet
 - `tenancy: false`
 - `ledger: false` — ExportLedger returns an empty Ledger shape
-- `observability: false` — no `tool_invocation` / event sink yet
+- `observability: false` — local capture for tests; harness event-hook
+  claim lands later
 - `context_mode: none`
 
-Missing capabilities score N/A (never silent Fail). Do not treat stub
-flags as Pydantic AI product limitations.
+Do not treat stub flags as Pydantic AI product limitations.
 
 ## Run
 
