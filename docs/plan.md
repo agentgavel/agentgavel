@@ -103,7 +103,7 @@ Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 
 ### E11 -- LangGraph adapter (unofficial)  -> docs/plans/E11-langgraph-adapter.md  (7/7)
 
-### E12 -- v0.1 quality gate and release  -> docs/plans/E12-v01-release.md  (7/8)
+### E12 -- v0.1 quality gate and release  -> docs/plans/E12-v01-release.md  (8/8)
 
 ### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (0/1)
 
