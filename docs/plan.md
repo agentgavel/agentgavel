@@ -97,7 +97,7 @@ Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 
 ### E8 -- Security suite SEC-001 through SEC-007  -> docs/plans/E8-security-suite.md  (10/11)
 
-### E9 -- CLI run, report, fingerprint  -> docs/plans/E9-cli-report.md  (3/6)
+### E9 -- CLI run, report, fingerprint  -> docs/plans/E9-cli-report.md  (4/6)
 
 ### E10 -- Sire adapter (unofficial)  -> docs/plans/E10-sire-adapter.md  (3/7)
 
@@ -210,6 +210,8 @@ Rules:
 - After M5, run T13.0 before any v0.2 coding.
 
 ## 9. Progress Log
+
+- 2026-09-03: T9.5 CLI binary tests (#48).
 
 - 2026-09-03: T10.3 Sire ResolveApproval + gate_decision emit (#46).
 
