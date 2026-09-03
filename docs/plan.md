@@ -104,7 +104,7 @@ until `v0.2.0` (T13.17).
 
 ### E12 -- v0.1 quality gate and release  -> docs/plans/E12-v01-release.md  (8/8)
 
-### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (10/26)
+### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (16/26)
 
 ### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (0/1)
 
@@ -133,7 +133,7 @@ Sync points: T13.6 (SEC-008..010 E2E), T13.8 (`--ci`), T13.24 (quality gate).
 ### Wave 16: Governance + CI + process (3 agents)
 - T13.7, T13.8, T13.9
 
-### Wave 17: §8.1 adapter scaffolds (6 agents)
+### Wave 17: §8.1 adapter scaffolds (6 agents) (done)
 - T13.10, T13.11, T13.12, T13.13, T13.14, T13.15
 
 ### Wave 18: §8.1 adapter tool paths (6 agents)
@@ -141,6 +141,10 @@ Sync points: T13.6 (SEC-008..010 E2E), T13.8 (`--ci`), T13.24 (quality gate).
 
 ### Wave 19: v0.2 smoke + quality + ship (3 agents / humans)
 - T13.22, T13.23, T13.24, T13.25 (human)
+
+## Roadmap
+- **Now:** Wave 17 scaffolds shipped
+- **Next:** Wave 18 tool paths
 
 ## 6. Timeline and Milestones
 
@@ -191,6 +195,7 @@ Rules:
 
 ## 9. Progress Log
 
+- 2026-09-04: Wave 17 T13.10–T13.15 §8.1 adapter scaffolds shipped (adk, openai_agents, pydantic_ai, agent_framework, strands, crewai).
 - 2026-09-04: Retargeted E13 Wave 4–6 to RFC §8.1 (six adapters; T13.10–T13.25).
 - 2026-09-04: Wave 16 T13.7–T13.9 GOV + `--ci` + scenario-governance docs.
 - 2026-09-04: Wave 14 T13.1–T13.3 SEC-v2 catalog + SEC-008 fixtures/predicate.
@@ -207,7 +212,7 @@ Rules:
 - Spec: `docs/RFC-0001.md`. Design: `docs/design.md`.
 - ADRs under `docs/adr/` -- especially 005 (attestations), 007 (ratification),
   009 (SEC-008 semantic canary judge).
-- Start apply at Wave 17 (T13.10+ scaffolds); do not expand E14 until T13.25.
+- Start apply at Wave 18 (T13.16+ tool paths); Wave 17 scaffolds shipped; do not expand E14 until T13.25.
 - kazi is on PATH; engineering tasks carry `acc:` for JIT lane.
 - Claim resource for plan rewrites: `R-plan-md`.
 - Remote: `git@github.com:agentgavel/agentgavel.git`.

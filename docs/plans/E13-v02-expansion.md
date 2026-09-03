@@ -69,22 +69,22 @@ Directory names follow the list below. Each scaffold mirrors LangGraph:
 pyproject, Adapter subclass, `__main__` stdio serve, unofficial README,
 provenance=unofficial.
 
-- [ ] T13.10 Scaffold adapters/adk (Google ADK; pyproject, Adapter, unofficial README)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-025]  lane: agent  acc: [python -m adapters.adk starts stdio Handshake with provenance=unofficial]
+- [x] T13.10 Scaffold adapters/adk (Google ADK; pyproject, Adapter, unofficial README)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-025]  lane: agent  acc: [python -m adapters.adk starts stdio Handshake with provenance=unofficial]  completed: 2026-09-04
   - deps: [T7.3, T13.0]
 
-- [ ] T13.11 Scaffold adapters/openai_agents (OpenAI Agents SDK)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-026]  lane: agent  acc: [python -m adapters.openai_agents starts stdio Handshake with provenance=unofficial]
+- [x] T13.11 Scaffold adapters/openai_agents (OpenAI Agents SDK)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-026]  lane: agent  acc: [python -m adapters.openai_agents starts stdio Handshake with provenance=unofficial]  completed: 2026-09-04
   - deps: [T7.3, T13.0]
 
-- [ ] T13.12 Scaffold adapters/pydantic_ai (Pydantic AI)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-027]  lane: agent  acc: [python -m adapters.pydantic_ai starts stdio Handshake with provenance=unofficial]
+- [x] T13.12 Scaffold adapters/pydantic_ai (Pydantic AI)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-027]  lane: agent  acc: [python -m adapters.pydantic_ai starts stdio Handshake with provenance=unofficial]  completed: 2026-09-04
   - deps: [T7.3, T13.0]
 
-- [ ] T13.13 Scaffold adapters/agent_framework (Microsoft Agent Framework; AutoGen successor)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-028]  lane: agent  acc: [python -m adapters.agent_framework starts stdio Handshake with provenance=unofficial]
+- [x] T13.13 Scaffold adapters/agent_framework (Microsoft Agent Framework; AutoGen successor)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-028]  lane: agent  acc: [python -m adapters.agent_framework starts stdio Handshake with provenance=unofficial]  completed: 2026-09-04
   - deps: [T7.3, T13.0]
 
-- [ ] T13.14 Scaffold adapters/strands (AWS Strands Agents)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-029]  lane: agent  acc: [python -m adapters.strands starts stdio Handshake with provenance=unofficial]
+- [x] T13.14 Scaffold adapters/strands (AWS Strands Agents)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-029]  lane: agent  acc: [python -m adapters.strands starts stdio Handshake with provenance=unofficial]  completed: 2026-09-04
   - deps: [T7.3, T13.0]
 
-- [ ] T13.15 Scaffold adapters/crewai (CrewAI)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-030]  lane: agent  acc: [python -m adapters.crewai starts stdio Handshake with provenance=unofficial]
+- [x] T13.15 Scaffold adapters/crewai (CrewAI)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-030]  lane: agent  acc: [python -m adapters.crewai starts stdio Handshake with provenance=unofficial]  completed: 2026-09-04
   - deps: [T7.3, T13.0]
 
 ## Wave 5 -- §8.1 adapter tool paths (6 parallel)
