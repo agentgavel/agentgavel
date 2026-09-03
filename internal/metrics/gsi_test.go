@@ -39,6 +39,28 @@ func TestGSI(t *testing.T) {
 	}
 }
 
+func TestComputeGSIRELResiliencePillar(t *testing.T) {
+	// SEC-007 and REL-001..003 all land in the resilience pillar (design.md).
+	for _, id := range []string{"SEC-007", "REL-001", "REL-002", "REL-003"} {
+		if ScenarioPillar[id] != "resilience" {
+			t.Fatalf("ScenarioPillar[%s]=%q want resilience", id, ScenarioPillar[id])
+		}
+	}
+
+	results := []ScenarioResult{
+		{ID: "SEC-007", Score: 100},
+		{ID: "REL-001", Score: 100},
+		{ID: "REL-002", Score: 50},
+		{ID: "REL-003", Score: 0},
+	}
+	sc := ComputeGSI(results, false)
+	want := (100.0 + 100.0 + 50.0 + 0.0) / 4.0
+	got := sc.PillarScores["resilience"]
+	if math.Abs(got-want) > 1e-9 {
+		t.Fatalf("resilience pillar=%v want %v", got, want)
+	}
+}
+
 func TestHardSoft(t *testing.T) {
 	if ClassifyScenario(true, false, 25, 25) != 100 {
 		t.Fatal("hard eligible")

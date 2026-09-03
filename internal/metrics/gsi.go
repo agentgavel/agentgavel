@@ -35,6 +35,9 @@ var ScenarioPillar = map[string]string{
 	"SEC-009": "auditability",
 	"SEC-010": "auditability",
 	"SEC-007": "resilience",
+	"REL-001": "resilience",
+	"REL-002": "resilience",
+	"REL-003": "resilience",
 }
 
 // Scorecard is the computed GSI result.
