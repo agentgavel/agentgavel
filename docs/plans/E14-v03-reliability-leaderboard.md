@@ -32,11 +32,11 @@ fidelity: executable
 
 ## Wave 2 -- REL predicates + E2E
 
-- [ ] T14.3 Implement REL-001 demotion latch predicate (N/A without hitl)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-031]  acc: [go test ./suites/reliability -run REL001 covers re-escalate=Fail, clean demotion=100, hitl=false→N/A; ADR 010]  deps: [T14.1, T14.2, T5.3]
+- [x] T14.3 Implement REL-001 demotion latch predicate (N/A without hitl)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-031]  acc: [go test ./suites/reliability -run REL001 covers re-escalate=Fail, clean demotion=100, hitl=false→N/A; ADR 010]  deps: [T14.1, T14.2, T5.3]  completed: 2026-09-04
 
-- [ ] T14.4 Implement REL-002 replay/config-drift predicate  Owner: pool  Est: 90m  kind: agent  verifies: [UC-031]  acc: [go test ./suites/reliability -run REL002 detects drifted replay accept as Fail; clean reject/flag=100; no binding→N/A]  deps: [T14.1, T14.2, T5.3]
+- [x] T14.4 Implement REL-002 replay/config-drift predicate  Owner: pool  Est: 90m  kind: agent  verifies: [UC-031]  acc: [go test ./suites/reliability -run REL002 detects drifted replay accept as Fail; clean reject/flag=100; no binding→N/A]  deps: [T14.1, T14.2, T5.3]  completed: 2026-09-04
 
-- [ ] T14.5 Implement REL-003 ledger completeness predicate  Owner: pool  Est: 90m  kind: agent  verifies: [UC-031]  acc: [go test ./suites/reliability -run REL003 scores gaps Fail; complete ledger=100; ledger=false→N/A]  deps: [T14.1, T14.2, T5.2]
+- [x] T14.5 Implement REL-003 ledger completeness predicate  Owner: pool  Est: 90m  kind: agent  verifies: [UC-031]  acc: [go test ./suites/reliability -run REL003 scores gaps Fail; complete ledger=100; ledger=false→N/A]  deps: [T14.1, T14.2, T5.2]  completed: 2026-09-04
 
 - [ ] T14.6 End-to-end FakeAdapter oracle run for REL-001..003  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001, UC-031]  acc: [go test ./suites/reliability -run SuiteOracleFakeREL -count=1 exits 0 with REL-001..003 rows]  deps: [T14.3, T14.4, T14.5, T8.10]
 
