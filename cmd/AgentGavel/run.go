@@ -25,6 +25,7 @@ func runRun(args []string) int {
 	rootDir := fs.String("root", "", "alias for --out (directory containing results/)")
 	scenarios := fs.String("scenarios", "", "optional comma-separated scenario IDs (default: all)")
 	runID := fs.String("run-id", "", "run id for results/<run-id>/ (default: generated)")
+	fingerprintPath := fs.String("fingerprint", "", "reload seed-set (and other pins) from a prior fingerprint.json or summary.json")
 	fs.Usage = func() {
 		fmt.Fprintf(fs.Output(), `Usage: AgentGavel run [flags]
 
@@ -69,6 +70,16 @@ Flags:
 		return 2
 	}
 
+	var pinned *engine.Fingerprint
+	if strings.TrimSpace(*fingerprintPath) != "" {
+		fp, err := engine.LoadFingerprintFile(*fingerprintPath)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "run: %v\n", err)
+			return 2
+		}
+		pinned = &fp
+	}
+
 	id := *runID
 	if id == "" {
 		id = fmt.Sprintf("run-%d", time.Now().UTC().UnixNano())
@@ -100,14 +111,28 @@ Flags:
 		return 1
 	}
 
-	result, err := security.RunOracleFake(resultsRoot, id, security.OracleFakeOptions{
+	opts := security.OracleFakeOptions{
 		RepoRoot:         repoRoot,
 		Seeds:            *seeds,
 		Scenarios:        scenarioList,
 		AdapterVersion:   adapterVer,
 		Model:            "oracle",
 		FrameworkVersion: version,
-	})
+	}
+	if pinned != nil {
+		opts.SeedSet = pinned.SeedSet
+		if pinned.Model != "" {
+			opts.Model = pinned.Model
+		}
+		if pinned.FrameworkVersion != "" {
+			opts.FrameworkVersion = pinned.FrameworkVersion
+		}
+		if pinned.AdapterVersion != "" {
+			opts.AdapterVersion = pinned.AdapterVersion
+		}
+	}
+
+	result, err := security.RunOracleFake(resultsRoot, id, opts)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "run: %v\n", err)
 		return 1

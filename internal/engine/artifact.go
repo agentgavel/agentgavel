@@ -39,5 +39,8 @@ func WriteRunArtifact(root, runID string, art RunArtifact) (string, error) {
 	if err := os.WriteFile(path, b, 0o644); err != nil {
 		return "", err
 	}
+	if _, err := WriteFingerprintFile(dir, art.Fingerprint); err != nil {
+		return "", err
+	}
 	return path, nil
 }

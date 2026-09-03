@@ -31,6 +31,18 @@ func TestWriteRunArtifact(t *testing.T) {
 	if art.RunID != "run-1" || art.Fingerprint["scenario-version"] != "SEC-v1" {
 		t.Fatalf("%#v", art)
 	}
+	fpPath := filepath.Join(root, "results", "run-1", "fingerprint.json")
+	fb, err := os.ReadFile(fpPath)
+	if err != nil {
+		t.Fatalf("fingerprint.json: %v", err)
+	}
+	var fields map[string]string
+	if err := json.Unmarshal(fb, &fields); err != nil {
+		t.Fatal(err)
+	}
+	if fields["scenario-version"] != "SEC-v1" {
+		t.Fatalf("fingerprint fields %#v", fields)
+	}
 }
 
 func TestScenarioInterfaceMethods(t *testing.T) {
