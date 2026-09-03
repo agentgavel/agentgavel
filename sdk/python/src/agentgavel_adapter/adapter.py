@@ -7,7 +7,8 @@ transport (ADR 002) and Event buffering via ``emit()``.
 from __future__ import annotations
 
 import sys
-from typing import TYPE_CHECKING, Any, BinaryIO, Mapping, MutableMapping, Sequence, TextIO
+from collections.abc import Mapping, MutableMapping, Sequence
+from typing import TYPE_CHECKING, Any, BinaryIO, TextIO
 
 if TYPE_CHECKING:
     from agentgavel_adapter.transport import TransportLoop
