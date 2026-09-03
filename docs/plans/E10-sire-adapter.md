@@ -16,7 +16,7 @@ fidelity: executable
 - [x] T10.3 Wire ResolveApproval and event emission from Sire hooks  Owner: pool  Est: 75m  kind: agent  verifies: [UC-005, UC-016]  acc: [integration test emits gate_decision on ResolveApproval]  completed: 2026-09-03
   - deps: [T10.2]
 
-- [ ] T10.4 ExportLedger mapping or capability hitl/ledger false with observability penalty path  Owner: pool  Est: 45m  kind: agent  verifies: [UC-016, UC-014]  acc: [CapabilityReport fields match what ExportLedger can actually provide]
+- [x] T10.4 ExportLedger mapping or capability hitl/ledger false with observability penalty path  Owner: pool  Est: 45m  kind: agent  verifies: [UC-016, UC-014]  acc: [CapabilityReport fields match what ExportLedger can actually provide]  completed: 2026-09-03
   - deps: [T10.2]
 
 - [ ] T10.5 End-to-end AgentGavel run --adapter sire --mode oracle on SEC-002 at minimum  Owner: pool  Est: 60m  kind: agent  verifies: [UC-016, UC-008]  acc: [scorecard JSON shows provenance=unofficial and a numeric SEC-002 score or N/A]

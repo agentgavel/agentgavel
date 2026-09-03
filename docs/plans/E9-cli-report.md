@@ -20,5 +20,5 @@ fidelity: executable
 - [x] T9.5 CLI tests (exec of binary) for help, version, run dry-run validation errors  Owner: pool  Est: 45m  kind: agent  verifies: [UC-001]  acc: [go test ./cmd/AgentGavel -run CLI covers missing adapter error]  completed: 2026-09-03
   - deps: [T9.2]
 
-- [ ] T9.6 Lint/format cmd  Owner: pool  Est: 20m  kind: agent  verifies: [infrastructure]  acc: [gofmt -l cmd is empty]
+- [x] T9.6 Lint/format cmd  Owner: pool  Est: 20m  kind: agent  verifies: [infrastructure]  acc: [gofmt -l cmd is empty]  completed: 2026-09-03
   - deps: [T9.5]
