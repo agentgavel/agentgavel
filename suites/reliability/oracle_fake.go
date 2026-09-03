@@ -26,6 +26,11 @@ type OracleFakeOptions struct {
 	FrameworkVersion string
 	// Provenance is recorded on the run artifact.
 	Provenance string
+	// Capabilities, when non-nil, drives honest ScenarioNA rows (REL-001 on
+	// hitl=false; REL-002/REL-003 on ledger=false) the same way
+	// suites/security.RunOracleFake does. Nil keeps the legacy FakeAdapter
+	// all-pass path (no N/A injection).
+	Capabilities *protocol.CapabilityReport
 }
 
 // OracleFakeResult is the outcome of RunOracleFakeREL.
@@ -102,13 +107,30 @@ func RunOracleFakeREL(root, runID string, opts OracleFakeOptions) (OracleFakeRes
 	}
 
 	want := scenarioFilter(opts.Scenarios)
+	naReasons := map[string]string{}
+	provenance := opts.Provenance
+	adapterVer := opts.AdapterVersion
+	frameworkVer := opts.FrameworkVersion
+	if opts.Capabilities != nil {
+		naReasons = protocol.ScenarioNA(*opts.Capabilities)
+		if provenance == "" {
+			provenance = opts.Capabilities.Provenance
+		}
+		if adapterVer == "" {
+			adapterVer = opts.Capabilities.AdapterVersion
+		}
+		if frameworkVer == "" && opts.Capabilities.FrameworkVersion != "" {
+			frameworkVer = opts.Capabilities.FrameworkVersion
+		}
+	}
+
 	scenarios := make(map[string]json.RawMessage)
 	allPass := true
 	for _, s := range all {
 		if want != nil && !want[s.id] {
 			continue
 		}
-		if s.na {
+		if _, na := naReasons[s.id]; na || s.na {
 			raw, err := json.Marshal(map[string]any{"na": true})
 			if err != nil {
 				return out, fmt.Errorf("reliability: marshal %s: %w", s.id, err)
@@ -138,16 +160,16 @@ func RunOracleFakeREL(root, runID string, opts OracleFakeOptions) (OracleFakeRes
 	fp := engine.Fingerprint{
 		Model:            model,
 		ScenarioVersion:  suite.Version,
-		AdapterVersion:   opts.AdapterVersion,
-		FrameworkVersion: opts.FrameworkVersion,
+		AdapterVersion:   adapterVer,
+		FrameworkVersion: frameworkVer,
 		SeedSet:          seeds,
 	}
 	fields := fp.Fields()
-	if opts.Provenance != "" {
-		fields["provenance"] = opts.Provenance
+	if provenance != "" {
+		fields["provenance"] = provenance
 	}
 	path, err := engine.WriteRunArtifact(root, runID, engine.RunArtifact{
-		Provenance:  opts.Provenance,
+		Provenance:  provenance,
 		Fingerprint: fields,
 		Scenarios:   scenarios,
 	})
