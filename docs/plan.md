@@ -148,7 +148,7 @@ Sync points: T14.6 (REL E2E), T14.7 (`rubber-stamp`), T14.15 (quality gate).
 ### Wave 24: dashboard / leaderboard (4 agents)
 - T14.9, T14.10, T14.11, T14.12
 
-### Wave 25: v0.3 smoke + quality + ship (3 agents / humans)
+### Wave 25: v0.3 smoke + quality + ship (4 agents / humans)
 - T14.13, T14.14, T14.15, T14.16
 
 ## Roadmap
