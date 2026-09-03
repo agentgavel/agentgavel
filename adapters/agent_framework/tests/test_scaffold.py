@@ -20,12 +20,12 @@ def test_handshake_provenance_unofficial() -> None:
     assert report["adapter_name"] == "agent_framework"
     assert report["framework_name"] == "microsoft-agent-framework"
     assert report["provenance"] == "unofficial"
-    # Honest scaffold capabilities (T13.13).
+    # Honest capabilities after T13.19 tool path.
     assert report["hitl"] is False
     assert report["ledger"] is False
-    assert report["observability"] is False
+    assert report["observability"] is True
     assert report["tenancy"] is False
-    assert report["context_mode"] == "none"
+    assert report["context_mode"] == "attestation"
 
 
 def test_lifecycle_stubs_do_not_crash() -> None:
