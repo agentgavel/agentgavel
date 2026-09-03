@@ -23,5 +23,5 @@ fidelity: executable
 - [x] T11.6 adapters/langgraph/README unofficial labeling  Owner: pool  Est: 30m  kind: agent  delivers: [adapters/langgraph/README]  verifies: [UC-017]  acc: [README states unofficial]  completed: 2026-09-03
   - deps: [T11.1]
 
-- [ ] T11.7 Ruff lint adapters/langgraph  Owner: pool  Est: 20m  kind: agent  verifies: [infrastructure]  acc: [ruff check adapters/langgraph exits 0]
+- [x] T11.7 Ruff lint adapters/langgraph  Owner: pool  Est: 20m  kind: agent  verifies: [infrastructure]  acc: [ruff check adapters/langgraph exits 0]  completed: 2026-09-03
   - deps: [T11.5]

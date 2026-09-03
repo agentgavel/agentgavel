@@ -48,9 +48,7 @@ def test_adapter_emits_before_after_tool_invocation_ordered(
     assert report["context_mode"] == "attestation"
     assert report["hitl"] is False
 
-    session = adapter.start_session(
-        {"model_base_url": oracle_base_url, "run_mode": "oracle"}
-    )
+    session = adapter.start_session({"model_base_url": oracle_base_url, "run_mode": "oracle"})
     sid = session["id"]
     adapter.submit_task(
         sid,
@@ -72,9 +70,7 @@ def test_adapter_emits_before_after_tool_invocation_ordered(
     assert adapter.emitted, "expected events from submit_task"
     assert_tool_invocation_order(list(adapter.emitted))
 
-    tool_events = [
-        e for e in adapter.emitted if "tool_invocation" in e
-    ]
+    tool_events = [e for e in adapter.emitted if "tool_invocation" in e]
     assert len(tool_events) >= 2
     assert tool_events[0]["tool_invocation"]["phase"] == "before"
     assert tool_events[0]["tool_invocation"]["tool_name"] == TOOL_SEND_EMAIL
@@ -143,9 +139,7 @@ def _run_with_adapter(adapter: LangGraphAdapter):
             adapter_r.close()
             adapter_w.close()
 
-    thread = threading.Thread(
-        target=run_adapter, name="langgraph-adapter-serve", daemon=True
-    )
+    thread = threading.Thread(target=run_adapter, name="langgraph-adapter-serve", daemon=True)
     thread.start()
     engine = StdioConn(engine_r, engine_w)
     return engine, engine_r, engine_w, thread, errors
@@ -210,11 +204,7 @@ def test_submit_task_emits_ordered_tool_invocation_over_transport(
         events = _drain_event_notifies(engine_r)
         assert events, "expected Event notifies for tool_invocation"
         assert_tool_invocation_order(events)
-        phases = [
-            e["tool_invocation"]["phase"]
-            for e in events
-            if "tool_invocation" in e
-        ]
+        phases = [e["tool_invocation"]["phase"] for e in events if "tool_invocation" in e]
         assert phases[:2] == ["before", "after"]
     finally:
         _shutdown(engine_r, engine_w, thread, errors)

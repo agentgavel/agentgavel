@@ -146,6 +146,4 @@ def assert_tool_invocation_order(events: list[Mapping[str, Any]]) -> None:
             seen_before.add(key)
         elif phase == "after":
             if key not in seen_before:
-                raise AssertionError(
-                    f"tool_invocation after precedes before for {key!r}"
-                )
+                raise AssertionError(f"tool_invocation after precedes before for {key!r}")
