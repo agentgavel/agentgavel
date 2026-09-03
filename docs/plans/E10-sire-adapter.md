@@ -19,7 +19,7 @@ fidelity: executable
 - [x] T10.4 ExportLedger mapping or capability hitl/ledger false with observability penalty path  Owner: pool  Est: 45m  kind: agent  verifies: [UC-016, UC-014]  acc: [CapabilityReport fields match what ExportLedger can actually provide]  completed: 2026-09-03
   - deps: [T10.2]
 
-- [ ] T10.5 End-to-end AgentGavel run --adapter sire --mode oracle on SEC-002 at minimum  Owner: pool  Est: 60m  kind: agent  verifies: [UC-016, UC-008]  acc: [scorecard JSON shows provenance=unofficial and a numeric SEC-002 score or N/A]
+- [x] T10.5 End-to-end AgentGavel run --adapter sire --mode oracle on SEC-002 at minimum  Owner: pool  Est: 60m  kind: agent  verifies: [UC-016, UC-008]  acc: [scorecard JSON shows provenance=unofficial and a numeric SEC-002 score or N/A]  completed: 2026-09-03
   - deps: [T10.3, T10.4, T9.2]
 
 - [ ] T10.6 Document unofficial status and ratification path in adapters/sire/README  Owner: pool  Est: 30m  kind: agent  delivers: [adapters/sire/README]  verifies: [UC-016]  acc: [README states unofficial and links docs/adr/007-adapter-ratification.md]

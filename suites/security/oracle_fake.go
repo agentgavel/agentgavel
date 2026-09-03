@@ -28,6 +28,14 @@ type OracleFakeOptions struct {
 	Model string
 	// FrameworkVersion is optional fingerprint metadata.
 	FrameworkVersion string
+	// Provenance is recorded on the run artifact (from Handshake CapabilityReport).
+	Provenance string
+	// ObservabilityPenalty, when true, is written onto the summary for report.Load.
+	ObservabilityPenalty bool
+	// Capabilities, when non-nil, drives honest ScenarioNA rows and may set
+	// ObservabilityPenalty from protocol.ObservabilityPenalty. Nil keeps the
+	// legacy FakeAdapter all-pass path (no N/A injection).
+	Capabilities *protocol.CapabilityReport
 }
 
 // OracleFakeResult is the outcome of RunOracleFake.
@@ -141,10 +149,39 @@ func RunOracleFake(root, runID string, opts OracleFakeOptions) (OracleFakeResult
 	}
 
 	want := scenarioFilter(opts.Scenarios)
+	naReasons := map[string]string{}
+	obsPenalty := opts.ObservabilityPenalty
+	provenance := opts.Provenance
+	adapterVer := opts.AdapterVersion
+	frameworkVer := opts.FrameworkVersion
+	if opts.Capabilities != nil {
+		naReasons = protocol.ScenarioNA(*opts.Capabilities)
+		if protocol.ObservabilityPenalty(*opts.Capabilities) {
+			obsPenalty = true
+		}
+		if provenance == "" {
+			provenance = opts.Capabilities.Provenance
+		}
+		if adapterVer == "" {
+			adapterVer = opts.Capabilities.AdapterVersion
+		}
+		if frameworkVer == "" && opts.Capabilities.FrameworkVersion != "" {
+			frameworkVer = opts.Capabilities.FrameworkVersion
+		}
+	}
+
 	scenarios := make(map[string]json.RawMessage)
 	allPass := true
 	for _, s := range all {
 		if want != nil && !want[s.id] {
+			continue
+		}
+		if _, na := naReasons[s.id]; na {
+			raw, err := json.Marshal(map[string]any{"na": true})
+			if err != nil {
+				return out, fmt.Errorf("security: marshal %s: %w", s.id, err)
+			}
+			scenarios[s.id] = raw
 			continue
 		}
 		if s.score != 100 || s.catastrophic {
@@ -173,13 +210,21 @@ func RunOracleFake(root, runID string, opts OracleFakeOptions) (OracleFakeResult
 	fp := engine.Fingerprint{
 		Model:            model,
 		ScenarioVersion:  suite.Version,
-		AdapterVersion:   opts.AdapterVersion,
-		FrameworkVersion: opts.FrameworkVersion,
+		AdapterVersion:   adapterVer,
+		FrameworkVersion: frameworkVer,
 		SeedSet:          seeds,
 	}
+	fields := fp.Fields()
+	if provenance != "" {
+		// Non-hashed metadata so scorecards/fingerprints show Handshake provenance
+		// without changing the reproducible hash of seed/model/version pins.
+		fields["provenance"] = provenance
+	}
 	path, err := engine.WriteRunArtifact(root, runID, engine.RunArtifact{
-		Fingerprint: fp.Fields(),
-		Scenarios:   scenarios,
+		Provenance:           provenance,
+		ObservabilityPenalty: obsPenalty,
+		Fingerprint:          fields,
+		Scenarios:            scenarios,
 	})
 	if err != nil {
 		return out, err

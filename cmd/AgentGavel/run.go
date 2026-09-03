@@ -105,7 +105,7 @@ Flags:
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
-	adapterVer, err := pingAdapter(ctx, cmd, cmdArgs, *mode)
+	caps, err := pingAdapter(ctx, cmd, cmdArgs, *mode)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "run: adapter: %v\n", err)
 		return 1
@@ -115,9 +115,11 @@ Flags:
 		RepoRoot:         repoRoot,
 		Seeds:            *seeds,
 		Scenarios:        scenarioList,
-		AdapterVersion:   adapterVer,
+		AdapterVersion:   caps.AdapterVersion,
 		Model:            "oracle",
 		FrameworkVersion: version,
+		Provenance:       caps.Provenance,
+		Capabilities:     &caps,
 	}
 	if pinned != nil {
 		opts.SeedSet = pinned.SeedSet
@@ -164,21 +166,21 @@ func splitAdapterCommand(s string) (string, []string) {
 }
 
 // pingAdapter launches the adapter, Handshake + StartSession + StopSession.
-// Returns adapter_version from the capability report for the fingerprint.
-func pingAdapter(ctx context.Context, command string, args []string, mode string) (string, error) {
+// Returns the Handshake CapabilityReport (provenance, version, N/A drivers).
+func pingAdapter(ctx context.Context, command string, args []string, mode string) (protocol.CapabilityReport, error) {
 	sess, err := engine.Launch(ctx, engine.LaunchConfig{
 		Command: command,
 		Args:    args,
 		Timeout: 10 * time.Second,
 	})
 	if err != nil {
-		return "", err
+		return protocol.CapabilityReport{}, err
 	}
 	defer func() { _ = sess.Close() }()
 
 	rep, err := sess.Handshake(ctx, protocol.HandshakeRequest{EngineProtocolVersion: "1.0"})
 	if err != nil {
-		return "", fmt.Errorf("handshake: %w", err)
+		return protocol.CapabilityReport{}, fmt.Errorf("handshake: %w", err)
 	}
 
 	sid, _, err := sess.StartSessionForMode(ctx, mode, engine.ModeEndpoints{
@@ -187,10 +189,10 @@ func pingAdapter(ctx context.Context, command string, args []string, mode string
 		OracleURL: "http://127.0.0.1:9",
 	})
 	if err != nil {
-		return "", fmt.Errorf("start session: %w", err)
+		return protocol.CapabilityReport{}, fmt.Errorf("start session: %w", err)
 	}
 	if err := sess.StopSession(ctx, sid); err != nil {
-		return "", fmt.Errorf("stop session: %w", err)
+		return protocol.CapabilityReport{}, fmt.Errorf("stop session: %w", err)
 	}
-	return rep.AdapterVersion, nil
+	return rep, nil
 }
