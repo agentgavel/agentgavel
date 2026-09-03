@@ -99,7 +99,7 @@ Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 
 ### E9 -- CLI run, report, fingerprint  -> docs/plans/E9-cli-report.md  (2/6)
 
-### E10 -- Sire adapter (unofficial)  -> docs/plans/E10-sire-adapter.md  (1/7)
+### E10 -- Sire adapter (unofficial)  -> docs/plans/E10-sire-adapter.md  (2/7)
 
 ### E11 -- LangGraph adapter (unofficial)  -> docs/plans/E11-langgraph-adapter.md  (0/7)
 
@@ -210,6 +210,8 @@ Rules:
 - After M5, run T13.0 before any v0.2 coding.
 
 ## 9. Progress Log
+
+- 2026-09-03: T10.2 Sire mockable lifecycle client merged (#42).
 
 - 2026-09-03: T8.11 suites/security gofmt verified clean (#39).
 
