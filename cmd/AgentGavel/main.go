@@ -25,6 +25,8 @@ func run(args []string) int {
 		return 0
 	case "oracle":
 		return runOracle(args[1:])
+	case "report":
+		return runReport(args[1:])
 	case "help", "-h", "--help":
 		printHelp(os.Stdout)
 		return 0
@@ -47,6 +49,7 @@ Usage:
 Commands:
   version  Print the AgentGavel version
   oracle   Run the Compliance Oracle HTTP server (--listen host:port)
+  report   Print GSI scorecard text (or --json) from results/<run-id>
   help     Show this help
 
 See docs/RFC-0001.md for the specification.
