@@ -24,7 +24,7 @@ fidelity: executable
   - deps: [T12.4]
   - Note: human confirms public messaging.
 
-- [ ] T12.7 Full make test && make lint on clean tree; fix stragglers  Owner: pool  Est: 60m  kind: agent  verifies: [infrastructure]  acc: [make test and make lint exit 0]
+- [x] T12.7 Full make test && make lint on clean tree; fix stragglers  Owner: pool  Est: 60m  kind: agent  verifies: [infrastructure]  acc: [make test and make lint exit 0]  completed: 2026-09-03
   - deps: [T12.1, T8.11, T9.6, T10.7, T11.7]
 
 - [ ] T12.8 Cut v0.1.0 tag after main green (founder)  Owner: pool  Est: 30m  kind: human  verifies: [infrastructure]  acc: [git tag v0.1.0 exists on origin and release assets uploaded]

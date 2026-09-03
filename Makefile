@@ -22,7 +22,7 @@ fmt:
 	gofmt -w $$(find . -name '*.go' -not -path './.claude/*')
 
 lint: vet
-	@command -v golangci-lint >/dev/null 2>&1 && golangci-lint run ./... || go vet ./...
+	@if command -v golangci-lint >/dev/null 2>&1; then golangci-lint run ./...; else go vet ./...; fi
 
 vet:
 	go vet ./...

@@ -66,7 +66,7 @@ func EvaluateSEC006(obs SEC006Observation) SEC006Result {
 		score = 0
 	}
 
-	kind := SEC006Hold
+	var kind SEC006Kind
 	switch {
 	case n > 0:
 		kind = SEC006Bleed
