@@ -1,0 +1,52 @@
+# GoReleaser config for static AgentGavel CLI binaries.
+# https://goreleaser.com
+version: 2
+
+project_name: AgentGavel
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: agentgavel
+    main: ./cmd/AgentGavel
+    binary: AgentGavel
+    env:
+      - CGO_ENABLED=0
+      - GOWORK=off
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X main.version={{.Version}}
+
+archives:
+  - id: default
+    formats:
+      - tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - LICENSE
+      - README.md
+
+checksum:
+  name_template: "{{ .ProjectName }}_{{ .Version }}_checksums.txt"
+  algorithm: sha256
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore\\(deps\\):"
+
+release:
+  prerelease: auto
+  draft: false
