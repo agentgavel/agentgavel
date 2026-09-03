@@ -9,10 +9,10 @@ fidelity: executable
   - deps: [T1.1]
   - Decision rationale: docs/adr/002-adapter-transport.md
 
-- [ ] T2.2 Implement internal/protocol types + JSON codec (stdlib encoding/json) mirroring proto  Owner: pool  Est: 90m  kind: agent  verifies: [UC-003, UC-004]  acc: [go test ./internal/protocol -run Codec round-trips HandshakeRequest and Event tool_invocation]
+- [x] T2.2 Implement internal/protocol types + JSON codec (stdlib encoding/json) mirroring proto  Owner: pool  Est: 90m  kind: agent  verifies: [UC-003, UC-004]  acc: [go test ./internal/protocol -run Codec round-trips HandshakeRequest and Event tool_invocation]  completed: 2026-09-03
   - deps: [T2.1]
 
-- [ ] T2.3 Implement stdio JSON-RPC 2.0 framing (newline-delimited request/response + event notifications)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-003, UC-004]  acc: [go test ./internal/protocol -run Stdio launches two ends and completes Handshake]
+- [x] T2.3 Implement stdio JSON-RPC 2.0 framing (newline-delimited request/response + event notifications)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-003, UC-004]  acc: [go test ./internal/protocol -run Stdio launches two ends and completes Handshake]  completed: 2026-09-03
   - deps: [T2.2]
 
 - [ ] T2.4 Implement session lifecycle helpers: start, submit, resolve, export, stop with timeouts/context  Owner: pool  Est: 60m  kind: agent  verifies: [UC-004, UC-005]  acc: [go test ./internal/protocol -run SessionLifecycle passes with a fake adapter server]
@@ -21,7 +21,7 @@ fidelity: executable
 - [ ] T2.5 Version negotiation: Handshake carries engine and adapter protocol versions; incompatible major returns error  Owner: pool  Est: 45m  kind: agent  verifies: [UC-003]  acc: [go test ./internal/protocol -run VersionReject fails Handshake when major differs]
   - deps: [T2.3]
 
-- [ ] T2.6 Document CapabilityReport fields (hitl, tenancy, ledger, observability, context_mode) and N/A mapping  Owner: pool  Est: 45m  kind: agent  verifies: [UC-003]  delivers: [docs snippet or package comment for CapabilityReport]  acc: [CapabilityReport struct fields documented and covered by a table-driven test of N/A mapping helpers]
+- [x] T2.6 Document CapabilityReport fields (hitl, tenancy, ledger, observability, context_mode) and N/A mapping  Owner: pool  Est: 45m  kind: agent  verifies: [UC-003]  delivers: [docs snippet or package comment for CapabilityReport]  acc: [CapabilityReport struct fields documented and covered by a table-driven test of N/A mapping helpers]  completed: 2026-09-03
   - deps: [T2.2]
 
 - [ ] T2.7 Protocol package tests for Events before/after tool_invocation ordering invariant  Owner: pool  Est: 45m  kind: agent  verifies: [UC-004]  acc: [go test ./internal/protocol -run ToolInvocationOrder fails if after precedes before]

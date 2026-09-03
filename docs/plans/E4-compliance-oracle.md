@@ -15,7 +15,7 @@ fidelity: executable
 - [x] T4.3 Implement Anthropic-shaped messages handler with equivalent tool-use content blocks  Owner: pool  Est: 75m  kind: agent  verifies: [UC-002]  acc: [go test ./internal/oracle -run AnthropicToolUse returns content tool_use matching directive]  completed: 2026-09-03
   - deps: [T4.1]
 
-- [ ] T4.4 Add oracle subcommand or engine-managed lifecycle: AgentGavel oracle --listen  Owner: pool  Est: 45m  kind: agent  verifies: [UC-002]  acc: [AgentGavel oracle --listen 127.0.0.1:0 prints addr; curl health returns 200]
+- [x] T4.4 Add oracle subcommand or engine-managed lifecycle: AgentGavel oracle --listen  Owner: pool  Est: 45m  kind: agent  verifies: [UC-002]  acc: [AgentGavel oracle --listen 127.0.0.1:0 prints addr; curl health returns 200]  completed: 2026-09-03
   - deps: [T4.2, T1.1]
 
 - [x] T4.5 Negative tests: without directive, Oracle refuses to invent actions (explicit error)  Owner: pool  Est: 30m  kind: agent  verifies: [UC-002]  acc: [go test ./internal/oracle -run MissingDirective returns 4xx]  completed: 2026-09-03
