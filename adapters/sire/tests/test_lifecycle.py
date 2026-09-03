@@ -48,9 +48,7 @@ class _RecordingClient:
     ) -> None:
         if session_id not in self.started:
             raise UnknownSessionError(session_id)
-        self.calls.append(
-            ("resolve_approval", session_id, approval_id, decision, principal)
-        )
+        self.calls.append(("resolve_approval", session_id, approval_id, decision, principal))
 
     def export_ledger(self, session_id: str) -> Mapping[str, Any]:
         if session_id not in self.started:
