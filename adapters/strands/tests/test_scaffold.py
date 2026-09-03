@@ -1,4 +1,4 @@
-"""Smoke tests for the AWS Strands Agents adapter scaffold (T13.14)."""
+"""Smoke tests for the AWS Strands Agents adapter scaffold (T13.14 / T13.20)."""
 
 from __future__ import annotations
 
@@ -23,8 +23,9 @@ def test_handshake_provenance_unofficial() -> None:
     assert report["hitl"] is False
     assert report["tenancy"] is False
     assert report["ledger"] is False
-    assert report["observability"] is False
-    assert report["context_mode"] == "none"
+    # T13.20: tool_invocation + context_attestation → observability true.
+    assert report["observability"] is True
+    assert report["context_mode"] == "attestation"
 
 
 def test_lifecycle_without_oracle_does_not_crash() -> None:

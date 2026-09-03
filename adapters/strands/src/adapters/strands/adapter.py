@@ -1,17 +1,21 @@
 """AWS Strands Agents adapter (provenance=unofficial).
 
-T13.14: Handshake + session lifecycle scaffold. No strands-agents / tool path
-yet (T13.20). CapabilityReport stays honest: hitl/tenancy/ledger/observability
-false, context_mode=none. Unofficial until a maintainer signs off (ADR 007).
+T13.14: Handshake + session lifecycle scaffold.
+T13.20: minimal in-process email tool graph (read_email/send_email) aimed at
+the Compliance Oracle; records ``tool_invocation`` before/after and hashed
+``context_attestation`` (ADR 005). HITL/interrupt is not wired — Handshake
+keeps ``hitl=false`` honestly. Unofficial until a maintainer signs off (ADR 007).
 """
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, MutableMapping
 from typing import Any
 from uuid import uuid4
 
 from agentgavel_adapter.adapter import Adapter
+
+from adapters.strands.graph import MinimalEmailGraph
 
 _ADAPTER_VERSION = "0.0.1"
 _FRAMEWORK_VERSION = "stub-0.0.1"
@@ -22,11 +26,14 @@ class HitlNotSupportedError(RuntimeError):
 
 
 class StrandsAdapter(Adapter):
-    """Unofficial AWS Strands sidecar: Handshake + lifecycle (no tool path yet)."""
+    """Unofficial AWS Strands sidecar: Handshake + Oracle graph (no HITL yet)."""
 
     def __init__(self) -> None:
         super().__init__()
         self._sessions: dict[str, dict[str, Any]] = {}
+        self._seq: dict[str, int] = {}
+        self.emitted: list[MutableMapping[str, Any]] = []
+        self.last_task_result: dict[str, Mapping[str, Any]] = {}
 
     def handshake(
         self,
@@ -41,12 +48,13 @@ class StrandsAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: unofficial until maintainer ratification.
             "provenance": "unofficial",
-            # Honest scaffold: no interrupt flow / events / ledger yet.
+            # Honest: no interrupt flow yet (T13.20 is tools-only).
             "hitl": False,
             "tenancy": False,
             "ledger": False,
-            "observability": False,
-            "context_mode": "none",
+            # tool_invocation before/after + context_attestation.
+            "observability": True,
+            "context_mode": "attestation",
             "framework_name": "aws-strands",
             "framework_version": _FRAMEWORK_VERSION,
         }
@@ -54,13 +62,32 @@ class StrandsAdapter(Adapter):
     def start_session(self, config: Mapping[str, Any]) -> Mapping[str, Any]:
         session_id = f"strands-sess-{uuid4().hex[:12]}"
         self._sessions[session_id] = dict(config)
+        self._seq[session_id] = 0
         return {"id": session_id}
 
     def submit_task(self, session_id: str, task: Mapping[str, Any]) -> None:
-        if session_id not in self._sessions:
+        config = self._sessions.get(session_id)
+        if config is None:
             raise KeyError(f"unknown session: {session_id}")
-        # Scaffold: record task only; Oracle tool path lands in T13.20.
-        self._sessions[session_id]["last_task"] = dict(task)
+        base_url = str(config.get("model_base_url") or "").strip()
+        if not base_url:
+            # No Oracle binding yet — lifecycle no-op (scaffold behavior).
+            self._sessions[session_id]["last_task"] = dict(task)
+            return
+        meta = task.get("metadata") if isinstance(task.get("metadata"), Mapping) else {}
+        directive = meta.get("probe_directive") if isinstance(meta, Mapping) else None
+        if directive is not None and not isinstance(directive, Mapping):
+            raise TypeError("task.metadata.probe_directive must be a mapping")
+        graph = MinimalEmailGraph(
+            model_base_url=base_url,
+            session_id=session_id,
+            on_event=self._record_event,
+        )
+        result = graph.run(
+            str(task.get("prompt") or ""),
+            probe_directive=directive,
+        )
+        self.last_task_result[session_id] = result
 
     def resolve_approval(
         self,
@@ -84,3 +111,19 @@ class StrandsAdapter(Adapter):
 
     def stop_session(self, session_id: str) -> None:
         self._sessions.pop(session_id, None)
+        self.last_task_result.pop(session_id, None)
+        self._seq.pop(session_id, None)
+
+    def _next_seq(self, session_id: str) -> int:
+        n = self._seq.get(session_id, 0) + 1
+        self._seq[session_id] = n
+        return n
+
+    def _record_event(self, event: MutableMapping[str, Any]) -> None:
+        # Stamp a session-monotonic seq so graph events share one clock.
+        sid = event.get("session_id")
+        if isinstance(sid, str) and sid:
+            event["seq"] = self._next_seq(sid)
+        self.emitted.append(event)
+        if self._transport is not None:
+            self.emit(event)
