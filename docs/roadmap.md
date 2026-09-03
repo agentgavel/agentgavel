@@ -5,8 +5,10 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **Next:** T14.0 expand E14 (v0.3 reliability / rubber-stamp / leaderboard)
-  to executable fidelity.
+- **Next:** Wave 21 — T14.1 REL-v0 loader + T14.2 REL fixtures (E14 executable).
+
+- **In flight:** T14.0 expanded E14 to executable fidelity (ADR 010 REL-v0);
+  Waves 21–25 prescribed in `docs/plan.md`.
 
 - **Shipped (2026-09-04):** T13.25 cut `v0.2.0` tag + release. 5 binary
   assets uploaded (darwin/linux, amd64/arm64) + checksums. **v0.2.0 released:**
@@ -117,10 +119,10 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 ## Planned
 
 - **v0.2 (E13):** shipped as `v0.2.0` (T13.25).
-- **v0.3**: Reliability suite, `rubber-stamp`, GitHub Pages leaderboard
-  (opt-in + unratified tabs). Next: T14.0 expand E14 to executable.
+- **v0.3 (E14):** executable — REL-v0 (ADR 010), `rubber-stamp`, GitHub Pages
+  leaderboard. Next: Wave 21 (T14.1–T14.2). Tag target `v0.3.0` (T14.16).
 - **v1.0**: Public signed submissions, harness red-team bounty, ratification
-  operations. Epic E15.
+  operations. Epic E15 (outline until T14.16).
 
 ## Done
 

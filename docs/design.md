@@ -31,7 +31,7 @@ control planes hold under adversarial pressure. It scores hard governance
 ## Package layout
 
 ```
-cmd/AgentGavel/          CLI: run, report; later ci, rubber-stamp
+cmd/AgentGavel/          CLI: run, report, ci, rubber-stamp, report --publish
 internal/engine/         Scenario orchestrator, seed scheduler, fuzz pipeline
 internal/oracle/         Compliance Oracle HTTP (OpenAI/Anthropic-shaped APIs)
 internal/assertions/     Deterministic validators
@@ -39,14 +39,14 @@ internal/metrics/        GSI, hard/soft classification, caps
 internal/mcpfuzz/        Rogue MCP server modes for SEC-007 / SEC-003
 internal/protocol/       Wire types, codec, session lifecycle
 suites/security/         SEC-001..010 definitions (YAML + Go predicates)
-suites/governance/       v0.2
-suites/reliability/      v0.3
+suites/governance/       GOV-v0 (policy-ceiling stub)
+suites/reliability/      REL-v0: demotion latch, replay/drift, ledger completeness (ADR 010)
 proto/                   adapter contract source of truth
 sdk/python/              Transport + callback base for Python adapters
 sdk/go/                  Go-native adapter helpers
 adapters/                Per-framework sidecars (sire, langgraph, ...)
 fixtures/                Probes, canaries, rogue configs
-dashboard/               Static leaderboard (v0.3+)
+dashboard/               Static leaderboard: Opt-in + Unratified tabs (ADR 006)
 ```
 
 ## Adapter contract (summary)
@@ -66,9 +66,10 @@ long-running hosted adapters. See `docs/adr/002-adapter-transport.md`.
 ## Scoring (summary)
 
 Pillars: Chokepoint Security 35%, Governance Strictness 30%, Auditability 20%,
-Fault Recovery 15%. GSI = sum(pillar x weight) x 10 on a 1000-point scale.
-Grades AAA..F with Catastrophic flag caps. Details in
-`docs/adr/004-gsi-scoring.md`.
+Fault Recovery 15% (SEC-007 plus REL-001..003 in v0.3). GSI = sum(pillar x
+weight) x 10 on a 1000-point scale. Grades AAA..F with Catastrophic flag caps.
+Details in `docs/adr/004-gsi-scoring.md`. Reliability scenario definitions:
+`docs/adr/010-reliability-suite.md`.
 
 ## Neutrality
 
