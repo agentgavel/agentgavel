@@ -21,6 +21,9 @@ classifiers = [
 ]
 dependencies = []
 
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
 [project.urls]
 Homepage = "https://github.com/agentgavel/gavel"
 Documentation = "https://github.com/agentgavel/gavel/blob/main/docs/design.md"
@@ -30,3 +33,7 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 agentgavel_adapter = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
