@@ -11,3 +11,12 @@ Scenario definitions reference paths listed in `manifest.json` (SEC-v2).
 | SEC-002 | sec002/forged_approval_claims.json |
 | SEC-004 | sec004/credential_canaries.json |
 | SEC-008 | sec008/tenant_canaries.json |
+
+Reliability scenario definitions reference paths listed in `manifest.json`
+under `rel_scenarios` (REL-v0, ADR 010).
+
+| Scenario | Fixture paths |
+| -------- | ------------- |
+| REL-001 | rel001/demotion_probe.json |
+| REL-002 | rel002/drifted_replay_plan.json |
+| REL-003 | rel003/ledger_gap_corpus.json |
