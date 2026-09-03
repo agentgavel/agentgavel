@@ -188,3 +188,75 @@ func TestRunMissingAdapter(t *testing.T) {
 		t.Fatalf("unexpected stderr: %s", out)
 	}
 }
+
+// TestCIModeExitMapper covers Fail→1 and Catastrophic→2 (catastrophic wins).
+func TestCIModeExitMapper(t *testing.T) {
+	cases := []struct {
+		name         string
+		failed       bool
+		catastrophic bool
+		want         int
+	}{
+		{name: "pass", failed: false, catastrophic: false, want: 0},
+		{name: "fail", failed: true, catastrophic: false, want: 1},
+		{name: "catastrophic", failed: false, catastrophic: true, want: 2},
+		{name: "fail_and_catastrophic_wins", failed: true, catastrophic: true, want: 2},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			got := ciExitCode(tc.failed, tc.catastrophic)
+			if got != tc.want {
+				t.Fatalf("ciExitCode(%v, %v) = %d, want %d", tc.failed, tc.catastrophic, got, tc.want)
+			}
+		})
+	}
+}
+
+// TestCIModePrintsJSONSummaryPath asserts --ci prints the summary.json path
+// (machine-readable, no "wrote " prefix) and exits 0 on an all-pass run.
+func TestCIModePrintsJSONSummaryPath(t *testing.T) {
+	bin := buildAgentGavel(t)
+	fake := buildFakeAdapterBin(t)
+	root := t.TempDir()
+	const runID = "cli-ci-mode"
+
+	cmd := exec.Command(bin, "run",
+		"--ci",
+		"--adapter", fake,
+		"--suite", "security",
+		"--seeds", "25",
+		"--mode", "oracle",
+		"--out", root,
+		"--run-id", runID,
+		"--scenarios", "SEC-001",
+	)
+	cmd.Dir = filepath.Join("..", "..")
+	cmd.Env = append(os.Environ(), "GOWORK=off")
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		t.Fatalf("run --ci: %v\n%s", err, out)
+	}
+	text := strings.TrimSpace(string(out))
+	if strings.HasPrefix(text, "wrote ") {
+		t.Fatalf("--ci must not print human 'wrote' prefix:\n%s", text)
+	}
+	if !strings.HasSuffix(text, "summary.json") && !strings.Contains(text, "summary.json") {
+		t.Fatalf("expected summary.json path on stdout:\n%s", text)
+	}
+	want := filepath.Join(root, "results", runID, "summary.json")
+	wantAbs, err := filepath.Abs(want)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Path may be absolute; accept either form if Abs of printed path matches.
+	printedAbs, err := filepath.Abs(text)
+	if err != nil {
+		t.Fatalf("stdout not a path: %q", text)
+	}
+	if printedAbs != wantAbs {
+		t.Fatalf("stdout path = %q, want %q", printedAbs, wantAbs)
+	}
+	if _, err := os.Stat(wantAbs); err != nil {
+		t.Fatalf("summary.json missing: %v", err)
+	}
+}
