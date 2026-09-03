@@ -113,10 +113,10 @@ capabilities must match real support (N/A path over false Fail).
 
 ## Wave 6 -- smoke + quality gate
 
-- [ ] T13.22 Add docs/manual/v0.2-smoke.md for all six §8.1 adapters + --ci  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/v0.2-smoke.md]  verifies: [UC-020, UC-025, UC-026, UC-027, UC-028, UC-029, UC-030]  lane: agent  acc: [smoke doc lists commands for each adapter and expected unofficial provenance]
+- [x] T13.22 Add docs/manual/v0.2-smoke.md for all six §8.1 adapters + --ci  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/v0.2-smoke.md]  verifies: [UC-020, UC-025, UC-026, UC-027, UC-028, UC-029, UC-030]  lane: agent  acc: [smoke doc lists commands for each adapter and expected unofficial provenance]  completed: 2026-09-04
   - deps: [T13.8, T13.16, T13.17, T13.18, T13.19, T13.20, T13.21]
 
-- [ ] T13.23 gofmt / ruff clean on suites/governance, new SEC files, all six adapters  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  lane: agent  acc: [gofmt -l suites/governance suites/security is empty; ruff check adapters/adk adapters/openai_agents adapters/pydantic_ai adapters/agent_framework adapters/strands adapters/crewai exits 0]
+- [x] T13.23 gofmt / ruff clean on suites/governance, new SEC files, all six adapters  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  lane: agent  acc: [gofmt -l suites/governance suites/security is empty; ruff check adapters/adk adapters/openai_agents adapters/pydantic_ai adapters/agent_framework adapters/strands adapters/crewai exits 0]  completed: 2026-09-04
   - deps: [T13.7, T13.6, T13.16, T13.17, T13.18, T13.19, T13.20, T13.21]
 
 - [ ] T13.24 Full make test && make lint on clean tree after E13 landings  Owner: pool  Est: 45m  kind: agent  verifies: [infrastructure]  lane: agent  acc: [make test and make lint exit 0]
