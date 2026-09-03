@@ -206,17 +206,21 @@ class TransportLoop:
         self._handlers = resolved
         self._events = event_buffer if event_buffer is not None else EventBuffer()
         self._closed = False
+        # While True, emit() only buffers; flush runs after the JSON-RPC reply
+        # so engine Call can return before DrainEvents reads notifies (Go interop).
+        self._handling = False
 
     @property
     def events(self) -> EventBuffer:
         return self._events
 
     def emit(self, event: Mapping[str, Any]) -> None:
-        """Buffer an Event and flush it as a METHOD_EVENT_NOTIFY notification."""
+        """Buffer an Event; flush immediately unless inside a request handler."""
         if not isinstance(event, Mapping):
             raise TypeError("event must be a mapping")
         self._events.push(event)
-        self.flush_events()
+        if not self._handling:
+            self.flush_events()
 
     def flush_events(self) -> None:
         """Send all buffered events as JSON-RPC notifications."""
@@ -248,17 +252,19 @@ class TransportLoop:
             self.flush_events()
             return True
 
+        self._handling = True
         try:
-            result = handler(params)
-            if result is None:
-                result = _EMPTY
-            self._conn.reply(req_id, result)
-        except Exception as exc:  # noqa: BLE001 — surface as JSON-RPC error to peer
-            self._conn.reply_error(req_id, INTERNAL_ERROR, str(exc))
+            try:
+                result = handler(params)
+                if result is None:
+                    result = _EMPTY
+                self._conn.reply(req_id, result)
+            except Exception as exc:  # noqa: BLE001 — surface as JSON-RPC error to peer
+                self._conn.reply_error(req_id, INTERNAL_ERROR, str(exc))
+                return True
+        finally:
+            self._handling = False
             self.flush_events()
-            return True
-
-        self.flush_events()
         # StopSession ends the adapter serve loop (matches Go protocol fake).
         return method != METHOD_STOP_SESSION
 

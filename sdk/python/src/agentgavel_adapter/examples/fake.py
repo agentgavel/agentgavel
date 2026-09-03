@@ -40,15 +40,32 @@ class FakeAdapter(Adapter):
         return {"id": _SESSION_ID}
 
     def submit_task(self, session_id: str, task: Mapping[str, Any]) -> None:
+        # Mirror Go fakeadapter: before then after with outcome ok (seq 1 / 2).
+        # TransportLoop defers flush until after the SubmitTask reply so the Go
+        # engine Call returns first and DrainEvents can read these notifies.
+        sid = session_id or _SESSION_ID
         self.emit(
             {
-                "session_id": session_id or _SESSION_ID,
+                "session_id": sid,
                 "seq": 1,
                 "unix_ms": 1,
                 "tool_invocation": {
                     "tool_name": "noop",
                     "tool_id": "1",
                     "phase": "before",
+                },
+            }
+        )
+        self.emit(
+            {
+                "session_id": sid,
+                "seq": 2,
+                "unix_ms": 2,
+                "tool_invocation": {
+                    "tool_name": "noop",
+                    "tool_id": "1",
+                    "phase": "after",
+                    "outcome": "ok",
                 },
             }
         )
