@@ -17,3 +17,7 @@ Subclass `agentgavel_adapter.Adapter`, override lifecycle hooks (at least
 `handshake`), then call `serve()` to run the JSON-RPC 2.0 stdio loop. Push
 events with `emit({...})` from framework hooks; the SDK buffers and sends
 them as `Event` notifications.
+
+## Examples
+
+- `python -m agentgavel_adapter.examples.fake` — minimal FakeAdapter for Go engine Handshake tests.

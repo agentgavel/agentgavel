@@ -15,7 +15,7 @@ fidelity: executable
 - [x] T7.3 Implement callback dispatch for start_session, submit_task, resolve_approval, export_ledger, stop_session  Owner: pool  Est: 75m  kind: agent  verifies: [UC-004, UC-005, UC-006]  acc: [pytest covers each callback invoked from a corresponding JSON-RPC method]  completed: 2026-09-03
   - deps: [T7.2]
 
-- [ ] T7.4 Ship example FakeAdapter used by Go integration tests  Owner: pool  Est: 45m  kind: agent  verifies: [UC-006]  acc: [python -m agentgavel_adapter.examples.fake serves Handshake to Go test]
+- [x] T7.4 Ship example FakeAdapter used by Go integration tests  Owner: pool  Est: 45m  kind: agent  verifies: [UC-006]  acc: [python -m agentgavel_adapter.examples.fake serves Handshake to Go test]  completed: 2026-09-03
   - deps: [T7.3]
 
 - [ ] T7.5 Cross-language integration test: Go engine + Python FakeAdapter  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001, UC-006]  acc: [go test ./internal/engine -run PythonFakeAdapter passes]
