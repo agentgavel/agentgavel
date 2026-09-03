@@ -1,18 +1,20 @@
 """Microsoft Agent Framework adapter (provenance=unofficial).
 
-T13.13 scaffold: Handshake + session lifecycle stubs. Targets Microsoft
-Agent Framework (AutoGen successor). Capability flags stay honestly false
-until T13.19 wires a real tool path / HITL / events. Unofficial until a
-maintainer signs off (ADR 007).
+T13.13 scaffold + T13.19 minimal Oracle tool path (read_email/send_email)
+mirroring LangGraph T11.2. Capability flags stay honest: observability and
+context attestation are real; hitl / tenancy / ledger remain false until
+wired. Unofficial until a maintainer signs off (ADR 007).
 """
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, MutableMapping
 from typing import Any
 from uuid import uuid4
 
 from agentgavel_adapter.adapter import Adapter
+
+from adapters.agent_framework.graph import MinimalEmailGraph
 
 _ADAPTER_VERSION = "0.0.1"
 _FRAMEWORK_NAME = "microsoft-agent-framework"
@@ -24,11 +26,14 @@ class HitlNotSupportedError(RuntimeError):
 
 
 class AgentFrameworkAdapter(Adapter):
-    """Unofficial Microsoft Agent Framework sidecar scaffold."""
+    """Unofficial Microsoft Agent Framework sidecar: Handshake + Oracle tools."""
 
     def __init__(self) -> None:
         super().__init__()
         self._sessions: dict[str, dict[str, Any]] = {}
+        self._seq: dict[str, int] = {}
+        self.emitted: list[MutableMapping[str, Any]] = []
+        self.last_task_result: dict[str, Mapping[str, Any]] = {}
 
     def handshake(
         self,
@@ -43,12 +48,12 @@ class AgentFrameworkAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: unofficial until maintainer ratification.
             "provenance": "unofficial",
-            # Honest scaffold: no HITL / ledger / events yet (T13.19).
+            # Honest: no HITL / ledger / tenancy yet; events are real (T13.19).
             "hitl": False,
             "tenancy": False,
             "ledger": False,
-            "observability": False,
-            "context_mode": "none",
+            "observability": True,
+            "context_mode": "attestation",
             "framework_name": _FRAMEWORK_NAME,
             "framework_version": _FRAMEWORK_VERSION,
         }
@@ -56,13 +61,31 @@ class AgentFrameworkAdapter(Adapter):
     def start_session(self, config: Mapping[str, Any]) -> Mapping[str, Any]:
         session_id = f"maf-sess-{uuid4().hex[:12]}"
         self._sessions[session_id] = dict(config)
+        self._seq[session_id] = 0
         return {"id": session_id}
 
     def submit_task(self, session_id: str, task: Mapping[str, Any]) -> None:
-        if session_id not in self._sessions:
+        config = self._sessions.get(session_id)
+        if config is None:
             raise KeyError(f"unknown session: {session_id}")
-        # Scaffold: no Oracle / tool path yet (T13.19).
-        del task
+        base_url = str(config.get("model_base_url") or "").strip()
+        if not base_url:
+            # No Oracle binding yet — lifecycle no-op (scaffold behavior).
+            return
+        meta = task.get("metadata") if isinstance(task.get("metadata"), Mapping) else {}
+        directive = meta.get("probe_directive") if isinstance(meta, Mapping) else None
+        if directive is not None and not isinstance(directive, Mapping):
+            raise TypeError("task.metadata.probe_directive must be a mapping")
+        graph = MinimalEmailGraph(
+            model_base_url=base_url,
+            session_id=session_id,
+            on_event=self._record_event,
+        )
+        result = graph.run(
+            str(task.get("prompt") or ""),
+            probe_directive=directive,
+        )
+        self.last_task_result[session_id] = result
 
     def resolve_approval(
         self,
@@ -84,3 +107,19 @@ class AgentFrameworkAdapter(Adapter):
 
     def stop_session(self, session_id: str) -> None:
         self._sessions.pop(session_id, None)
+        self.last_task_result.pop(session_id, None)
+        self._seq.pop(session_id, None)
+
+    def _next_seq(self, session_id: str) -> int:
+        n = self._seq.get(session_id, 0) + 1
+        self._seq[session_id] = n
+        return n
+
+    def _record_event(self, event: MutableMapping[str, Any]) -> None:
+        # Stamp a session-monotonic seq so graph events share one clock.
+        sid = event.get("session_id")
+        if isinstance(sid, str) and sid:
+            event["seq"] = self._next_seq(sid)
+        self.emitted.append(event)
+        if self._transport is not None:
+            self.emit(event)

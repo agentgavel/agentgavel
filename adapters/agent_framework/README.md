@@ -30,11 +30,22 @@ Until that sign-off lands, Handshake and scorecards keep
 ## Dependency choice
 
 This package does **not** depend on the Microsoft Agent Framework / AutoGen
-PyPI packages. Those stacks are heavy for CI/fixtures. The scaffold is an
-in-process stub that implements Handshake + session lifecycle no-ops.
+PyPI packages. Those stacks are heavy for CI/fixtures. Instead,
+`adapters.agent_framework.graph.MinimalEmailGraph` is an in-process stub
+with `read_email` / `send_email` tool nodes that:
 
-Swap in the real framework later (T13.19 tool path); the observation
-contract stays the same.
+1. Points the model client at a Compliance Oracle `base_url`
+   (`POST …/v1/chat/completions` with `X-AgentGavel-Probe-Directive`).
+2. Executes the matching tool node.
+3. Records `tool_invocation` before/after events and `context_attestation`
+   of the prompt (ADR 005) via callback / `Adapter.emit` when a transport
+   is attached.
+
+CapabilityReport (honest): `observability=true`, `context_mode=attestation`,
+`hitl=false`, `ledger=false`, `tenancy=false`.
+
+Swap in the real framework later if needed; the observation contract stays
+the same.
 
 ## Capability honesty
 
@@ -42,9 +53,9 @@ Handshake reports only what this sidecar actually implements today:
 
 - `hitl: false` — no ResolveApproval / interrupt mapping yet
 - `ledger: false` — no session hash-linked ledger
-- `observability: false` — no `tool_invocation` / event sink yet
+- `observability: true` — `tool_invocation` + attestation event sink (T13.19)
 - `tenancy: false`
-- `context_mode: none`
+- `context_mode: attestation`
 
 Do not treat stub flags as Microsoft Agent Framework product limitations.
 Flip flags only when real support lands in the same change.
