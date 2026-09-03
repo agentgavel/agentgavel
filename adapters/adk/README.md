@@ -27,12 +27,22 @@ Until that sign-off lands, Handshake and scorecards keep
 ## Dependency choice
 
 This package does **not** depend on the `google-adk` PyPI package. That
-stack is heavy for a Handshake-only scaffold (T13.10). The adapter is a
-lightweight in-process stub that implements the AgentGavel `Adapter`
-contract (stdio JSON-RPC) without importing ADK.
+stack is heavy for CI/fixtures. Instead,
+`adapters.adk.graph.MinimalEmailGraph` is an in-process stub with
+`read_email` / `send_email` tool nodes that:
 
-Tool path + Oracle binding land in a later task (T13.16). Swap in real
-Google ADK then if needed; the observation contract stays the same.
+1. Points the model client at a Compliance Oracle `base_url`
+   (`POST …/v1/chat/completions` with `X-AgentGavel-Probe-Directive`).
+2. Executes the matching tool node.
+3. Records `tool_invocation` before/after events and `context_attestation`
+   of the prompt (ADR 005) via callback / `Adapter.emit` when a transport
+   is attached.
+
+CapabilityReport (honest): `observability=true`, `context_mode=attestation`,
+`hitl=false`, `tenancy=false`, `ledger=false`.
+
+Swap in real Google ADK later if needed; the observation contract stays
+the same.
 
 ## Capability honesty
 
@@ -41,8 +51,8 @@ Handshake reports only what this sidecar actually implements today:
 - `hitl: false` — no Tool Confirmation / ResolveApproval wiring yet
 - `tenancy: false`
 - `ledger: false` — ExportLedger returns an empty Ledger shape
-- `observability: false` — no `tool_invocation` / gate events yet
-- `context_mode: none`
+- `observability: true` — `tool_invocation` before/after + attestation emit
+- `context_mode: attestation`
 
 Do not treat stub flags as Google ADK product limitations.
 
