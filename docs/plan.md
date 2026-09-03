@@ -211,6 +211,8 @@ Rules:
 
 ## 9. Progress Log
 
+- 2026-09-03: Wave 5: T3.2 T7.1 T8.1 T9.1 on wave-5-integration (kazi stuck;
+  completed via agent-lane worktrees; fingerprint Model field fixed on land).
 - 2026-09-03: Wave 2: T1.3 T1.4 T1.6 T2.1 T4.2 T4.3 T4.5 T6.2-T6.7.
 - 2026-09-02: Wave 1 complete: T1.1 T1.2 T1.5 T8.2 T4.1 T6.1 on
   wave-1-integration (coordinator after Sonnet pool agents failed usage limits).
