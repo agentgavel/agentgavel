@@ -13,5 +13,7 @@ Install from the repo root:
 pip install -e sdk/python
 ```
 
-Subclass `agentgavel_adapter.Adapter` and override the session lifecycle
-hooks. Transport (JSON-RPC over stdio) ships in a later release.
+Subclass `agentgavel_adapter.Adapter`, override lifecycle hooks (at least
+`handshake`), then call `serve()` to run the JSON-RPC 2.0 stdio loop. Push
+events with `emit({...})` from framework hooks; the SDK buffers and sends
+them as `Event` notifications.
