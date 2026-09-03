@@ -103,7 +103,7 @@ Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 
 ### E11 -- LangGraph adapter (unofficial)  -> docs/plans/E11-langgraph-adapter.md  (0/7)
 
-### E12 -- v0.1 quality gate and release  -> docs/plans/E12-v01-release.md  (0/8)
+### E12 -- v0.1 quality gate and release  -> docs/plans/E12-v01-release.md  (1/8)
 
 ### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (0/1)
 
@@ -210,6 +210,8 @@ Rules:
 - After M5, run T13.0 before any v0.2 coding.
 
 ## 9. Progress Log
+
+- 2026-09-03: T12.5 v0.1 devlog stub merged (#26).
 
 - 2026-09-03: Wave 6 complete: T6.8 StartFuzzMode on wave-6-t6.8-integration.
 
