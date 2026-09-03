@@ -6,9 +6,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/agentgavel/gavel/internal/engine"
-	"github.com/agentgavel/gavel/internal/mcpfuzz"
-	"github.com/agentgavel/gavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/internal/engine"
+	"github.com/agentgavel/agentgavel/internal/mcpfuzz"
+	"github.com/agentgavel/agentgavel/internal/protocol"
 )
 
 // OracleFakeOptions configures the v0.1 all-pass oracle scoring path used by

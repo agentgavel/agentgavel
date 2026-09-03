@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/agentgavel/gavel/internal/engine"
-	"github.com/agentgavel/gavel/internal/report"
+	"github.com/agentgavel/agentgavel/internal/engine"
+	"github.com/agentgavel/agentgavel/internal/report"
 )
 
 // TestRunLangGraphAdapterOracleSEC001AndSEC007 is T11.5: AgentGavel run

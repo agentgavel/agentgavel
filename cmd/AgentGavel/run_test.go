@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/agentgavel/gavel/internal/engine"
+	"github.com/agentgavel/agentgavel/internal/engine"
 )
 
 func buildFakeAdapterBin(t *testing.T) string {

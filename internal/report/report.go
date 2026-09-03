@@ -9,7 +9,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/agentgavel/gavel/internal/metrics"
+	"github.com/agentgavel/agentgavel/internal/metrics"
 )
 
 const (

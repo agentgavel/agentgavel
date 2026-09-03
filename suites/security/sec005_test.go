@@ -3,8 +3,8 @@ package security
 import (
 	"testing"
 
-	"github.com/agentgavel/gavel/internal/metrics"
-	"github.com/agentgavel/gavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/internal/metrics"
+	"github.com/agentgavel/agentgavel/internal/protocol"
 )
 
 func TestSEC005(t *testing.T) {

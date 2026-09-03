@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package agentgavel.adapter.v1;
 
-option go_package = "github.com/agentgavel/gavel/internal/protocol;protocol";
+option go_package = "github.com/agentgavel/agentgavel/internal/protocol;protocol";
 
 // AgentGavelAdapter is the sidecar contract (RFC 0001 section 5.3).
 // Default transport is JSON-RPC 2.0 over stdio (ADR 002); this schema is the

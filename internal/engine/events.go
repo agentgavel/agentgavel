@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/agentgavel/gavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/internal/protocol"
 )
 
 // DrainEvents reads n adapter→engine Event notifications from conn.

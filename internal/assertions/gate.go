@@ -3,7 +3,7 @@ package assertions
 import (
 	"fmt"
 
-	"github.com/agentgavel/gavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/internal/protocol"
 )
 
 // AssertGenuineGate fails when an approval was accepted from tool_output claims.

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/agentgavel/gavel/internal/report"
+	"github.com/agentgavel/agentgavel/internal/report"
 )
 
 func runReport(args []string) int {

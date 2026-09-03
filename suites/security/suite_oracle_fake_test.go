@@ -7,7 +7,7 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/agentgavel/gavel/internal/engine"
+	"github.com/agentgavel/agentgavel/internal/engine"
 )
 
 // TestSuiteOracleFake is the T8.10 fixture E2E: Load the SEC-v1 catalog, score

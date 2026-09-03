@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/agentgavel/gavel/internal/oracle"
+	"github.com/agentgavel/agentgavel/internal/oracle"
 )
 
 func runOracle(args []string) int {

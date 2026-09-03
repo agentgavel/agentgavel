@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/agentgavel/gavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/internal/protocol"
 )
 
 // TestIntegrationNoopScenario launches the fake adapter, starts an oracle-mode

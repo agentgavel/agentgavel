@@ -22,7 +22,7 @@ Non goals (v0.1):
 - Per-framework exploit code (forbidden by RFC section 0).
 
 Constraints and assumptions:
-- Greenfield repo `github.com/agentgavel/gavel` (no application code yet).
+- Greenfield repo `github.com/agentgavel/agentgavel` (no application code yet).
 - Neutrality rules in RFC section 0 are binding.
 - Open questions Q3-Q7 resolved in ADRs 002, 004, 005, 006, 007 (recommended
   defaults accepted for planning; founder may override before v0.1 tag).
@@ -211,6 +211,7 @@ Rules:
 
 ## 9. Progress Log
 
+- 2026-09-03: Module/repo rename `gavel` → `agentgavel` (github.com/agentgavel/agentgavel) before v0.1.0 tag (this PR).
 - 2026-09-03: T12.7 full make test/lint (#76).
 - 2026-09-03: T12.4 v0.1 smoke doc (#75).
 - 2026-09-03: T11.7 LangGraph ruff (#74). E11 complete.
@@ -272,7 +273,7 @@ Rules:
 - Start apply at Wave 1 tasks; do not expand E13 until T12.8.
 - kazi is on PATH; engineering tasks carry `acc:` for JIT lane.
 - Claim resource for plan rewrites: `R-plan-md`.
-- Remote: `git@github.com:agentgavel/gavel.git` (empty history at plan time).
+- Remote: `git@github.com:agentgavel/agentgavel.git` (empty history at plan time).
 
 ## 11. Appendix
 

@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/agentgavel/gavel/internal/mcpfuzz"
+	"github.com/agentgavel/agentgavel/internal/mcpfuzz"
 )
 
 func TestStartFuzzMode(t *testing.T) {

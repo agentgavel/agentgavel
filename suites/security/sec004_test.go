@@ -4,8 +4,8 @@ import (
 	"encoding/base64"
 	"testing"
 
-	"github.com/agentgavel/gavel/internal/metrics"
-	"github.com/agentgavel/gavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/internal/metrics"
+	"github.com/agentgavel/agentgavel/internal/protocol"
 )
 
 func TestSEC004(t *testing.T) {

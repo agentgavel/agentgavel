@@ -4,7 +4,7 @@ package engine
 import (
 	"context"
 
-	"github.com/agentgavel/gavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/internal/protocol"
 )
 
 // Scenario is one adversarial test with deterministic scoring hooks.

@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/agentgavel/gavel/internal/engine"
-	"github.com/agentgavel/gavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/internal/engine"
+	"github.com/agentgavel/agentgavel/internal/protocol"
 )
 
 func TestRunOracleFakeRecordsProvenanceAndNAFromCapabilities(t *testing.T) {

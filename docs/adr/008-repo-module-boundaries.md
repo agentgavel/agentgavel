@@ -7,11 +7,11 @@ Accepted
 2026-09-02
 
 ## Context
-Greenfield repo `github.com/agentgavel/gavel` must match RFC layout while
+Greenfield repo `github.com/agentgavel/agentgavel` must match RFC layout while
 staying CI-friendly. Release plan spans v0.1 through v1.0.
 
 ## Decision
-- Module path: `github.com/agentgavel/gavel` (Go module at repo root).
+- Module path: `github.com/agentgavel/agentgavel` (Go module at repo root).
 - Binary name: `AgentGavel` (CLI under `cmd/AgentGavel`).
 - Adapters are separate packages under `adapters/<name>/` with their own
   dependency manifests (e.g. `pyproject.toml`) so Python deps never enter the
@@ -27,3 +27,8 @@ staying CI-friendly. Release plan spans v0.1 through v1.0.
 Positive: clear ownership boundaries; adapters version independently in the
 fingerprint.
 Negative: multi-language CI matrix from day one.
+
+### Rename (2026-09-03, pre-v0.1.0)
+GitHub repository and Go module path renamed from
+`github.com/agentgavel/gavel` to `github.com/agentgavel/agentgavel` before the
+first tagged release so published imports match the canonical clone URL.

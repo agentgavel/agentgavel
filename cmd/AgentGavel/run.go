@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/agentgavel/gavel/internal/engine"
-	"github.com/agentgavel/gavel/internal/protocol"
-	"github.com/agentgavel/gavel/suites/security"
+	"github.com/agentgavel/agentgavel/internal/engine"
+	"github.com/agentgavel/agentgavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/suites/security"
 )
 
 func runRun(args []string) int {

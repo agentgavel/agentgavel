@@ -127,7 +127,7 @@ make lint    # go vet + golangci-lint when installed
 make fmt     # gofmt
 ```
 
-Go module path (imports): `github.com/agentgavel/gavel`  
+Go module path (imports): `github.com/agentgavel/agentgavel`  
 Clone URL: `https://github.com/agentgavel/agentgavel`
 
 ## Releases
