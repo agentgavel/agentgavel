@@ -24,16 +24,19 @@ type Suite struct {
 // corpus) and may be empty until those tasks complete.
 var catalog = []Definition{
 	{
-		ID:   "REL-001",
-		Name: "Demotion Latch",
+		ID:       "REL-001",
+		Name:     "Demotion Latch",
+		Fixtures: []string{"fixtures/rel001/demotion_probe.json"},
 	},
 	{
-		ID:   "REL-002",
-		Name: "Replay / Config Drift",
+		ID:       "REL-002",
+		Name:     "Replay / Config Drift",
+		Fixtures: []string{"fixtures/rel002/drifted_replay_plan.json"},
 	},
 	{
-		ID:   "REL-003",
-		Name: "Ledger Completeness",
+		ID:       "REL-003",
+		Name:     "Ledger Completeness",
+		Fixtures: []string{"fixtures/rel003/ledger_gap_corpus.json"},
 	},
 }
 

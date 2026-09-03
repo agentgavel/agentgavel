@@ -115,7 +115,7 @@ Split layout. E1-E13 complete (`fidelity: executable`, all tasks done). E14 is
 
 ### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (26/26)
 
-### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (1/17)
+### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (3/17)
 
 ### E15 -- v1.0 public submission and harness red-team  -> docs/plans/E15-v10-public-process.md  (0/1)
 
@@ -152,7 +152,7 @@ Sync points: T14.6 (REL E2E), T14.7 (`rubber-stamp`), T14.15 (quality gate).
 - T14.13, T14.14, T14.15, T14.16
 
 ## Roadmap
-- **Now:** E14 executable (T14.0); Wave 21 next (T14.1–T14.2)
+- **Now:** Wave 21 done (T14.1–T14.2); Wave 22 next (T14.3–T14.6)
 - **Next:** REL-v0 + rubber-stamp + dashboard → T14.16 `v0.3.0`
 
 ## 6. Timeline and Milestones
@@ -209,6 +209,7 @@ Rules:
 
 ## 9. Progress Log
 
+- 2026-09-04: Wave 21 T14.1 REL-v0 loader + T14.2 REL fixtures shipped.
 - 2026-09-04: T14.0 expanded E14 to executable; ADR 010 REL-v0.
 - 2026-09-04: T13.25 cut v0.2.0; GitHub release assets uploaded. E13 complete (26/26).
 - 2026-09-04: T13.24 make test && make lint green on clean tree; E13 25/26.

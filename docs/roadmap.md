@@ -5,9 +5,11 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **Next:** Wave 21 — T14.1 REL-v0 loader + T14.2 REL fixtures (E14 executable).
+- **Next:** Wave 22 — T14.3–T14.6 REL predicates + FakeAdapter E2E.
 
-- **In flight:** T14.0 expanded E14 to executable fidelity (ADR 010 REL-v0);
+- **Shipped (2026-09-04):** Wave 21 — T14.1 REL-v0 loader, T14.2 REL fixtures.
+
+- **Shipped (2026-09-04):** T14.0 expanded E14 to executable fidelity (ADR 010 REL-v0);
   Waves 21–25 prescribed in `docs/plan.md`.
 
 - **Shipped (2026-09-04):** T13.25 cut `v0.2.0` tag + release. 5 binary
