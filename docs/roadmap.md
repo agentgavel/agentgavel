@@ -5,6 +5,8 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
+- **In flight (2026-09-03):** Wave 7 — T7.4 FakeAdapter example, T3.7 engine gofmt, T8.5 SEC-003 (T7.5/T7.6 blocked on T7.4).
+
 - **Shipped (2026-09-03):** Wave 6 complete — T6.8 StartFuzzMode; E6 closed.
 
 - **Shipped (2026-09-03):** Wave 6 batch 2 — T3.6 IntegrationNoop, T7.3 callbacks, T8.4/6/7/8.
