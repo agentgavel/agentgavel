@@ -72,6 +72,10 @@ func TestRunOracleFakeAllPassWritesSummary(t *testing.T) {
 	if art.Fingerprint["seed.set"] != wantSeeds {
 		t.Errorf("seed.set = %q, want 0..24", art.Fingerprint["seed.set"])
 	}
+	fpPath := filepath.Join(root, "results", runID, "fingerprint.json")
+	if _, err := os.Stat(fpPath); err != nil {
+		t.Fatalf("fingerprint.json: %v", err)
+	}
 	if len(art.Scenarios) != 7 {
 		t.Fatalf("scenarios = %d, want 7", len(art.Scenarios))
 	}
@@ -91,6 +95,76 @@ func TestRunOracleFakeAllPassWritesSummary(t *testing.T) {
 		if body.Score != 100 {
 			t.Errorf("%s score = %v, want 100", id, body.Score)
 		}
+	}
+}
+
+func TestRunFingerprintReloadSameSeedSet(t *testing.T) {
+	bin := buildAgentGavel(t)
+	fake := buildFakeAdapterBin(t)
+	root := t.TempDir()
+
+	first := exec.Command(bin, "run",
+		"--adapter", fake,
+		"--suite", "security",
+		"--seeds", "7",
+		"--mode", "oracle",
+		"--out", root,
+		"--run-id", "first",
+		"--scenarios", "SEC-001",
+	)
+	first.Dir = filepath.Join("..", "..")
+	first.Env = append(os.Environ(), "GOWORK=off")
+	if out, err := first.CombinedOutput(); err != nil {
+		t.Fatalf("first run: %v\n%s", err, out)
+	}
+
+	fpPath := filepath.Join(root, "results", "first", "fingerprint.json")
+	fb, err := os.ReadFile(fpPath)
+	if err != nil {
+		t.Fatalf("read fingerprint: %v", err)
+	}
+	var firstFields map[string]string
+	if err := json.Unmarshal(fb, &firstFields); err != nil {
+		t.Fatal(err)
+	}
+	wantSeed := firstFields["seed.set"]
+	if wantSeed != "0,1,2,3,4,5,6" {
+		t.Fatalf("first seed.set = %q, want 0..6", wantSeed)
+	}
+	wantHash := firstFields["hash"]
+	if wantHash == "" {
+		t.Fatal("empty fingerprint hash")
+	}
+
+	second := exec.Command(bin, "run",
+		"--adapter", fake,
+		"--suite", "security",
+		"--seeds", "99", // ignored when --fingerprint pins seed-set
+		"--mode", "oracle",
+		"--out", root,
+		"--run-id", "second",
+		"--scenarios", "SEC-001",
+		"--fingerprint", fpPath,
+	)
+	second.Dir = filepath.Join("..", "..")
+	second.Env = append(os.Environ(), "GOWORK=off")
+	if out, err := second.CombinedOutput(); err != nil {
+		t.Fatalf("second run: %v\n%s", err, out)
+	}
+
+	sb, err := os.ReadFile(filepath.Join(root, "results", "second", "fingerprint.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var secondFields map[string]string
+	if err := json.Unmarshal(sb, &secondFields); err != nil {
+		t.Fatal(err)
+	}
+	if secondFields["seed.set"] != wantSeed {
+		t.Fatalf("reloaded seed.set = %q, want %q", secondFields["seed.set"], wantSeed)
+	}
+	if secondFields["hash"] != wantHash {
+		t.Fatalf("reloaded hash = %q, want %q (pins should reproduce fingerprint hash)", secondFields["hash"], wantHash)
 	}
 }
 
