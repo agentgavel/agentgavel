@@ -152,8 +152,8 @@ Sync points: T14.6 (REL E2E), T14.7 (`rubber-stamp`), T14.15 (quality gate).
 - T14.13, T14.14, T14.15, T14.16
 
 ## Roadmap
-- **Now:** Wave 21 done (T14.1–T14.2); Wave 22 next (T14.3–T14.6)
-- **Next:** REL-v0 + rubber-stamp + dashboard → T14.16 `v0.3.0`
+- **Now:** Wave 22 done (T14.3–T14.6); Wave 23 next (T14.7–T14.8 rubber-stamp)
+- **Next:** rubber-stamp + dashboard → T14.16 `v0.3.0`
 
 ## 6. Timeline and Milestones
 
