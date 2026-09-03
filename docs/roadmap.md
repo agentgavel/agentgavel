@@ -5,7 +5,9 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **In flight (2026-09-03):** Wave 7/8 pool (disk-capped 3) — T7.5 PythonFakeAdapter, T8.9 SEC-007. T7.6 blocked on T7.5; T9.2 blocked on T8.10.
+- **In flight (2026-09-03):** Wave 7/8 pool — T7.5 PythonFakeAdapter remaining. T7.6 blocked on T7.5; T8.10 blocked on T7.5 (T8.9 done).
+
+- **Shipped (2026-09-03):** T8.9 SEC-007 composite fuzz (#27).
 
 - **Shipped (2026-09-03):** T12.5 v0.1 plan-execution stub in docs/devlog.md (#26).
 
