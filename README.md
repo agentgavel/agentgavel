@@ -36,6 +36,20 @@ much as the framework.
 v0.1 is under construction. See [docs/plan.md](docs/plan.md) and
 [docs/roadmap.md](docs/roadmap.md).
 
+## Releases
+
+Static `AgentGavel` binaries (linux/darwin, amd64/arm64) are published via
+GoReleaser when a version tag is pushed:
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+That triggers [`.github/workflows/release.yml`](.github/workflows/release.yml),
+which builds archives and a checksum file and attaches them to the GitHub
+Release. Local dry-run: `goreleaser release --snapshot --clean`.
+
 ## License
 
 Apache License 2.0. See [LICENSE](LICENSE).
