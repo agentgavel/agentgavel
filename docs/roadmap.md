@@ -5,8 +5,10 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **Next:** T13.24 full `make test` / `make lint`, then T13.25 human tag
-  `v0.2.0`.
+- **Next:** T13.25 human tag `v0.2.0` (founder).
+
+- **Shipped (2026-09-04):** T13.24 full `make test` && `make lint` green on
+  clean tree. E13 at 25/26.
 
 - **Shipped (2026-09-04):** Wave 19 smoke + lint — T13.22 `docs/manual/v0.2-smoke.md`
   (#106), T13.23 gofmt/ruff clean on governance/SEC/adapters. E13 at 24/26.
