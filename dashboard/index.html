@@ -1,101 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AgentGavel Leaderboard</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#050505">
+  <meta name="description" content="Adversarial benchmarking for AI agent governance and security — policy ceilings, HITL gates, and tamper-evident provenance.">
+  <title>AgentGavel — Does the control plane hold?</title>
+  <link rel="icon" href="brand/logo-icon-32.png" sizes="32x32">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
 </head>
 <body>
-  <header class="site-header">
-    <p class="brand">AgentGavel</p>
-    <h1>Reliability leaderboard</h1>
-    <p class="lede">
-      Opt-in maintainer submissions and a separate Unratified tab for
-      AgentGavel-operated runs, per ADR 006. Provenance badges follow
-      ADR 007 (<code>ratified</code> / <code>provisional</code> /
-      <code>unofficial</code>).
-    </p>
-  </header>
-
-  <noscript>
-    <div class="noscript">
-      <p>
-        JavaScript is required to render the tables. Without it you can still
-        inspect the two tabs defined by ADR 006:
-      </p>
-      <ul>
-        <li><strong>Opt-in</strong> — maintainer-signed (or sample) submissions.</li>
-        <li><strong>Unratified</strong> — unsolicited AgentGavel-operated runs.</li>
-      </ul>
-      <p>
-        Entry list:
-        <a href="data/index.json"><code>data/index.json</code></a>
-        (schema: <a href="data/schema.json"><code>data/schema.json</code></a>).
-      </p>
+  <div class="stage" id="stage">
+    <div class="plate" aria-hidden="true">
+      <video class="plate-video" autoplay muted loop playsinline preload="auto">
+        <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260808_112712_da9d53df-6d27-4b12-bdf6-aa9dc2622bdf.mp4" type="video/mp4">
+      </video>
     </div>
-  </noscript>
 
-  <main>
-    <section id="opt-in" aria-labelledby="opt-in-heading">
-      <h2 id="opt-in-heading">Opt-in <span class="adr-cite">(ADR 006)</span></h2>
-      <p class="section-note">
-        Primary tab: maintainer-linked submissions with fingerprint and adapter
-        provenance. Until v1.0 signatures, rows here are hand-authored samples
-        (<code>sample: true</code>).
-      </p>
-      <div class="table-wrap" data-tab="opt-in">
-        <p class="status" data-status>Loading…</p>
-        <table hidden>
-          <thead>
-            <tr>
-              <th scope="col">Framework</th>
-              <th scope="col">Adapter</th>
-              <th scope="col">GSI</th>
-              <th scope="col">Grade</th>
-              <th scope="col">Provenance</th>
-              <th scope="col">Flags</th>
-              <th scope="col">Generated</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="AgentGavel home">
+        <img src="brand/logo-icon-on-dark.svg" width="48" height="48" alt="">
+      </a>
+      <nav class="links" aria-label="Primary">
+        <a href="#why">Why</a>
+        <a href="#suites">Suites</a>
+        <a href="#neutrality">Neutrality</a>
+        <a href="leaderboard/">Leaderboard</a>
+      </nav>
+      <a class="pill pill-nav" href="https://github.com/agentgavel/agentgavel"><span>Get Started</span></a>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+        <i></i><i></i>
+      </button>
+    </header>
+
+    <nav class="menu" id="menu" aria-hidden="true">
+      <div class="menu-inner">
+        <p class="menu-eyebrow">Menu</p>
+        <ul class="menu-list">
+          <li><a href="#why">Why</a></li>
+          <li><a href="#suites">Suites</a></li>
+          <li><a href="#neutrality">Neutrality</a></li>
+          <li><a href="leaderboard/">Leaderboard</a></li>
+        </ul>
+        <div class="menu-foot">
+          <a class="pill menu-pill" href="https://github.com/agentgavel/agentgavel"><span>Get Started</span></a>
+          <a class="menu-ghost" href="leaderboard/">View Leaderboard</a>
+        </div>
       </div>
-    </section>
+    </nav>
 
-    <section id="unratified" aria-labelledby="unratified-heading">
-      <h2 id="unratified-heading">Unratified / unsolicited <span class="adr-cite">(ADR 006)</span></h2>
-      <p class="section-note">
-        Separate from Opt-in: AgentGavel-operated runs against public releases.
-        <code>report --publish</code> writes only this tab in v0.3.
+    <main class="hero">
+      <h1 class="headline"><span>Does the control</span> <span>plane hold?</span></h1>
+      <p class="sub">
+        <span>Adversarial benchmarking for AI agent governance</span>
+        <span>and security — not task completion.</span>
       </p>
-      <div class="table-wrap" data-tab="unratified">
-        <p class="status" data-status>Loading…</p>
-        <table hidden>
-          <thead>
-            <tr>
-              <th scope="col">Framework</th>
-              <th scope="col">Adapter</th>
-              <th scope="col">GSI</th>
-              <th scope="col">Grade</th>
-              <th scope="col">Provenance</th>
-              <th scope="col">Flags</th>
-              <th scope="col">Generated</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+      <div class="actions">
+        <a class="pill pill-cta" href="https://github.com/agentgavel/agentgavel"><span>Get Started</span></a>
+        <a class="ghost" href="leaderboard/">View Leaderboard</a>
       </div>
-    </section>
-  </main>
+    </main>
 
-  <footer class="site-footer">
-    <p>
-      Data written only by <code>AgentGavel report --publish</code>.
-      Schema: <a href="data/schema.json">data/schema.json</a>.
-    </p>
+    <p class="strip" aria-hidden="true">Hard gates · Soft hopes · Provenance that survives compromise</p>
+  </div>
+
+  <section class="panel" id="why">
+    <div class="panel-inner">
+      <p class="eyebrow">Why it exists</p>
+      <h2>Task benchmarks reward finishing the job.<br>They do not answer authority.</h2>
+      <div class="split">
+        <p>Can the agent be tricked into exceeding its policy ceiling? Do “approval required” labels actually stop side effects? If it misbehaves, can you reconstruct what it did, on whose behalf, and why?</p>
+        <p>AgentGavel fills that gap with a reproducible, CI-friendly suite and a scorecard that separates <em>Hard</em> governance from <em>Soft</em> hope.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel panel-hard" id="hard-soft">
+    <div class="panel-inner">
+      <p class="eyebrow">Hard vs Soft</p>
+      <h2>The stop-bar is the point.</h2>
+      <div class="duo">
+        <div>
+          <h3><span class="bar" aria-hidden="true"></span> Hard</h3>
+          <p>Deterministic chokepoints that refuse unsafe actions regardless of LLM output. Policy ceilings, HITL gates, and provenance that do not negotiate.</p>
+        </div>
+        <div>
+          <h3>Soft</h3>
+          <p>System prompts and policies an LLM may be persuaded to ignore. Still scored — so you can see where hope is doing the work of a gate.</p>
+        </div>
+      </div>
+      <p class="note">Both are scored. Hard/Soft classification uses a Compliance Oracle so the label does not depend on any particular model’s mood.</p>
+    </div>
+  </section>
+
+  <section class="panel" id="suites">
+    <div class="panel-inner">
+      <p class="eyebrow">Suites</p>
+      <h2>Three pillars. One scorecard.</h2>
+      <ul class="pillars">
+        <li>
+          <span class="pillar-id">SEC</span>
+          <span class="pillar-name">Security</span>
+          <span class="pillar-copy">Prompt injection, grant pressure, and side-effect containment when tools and MCP surfaces are hostile.</span>
+        </li>
+        <li>
+          <span class="pillar-id">GOV</span>
+          <span class="pillar-name">Governance</span>
+          <span class="pillar-copy">Authority boundaries, approval paths, and whether policy ceilings hold under adversarial framing.</span>
+        </li>
+        <li>
+          <span class="pillar-id">REL</span>
+          <span class="pillar-name">Reliability</span>
+          <span class="pillar-copy">Resilience of the control plane when the model is compromised — not whether the happy path finishes.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="panel" id="neutrality">
+    <div class="panel-inner">
+      <p class="eyebrow">Neutrality</p>
+      <h2>Scenarios are code, not judgment.</h2>
+      <div class="split">
+        <p>Every published run carries a fingerprint — versions, config, model, seeds. Adapters carry a provenance label on every scorecard so a low score cannot hide behind an unofficial harness.</p>
+        <ul class="labels">
+          <li><strong>ratified</strong> — framework maintainers reviewed or contributed the adapter</li>
+          <li><strong>provisional</strong> — independent review after outreach</li>
+          <li><strong>unofficial</strong> — otherwise, including author-affiliated adapters until external sign-off</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel panel-cta" id="start">
+    <div class="panel-inner">
+      <p class="eyebrow">Get started</p>
+      <h2>Run the suite. Read the scorecard.<br>Publish only what you can stand behind.</h2>
+      <div class="actions actions-end">
+        <a class="pill" href="https://github.com/agentgavel/agentgavel"><span>GitHub</span></a>
+        <a class="ghost ghost-dark" href="leaderboard/">Leaderboard</a>
+        <a class="ghost ghost-dark" href="https://github.com/agentgavel/agentgavel/blob/main/docs/RFC-0001.md">RFC 0001</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-foot">
+    <a class="foot-brand" href="#">
+      <img src="brand/logo-icon-on-dark.svg" width="28" height="28" alt="">
+      <span>AgentGavel</span>
+    </a>
+    <p>Apache-2.0 · Adversarial benchmarking for agent control planes</p>
   </footer>
 
-  <script src="app.js" defer></script>
+  <script src="site.js" defer></script>
 </body>
 </html>
