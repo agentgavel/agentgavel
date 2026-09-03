@@ -2,11 +2,29 @@
 
 Unofficial AgentGavel sidecar targeting LangGraph-shaped agent graphs.
 
-**Provenance:** `unofficial` — community/author-built until a maintainer
-signs off (see `docs/adr/007-adapter-ratification.md`). Full status
-documentation lands in T11.6.
+## Unofficial status
 
-## Dependency choice (T11.2)
+This adapter ships with **`provenance=unofficial`** on every scorecard.
+It is community/author-built, not a LangGraph-maintainer contribution.
+
+A low score behind this adapter is a claim about the adapter as much as
+about LangGraph. Do not treat unofficial results as ratified framework
+rankings.
+
+### Ratification path (ADR 007)
+
+Full policy: [`docs/adr/007-adapter-ratification.md`](../../docs/adr/007-adapter-ratification.md).
+
+| Label | Meaning for this adapter |
+| --- | --- |
+| **unofficial** (current) | Default until LangGraph maintainers review/contribute, or an independent external reviewer signs off under ADR 007. |
+| **provisional** | Possible after independent external review (contract honesty, no oracle special-casing, event completeness) when maintainers decline. Expires after 180 days unless renewed or upgraded. |
+| **ratified** | Preferred path: LangGraph maintainers review or contribute the adapter. |
+
+Until that sign-off lands, Handshake and scorecards keep
+`provenance: unofficial`.
+
+## Dependency choice
 
 This package does **not** depend on the `langgraph` PyPI package. That
 stack pulls LangChain and is heavy for CI/fixtures. Instead,
@@ -26,6 +44,7 @@ CapabilityReport (honest): `observability=true`, `context_mode=attestation`,
 Swap in real LangGraph later if needed; the observation contract stays
 the same.
 
+<<<<<<< HEAD
 ## HITL / interrupts (T11.3)
 
 When interrupt support is enabled (default), gated tools (`send_email`)
@@ -36,6 +55,14 @@ harness `ResolveApproval`. Handshake reports `hitl: true` and a
 
 Construct with `LangGraphAdapter(hitl=False)` for the honest unsupported
 path: `hitl: false` and `ResolveApproval` raises `HitlNotSupportedError`.
+=======
+## Capability honesty
+
+Handshake reports only what this sidecar actually implements. Missing
+HITL interrupt mapping, ledger export, or full observability stay
+`false` until the matching tasks land. Do not treat stub flags as
+framework limitations.
+>>>>>>> 7251055 (docs(langgraph): expand unofficial status and ratification path (T11.6))
 
 ## Run
 
