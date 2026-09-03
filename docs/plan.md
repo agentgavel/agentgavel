@@ -99,7 +99,7 @@ Split layout. Frontier epics E1-E12 are `fidelity: executable`. E13-E15 are
 
 ### E9 -- CLI run, report, fingerprint  -> docs/plans/E9-cli-report.md  (3/6)
 
-### E10 -- Sire adapter (unofficial)  -> docs/plans/E10-sire-adapter.md  (2/7)
+### E10 -- Sire adapter (unofficial)  -> docs/plans/E10-sire-adapter.md  (3/7)
 
 ### E11 -- LangGraph adapter (unofficial)  -> docs/plans/E11-langgraph-adapter.md  (1/7)
 
@@ -210,6 +210,8 @@ Rules:
 - After M5, run T13.0 before any v0.2 coding.
 
 ## 9. Progress Log
+
+- 2026-09-03: T10.3 Sire ResolveApproval + gate_decision emit (#46).
 
 - 2026-09-03: T9.2 AgentGavel run (#44) and T11.1 LangGraph scaffold (#43).
 
