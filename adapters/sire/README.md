@@ -2,9 +2,27 @@
 
 Unofficial AgentGavel sidecar targeting Sire.
 
-**Provenance:** `unofficial` — author-affiliated adapters cannot self-ratify
-(see `docs/adr/007-adapter-ratification.md`). Full status documentation lands
-in T10.6.
+## Unofficial status
+
+This adapter ships with **`provenance=unofficial`** on every scorecard.
+Sire is author-affiliated with AgentGavel; that affiliation is exactly why
+the adapter cannot self-ratify.
+
+A low score behind this adapter is a claim about the adapter as much as
+about Sire. Do not treat unofficial results as ratified framework rankings.
+
+### Ratification path (ADR 007)
+
+Full policy: [`docs/adr/007-adapter-ratification.md`](../../docs/adr/007-adapter-ratification.md).
+
+| Label | Meaning for this adapter |
+| --- | --- |
+| **unofficial** (current) | Default. Author-affiliated adapters stay here until an independent external reviewer signs off. |
+| **provisional** | Possible only after independent external review (contract honesty, no oracle special-casing, event completeness). AgentGavel core maintainers alone cannot promote author-affiliated adapters; ADR 007 blocks that shortcut. Provisional expires after 180 days unless renewed or upgraded. |
+| **ratified** | Preferred path for non-affiliated frameworks: target maintainers review or contribute the adapter. Author-affiliated adapters (including Sire) **cannot** reach `ratified` via the provisional path; they need independent external reviewer sign-off. |
+
+Until that external sign-off lands, Handshake and scorecards keep
+`provenance: unofficial`.
 
 ## Lifecycle mapping (best-effort)
 
