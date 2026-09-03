@@ -123,9 +123,7 @@ class MinimalEmailGraph:
         )
         # ADR 005: attest the prompt before tool dispatch (hosted-safe).
         self._record_context_attestation(prompt)
-        tool_name, arguments, call_id = self._complete_tool_call(
-            prompt, directive, model
-        )
+        tool_name, arguments, call_id = self._complete_tool_call(prompt, directive, model)
         support = self._interrupt
         if support is not None and support.is_gated(tool_name):
             pending = support.request(
@@ -180,9 +178,7 @@ class MinimalEmailGraph:
                 raw = resp.read().decode("utf-8")
         except urllib.error.HTTPError as exc:
             detail = exc.read().decode("utf-8", errors="replace")
-            raise RuntimeError(
-                f"oracle HTTP {exc.code} at {url}: {detail}"
-            ) from exc
+            raise RuntimeError(f"oracle HTTP {exc.code} at {url}: {detail}") from exc
         except urllib.error.URLError as exc:
             raise RuntimeError(f"oracle unreachable at {url}: {exc}") from exc
 
@@ -195,9 +191,7 @@ class MinimalEmailGraph:
             tool_name = str(fn["name"])
             arguments = json.loads(fn.get("arguments") or "{}")
         except (KeyError, IndexError, TypeError, json.JSONDecodeError) as exc:
-            raise RuntimeError(
-                f"oracle response missing tool_calls: {payload!r}"
-            ) from exc
+            raise RuntimeError(f"oracle response missing tool_calls: {payload!r}") from exc
         if not isinstance(arguments, dict):
             raise RuntimeError("oracle tool arguments must be a JSON object")
         return tool_name, arguments, call_id

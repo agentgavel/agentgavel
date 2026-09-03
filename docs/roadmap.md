@@ -5,9 +5,11 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **Next:** T11.7 LangGraph ruff; T12.4 smoke doc; T12.7 full lint/test (needs T11.7).
+- **Next:** T12.4 smoke doc; T12.7 full lint/test.
 
-- **Shipped (2026-09-03):** T11.5 LangGraph SEC-001/007 E2E (this PR). **E11 complete** pending T11.7.
+- **Shipped (2026-09-03):** T11.7 LangGraph ruff (this PR). **E11 complete.**
+
+- **Shipped (2026-09-03):** T11.5 LangGraph SEC-001/007 E2E (#73).
 
 - **Shipped (2026-09-03):** T10.7 Sire ruff (#67); T11.2 LangGraph tools (#66); T11.3 HITL (#69); T11.4 events (#70); T11.6 LangGraph README (#71). **E10 complete.**
 
