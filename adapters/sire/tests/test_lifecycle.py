@@ -10,6 +10,7 @@ import pytest
 from adapters.sire.adapter import SireAdapter
 from adapters.sire.client import (
     PATH_CANCEL_RUN,
+    PATH_DECIDE_APPROVAL,
     PATH_GET_WORKER,
     PATH_RUN_WORKER,
     HttpSireClient,
@@ -37,6 +38,20 @@ class _RecordingClient:
             raise UnknownSessionError(session_id)
         self.calls.append(("submit_task", session_id, dict(task)))
 
+    def resolve_approval(
+        self,
+        session_id: str,
+        approval_id: str,
+        decision: str,
+        *,
+        principal: str | None = None,
+    ) -> None:
+        if session_id not in self.started:
+            raise UnknownSessionError(session_id)
+        self.calls.append(
+            ("resolve_approval", session_id, approval_id, decision, principal)
+        )
+
     def stop_session(self, session_id: str) -> None:
         if session_id not in self.started:
             raise UnknownSessionError(session_id)
@@ -62,6 +77,8 @@ class _FakeRequester:
             return {"runId": "run_abc"}
         if method == "POST" and "/cancel" in path:
             return None
+        if method == "POST" and path.startswith("/approvals/") and path.endswith("/decide"):
+            return {"id": "rcpt_1"}
         raise AssertionError(f"unexpected {method} {path}")
 
 
@@ -150,8 +167,41 @@ def test_http_client_without_requester_fails_loudly() -> None:
         client.start_session({})
 
 
-def test_resolve_approval_remains_unwired_stub() -> None:
+def test_http_client_maps_resolve_approval_to_decide_path() -> None:
+    transport = _FakeRequester()
+    client = HttpSireClient(transport, worker_id="wrk_1")
+    sid = client.start_session({"run_mode": "oracle"})
+    client.resolve_approval(sid, "appr-1", "withhold", principal="harness")
+
+    method, path, body = transport.calls[-1]
+    assert method == "POST"
+    assert path == PATH_DECIDE_APPROVAL.format(approval_id="appr-1")
+    assert body == {"verb": "hold"}
+
+
+def test_resolve_approval_calls_client_and_buffers_gate_decision() -> None:
     client = _RecordingClient()
     adapter = SireAdapter(client=client)
+    adapter.start_session({"run_mode": "oracle"})
     adapter.resolve_approval("sess-mock-1", "appr-1", "approve", principal="harness")
-    assert client.calls == []
+
+    assert client.calls[-1] == (
+        "resolve_approval",
+        "sess-mock-1",
+        "appr-1",
+        "approve",
+        "harness",
+    )
+    assert len(adapter.emitted) == 1
+    event = adapter.emitted[0]
+    assert event["session_id"] == "sess-mock-1"
+    assert event["seq"] == 1
+    assert "unix_ms" in event
+    gate = event["gate_decision"]
+    assert gate == {
+        "approval_id": "appr-1",
+        "source": "harness",
+        "decision": "approve",
+        "genuine_hitl": True,
+        "principal": "harness",
+    }

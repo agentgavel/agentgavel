@@ -3,13 +3,15 @@
 Sire's public HTTP API (``https://api.sire.run/api/v1``) has Workers and Runs,
 not AgentGavel sessions. The mapping is best-effort:
 
-* ``start_session``  -> bind a Worker (``GET /workers/{workerId}``)
-* ``submit_task``    -> start a Run (``POST /workers/{workerId}/run``)
-* ``stop_session``   -> cancel that Run (``POST /runs/{runId}/cancel``)
+* ``start_session``     -> bind a Worker (``GET /workers/{workerId}``)
+* ``submit_task``       -> start a Run (``POST /workers/{workerId}/run``)
+* ``resolve_approval``  -> decide a Hold (``POST /approvals/{approvalId}/decide``)
+* ``stop_session``      -> cancel that Run (``POST /runs/{runId}/cancel``)
 
-ResolveApproval is left for T10.3 (``POST /approvals/{approvalId}/decide``).
-A live client needs a bearer token, a tenant-scoped worker id, and a worker
-whose model ``base_url`` can be pointed at the Compliance Oracle.
+Sire's decide body uses ``verb`` (``approve`` / ``deny`` / ``hold``). AgentGavel
+``withhold`` maps to Sire ``hold``. A live client needs a bearer token, a
+tenant-scoped worker id, and a worker whose model ``base_url`` can be pointed
+at the Compliance Oracle.
 """
 
 from __future__ import annotations
@@ -25,6 +27,19 @@ DEFAULT_SIRE_API_BASE = "https://api.sire.run" + SIRE_API_V1_PREFIX
 PATH_GET_WORKER = "/workers/{worker_id}"
 PATH_RUN_WORKER = "/workers/{worker_id}/run"
 PATH_CANCEL_RUN = "/runs/{run_id}/cancel"
+PATH_DECIDE_APPROVAL = "/approvals/{approval_id}/decide"
+
+# AgentGavel Decision wire names → Sire Decision.verb (interfaces.md).
+_SIRE_VERB = {
+    "approve": "approve",
+    "deny": "deny",
+    "withhold": "hold",
+}
+_DECISION_BY_INT = {
+    1: "approve",
+    2: "deny",
+    3: "withhold",
+}
 
 
 class SireClientError(Exception):
@@ -35,6 +50,33 @@ class UnknownSessionError(SireClientError):
     """Adapter session id is not known to this client."""
 
 
+def wire_decision(decision: str | int) -> str:
+    """Normalize a ResolveApproval decision to AgentGavel wire names.
+
+    Accepts proto enum integers (1/2/3) or names (``approve`` / ``deny`` /
+    ``withhold``, optionally ``DECISION_``-prefixed).
+    """
+    if isinstance(decision, bool):
+        raise SireClientError(f"unknown decision {decision!r}")
+    if isinstance(decision, int):
+        try:
+            return _DECISION_BY_INT[decision]
+        except KeyError as exc:
+            raise SireClientError(f"unknown decision wire value {decision}") from exc
+    name = str(decision).strip().lower()
+    prefix = "decision_"
+    if name.startswith(prefix):
+        name = name[len(prefix) :]
+    if name not in _SIRE_VERB:
+        raise SireClientError(f"unknown decision {decision!r}")
+    return name
+
+
+def sire_decide_verb(decision: str | int) -> str:
+    """Map an AgentGavel decision onto Sire's ``Decision.verb``."""
+    return _SIRE_VERB[wire_decision(decision)]
+
+
 class SireClient(Protocol):
     """Thin surface the adapter drives. Tests inject a mock."""
 
@@ -43,6 +85,16 @@ class SireClient(Protocol):
 
     def submit_task(self, session_id: str, task: Mapping[str, Any]) -> None:
         """Start a Sire run for the bound worker using the task prompt as seed."""
+
+    def resolve_approval(
+        self,
+        session_id: str,
+        approval_id: str,
+        decision: str,
+        *,
+        principal: str | None = None,
+    ) -> None:
+        """POST Sire ``/approvals/{approvalId}/decide`` for this adapter session."""
 
     def stop_session(self, session_id: str) -> None:
         """Cancel the session's run if one exists, then drop the binding."""
@@ -89,6 +141,29 @@ class StubSireClient:
         record["tasks"].append(dict(task))
         record["run_id"] = f"sire-run-{uuid4().hex[:12]}"
         self.calls.append(("submit_task", (session_id, dict(task))))
+
+    def resolve_approval(
+        self,
+        session_id: str,
+        approval_id: str,
+        decision: str,
+        *,
+        principal: str | None = None,
+    ) -> None:
+        record = self._require(session_id)
+        if record["stopped"]:
+            raise SireClientError(f"session {session_id} already stopped")
+        wire = wire_decision(decision)
+        record.setdefault("approvals", []).append(
+            {
+                "approval_id": approval_id,
+                "decision": wire,
+                "principal": principal,
+            }
+        )
+        self.calls.append(
+            ("resolve_approval", (session_id, approval_id, wire, principal))
+        )
 
     def stop_session(self, session_id: str) -> None:
         record = self._require(session_id)
@@ -157,6 +232,24 @@ class HttpSireClient:
                 f"POST {path} must return runId (Sire RunRef); got {body!r}"
             )
         record["run_id"] = str(run_id)
+
+    def resolve_approval(
+        self,
+        session_id: str,
+        approval_id: str,
+        decision: str,
+        *,
+        principal: str | None = None,
+    ) -> None:
+        del principal  # Sire decide body is verb(+note); harness principal is event-only.
+        requester = self._require_requester()
+        self._require_session(session_id)
+        path = PATH_DECIDE_APPROVAL.format(approval_id=approval_id)
+        requester.request(
+            "POST",
+            path,
+            json={"verb": sire_decide_verb(decision)},
+        )
 
     def stop_session(self, session_id: str) -> None:
         requester = self._require_requester()

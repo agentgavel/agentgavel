@@ -15,12 +15,15 @@ AgentGavel sessions. The adapter drives a mockable `SireClient`:
 | --- | --- | --- |
 | `start_session` | in-memory bind | `GET /workers/{workerId}` |
 | `submit_task` | record prompt | `POST /workers/{workerId}/run` (seed = prompt) |
+| `resolve_approval` | record decision | `POST /approvals/{approvalId}/decide` (`verb`) |
 | `stop_session` | mark stopped | `POST /runs/{runId}/cancel` |
 
 A live client still needs a bearer token and `extra["sire_worker_id"]` (or
 `HttpSireClient(worker_id=...)`). Point the worker's model `base_url` at the
-Compliance Oracle. `ResolveApproval` is not wired yet (T10.3). HITL / ledger /
-observability stay `false` until those surfaces exist.
+Compliance Oracle. `ResolveApproval` emits a protocol `gate_decision` event
+(`source=harness`, `genuine_hitl=true`) and Handshake reports `hitl: true`.
+Ledger and observability stay `false` until T10.4 (empty ExportLedger; event
+sink is not complete).
 
 Default construction uses `StubSireClient` so the sidecar starts without Sire.
 
