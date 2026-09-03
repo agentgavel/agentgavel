@@ -1,6 +1,13 @@
 # Devlog
 
+## 2026-09-03 -- Wave 2 Makefile, proto, Oracle handlers, mcpfuzz modes
+
+Landed Makefile (GOWORK=off), GitHub Actions CI, proto/adapter.proto (seven
+RPCs), OpenAI and Anthropic Compliance Oracle handlers with MissingDirective
+4xx, and mcpfuzz modes toxic-output through masquerade.
+
 ## 2026-09-02 -- Wave 1 bootstrap (T1.1 T1.2 T1.5 T8.2)
+
 
 Landed Go module + AgentGavel stub CLI, Apache-2.0 LICENSE/README/CONTRIBUTING,
 root .gitignore (scratch/worktrees/venvs/binaries), and SEC-001/002/004

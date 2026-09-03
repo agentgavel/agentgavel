@@ -1,0 +1,176 @@
+syntax = "proto3";
+
+package agentgavel.adapter.v1;
+
+option go_package = "github.com/agentgavel/gavel/internal/protocol;protocol";
+
+// AgentGavelAdapter is the sidecar contract (RFC 0001 section 5.3).
+// Default transport is JSON-RPC 2.0 over stdio (ADR 002); this schema is the
+// source of truth for message shapes. gRPC stubs are optional later.
+service AgentGavelAdapter {
+  // Handshake negotiates protocol version and returns honest capabilities.
+  rpc Handshake(HandshakeRequest) returns (CapabilityReport);
+
+  // StartSession creates a run with model binding and MCP fixture endpoints.
+  rpc StartSession(SessionConfig) returns (SessionId);
+
+  // SubmitTask delivers the scenario task prompt to the target.
+  rpc SubmitTask(SubmitTaskRequest) returns (Empty);
+
+  // ResolveApproval lets the harness act as the human approver.
+  rpc ResolveApproval(ResolveApprovalRequest) returns (Empty);
+
+  // Events is a server-streaming RPC; adapters push Event messages.
+  rpc Events(SessionId) returns (stream Event);
+
+  // ExportLedger returns the audit ledger for the session.
+  rpc ExportLedger(SessionId) returns (Ledger);
+
+  // StopSession tears down the session.
+  rpc StopSession(SessionId) returns (Empty);
+}
+
+message Empty {}
+
+message HandshakeRequest {
+  // Engine protocol version, e.g. "1.0".
+  string engine_protocol_version = 1;
+  // Optional engine build identity for fingerprints.
+  string engine_version = 2;
+}
+
+message CapabilityReport {
+  string adapter_protocol_version = 1;
+  string adapter_name = 2;
+  string adapter_version = 3;
+  // Provenance: unofficial | provisional | ratified.
+  string provenance = 4;
+  bool hitl = 5;
+  bool tenancy = 6;
+  bool ledger = 7;
+  bool observability = 8;
+  // context_mode: raw | attestation | none
+  string context_mode = 9;
+  // Framework identity for fingerprints.
+  string framework_name = 10;
+  string framework_version = 11;
+}
+
+message SessionConfig {
+  string model_base_url = 1;
+  string model_name = 2;
+  // MCP fixture endpoints the engine already started (stdio command or URL).
+  repeated MCPEndpoint mcp_endpoints = 3;
+  string tenant_id = 4;
+  string framework_config_hash = 5;
+  // oracle | model
+  string run_mode = 6;
+  map<string, string> extra = 7;
+}
+
+message MCPEndpoint {
+  string name = 1;
+  // command+args for stdio MCP, or http(s) URL.
+  string transport = 2;
+  string command = 3;
+  repeated string args = 4;
+  string url = 5;
+}
+
+message SessionId {
+  string id = 1;
+}
+
+message Task {
+  string id = 1;
+  string prompt = 2;
+  map<string, string> metadata = 3;
+}
+
+message SubmitTaskRequest {
+  string session_id = 1;
+  Task task = 2;
+}
+
+enum Decision {
+  DECISION_UNSPECIFIED = 0;
+  DECISION_APPROVE = 1;
+  DECISION_DENY = 2;
+  DECISION_WITHHOLD = 3;
+}
+
+message ResolveApprovalRequest {
+  string session_id = 1;
+  string approval_id = 2;
+  Decision decision = 3;
+  string principal = 4;
+}
+
+message Event {
+  string session_id = 1;
+  // Monotonic sequence within the session.
+  uint64 seq = 2;
+  int64 unix_ms = 3;
+
+  oneof kind {
+    ToolInvocation tool_invocation = 10;
+    GateDecision gate_decision = 11;
+    ContextSnapshot context_snapshot = 12;
+    ContextAttestation context_attestation = 13;
+    LedgerAppend ledger_append = 14;
+    SessionError session_error = 15;
+  }
+}
+
+message ToolInvocation {
+  string tool_name = 1;
+  string tool_id = 2;
+  // before | after
+  string phase = 3;
+  string arguments_json = 4;
+  string outcome = 5;
+  string error = 6;
+  bool refused = 7;
+}
+
+message GateDecision {
+  string approval_id = 1;
+  string source = 2; // store | tool_output | llm | harness
+  Decision decision = 3;
+  string principal = 4;
+  bool genuine_hitl = 5;
+}
+
+message ContextSnapshot {
+  string role = 1;
+  string content = 2;
+}
+
+message ContextAttestation {
+  // Hashed n-grams for privacy-sensitive runs (ADR 005).
+  repeated string ngram_hashes = 1;
+  string algorithm = 2;
+}
+
+message LedgerAppend {
+  string entry_json = 1;
+}
+
+message SessionError {
+  string code = 1;
+  string message = 2;
+}
+
+message Ledger {
+  string session_id = 1;
+  repeated LedgerEntry entries = 2;
+}
+
+message LedgerEntry {
+  string id = 1;
+  int64 unix_ms = 2;
+  string kind = 3;
+  string payload_json = 4;
+  string prev_hash = 5;
+  string hash = 6;
+}
