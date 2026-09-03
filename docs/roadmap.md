@@ -5,8 +5,11 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **Next:** Wave 16 — T13.7 governance scaffold, T13.8 `run --ci`, T13.9
-  scenario-governance docs.
+- **Next:** Wave 17 — T13.10–T13.14 AutoGen + CrewAI unofficial adapters
+  (note: open PR #86 may retarget adapter set — reconcile before dispatch).
+
+- **Shipped (2026-09-04):** Wave 16 complete — T13.7 GOV-v0 scaffold, T13.8
+  `run --ci`, T13.9 scenario-governance docs. E13 at 10/18.
 
 - **Shipped (2026-09-04):** Wave 15 complete — T13.4 SEC-009, T13.5 SEC-010,
   T13.6 SuiteOracleFakeV2 (SEC-008..010 E2E). E13 at 7/18.

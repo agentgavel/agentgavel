@@ -103,7 +103,7 @@ until `v0.2.0` (T13.17).
 
 ### E12 -- v0.1 quality gate and release  -> docs/plans/E12-v01-release.md  (8/8)
 
-### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (7/18)
+### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (10/18)
 
 ### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (0/1)
 
