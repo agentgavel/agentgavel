@@ -25,5 +25,5 @@ fidelity: executable
 - [x] T10.6 Document unofficial status and ratification path in adapters/sire/README  Owner: pool  Est: 30m  kind: agent  delivers: [adapters/sire/README]  verifies: [UC-016]  acc: [README states unofficial and links docs/adr/007-adapter-ratification.md]  completed: 2026-09-03
   - deps: [T10.1]
 
-- [ ] T10.7 Ruff lint adapters/sire  Owner: pool  Est: 20m  kind: agent  verifies: [infrastructure]  acc: [ruff check adapters/sire exits 0]
+- [x] T10.7 Ruff lint adapters/sire  Owner: pool  Est: 20m  kind: agent  verifies: [infrastructure]  acc: [ruff check adapters/sire exits 0]  completed: 2026-09-03
   - deps: [T10.5]
