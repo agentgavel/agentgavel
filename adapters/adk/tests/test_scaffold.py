@@ -1,4 +1,4 @@
-"""Smoke tests for the Google ADK adapter scaffold (T13.10)."""
+"""Smoke tests for the Google ADK adapter scaffold (T13.10) + tools (T13.16)."""
 
 from __future__ import annotations
 
@@ -23,8 +23,9 @@ def test_handshake_provenance_unofficial() -> None:
     assert report["hitl"] is False
     assert report["tenancy"] is False
     assert report["ledger"] is False
-    assert report["observability"] is False
-    assert report["context_mode"] == "none"
+    # T13.16: events emit → observability true; attestation mode.
+    assert report["observability"] is True
+    assert report["context_mode"] == "attestation"
 
 
 def test_lifecycle_without_oracle_does_not_crash() -> None:
