@@ -5,7 +5,9 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **In flight (2026-09-03):** Pool — T8.11 gofmt, T9.2 CLI run, T10.2 Sire lifecycle (cap 3; T11.1 waits).
+- **In flight (2026-09-03):** Pool — T9.2 CLI run, T10.2 Sire lifecycle, T11.1 LangGraph scaffold.
+
+- **Shipped (2026-09-03):** T8.11 suites/security gofmt already clean (#39).
 
 - **Shipped (2026-09-03):** T10.1 unofficial Sire adapter scaffold (#36).
 
