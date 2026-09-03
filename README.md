@@ -71,8 +71,9 @@ much as the framework. The in-tree Sire and LangGraph adapters are **unofficial*
 - **Unofficial adapters**: [Sire](adapters/sire/), [LangGraph](adapters/langgraph/)
 - **FakeAdapter** — in-repo harness proof (not a framework ranking)
 
-Later releases (outline): governance suite + AutoGen/CrewAI (v0.2), reliability /
-leaderboard (v0.3), public submission (v1.0). See [docs/roadmap.md](docs/roadmap.md).
+v0.2 added the governance suite and more unofficial adapters. v0.3 adds
+reliability + the Unratified leaderboard (below). Later: public submission
+(v1.0). See [docs/roadmap.md](docs/roadmap.md).
 
 ## Status
 
@@ -117,10 +118,11 @@ Full copy-paste checks (Sire, LangGraph, expected labels):
 ### CLI commands
 
 ```text
-AgentGavel version   # print version (ldflags / GoReleaser inject release tags)
-AgentGavel oracle    # Compliance Oracle HTTP server (--listen host:port)
-AgentGavel run       # run a suite against an adapter; write results/<run-id>/
-AgentGavel report    # GSI scorecard text or --json from a run
+AgentGavel version        # print version (ldflags / GoReleaser inject release tags)
+AgentGavel oracle         # Compliance Oracle HTTP server (--listen host:port)
+AgentGavel run            # run a suite (security|reliability); write results/<run-id>/
+AgentGavel rubber-stamp   # SEC-002 + SEC-006 approval-gate check (no GSI)
+AgentGavel report         # GSI scorecard text, --json, or --publish to dashboard/
 AgentGavel help
 ```
 
@@ -134,6 +136,24 @@ make fmt     # gofmt
 
 Go module path (imports): `github.com/agentgavel/agentgavel`  
 Clone URL: `https://github.com/agentgavel/agentgavel`
+
+## v0.3 — reliability + leaderboard
+
+v0.3 adds a fast approval-gate check, the reliability suite (REL-001..003),
+and an Unratified leaderboard publish path.
+
+- **`AgentGavel rubber-stamp`** — SEC-002 + SEC-006 only (approval forgery /
+  timeout auto-approve). CI exit codes; both-N/A fails closed. Manual:
+  [docs/manual/rubber-stamp.md](docs/manual/rubber-stamp.md).
+- **`AgentGavel run --suite reliability`** — REL-001..003 (demotion latch,
+  replay drift, ledger completeness) scored under the resilience pillar.
+- **`AgentGavel report --publish`** — writes an Unratified dashboard entry
+  (`tab=unratified` only until v1.0). Merge to `main` for GitHub Pages.
+  Manual: [docs/manual/leaderboard-pages.md](docs/manual/leaderboard-pages.md).
+
+Published Unratified rows inherit Handshake provenance — typically
+**unofficial**. A low score behind an unofficial adapter is a claim about the
+adapter as much as the framework (same caveat as [Adapter provenance](#adapter-provenance)).
 
 ## Releases
 
@@ -160,6 +180,8 @@ goreleaser release --snapshot --clean
 | [docs/design.md](docs/design.md) | Architecture sketch |
 | [docs/adr/](docs/adr/) | Architecture decisions |
 | [docs/manual/v0.1-smoke.md](docs/manual/v0.1-smoke.md) | Local smoke commands |
+| [docs/manual/rubber-stamp.md](docs/manual/rubber-stamp.md) | `rubber-stamp` usage + exit codes |
+| [docs/manual/leaderboard-pages.md](docs/manual/leaderboard-pages.md) | Dashboard / Pages publish path |
 | [docs/plan.md](docs/plan.md) / [docs/roadmap.md](docs/roadmap.md) | Execution plan + progress |
 
 ## License
