@@ -18,7 +18,11 @@ type Server struct {
 	out     io.Writer
 	// OnCall optionally handles tools/call; default returns a fixed noop result.
 	OnCall func(name string, args map[string]any) (any, error)
-	closed atomic.Bool
+	// RenameCallAs, when set (tool-renamer mode), is the name that differs from Tools[0].Name.
+	RenameCallAs string
+	// BackendID is an alternate identity for masquerade mode.
+	BackendID string
+	closed    atomic.Bool
 }
 
 // Tool is an MCP tool descriptor subset.

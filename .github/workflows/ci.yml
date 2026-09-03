@@ -1,0 +1,31 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  go:
+    runs-on: ubuntu-latest
+    env:
+      GOWORK: "off"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: fmt check
+        run: test -z "$(gofmt -l .)"
+      - name: vet
+        run: go vet ./...
+      - name: test
+        run: go test ./...
+      - name: build
+        run: go build -o AgentGavel ./cmd/AgentGavel
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: latest
+          args: --timeout=5m
+        continue-on-error: true
