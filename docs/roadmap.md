@@ -101,8 +101,15 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 ## Planned
 
 - **v0.2 (E13 executable):** SEC-008..010 (SEC-v2), governance scaffold,
-  AutoGen/CrewAI unofficial adapters, `--ci`, scenario governance docs,
-  tag `v0.2.0` (T13.17). Waves 14–18.
+  unofficial adapters for Microsoft Agent Framework, CrewAI, Google ADK,
+  OpenAI Agents SDK, Pydantic AI, AWS Strands Agents (RFC-0001 §8.1,
+  retargeted 2026-09-04 -- AutoGen swapped for its GA successor, four
+  frameworks added; n8n/Dify deferred as a separate workflow-engine
+  adapter architecture, §8.2, not part of this list), `--ci`, scenario
+  governance docs, tag `v0.2.0` (T13.17). Waves 14–18. E13's task-level
+  plan (`docs/plans/E13-v02-expansion.md`) still names only AutoGen/CrewAI
+  as of this update -- retargeting its tasks to match §8.1 is follow-up
+  work, not done here.
 - **v0.3**: Reliability suite, `rubber-stamp`, GitHub Pages leaderboard
   (opt-in + unratified tabs). Epic E14 outline until T13.17.
 - **v1.0**: Public signed submissions, harness red-team bounty, ratification
