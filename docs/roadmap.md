@@ -5,8 +5,12 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **Next (human):** T12.8 cut `v0.1.0` tag + release assets. Wave 13
-  (T13.0) waits on T12.8.
+- **Shipped (2026-09-04):** T12.8 cut `v0.1.0` tag + release. 5 binary
+  assets uploaded (darwin/linux, amd64/arm64) + checksums, verified via
+  `gh release view`. **v0.1.0 released:**
+  https://github.com/agentgavel/agentgavel/releases/tag/v0.1.0.
+  **E12 complete.** Wave 13 (T13.0, next-horizon planning) is now
+  unblocked.
 
 - **Shipped (2026-09-03):** T12.6 RFC Status → Implemented (v0.1 scope)
   (this PR). Brand mark in `brand/` (#81). Module rename (#80).
