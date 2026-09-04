@@ -5,6 +5,10 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
+- **Planned (2026-09-04):** /plan refine of E14 after Wave 22 — waves re-cut
+  to 23–27; see Planned below for the task list. Recommended next `/apply`
+  wave: Wave 23.
+
 - **Shipped (2026-09-04):** Wave 22 — T14.6 FakeAdapter oracle E2E for
   REL-001..003: `suites/reliability.RunOracleFakeREL` +
   `TestSuiteOracleFakeREL` (`go test ./suites/reliability -run
@@ -126,8 +130,14 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 ## Planned
 
 - **v0.2 (E13):** shipped as `v0.2.0` (T13.25).
-- **v0.3 (E14):** executable — REL-v0 (ADR 010), `rubber-stamp`, GitHub Pages
-  leaderboard. Next: Wave 21 (T14.1–T14.2). Tag target `v0.3.0` (T14.16).
+- **v0.3 (E14):** executable, 7/24 after Wave 22 — REL-v0 predicates + E2E
+  shipped (ADR 010). Plan refined 2026-09-04: added T14.17 (`run --suite
+  reliability` + REL N/A), T14.18 (REL in resilience pillar), T14.19 (Pages
+  workflow), T14.21 (dashboard CI check), T14.22 (README), T14.23 (governance
+  for REL); ADR 011 pins the `rubber-stamp` verdict (both-N/A exits 1, no
+  GSI); ADR 006 addendum: `report --publish` writes Unratified only until
+  v1.0. Next: Wave 23 (T14.7, T14.17, T14.18, T14.23). Founder gates: T14.20
+  (enable Pages + verify live), T14.16 (tag `v0.3.0`).
 - **v1.0**: Public signed submissions, harness red-team bounty, ratification
   operations. Epic E15 (outline until T14.16).
 
