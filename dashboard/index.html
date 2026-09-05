@@ -1,7 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8">
+<script>(function(){try{var t=localStorage.getItem('ag-theme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>AgentGavel | Governance Under Attack</title>
 <link rel="icon" href="brand/logo-icon-32.png" sizes="32x32">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#050505">
@@ -30,8 +32,7 @@ html{height:auto;scroll-behavior:smooth}body{height:auto;overflow-x:hidden;overf
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
 
-@media (prefers-color-scheme: light){
-  :root{
+html[data-theme="light"]{
     color-scheme:light;
     --ink:#1a1a1a;--muted:#5c5a55;--nav:#4a4844;--strip:#6b6964;
     --pill:#1a1a1a;--pill-ink:#fafafa;--page:#f4f3f0;--surface:#f4f3f0;--line:#ddd9d1;
@@ -39,7 +40,6 @@ html{height:auto;scroll-behavior:smooth}body{height:auto;overflow-x:hidden;overf
     --code-border:#d8d5ce;--code-label:#ddd9d1;--copy-border:#b8b4ab;--focus:#1a1a1a;
     --menu-bg:linear-gradient(135deg,#f7f6f3f7,#f4f3f0ee);--burger-bg:#1a1a1a0f;--burger-border:#1a1a1a24;
     --burger-bar:#1a1a1a;--ghost:#3d3b37;
-  }
   /* Hero stays cinematic-dark over the video; reading surface follows light tokens. */
   .stage,.stage .headline,.stage .sub,.stage .links a,.stage .ghost,.stage .motion,.stage .lg{color:#fafafa}
   .stage .links a{color:#b6b5b5}.stage .links a:hover,.stage .ghost:hover{color:#fff}
@@ -79,10 +79,16 @@ html{height:auto;scroll-behavior:smooth}body{height:auto;overflow-x:hidden;overf
   @media(max-width:520px){.comparison>div+div{border-top-color:var(--line-strong)}}
 }
 
-@media (prefers-color-scheme: light){
-  .stage .burger{background:#ffffff14;border-color:#ffffff33}
-  .stage .burger i{background:#fff}
-}
+html[data-theme="light"] .stage .burger{background:#ffffff14;border-color:#ffffff33}
+html[data-theme="light"] .stage .burger i{background:#fff}
+
+
+.theme-toggle{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:0;border:0;background:none;color:var(--muted);font:13px/1.4 Manrope,system-ui,sans-serif;letter-spacing:.04em;cursor:pointer}
+.theme-toggle:hover,.theme-toggle:focus-visible{color:var(--ink)}
+.theme-toggle svg{width:14px;height:14px;opacity:.75}
+.stage .theme-toggle{position:absolute;right:calc(70*var(--u));bottom:calc(26*var(--u));z-index:5;margin:0;color:#8b8a8a;font-size:13px}
+.stage .theme-toggle:hover,.stage .theme-toggle:focus-visible{color:#ddd}
+@media(max-aspect-ratio:11/10){.stage .theme-toggle{right:18px;bottom:48px}}
 
 </style>
 </head>
@@ -98,6 +104,7 @@ html{height:auto;scroll-behavior:smooth}body{height:auto;overflow-x:hidden;overf
 <a class="lg" href="#hitl-gates"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="5" y="12" width="18" height="13" rx="2"/><path d="M9 12V7a5 5 0 0 1 10 0v5M14 17v4"/></svg><span>HITL gates</span></a>
 <a class="lg" href="#provenance"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M16 4h8v8M12 24H4v-8M24 4 15 13M4 24l9-9"/><path d="m8 3-5 5 17 17 5-5Z"/></svg><span>Provenance</span></a>
 <a class="lg" href="#reproducibility"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M23 10a10 10 0 0 0-17-4L3 9m0-6v6h6M5 18a10 10 0 0 0 17 4l3-3m0 6v-6h-6"/></svg><span>Reproducible runs</span></a></div>
+<button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch color theme" title="Switch color theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1.5v1.8M8 12.7v1.8M1.5 8h1.8M12.7 8h1.8M3.4 3.4l1.3 1.3M11.3 11.3l1.3 1.3M12.6 3.4l-1.3 1.3M4.7 11.3l-1.3 1.3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span data-theme-label>Theme</span></button>
 <button class="motion" aria-label="Pause background video" title="Pause background video">Ⅱ</button>
 </div>
 <main class="content" id="content">
@@ -200,15 +207,55 @@ make build
 <details><summary>How can I challenge a result or improve an adapter?</summary><p>Start with the run fingerprint and adapter provenance. Reproduce the run, then open a repository issue with the scenario, configuration, and evidence, or propose an adapter change. Framework maintainers can review or contribute adapters through the ratification process.</p></details>
 </div></div></section>
 </main>
-<footer class="footer" id="contact"><div><strong>AgentGavel</strong><div class="read-status">Open-source governance benchmarking · Apache-2.0</div></div><nav aria-label="Footer"><a href="leaderboard/">Leaderboard</a><a href="#faq">FAQ</a><a href="https://github.com/agentgavel/agentgavel" target="_blank" rel="noopener noreferrer">Star on GitHub ↗</a><a href="https://github.com/agentgavel/agentgavel/issues">Questions &amp; contributions ↗</a><a href="https://github.com/agentgavel/agentgavel/blob/main/LICENSE">License ↗</a><a href="#home">Back to top ↑</a></nav></footer>
+<footer class="footer" id="contact"><div><strong>AgentGavel</strong><div class="read-status">Open-source governance benchmarking · Apache-2.0</div><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch color theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1.5v1.8M8 12.7v1.8M1.5 8h1.8M12.7 8h1.8M3.4 3.4l1.3 1.3M11.3 11.3l1.3 1.3M12.6 3.4l-1.3 1.3M4.7 11.3l-1.3 1.3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span data-theme-label>Theme</span></button></div><nav aria-label="Footer"><a href="leaderboard/">Leaderboard</a><a href="#faq">FAQ</a><a href="https://github.com/agentgavel/agentgavel" target="_blank" rel="noopener noreferrer">Star on GitHub ↗</a><a href="https://github.com/agentgavel/agentgavel/issues">Questions &amp; contributions ↗</a><a href="https://github.com/agentgavel/agentgavel/blob/main/LICENSE">License ↗</a><a href="#home">Back to top ↑</a></nav></footer>
 <div id="copy-status" role="status" aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)"></div>
 
 <script>
-const stage=document.querySelector('.stage'),burger=document.querySelector('#burger'),menu=document.querySelector('#menu'),hero=document.querySelector('.hero'),logos=document.querySelector('.logos'),video=document.querySelector('video'),motion=document.querySelector('.motion');
-function toggleMenu(open){stage.classList.toggle('is-open',open);burger.setAttribute('aria-expanded',String(open));burger.setAttribute('aria-label',open?'Close menu':'Open menu');menu.setAttribute('aria-hidden',String(!open));menu.inert=!open;hero.inert=open;logos.inert=open;motion.inert=open;document.querySelector('#content').inert=open;document.querySelector('.footer').inert=open;document.body.classList.toggle('menu-open',open);if(open)menu.querySelector('a').focus();else burger.focus({preventScroll:true})}
+const stage=document.querySelector('.stage'),burger=document.querySelector('#burger'),menu=document.querySelector('#menu'),hero=document.querySelector('.hero'),logos=document.querySelector('.logos'),video=document.querySelector('video'),motion=document.querySelector('.motion'),themeToggles=[...document.querySelectorAll('[data-theme-toggle]')];
+function toggleMenu(open){stage.classList.toggle('is-open',open);burger.setAttribute('aria-expanded',String(open));burger.setAttribute('aria-label',open?'Close menu':'Open menu');menu.setAttribute('aria-hidden',String(!open));menu.inert=!open;hero.inert=open;logos.inert=open;motion.inert=open;themeToggles.forEach(el=>{el.inert=open});document.querySelector('#content').inert=open;document.querySelector('.footer').inert=open;document.body.classList.toggle('menu-open',open);if(open)menu.querySelector('a').focus();else burger.focus({preventScroll:true})}
 burger.addEventListener('click',()=>toggleMenu(!stage.classList.contains('is-open')));document.addEventListener('keydown',e=>{if(!stage.classList.contains('is-open'))return;if(e.key==='Escape')toggleMenu(false);if(e.key==='Tab'){const list=[burger,...menu.querySelectorAll('a')],first=list[0],last=list.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{toggleMenu(false);if(a.hash){const target=document.querySelector(a.hash);if(target){target.setAttribute('tabindex','-1');target.focus({preventScroll:true})}}}));window.addEventListener('resize',()=>{if(innerWidth/innerHeight>1.1&&stage.classList.contains('is-open'))toggleMenu(false)});
 function syncMotion(){const paused=video.paused;motion.textContent=paused?'▷':'Ⅱ';motion.setAttribute('aria-label',paused?'Play background video':'Pause background video');motion.title=motion.getAttribute('aria-label')}
 motion.addEventListener('click',()=>{if(video.paused)video.play().catch(syncMotion);else video.pause()});video.addEventListener('play',syncMotion);video.addEventListener('pause',syncMotion);const reduced=matchMedia('(prefers-reduced-motion: reduce)');if(reduced.matches){video.autoplay=false;video.pause()}reduced.addEventListener('change',e=>{if(e.matches)video.pause()});video.addEventListener('error',()=>{motion.hidden=true});syncMotion();
+
+
+(function(){
+  const key='ag-theme';
+  const root=document.documentElement;
+  function systemTheme(){return matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}
+  function readTheme(){const t=root.getAttribute('data-theme');return t==='light'||t==='dark'?t:systemTheme()}
+  function syncThemeColor(theme){
+    let meta=document.querySelector('meta[name="theme-color"][data-ag-theme]');
+    if(!meta){meta=document.createElement('meta');meta.name='theme-color';meta.setAttribute('data-ag-theme','1');document.head.appendChild(meta)}
+    meta.content=theme==='light'?'#f4f3f0':'#050505';
+  }
+  function syncButtons(theme){
+    const next=theme==='light'?'dark':'light';
+    const label=next==='light'?'Light mode':'Dark mode';
+    document.querySelectorAll('[data-theme-toggle]').forEach(btn=>{
+      btn.setAttribute('aria-label','Switch to '+next+' mode');
+      btn.title='Switch to '+next+' mode';
+      const span=btn.querySelector('[data-theme-label]');
+      if(span)span.textContent=label;
+    });
+  }
+  function applyTheme(theme){
+    root.setAttribute('data-theme',theme);
+    try{localStorage.setItem(key,theme)}catch(e){}
+    syncThemeColor(theme);
+    syncButtons(theme);
+  }
+  applyTheme(readTheme());
+  document.querySelectorAll('[data-theme-toggle]').forEach(btn=>{
+    btn.addEventListener('click',()=>{applyTheme(readTheme()==='light'?'dark':'light')});
+  });
+  matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>{
+    try{if(localStorage.getItem(key)==='light'||localStorage.getItem(key)==='dark')return}catch(e){}
+    applyTheme(systemTheme());
+  });
+  // include theme toggles in menu inert set if needed — footer stays
+  const motionEl=document.querySelector('.motion');
+  const origToggle=window.toggleMenu;
+})();
 
 document.querySelectorAll('[data-copy]').forEach(button=>button.addEventListener('click',async()=>{const text=document.getElementById(button.dataset.copy).textContent;try{await navigator.clipboard.writeText(text);button.textContent='Copied';document.getElementById('copy-status').textContent='Command copied to clipboard.';setTimeout(()=>button.textContent='Copy',2000)}catch{const range=document.createRange();range.selectNodeContents(document.getElementById(button.dataset.copy));const selection=getSelection();selection.removeAllRanges();selection.addRange(range);button.textContent='Select & copy';document.getElementById('copy-status').textContent='Select the highlighted command and copy it manually.'}}));
 </script>
