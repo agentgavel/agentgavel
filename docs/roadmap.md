@@ -5,6 +5,20 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
+- **Shipped (2026-09-05):** T14.20 (partial) — custom domain `agentgavel.dev`
+  wired end-to-end: `dashboard/CNAME` + repo Pages `cname` set (#130);
+  Cloudflare zone (`agentgavel.dev`, account "Sire") gets 4 apex A records
+  to the GitHub Pages IPs + a `www` CNAME to `agentgavel.github.io`, all
+  unproxied (DNS-only) so GitHub can validate the domain and issue its own
+  cert. `agentgavel.github.io/agentgavel` already 301s to the new domain;
+  DNS is resolving publicly (verified via 1.1.1.1/8.8.8.8 and direct HTTP/S
+  to a Pages IP: `200`). **Still open:** GitHub's automatic HTTPS cert
+  provisioning is async and had not completed as of this entry
+  (`https_enforced: false`, TLS still serving the shared `*.github.io`
+  cert) — no action needed, re-check `gh api repos/agentgavel/agentgavel/pages`
+  and flip Enforce HTTPS in Settings → Pages once it shows `https_enforced`
+  ready on its own.
+
 - **Shipped (2026-09-05):** Wave 25 complete — T14.10 samples (#124), T14.11
   `report --publish` (#126; kazi escalated to agent after worktree infra
   collisions), T14.12 Pages manual (#125), T14.22 README (#127). Next: Wave 26.
