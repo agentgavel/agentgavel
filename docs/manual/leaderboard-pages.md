@@ -39,25 +39,29 @@ Pages deploy for pull requests.
 
 ## Public URL
 
-Expected pattern after Pages is enabled (founder task T14.20):
+Canonical domain: `agentgavel.dev` (custom domain, `dashboard/CNAME`).
+The default `agentgavel.github.io/agentgavel/` URL still resolves and
+redirects to the custom domain once DNS + HTTPS enforcement finish.
 
 ```text
-https://agentgavel.github.io/agentgavel/
-https://agentgavel.github.io/agentgavel/leaderboard/
+https://agentgavel.dev/
+https://agentgavel.dev/leaderboard/
 ```
 
 Entry list:
 
 ```text
-https://agentgavel.github.io/agentgavel/data/index.json
+https://agentgavel.dev/data/index.json
 ```
 
-Until T14.20 enables the repository Pages setting (`build_type=workflow`)
-and a successful `pages.yml` run, that URL may not resolve. Do not treat
-it as live until the founder smoke check (`curl` for
-`/leaderboard/` containing `id="opt-in"` / `id="unratified"` and a JSON
-`index.json`) passes. If the live URL differs from the pattern above,
-record the actual URL here after T14.20.
+Until T14.20 enables the repository Pages setting (`build_type=workflow`),
+DNS (four apex A records at the DNS provider pointing to GitHub Pages:
+`185.199.108.153`, `185.199.109.153`, `185.199.110.153`,
+`185.199.111.153`) resolves, and a successful `pages.yml` run completes,
+the domain may not resolve. Do not treat it as live until the founder
+smoke check (`curl` for `/leaderboard/` containing `id="opt-in"` /
+`id="unratified"` and a JSON `index.json`) passes. If the live URL
+differs from the pattern above, record the actual URL here after T14.20.
 
 ## Opt-in vs Unratified (ADR 006)
 
@@ -131,8 +135,7 @@ real run cannot be promoted onto Opt-in by editing JSON in v0.3.
 | Local `report --publish` into a checkout | Local only until you commit + merge |
 
 Because `pages.yml` uploads `dashboard/` from `main` only, an unmerged
-draft scorecard cannot leak onto
-`https://agentgavel.github.io/agentgavel/`.
+draft scorecard cannot leak onto `https://agentgavel.dev/`.
 
 ## Serve locally
 
