@@ -57,13 +57,13 @@ fidelity: executable
 
 ## Wave 2 -- signature contract + CLI (Wave 29, 3 agents)
 
-- [ ] T15.1 Add maintainer key registry under dashboard/keys (ADR 013)  Owner: pool  Est: 45m  kind: agent  verifies: [UC-032]  lane: agent  acc: [dashboard/keys/registry.json parses as a JSON array; each object has key_id, framework, alg=ed25519, public_key_b64, added_at, status in {active,revoked}; README documents how maintainers register a key via PR; at least one test/fixture active key exists for FakeAdapter or Example Framework]  deps: [T15.0]
+- [x] T15.1 Add maintainer key registry under dashboard/keys (ADR 013)  Owner: pool  Est: 45m  kind: agent  verifies: [UC-032]  lane: agent  acc: [dashboard/keys/registry.json parses as a JSON array; each object has key_id, framework, alg=ed25519, public_key_b64, added_at, status in {active,revoked}; README documents how maintainers register a key via PR; at least one test/fixture active key exists for FakeAdapter or Example Framework]  deps: [T15.0]  completed: 2026-09-05
 
-- [ ] T15.2 Implement Ed25519 canonical encode + verify library (ADR 013)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-032]  acc: [go test ./internal/submit -count=1 passes: CanonicalJSON sorts keys, Verify rejects tampered fields and revoked keys, Verify accepts a golden signed entry against the fixture public key]  deps: [T15.1]
+- [x] T15.2 Implement Ed25519 canonical encode + verify library (ADR 013)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-032]  acc: [go test ./internal/submit -count=1 passes: CanonicalJSON sorts keys, Verify rejects tampered fields and revoked keys, Verify accepts a golden signed entry against the fixture public key]  deps: [T15.1]  completed: 2026-09-05
   - Package `internal/submit` (or `internal/sign`): `CanonicalJSON([]byte) ([]byte, error)`, `Sign(priv, entry)`, `Verify(registry, entry)`.
   - Signature covers entry without `signature`/`key_id`/`sample`.
 
-- [ ] T15.3 Wire AgentGavel report --sign and verify-entry CLI  Owner: pool  Est: 75m  kind: agent  verifies: [UC-032]  acc: [go test ./cmd/AgentGavel -run 'Sign|VerifyEntry' -count=1 passes: report --sign with a test key writes key_id+signature; verify-entry exits 0 on valid and 1 on tamper; help text lists both]  deps: [T15.2, T14.11]
+- [x] T15.3 Wire AgentGavel report --sign and verify-entry CLI  Owner: pool  Est: 75m  kind: agent  verifies: [UC-032]  acc: [go test ./cmd/AgentGavel -run 'Sign|VerifyEntry' -count=1 passes: report --sign with a test key writes key_id+signature; verify-entry exits 0 on valid and 1 on tamper; help text lists both]  deps: [T15.2, T14.11]  completed: 2026-09-05
 
 ## Wave 3 -- CI + Opt-in rule flip (Wave 30, 3 agents)
 

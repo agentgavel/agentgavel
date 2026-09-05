@@ -1,0 +1,18 @@
+[
+  {
+    "key_id": "example-framework-test-1",
+    "framework": "Example Framework",
+    "alg": "ed25519",
+    "public_key_b64": "tPwbcIh4gbzeR5T5D/D70dv2zoK5qDDxWn4OBX7JR14=",
+    "added_at": "2026-09-05T00:00:00Z",
+    "status": "active"
+  },
+  {
+    "key_id": "example-framework-revoked-1",
+    "framework": "Example Framework",
+    "alg": "ed25519",
+    "public_key_b64": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "added_at": "2026-09-01T00:00:00Z",
+    "status": "revoked"
+  }
+]

@@ -126,7 +126,7 @@ Split layout. E1–E14 complete (`fidelity: executable`, all tasks done). E15 is
 
 ### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (24/24)
 
-### E15 -- v1.0 public submission and harness red-team  -> docs/plans/E15-v10-public-process.md  (1/15)
+### E15 -- v1.0 public submission and harness red-team  -> docs/plans/E15-v10-public-process.md  (4/15)
 
 ## 5. Parallel Work
 
@@ -162,8 +162,8 @@ T15.10 before T15.11; T15.13 before T15.14.
 - T15.12, T15.13, T15.14
 
 ## Roadmap
-- **Now:** Wave 28 done (T15.0); E15 1/15 executable — Wave 29 next
-- **Next:** Wave 29 (T15.1–T15.3) → Waves 30–33 → `v1.0.0`
+- **Now:** Wave 29 done (T15.1-T15.3); E15 4/15 -- Wave 30 next
+- **Next:** Wave 30 (T15.4-T15.6 CI + Opt-in flip) -> Waves 31-33 -> `v1.0.0`
 
 ## 6. Timeline and Milestones
 

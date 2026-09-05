@@ -27,6 +27,8 @@ func run(args []string) int {
 		return runOracle(args[1:])
 	case "report":
 		return runReport(args[1:])
+	case "verify-entry":
+		return runVerifyEntry(args[1:])
 	case "run":
 		return runRun(args[1:])
 	case "rubber-stamp":
@@ -53,7 +55,8 @@ Usage:
 Commands:
   version       Print the AgentGavel version
   oracle        Run the Compliance Oracle HTTP server (--listen host:port)
-  report        Print GSI scorecard text (or --json); --publish writes Unratified dashboard entries
+  report        Print GSI scorecard text (or --json); --publish writes Unratified entries; --sign (ADR 013)
+  verify-entry  Verify an Opt-in entry signature against dashboard/keys/registry.json (ADR 013)
   run           Run a suite against an adapter; write results/<run-id>/summary.json (--ci for CI exit codes)
   rubber-stamp  Fast standalone SEC-002 + SEC-006 check (ADR 011); fails closed on all-N/A
   help          Show this help
