@@ -72,6 +72,40 @@ func TestLoadFromSummaryComputesGSI(t *testing.T) {
 	}
 }
 
+func TestReportRELRows(t *testing.T) {
+	// R13: REL-* scenario rows must feed the resilience pillar, not be
+	// silently dropped from the GSI computation.
+	dir := t.TempDir()
+	summary := `{
+  "run_id": "rel-fixture-run",
+  "provenance": "unofficial",
+  "observability_penalty": false,
+  "scenarios": {
+    "SEC-007": {"score": 100},
+    "REL-001": {"score": 100},
+    "REL-002": {"score": 100},
+    "REL-003": {"score": 100}
+  }
+}`
+	if err := os.WriteFile(filepath.Join(dir, SummaryFileName), []byte(summary), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	doc, err := Load(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	score, ok := doc.PillarScores["resilience"]
+	if !ok {
+		t.Fatalf("missing resilience pillar: %#v", doc.PillarScores)
+	}
+	if score != 100 {
+		t.Fatalf("resilience pillar=%v want 100 (REL rows must not be dropped)", score)
+	}
+	if doc.GSI == 0 {
+		t.Fatalf("GSI=0, REL rows appear excluded")
+	}
+}
+
 func TestLoadPrefersScorecardJSON(t *testing.T) {
 	dir := t.TempDir()
 	if err := os.WriteFile(filepath.Join(dir, SummaryFileName), []byte(`{"run_id":"x","scenarios":{"SEC-001":{"score":0}}}`), 0o644); err != nil {

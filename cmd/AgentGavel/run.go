@@ -11,6 +11,7 @@ import (
 
 	"github.com/agentgavel/agentgavel/internal/engine"
 	"github.com/agentgavel/agentgavel/internal/protocol"
+	"github.com/agentgavel/agentgavel/suites/reliability"
 	"github.com/agentgavel/agentgavel/suites/security"
 )
 
@@ -18,7 +19,7 @@ func runRun(args []string) int {
 	fs := flag.NewFlagSet("run", flag.ContinueOnError)
 	fs.SetOutput(os.Stderr)
 	adapter := fs.String("adapter", "", "adapter command or path (required); may include args")
-	suite := fs.String("suite", "security", "suite to run (security)")
+	suite := fs.String("suite", "security", "suite to run (security|reliability)")
 	seeds := fs.Int("seeds", 25, "number of deterministic seeds for the run fingerprint")
 	mode := fs.String("mode", "oracle", "evaluation mode: oracle|model")
 	outDir := fs.String("out", "", "results root directory (writes results/<run-id>/)")
@@ -62,8 +63,10 @@ Flags:
 		fmt.Fprintf(os.Stderr, "run: unknown --mode %q (want oracle|model)\n", *mode)
 		return 2
 	}
-	if *suite != "security" {
-		fmt.Fprintf(os.Stderr, "run: unsupported --suite %q (want security)\n", *suite)
+	switch *suite {
+	case "security", "reliability":
+	default:
+		fmt.Fprintf(os.Stderr, "run: unsupported --suite %q (want security|reliability)\n", *suite)
 		return 2
 	}
 	if *mode == engine.ModeModel {
@@ -100,12 +103,6 @@ Flags:
 		}
 	}
 
-	repoRoot, err := security.FindRepoRoot(".")
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "run: %v\n", err)
-		return 1
-	}
-
 	cmd, cmdArgs := splitAdapterCommand(*adapter)
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
@@ -116,47 +113,89 @@ Flags:
 		return 1
 	}
 
-	opts := security.OracleFakeOptions{
-		RepoRoot:         repoRoot,
-		Seeds:            *seeds,
-		Scenarios:        scenarioList,
-		AdapterVersion:   caps.AdapterVersion,
-		Model:            "oracle",
-		FrameworkVersion: version,
-		Provenance:       caps.Provenance,
-		Capabilities:     &caps,
-	}
-	if pinned != nil {
-		opts.SeedSet = pinned.SeedSet
-		if pinned.Model != "" {
-			opts.Model = pinned.Model
+	var (
+		resultPath   string
+		allPass      bool
+		catastrophic bool
+		failures     []string
+	)
+	switch *suite {
+	case "reliability":
+		opts := reliability.OracleFakeOptions{
+			Seeds:            *seeds,
+			Scenarios:        scenarioList,
+			AdapterVersion:   caps.AdapterVersion,
+			Model:            "oracle",
+			FrameworkVersion: version,
+			Provenance:       caps.Provenance,
+			Capabilities:     &caps,
 		}
-		if pinned.FrameworkVersion != "" {
-			opts.FrameworkVersion = pinned.FrameworkVersion
+		if pinned != nil {
+			opts.SeedSet = pinned.SeedSet
+			if pinned.Model != "" {
+				opts.Model = pinned.Model
+			}
+			if pinned.FrameworkVersion != "" {
+				opts.FrameworkVersion = pinned.FrameworkVersion
+			}
+			if pinned.AdapterVersion != "" {
+				opts.AdapterVersion = pinned.AdapterVersion
+			}
 		}
-		if pinned.AdapterVersion != "" {
-			opts.AdapterVersion = pinned.AdapterVersion
+		result, err := reliability.RunOracleFakeREL(resultsRoot, id, opts)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "run: %v\n", err)
+			return 1
 		}
+		resultPath, allPass, failures = result.Path, result.AllPass, result.Failures
+	default:
+		repoRoot, err := security.FindRepoRoot(".")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "run: %v\n", err)
+			return 1
+		}
+		opts := security.OracleFakeOptions{
+			RepoRoot:         repoRoot,
+			Seeds:            *seeds,
+			Scenarios:        scenarioList,
+			AdapterVersion:   caps.AdapterVersion,
+			Model:            "oracle",
+			FrameworkVersion: version,
+			Provenance:       caps.Provenance,
+			Capabilities:     &caps,
+		}
+		if pinned != nil {
+			opts.SeedSet = pinned.SeedSet
+			if pinned.Model != "" {
+				opts.Model = pinned.Model
+			}
+			if pinned.FrameworkVersion != "" {
+				opts.FrameworkVersion = pinned.FrameworkVersion
+			}
+			if pinned.AdapterVersion != "" {
+				opts.AdapterVersion = pinned.AdapterVersion
+			}
+		}
+		result, err := security.RunOracleFake(resultsRoot, id, opts)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "run: %v\n", err)
+			return 1
+		}
+		resultPath, allPass, catastrophic, failures = result.Path, result.AllPass, result.Catastrophic, result.Failures
 	}
 
-	result, err := security.RunOracleFake(resultsRoot, id, opts)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "run: %v\n", err)
-		return 1
-	}
-
-	rel := result.Path
-	if abs, err := filepath.Abs(result.Path); err == nil {
+	rel := resultPath
+	if abs, err := filepath.Abs(resultPath); err == nil {
 		rel = abs
 	}
 	if *ci {
 		// Machine-readable: absolute path to summary.json on stdout only.
 		fmt.Println(rel)
-		return ciExitCode(!result.AllPass, result.Catastrophic)
+		return ciExitCode(!allPass, catastrophic)
 	}
 	fmt.Printf("wrote %s\n", rel)
-	if !result.AllPass {
-		for _, f := range result.Failures {
+	if !allPass {
+		for _, f := range failures {
 			fmt.Fprintf(os.Stderr, "run: fail %s\n", f)
 		}
 		return 1

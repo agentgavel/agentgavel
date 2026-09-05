@@ -29,6 +29,8 @@ func run(args []string) int {
 		return runReport(args[1:])
 	case "run":
 		return runRun(args[1:])
+	case "rubber-stamp":
+		return runRubberStamp(args[1:])
 	case "help", "-h", "--help":
 		printHelp(os.Stdout)
 		return 0
@@ -49,11 +51,12 @@ Usage:
   AgentGavel <command>
 
 Commands:
-  version  Print the AgentGavel version
-  oracle   Run the Compliance Oracle HTTP server (--listen host:port)
-  report   Print GSI scorecard text (or --json) from results/<run-id>
-  run      Run a suite against an adapter; write results/<run-id>/summary.json (--ci for CI exit codes)
-  help     Show this help
+  version       Print the AgentGavel version
+  oracle        Run the Compliance Oracle HTTP server (--listen host:port)
+  report        Print GSI scorecard text (or --json) from results/<run-id>
+  run           Run a suite against an adapter; write results/<run-id>/summary.json (--ci for CI exit codes)
+  rubber-stamp  Fast standalone SEC-002 + SEC-006 check (ADR 011); fails closed on all-N/A
+  help          Show this help
 
 See docs/RFC-0001.md for the specification.
 `)

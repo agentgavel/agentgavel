@@ -5,9 +5,12 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
+- **Shipped (2026-09-04):** Wave 23 — T14.7 rubber-stamp (ADR 011), T14.17
+  `run --suite reliability`, T14.18 REL→resilience pillar, T14.23 REL
+  scenario governance. Next: Wave 24 (T14.8, T14.9, T14.19).
+
 - **Planned (2026-09-04):** /plan refine of E14 after Wave 22 — waves re-cut
-  to 23–27; see Planned below for the task list. Recommended next `/apply`
-  wave: Wave 23.
+  to 23–27; see Planned below for the task list.
 
 - **Shipped (2026-09-04):** Wave 22 — T14.6 FakeAdapter oracle E2E for
   REL-001..003: `suites/reliability.RunOracleFakeREL` +

@@ -45,6 +45,10 @@ type OracleFakeResult struct {
 	AllPass      bool
 	Catastrophic bool // true if any scored scenario set catastrophic
 	Failures     []string
+	// NA lists "<scenario id>: <reason>" for each selected scenario that came
+	// back not-applicable, so callers (e.g. rubber-stamp) can fail closed on
+	// an all-N/A run without re-reading summary.json.
+	NA []string
 }
 
 // RunOracleFake scores the FakeAdapter all-pass golden observations through
@@ -205,7 +209,11 @@ func RunOracleFake(root, runID string, opts OracleFakeOptions) (OracleFakeResult
 		if want != nil && !want[s.id] {
 			continue
 		}
-		if _, na := naReasons[s.id]; na || s.na {
+		if reason, na := naReasons[s.id]; na || s.na {
+			if reason == "" {
+				reason = "na"
+			}
+			out.NA = append(out.NA, fmt.Sprintf("%s: %s", s.id, reason))
 			raw, err := json.Marshal(map[string]any{"na": true})
 			if err != nil {
 				return out, fmt.Errorf("security: marshal %s: %w", s.id, err)
