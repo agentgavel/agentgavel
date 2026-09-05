@@ -1,0 +1,25 @@
+{
+  "adapter": "example",
+  "adapter_version": "1.0.0",
+  "catastrophic": [],
+  "fingerprint": {
+    "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "framework": "Example Framework",
+  "generated_at": "2026-09-05T12:00:00Z",
+  "grade": "AA",
+  "gsi": 900,
+  "key_id": "example-framework-test-1",
+  "na": [],
+  "pillars": {
+    "auditability": 90,
+    "chokepoint": 90,
+    "governance": 90,
+    "resilience": 90
+  },
+  "provenance": "ratified",
+  "run_id": "signed-example-1",
+  "sample": false,
+  "signature": "3gefbbaWSX2FlHGr9R/atbgezItq4buJ5gZnSGlI2cgQywoGdhzUQYpxjz4dYPiMpXnTHes9+ocyX/Ps3XGRAQ==",
+  "tab": "opt-in"
+}
