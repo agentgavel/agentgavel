@@ -1,19 +1,21 @@
-# E15 -- v1.0 public submission and harness red-team
+# E15 -- v1.0 public submission, harness red-team, OpenClaw
 
 Acceptance: Public signed Opt-in submission process live (GitHub-native per
 ADR 012); adversarial red-team bounty for the harness itself announced;
 ratification and provisional paths operational per ADR 007; at least one
-non-author adapter reaches provisional or ratified.
+non-author adapter reaches provisional or ratified; unofficial OpenClaw
+gateway-style adapter ships with honest CapabilityReport and at least one
+oracle E2E path (ADR 014).
 fidelity: executable
 
 ## Learnings from v0.3 (bind into tasks)
 
 - Pages + `agentgavel.dev` already ship from `dashboard/` via `pages.yml`.
-  Opt-in trust must reuse that path (ADR 012) — no new host.
+  Opt-in trust must reuse that path (ADR 012) -- no new host.
 - `report --publish` is the sole writer of `dashboard/data/*.json` and
   `index.json` today, and rejects `--tab opt-in` (ADR 006 addendum).
   v1.0 flips that for **signed** Opt-in only (ADR 013).
-- `scripts/check-dashboard.sh` enforces `tab=opt-in ⇒ sample=true`. Flip to
+- `scripts/check-dashboard.sh` enforces `tab=opt-in => sample=true`. Flip to
   `sample=true OR verified signature` in the same wave as the verifier.
 - Samples stay: Opt-in demo rows with `sample: true` need no key. Real
   Opt-in rows use Ed25519 + `dashboard/keys/registry.json` (ADR 013).
@@ -23,6 +25,9 @@ fidelity: executable
 - Soft rates, FakeAdapter oracle-first, and no per-framework exploit code
   still bind. Bounty targets the **harness** (engine, oracle, scoring,
   dashboard verify), not adapter exploit kits.
+- OpenClaw is a Gateway product, not a §8.1 library: reuse the wire
+  protocol; map Gateway APIs inside the sidecar (ADR 014). Honest N/A
+  beats stubbed green when approvals/ledger are not programmable.
 
 ## Locked decisions
 
@@ -30,6 +35,8 @@ fidelity: executable
 - Signature: Ed25519 + JCS-ish canonical JSON; registry under
   `dashboard/keys/` (ADR 013).
 - No Firebase / BaaS as trust root in v1.0.
+- OpenClaw in v1.0 as gateway-style unofficial adapter (ADR 014); n8n/Dify
+  still deferred (§8.2).
 
 ## File-touch map
 
@@ -49,6 +56,14 @@ fidelity: executable
 | T15.12 | `docs/manual/v1.0-smoke.md` |
 | T15.13 | repo-wide `make test` / `make lint` / `check-dashboard` |
 | T15.14 | git tag `v1.0.0` + GitHub release assets |
+| T15.15 | `docs/adr/014-gateway-style-openclaw.md`, RFC §8.3 |
+| T15.16 | `docs/manual/openclaw-capability-map.md` (or design appendix) |
+| T15.17 | `adapters/openclaw/` scaffold + Handshake |
+| T15.18 | OpenClaw `ResolveApproval` / exec-approval mapping |
+| T15.19 | Events + CapabilityReport honesty |
+| T15.20 | Oracle E2E SEC-002 (or documented N/A path) |
+| T15.21 | OpenClaw README + unofficial provenance |
+| T15.22 | OpenClaw adapter lint (ruff/gofmt as applicable) |
 
 ## Wave 1 -- planning (Wave 28)
 
@@ -75,7 +90,7 @@ fidelity: executable
 
 ## Wave 4 -- docs + bounty (Wave 31, 3 agents)
 
-- [ ] T15.7 Document signed Opt-in PR submission workflow  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/opt-in-submission.md]  verifies: [UC-032]  lane: agent  acc: [doc cites ADR 012 and ADR 013; lists generate scorecard, report --sign, open PR adding dashboard/data entry + index, CI verify, merge→Pages; states samples need no signature]  deps: [T15.3, T15.4]
+- [ ] T15.7 Document signed Opt-in PR submission workflow  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/opt-in-submission.md]  verifies: [UC-032]  lane: agent  acc: [doc cites ADR 012 and ADR 013; lists generate scorecard, report --sign, open PR adding dashboard/data entry + index, CI verify, merge->Pages; states samples need no signature]  deps: [T15.3, T15.4]
 
 - [ ] T15.8 Publish harness red-team bounty scope and disclosure policy  Owner: pool  Est: 60m  kind: agent  delivers: [SECURITY.md, docs/manual/harness-bounty.md]  verifies: [UC-033]  lane: agent  acc: [SECURITY.md links disclosure path; harness-bounty.md defines in-scope (engine, oracle, scoring, dashboard verify, CI signature checks), out-of-scope (per-framework exploit kits, social engineering), and safe-harbor / coordinated disclosure]  deps: [T15.0]
 
@@ -87,10 +102,32 @@ fidelity: executable
 
 - [ ] T15.11 Grant provisional provenance to one non-author adapter (LangGraph preferred)  Owner: pool  Est: 90m  kind: human  verifies: [UC-034]  acc: [adapters/langgraph README (or ratification record) shows provenance=provisional with dated checklist reference; dashboard sample or live entry for that adapter uses provenance=provisional; Sire remains unofficial or provisional-only via external review]  deps: [T15.10]  blocked: Needs independent review sign-off (founder or external reviewer)
 
-## Wave 6 -- quality + ship (Wave 33, 3 agents)
+## Wave 6 -- OpenClaw design + capability map (Wave 34, done+1)
 
-- [ ] T15.12 Add docs/manual/v1.0-smoke.md for sign, verify, Opt-in publish, bounty links  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/v1.0-smoke.md]  verifies: [UC-032, UC-033]  lane: agent  acc: [smoke doc has copy-paste commands for report --sign, verify-entry, check-dashboard, and local Pages serve, each with expected exit codes]  deps: [T15.6, T15.7, T15.8]
+- [x] T15.15 Accept gateway-style OpenClaw scope (ADR 014 + RFC §8.3)  Owner: pool  Est: 45m  kind: agent  delivers: [docs/adr/014-gateway-style-openclaw.md, RFC §8.3]  verifies: [UC-035]  lane: agent  acc: [ADR 014 exists Accepted; RFC-0001 §8 item 4 cites OpenClaw; §8.3 states gateway-style mapping and that n8n/Dify remain deferred]  deps: [T15.0]  completed: 2026-09-05
 
-- [ ] T15.13 Full make test and make lint green on clean tree (v1.0 gate)  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [make test && make lint && bash scripts/check-dashboard.sh all exit 0 on a clean checkout of the integration branch]  deps: [T15.5, T15.6, T15.4]
+- [ ] T15.16 Map OpenClaw Gateway surfaces to Handshake/ResolveApproval/Events/ExportLedger  Owner: pool  Est: 75m  kind: agent  delivers: [docs/manual/openclaw-capability-map.md]  verifies: [UC-035]  lane: agent  acc: [doc lists each wire RPC and the concrete OpenClaw API/CLI/config used (or N/A with reason); names reference config fingerprint fields; cites ADR 014]  deps: [T15.15]
 
-- [ ] T15.14 Cut v1.0.0 GitHub release with GoReleaser assets  Owner: pool  Est: 45m  kind: human  verifies: [infrastructure]  acc: [git tag v1.0.0 exists; gh release view v1.0.0 shows darwin/linux amd64/arm64 binaries + checksums; release notes cite signed Opt-in (ADR 012/013) and harness bounty]  deps: [T15.13, T15.12, T15.9]  blocked: Founder cuts tag after T15.13 green (same pattern as T14.16)
+## Wave 7 -- OpenClaw adapter (Wave 35, 3 agents)
+
+- [ ] T15.17 Scaffold adapters/openclaw unofficial sidecar with Handshake  Owner: pool  Est: 90m  kind: agent  verifies: [UC-035]  acc: [adapters/openclaw launches as AgentGavel --adapter sidecar; Handshake returns CapabilityReport with provenance=unofficial and version fields; go test or pytest for Handshake green]  deps: [T15.16, T7.1]
+
+- [ ] T15.18 Map ResolveApproval to OpenClaw exec approvals / permission modes  Owner: pool  Est: 90m  kind: agent  verifies: [UC-035, UC-021]  acc: [adapter implements ResolveApproval against OpenClaw approval surface per capability map, OR CapabilityReport.hitl=false with documented N/A and no silent Fail on SEC-002]  deps: [T15.17]
+
+- [ ] T15.19 Emit tool/gate Events and ExportLedger honesty for OpenClaw  Owner: pool  Est: 90m  kind: agent  verifies: [UC-035]  acc: [Events stream includes tool_invocation and gate_decision when capabilities allow; missing ledger sets ledger=false; unit tests cover event emission or N/A paths]  deps: [T15.17]
+
+## Wave 8 -- OpenClaw E2E + docs (Wave 36, 3 agents)
+
+- [ ] T15.20 Oracle E2E SEC-002 (or honest all-N/A rubber-stamp path) against OpenClaw  Owner: pool  Est: 90m  kind: agent  verifies: [UC-035, UC-021]  acc: [go test or documented AgentGavel run --adapter openclaw --suite security -run SEC-002 shows Pass/Fail/N/A with oracle; if hitl=false, rubber-stamp exits 1 with not_applicable per ADR 011 and test asserts that]  deps: [T15.18, T15.19, T8.10]
+
+- [ ] T15.21 OpenClaw adapter README with unofficial provenance and reference config  Owner: pool  Est: 45m  kind: agent  delivers: [adapters/openclaw/README.md]  verifies: [UC-035]  lane: agent  acc: [README states unofficial provenance, ADR 014, how to run against a local Gateway, fingerprint config fields, and that nested Codex/Claude/Copilot plugins are out of scope for v1.0]  deps: [T15.17]
+
+- [ ] T15.22 Lint clean on adapters/openclaw  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [ruff and/or gofmt clean on adapters/openclaw as applicable to the language chosen in T15.17]  deps: [T15.17, T15.18, T15.19]
+
+## Wave 9 -- quality + ship (Wave 33, 3 agents)
+
+- [ ] T15.12 Add docs/manual/v1.0-smoke.md for sign, verify, Opt-in publish, OpenClaw, bounty links  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/v1.0-smoke.md]  verifies: [UC-032, UC-033, UC-035]  lane: agent  acc: [smoke doc has copy-paste commands for report --sign, verify-entry, check-dashboard, OpenClaw Handshake or SEC-002 path, and local Pages serve, each with expected exit codes]  deps: [T15.6, T15.7, T15.8, T15.20]
+
+- [ ] T15.13 Full make test and make lint green on clean tree (v1.0 gate)  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [make test && make lint && bash scripts/check-dashboard.sh all exit 0 on a clean checkout of the integration branch]  deps: [T15.5, T15.6, T15.4, T15.22]
+
+- [ ] T15.14 Cut v1.0.0 GitHub release with GoReleaser assets  Owner: pool  Est: 45m  kind: human  verifies: [infrastructure]  acc: [git tag v1.0.0 exists; gh release view v1.0.0 shows darwin/linux amd64/arm64 binaries + checksums; release notes cite signed Opt-in (ADR 012/013), harness bounty, and unofficial OpenClaw adapter (ADR 014)]  deps: [T15.13, T15.12, T15.9, T15.20, T15.21]  blocked: Founder cuts tag after T15.13 green (same pattern as T14.16)
