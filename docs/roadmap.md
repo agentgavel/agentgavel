@@ -5,11 +5,10 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **Shipped (2026-09-05):** Wave 27 T14.15 — `make test` + `make lint` +
-  `scripts/check-dashboard.sh` green on clean tree. T14.20 live verify —
-  `https://agentgavel.dev/` (marketing), `/leaderboard/` (`#opt-in` /
-  `#unratified`), `/data/index.json` samples. E14 23/24. **Next:** T14.16
-  cut `v0.3.0`.
+- **Shipped (2026-09-05):** Wave 27 / E14 complete — T14.15 quality gate,
+  T14.20 live `agentgavel.dev` leaderboard, T14.16 tag
+  [`v0.3.0`](https://github.com/agentgavel/agentgavel/releases/tag/v0.3.0)
+  (REL-v0, rubber-stamp, leaderboard). **Next:** T15.0 expand E15.
 
 - **Shipped (2026-09-05):** Wave 26 complete — T14.21 `check-dashboard.sh` +
   CI `dashboard` job, T14.13 `docs/manual/v0.3-smoke.md`, T14.14 gofmt clean

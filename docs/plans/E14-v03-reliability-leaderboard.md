@@ -150,5 +150,6 @@ fidelity: executable
 - [x] T14.20 Enable GitHub Pages (workflow source) and verify the leaderboard live (founder)  Owner: pool  Est: 30m  kind: human  verifies: [UC-022]  acc: [curl -sf https://agentgavel.dev/leaderboard/ returns HTML containing id="opt-in" and id="unratified", curl -sf https://agentgavel.dev/ returns the marketing home, and curl -sf https://agentgavel.dev/data/index.json returns a JSON array with the sample entries]  deps: [T14.19, T14.10, T14.21]  completed: 2026-09-05
   - Founder action (outward-facing): `gh api -X POST repos/agentgavel/agentgavel/pages -f build_type=workflow`, then run `pages.yml` via `workflow_dispatch`, then verify with `curl` and an `agent-browser` screenshot. Record the URL in `docs/manual/leaderboard-pages.md` if it differs from the pattern.
 
-- [ ] T14.16 Cut v0.3.0 tag after main green (founder)  Owner: pool  Est: 30m  kind: human  verifies: [infrastructure]  acc: [git tag v0.3.0 exists on origin and release assets uploaded]  deps: [T14.15, T14.20]
+- [x] T14.16 Cut v0.3.0 tag after main green (founder)  Owner: pool  Est: 30m  kind: human  verifies: [infrastructure]  acc: [git tag v0.3.0 exists on origin and release assets uploaded]  deps: [T14.15, T14.20]  completed: 2026-09-05
   - Note: human confirms public v0.3 messaging and tag push. Release notes name REL-v0 (ADR 010), `rubber-stamp` (ADR 011), and the live leaderboard URL.
+  - Tag `v0.3.0` + 5 GoReleaser assets: https://github.com/agentgavel/agentgavel/releases/tag/v0.3.0
