@@ -13,7 +13,7 @@ Objectives:
   unofficial Sire + LangGraph adapters.
 - v0.2 shipped (`v0.2.0`): SEC-008..010, GOV-v0 scaffold, six RFC §8.1 unofficial
   adapters, `run --ci`, scenario governance.
-- Frontier is now v0.3 (E14 executable, 21/24 after Wave 26): REL-v0 shipped
+- Frontier is now v0.3 (E14 executable, 23/24 after Wave 27 T14.15+T14.20): REL-v0 shipped
   as predicates + FakeAdapter E2E (ADR 010); remaining work is `rubber-stamp`
   (ADR 011), REL CLI wiring, GSI pillar mapping, and the GitHub Pages
   leaderboard (ADR 006 + addendum).
@@ -132,7 +132,7 @@ Split layout. E1-E13 complete (`fidelity: executable`, all tasks done). E14 is
 
 ### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (26/26)
 
-### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (21/24)
+### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (23/24)
 
 ### E15 -- v1.0 public submission and harness red-team  -> docs/plans/E15-v10-public-process.md  (0/1)
 
@@ -176,9 +176,8 @@ Sync points: T14.7 + T14.17 (CLI surfaces), T14.11 (publish schema), T14.15
 - T14.15, T14.20, T14.16
 
 ## Roadmap
-- **Now:** Wave 26 done (T14.21, T14.13, T14.14); E14 21/24 — Wave 27 next
-- **Next:** Wave 27 quality gate + live leaderboard verify (T14.15, T14.20)
-  → T14.16 `v0.3.0` → T15.0 expands E15
+- **Now:** Wave 27 in flight — T14.15 + T14.20 done; T14.16 `v0.3.0` tag next
+- **Next:** T14.16 `v0.3.0` → T15.0 expands E15 (GitHub-native Opt-in, ADR 012)
 
 ## 6. Timeline and Milestones
 
