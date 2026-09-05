@@ -5,13 +5,17 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
+- **Planned (2026-09-05):** v1.0 also includes unofficial **Hermes Agent**
+  (https://github.com/nousresearch/hermes-agent) gateway-style adapter
+  (ADR 014 rename, Waves 37-39, T15.23-T15.30). T15.30 done. E15 6/31.
+  **Next:** Wave 30 Opt-in CI and/or T15.16 / T15.23 capability maps.
+
 - **Planned (2026-09-05):** v1.0 scope expanded -- unofficial **OpenClaw**
   gateway-style adapter (ADR 014 / RFC §8.3), Waves 34-36 (T15.15-T15.22).
-  T15.15 done. E15 5/23. **Next:** Wave 30 Opt-in CI and/or T15.16 capability map.
+  T15.15 done.
 
 - **Shipped (2026-09-05):** Wave 29 — T15.1 `dashboard/keys/` registry, T15.2
   `internal/submit` Ed25519 verify, T15.3 `report --sign` + `verify-entry`.
-  E15 4/15 before OpenClaw expand.
 
 - **Shipped (2026-09-05):** Wave 28 / T15.0 — E15 expanded to executable
   fidelity (15 tasks, Waves 29–33). ADR 013 pins Ed25519 + key registry for
@@ -177,10 +181,9 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 - **v0.2 (E13):** shipped as `v0.2.0` (T13.25).
 - **v0.3 (E14):** shipped as `v0.3.0` (T14.16) — REL-v0, rubber-stamp,
   live leaderboard.
-- **v1.0 (E15):** executable (5/23 after OpenClaw scope expand). Tracks:
-  Opt-in signatures (Waves 30-31), ratification (32), OpenClaw gateway
-  adapter (34-36, ADR 014), ship (33). Human gates: T15.11, T15.14.
-  `v1.0.0` waits on OpenClaw E2E (T15.20).
+- **v1.0 (E15):** executable (6/31 after Hermes expand). Tracks: Opt-in
+  signatures, ratification, OpenClaw (34-36), Hermes (37-39), ship (33).
+  Human gates: T15.11, T15.14. `v1.0.0` waits on T15.20 and T15.27.
 
 ## Done
 

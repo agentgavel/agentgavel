@@ -45,7 +45,7 @@ suites/reliability/      REL-v0: demotion latch, replay/drift, ledger completene
 proto/                   adapter contract source of truth
 sdk/python/              Transport + callback base for Python adapters
 sdk/go/                  Go-native adapter helpers
-adapters/                Per-framework sidecars (sire, langgraph, openclaw, ...)
+adapters/                Per-framework sidecars (sire, langgraph, openclaw, hermes, ...)
 fixtures/                Probes, canaries, rogue configs
 dashboard/               Static leaderboard: Opt-in + Unratified tabs (ADR 006)
 dashboard/keys/          Maintainer public-key registry for Opt-in (ADR 013)
@@ -65,10 +65,11 @@ features become honest N/A rather than silent Fail.
 Transport: JSON-RPC 2.0 over stdio is the default; gRPC is optional for
 long-running hosted adapters. See `docs/adr/002-adapter-transport.md`.
 
-**Gateway-style targets** (OpenClaw first, ADR 014): the sidecar still speaks
-this contract; inside it, the adapter drives a Gateway/control API rather than
-an in-process agent graph library. Nested vendor harness plugins are out of
-scope unless named in CapabilityReport.
+**Gateway-style targets** (OpenClaw and Hermes Agent, ADR 014): the sidecar
+still speaks this contract; inside it, the adapter drives a Gateway/control
+API rather than an in-process agent graph library. Nested or non-reference
+execution backends are out of scope unless named in CapabilityReport.
+Each product gets its own adapter dir and fingerprint.
 
 ## Scoring (summary)
 

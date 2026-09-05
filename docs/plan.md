@@ -17,14 +17,16 @@ Objectives:
   `agentgavel.dev` (ADR 006), Pages + dashboard CI.
 - Frontier is now v1.0 (E15 executable after T15.0): GitHub-native signed Opt-in
   (ADR 012 + ADR 013), harness red-team bounty, ratification ops (ADR 007),
-  and unofficial OpenClaw gateway-style adapter (ADR 014 / RFC §8.3).
+  and unofficial gateway-style adapters for OpenClaw and Hermes Agent
+  (ADR 014 / RFC §8.3).
 
 Non goals (v1.0):
 - Per-framework exploit code (forbidden by RFC section 0).
 - Firebase / BaaS as Opt-in trust root (rejected; ADR 012).
 - Hosted submission API beyond signed PRs into `dashboard/data/`.
 - n8n / Dify gateway adapters (still deferred under RFC §8.2).
-- Nested Codex / Claude Agent SDK / Copilot plugins as the OpenClaw SUT.
+- Nested Codex / Claude Agent SDK / Copilot plugins as the OpenClaw SUT;
+  non-reference Hermes terminal backends as the Hermes SUT.
 
 Constraints and assumptions:
 - Module/repo: `github.com/agentgavel/agentgavel`.
@@ -42,8 +44,8 @@ Success metrics:
   signature verifies (ADR 013).
 - `SECURITY.md` + harness bounty scope published.
 - At least one non-author adapter reaches provisional or ratified (ADR 007).
-- Unofficial OpenClaw adapter Handshake + SEC-002 oracle path (or honest
-  N/A) documented (ADR 014).
+- Unofficial OpenClaw and Hermes Agent adapters each have Handshake +
+  SEC-002 oracle path (or honest N/A) documented (ADR 014).
 - Soft rates use >=25 seeds with Wilson intervals.
 - Scenario governance comment window applies before REL/SEC/GOV changes publish.
 
@@ -53,17 +55,17 @@ Work type: Engineering (greenfield + process docs).
 
 Graph scan: no `.code-review-graph/graph.db`; skipped.
 
-Use cases: 31 total (UC-032 signed Opt-in, UC-033 harness bounty,
-UC-034 ratification ops, UC-035 OpenClaw gateway adapter). Manifest:
+Use cases: 32 total (UC-032..036 including OpenClaw + Hermes). Manifest:
 `.claude/scratch/usecases-manifest.json`.
 
-Gaps to close in v1.0 (re-scanned 2026-09-05 after Wave 29 + OpenClaw expand):
+Gaps to close in v1.0 (re-scanned 2026-09-05 after Hermes expand):
 - Maintainer key registry + Ed25519 verify (ADR 013) -- T15.1-3 done.
 - CLI CI verify job; flip `check-dashboard.sh`; signed `--tab opt-in`.
 - Opt-in submission manual; Pages/README; bounty + SECURITY.md.
 - Ratification ops + first non-author provisional (human gate).
 - OpenClaw capability map + unofficial sidecar + oracle E2E (ADR 014).
-- v1.0 smoke + quality gate + `v1.0.0` tag (waits on OpenClaw E2E).
+- Hermes Agent capability map + unofficial sidecar + oracle E2E (ADR 014).
+- v1.0 smoke + quality gate + `v1.0.0` tag (waits on OpenClaw + Hermes E2E).
 
 Research notes (v0.3 ops + OpenClaw):
 - Trust for Opt-in is cryptographic, not IdP login; volume is low.
@@ -100,7 +102,8 @@ Out of scope:
 | D16 | v0.3.0 GitHub release | tag + binaries |
 | D17 | Signed Opt-in + bounty + ratification | ADR 012/013; SECURITY.md; provisional badge |
 | D18 | Unofficial OpenClaw gateway adapter | ADR 014; Handshake + SEC-002/N/A path |
-| D19 | v1.0.0 GitHub release | tag + binaries |
+| D19 | Unofficial Hermes Agent gateway adapter | ADR 014; Handshake + SEC-002/N/A path |
+| D20 | v1.0.0 GitHub release | tag + binaries |
 
 ## 4. Checkable Work Breakdown
 
@@ -135,7 +138,7 @@ Split layout. E1–E14 complete (`fidelity: executable`, all tasks done). E15 is
 
 ### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (24/24)
 
-### E15 -- v1.0 public submission, red-team, OpenClaw  -> docs/plans/E15-v10-public-process.md  (5/23)
+### E15 -- v1.0 Opt-in, red-team, OpenClaw, Hermes  -> docs/plans/E15-v10-public-process.md  (6/31)
 
 ## 5. Parallel Work
 
@@ -145,11 +148,13 @@ Tracks (v1.0):
 - Track X: submission docs + bounty + README (T15.7–T15.9)
 - Track Y: ratification ops + first provisional (T15.10–T15.11)
 - Track AA: OpenClaw gateway-style adapter (T15.15–T15.22)
+- Track AB: Hermes Agent gateway-style adapter (T15.30, T15.23–T15.29)
 - Track Z: smoke + quality + tag (T15.12–T15.14)
 
 Sync points: T15.2 before T15.4/T15.5; T15.5+T15.6 before T15.13;
-T15.10 before T15.11; T15.15 before T15.16; T15.20+T15.21 before T15.14;
-T15.13 before T15.14. Track AA may run in parallel with W/X after T15.15.
+T15.10 before T15.11; T15.15 before T15.16; T15.30 before T15.23;
+T15.20+T15.21 and T15.27+T15.28 before T15.14; T15.13 before T15.14.
+Tracks AA/AB may run in parallel with W/X after their design tasks.
 
 ### Wave 13–27: E13–E14 (done)
 - T13.0–T13.25, T14.0–T14.23
@@ -178,12 +183,21 @@ T15.13 before T15.14. Track AA may run in parallel with W/X after T15.15.
 ### Wave 36: OpenClaw E2E + docs (3 agents)
 - T15.20, T15.21, T15.22
 
+### Wave 37: Hermes design (done + 1 agent)
+- T15.30 (done), T15.23
+
+### Wave 38: Hermes adapter (3 agents)
+- T15.24, T15.25, T15.26
+
+### Wave 39: Hermes E2E + docs (3 agents)
+- T15.27, T15.28, T15.29
+
 ### Wave 33: quality gate + ship (2 agents + founder)
 - T15.12, T15.13, T15.14
 
 ## Roadmap
-- **Now:** Wave 29 done; OpenClaw in v1.0 scope (ADR 014); E15 5/23
-- **Next:** Wave 30 (Opt-in CI) in parallel with Wave 34 T15.16 -> 35-36 -> 33 -> `v1.0.0`
+- **Now:** Wave 29 done; OpenClaw + Hermes in v1.0 (ADR 014); E15 6/31
+- **Next:** Wave 30 (Opt-in CI) in parallel with T15.16 / T15.23 maps -> 35-39 -> 33 -> `v1.0.0`
 
 ## 6. Timeline and Milestones
 
@@ -199,7 +213,7 @@ T15.13 before T15.14. Track AA may run in parallel with W/X after T15.15.
 | M8 | v0.3 planned | T14.0 | E14 executable |
 | M9 | v0.3.0 release | Waves 21-27 | T14.20 live, T14.16 done |
 | M10 | v1.0 planned | T15.0 | E15 executable |
-| M11 | v1.0.0 release | Waves 29-36 | T15.13 green, T15.20 OpenClaw E2E, T15.14 tagged |
+| M11 | v1.0.0 release | Waves 29-39 | T15.13 green, T15.20+T15.27 gateway E2E, T15.14 tagged |
 
 ## 7. Risk Register
 
@@ -213,8 +227,9 @@ T15.13 before T15.14. Track AA may run in parallel with W/X after T15.15.
 | R14 | Canonical JSON mismatch across signers | Broken Opt-in | Med | Golden vectors in `internal/submit`; ADR 013 pins encoding |
 | R15 | Provisional confused with ratified | Credibility | Med | Three-way badge + ratification manual (T15.10) |
 | R16 | Bounty scope includes adapter exploits | Neutrality breach | Med | Bounty doc out-of-scope list; RFC section 0 |
-| R17 | OpenClaw Gateway APIs lack ResolveApproval | Heavy N/A | High | Capability map first (T15.16); honest hitl=false; ADR 011 rubber-stamp |
-| R18 | OpenClaw CI needs live Gateway | Flaky / heavy | Med | Document reference config; skip live E2E in default CI if marked optional with FakeAdapter remaining the harness proof |
+| R17 | OpenClaw/Hermes Gateway APIs lack ResolveApproval | Heavy N/A | High | Capability maps first (T15.16, T15.23); honest hitl=false; ADR 011 |
+| R18 | Gateway CI needs live process | Flaky / heavy | Med | Document reference config; optional live E2E; FakeAdapter remains harness proof |
+| R19 | Confusing OpenClaw vs Hermes scorecards | Credibility | Med | Separate adapter dirs, fingerprints, and leaderboard rows (ADR 014) |
 
 ## 8. Operating Procedure
 
@@ -235,15 +250,17 @@ Rules:
 - Opt-in submissions are GitHub-native (ADR 012); signatures follow ADR 013.
 - `report --publish` remains the sole writer of `dashboard/data/index.json`;
   signed Opt-in may set `tab=opt-in` only when verify passes.
-- After M10, execute Waves 29-36 before cutting `v1.0.0` (T15.14); tag waits
-  on OpenClaw E2E (T15.20) and Opt-in/bounty docs.
+- After M10, execute Waves 29-39 before cutting `v1.0.0` (T15.14); tag waits
+  on OpenClaw E2E (T15.20), Hermes E2E (T15.27), and Opt-in/bounty docs.
 - Adapter dirs for §8.1: `adk`, `openai_agents`, `pydantic_ai`,
   `agent_framework`, `strands`, `crewai` (never `autogen`).
-- Gateway-style: `openclaw` per ADR 014 / RFC §8.3 (n8n/Dify still deferred).
+- Gateway-style: `openclaw`, `hermes` per ADR 014 / RFC §8.3 (n8n/Dify still
+  deferred).
 - REL IDs and predicates: ADR 010 only (REL-001..003 / REL-v0).
 
 ## 9. Progress Log
 
+- 2026-09-05: Expand E15 for Hermes Agent (ADR 014 rename, RFC §8.3, T15.23-T15.30, UC-036); T15.30 done.
 - 2026-09-05: Expand E15 for OpenClaw (ADR 014, RFC §8.3, T15.15-T15.22, UC-035); T15.15 done.
 - 2026-09-05: Wave 29 T15.1 key registry, T15.2 internal/submit, T15.3 report --sign + verify-entry.
 - 2026-09-05: T15.0 expanded E15 to executable (15 tasks, Waves 29-33); ADR 013 Opt-in signature format; UC-032..034.
@@ -256,8 +273,8 @@ Rules:
 
 - Spec: `docs/RFC-0001.md`. Design: `docs/design.md`.
 - ADRs: 006/012/013 (leaderboard + Opt-in), 007 (ratification), 010 (REL),
-  011 (rubber-stamp), 014 (OpenClaw gateway-style).
-- Start apply at Wave 30 (T15.4-T15.6) and/or Wave 34 T15.16 (OpenClaw map).
+  011 (rubber-stamp), 014 (OpenClaw + Hermes gateway-style).
+- Start apply at Wave 30 (T15.4-T15.6) and/or T15.16 / T15.23 capability maps.
 - Founder/human gates: T15.11 (provisional sign-off), T15.14 (tag `v1.0.0`).
 - kazi is on PATH; engineering tasks carry `acc:` for JIT lane.
 - Claim resource for plan rewrites: `R-plan-md`.
@@ -267,6 +284,6 @@ Rules:
 
 - RFC open questions: Q3->ADR 005; Q4->ADR 006 + 012 + 013; Q5->ADR 004;
   Q6->ADR 007; Q7->ADR 002; REL->ADR 010; rubber-stamp->ADR 011;
-  OpenClaw gateway-style->ADR 014.
+  gateway-style OpenClaw+Hermes->ADR 014.
 - Use case manifest: `.claude/scratch/usecases-manifest.json`.
 - Release map: v0.1=E1-E12; v0.2=E13; v0.3=E14; v1.0=E15.
