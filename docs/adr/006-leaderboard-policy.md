@@ -38,5 +38,6 @@ that a submission came from a maintainer. Therefore in v0.3:
   (`ratified` / `provisional` / `unofficial`); unratified entries produced by
   `report --publish` copy provenance from the run's Handshake.
 This addendum expires when E15 lands signatures (GitHub-native Opt-in PRs
-per ADR 012); the CI rule then flips to "opt-in requires a verified
-signature".
+per ADR 012; Ed25519 format in ADR 013). The CI rule then flips to
+`tab=opt-in ⇒ (sample=true OR signature verifies against an active
+registry key)` — samples may remain for demos.
