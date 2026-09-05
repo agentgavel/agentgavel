@@ -180,6 +180,7 @@ goreleaser release --snapshot --clean
 | [docs/design.md](docs/design.md) | Architecture sketch |
 | [docs/adr/](docs/adr/) | Architecture decisions |
 | [docs/manual/v0.1-smoke.md](docs/manual/v0.1-smoke.md) | Local smoke commands |
+| [docs/manual/v0.3-smoke.md](docs/manual/v0.3-smoke.md) | REL, rubber-stamp, publish, dashboard smoke |
 | [docs/manual/rubber-stamp.md](docs/manual/rubber-stamp.md) | `rubber-stamp` usage + exit codes |
 | [docs/manual/leaderboard-pages.md](docs/manual/leaderboard-pages.md) | Dashboard / Pages publish path |
 | [docs/plan.md](docs/plan.md) / [docs/roadmap.md](docs/roadmap.md) | Execution plan + progress |

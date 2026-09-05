@@ -13,7 +13,7 @@ Objectives:
   unofficial Sire + LangGraph adapters.
 - v0.2 shipped (`v0.2.0`): SEC-008..010, GOV-v0 scaffold, six RFC §8.1 unofficial
   adapters, `run --ci`, scenario governance.
-- Frontier is now v0.3 (E14 executable, 18/24 after Wave 25): REL-v0 shipped
+- Frontier is now v0.3 (E14 executable, 21/24 after Wave 26): REL-v0 shipped
   as predicates + FakeAdapter E2E (ADR 010); remaining work is `rubber-stamp`
   (ADR 011), REL CLI wiring, GSI pillar mapping, and the GitHub Pages
   leaderboard (ADR 006 + addendum).
@@ -133,7 +133,7 @@ Split layout. E1-E13 complete (`fidelity: executable`, all tasks done). E14 is
 
 ### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (26/26)
 
-### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (18/24)
+### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (21/24)
 
 ### E15 -- v1.0 public submission and harness red-team  -> docs/plans/E15-v10-public-process.md  (0/1)
 
@@ -177,9 +177,9 @@ Sync points: T14.7 + T14.17 (CLI surfaces), T14.11 (publish schema), T14.15
 - T14.15, T14.20, T14.16
 
 ## Roadmap
-- **Now:** Wave 25 done (T14.10, T14.11, T14.12, T14.22); E14 18/24 — Wave 26 next
-- **Next:** Wave 26 (T14.21, T14.13, T14.14) → Wave 27 live leaderboard
-  (T14.20) → T14.16 `v0.3.0` → T15.0 expands E15
+- **Now:** Wave 26 done (T14.21, T14.13, T14.14); E14 21/24 — Wave 27 next
+- **Next:** Wave 27 quality gate + live leaderboard verify (T14.15, T14.20)
+  → T14.16 `v0.3.0` → T15.0 expands E15
 
 ## 6. Timeline and Milestones
 
@@ -244,6 +244,7 @@ Rules:
 
 ## 9. Progress Log
 
+- 2026-09-05: Wave 26 T14.21 check-dashboard.sh + CI job, T14.13 v0.3-smoke.md, T14.14 gofmt. Wave 26 complete; E14 21/24.
 - 2026-09-05: Wave 25 T14.10 samples (#124), T14.11 report --publish (#126), T14.12 Pages manual (#125); T14.22 README (#127). Wave 25 complete; E14 18/24.
 - 2026-09-04: /plan refine after Wave 22 — E14 7/24: refined T14.7–T14.16, added T14.17–T14.23 (REL CLI wiring, REL pillar mapping, Pages workflow, publish index, dashboard CI check, README, governance-for-REL); waves re-cut to 23–27; ADR 011 (rubber-stamp verdict) + ADR 006 addendum.
 - 2026-09-04: Wave 22 T14.3–T14.6 REL-001..003 predicates + FakeAdapter oracle E2E shipped (#112, #113).
