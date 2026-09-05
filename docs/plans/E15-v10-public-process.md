@@ -1,11 +1,11 @@
-# E15 -- v1.0 public submission, harness red-team, OpenClaw
+# E15 -- v1.0 public submission, harness red-team, OpenClaw, Hermes
 
 Acceptance: Public signed Opt-in submission process live (GitHub-native per
 ADR 012); adversarial red-team bounty for the harness itself announced;
 ratification and provisional paths operational per ADR 007; at least one
-non-author adapter reaches provisional or ratified; unofficial OpenClaw
-gateway-style adapter ships with honest CapabilityReport and at least one
-oracle E2E path (ADR 014).
+non-author adapter reaches provisional or ratified; unofficial OpenClaw and
+Hermes Agent gateway-style adapters ship with honest CapabilityReport and at
+least one oracle E2E path each (ADR 014).
 fidelity: executable
 
 ## Learnings from v0.3 (bind into tasks)
@@ -25,9 +25,9 @@ fidelity: executable
 - Soft rates, FakeAdapter oracle-first, and no per-framework exploit code
   still bind. Bounty targets the **harness** (engine, oracle, scoring,
   dashboard verify), not adapter exploit kits.
-- OpenClaw is a Gateway product, not a §8.1 library: reuse the wire
-  protocol; map Gateway APIs inside the sidecar (ADR 014). Honest N/A
-  beats stubbed green when approvals/ledger are not programmable.
+- OpenClaw and Hermes Agent are Gateway products, not §8.1 libraries: reuse
+  the wire protocol; map Gateway APIs inside the sidecar (ADR 014). Honest
+  N/A beats stubbed green when approvals/ledger are not programmable.
 
 ## Locked decisions
 
@@ -35,8 +35,8 @@ fidelity: executable
 - Signature: Ed25519 + JCS-ish canonical JSON; registry under
   `dashboard/keys/` (ADR 013).
 - No Firebase / BaaS as trust root in v1.0.
-- OpenClaw in v1.0 as gateway-style unofficial adapter (ADR 014); n8n/Dify
-  still deferred (§8.2).
+- OpenClaw and Hermes Agent in v1.0 as gateway-style unofficial adapters
+  (ADR 014); n8n/Dify still deferred (§8.2).
 
 ## File-touch map
 
@@ -64,6 +64,14 @@ fidelity: executable
 | T15.20 | Oracle E2E SEC-002 (or documented N/A path) |
 | T15.21 | OpenClaw README + unofficial provenance |
 | T15.22 | OpenClaw adapter lint (ruff/gofmt as applicable) |
+| T15.30 | ADR 014 + RFC §8.3 Hermes expand |
+| T15.23 | `docs/manual/hermes-capability-map.md` |
+| T15.24 | `adapters/hermes/` scaffold + Handshake |
+| T15.25 | Hermes `ResolveApproval` mapping |
+| T15.26 | Hermes Events + CapabilityReport honesty |
+| T15.27 | Hermes oracle E2E SEC-002 (or N/A path) |
+| T15.28 | Hermes README + unofficial provenance |
+| T15.29 | Hermes adapter lint |
 
 ## Wave 1 -- planning (Wave 28)
 
@@ -104,7 +112,7 @@ fidelity: executable
 
 ## Wave 6 -- OpenClaw design + capability map (Wave 34, done+1)
 
-- [x] T15.15 Accept gateway-style OpenClaw scope (ADR 014 + RFC §8.3)  Owner: pool  Est: 45m  kind: agent  delivers: [docs/adr/014-gateway-style-openclaw.md, RFC §8.3]  verifies: [UC-035]  lane: agent  acc: [ADR 014 exists Accepted; RFC-0001 §8 item 4 cites OpenClaw; §8.3 states gateway-style mapping and that n8n/Dify remain deferred]  deps: [T15.0]  completed: 2026-09-05
+- [x] T15.15 Accept gateway-style OpenClaw scope (ADR 014 + RFC §8.3)  Owner: pool  Est: 45m  kind: agent  delivers: [docs/adr/014-gateway-style-adapters.md, RFC §8.3]  verifies: [UC-035]  lane: agent  acc: [ADR 014 exists Accepted; RFC-0001 §8 item 4 cites OpenClaw; §8.3 states gateway-style mapping and that n8n/Dify remain deferred]  deps: [T15.0]  completed: 2026-09-05
 
 - [ ] T15.16 Map OpenClaw Gateway surfaces to Handshake/ResolveApproval/Events/ExportLedger  Owner: pool  Est: 75m  kind: agent  delivers: [docs/manual/openclaw-capability-map.md]  verifies: [UC-035]  lane: agent  acc: [doc lists each wire RPC and the concrete OpenClaw API/CLI/config used (or N/A with reason); names reference config fingerprint fields; cites ADR 014]  deps: [T15.15]
 
@@ -124,10 +132,32 @@ fidelity: executable
 
 - [ ] T15.22 Lint clean on adapters/openclaw  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [ruff and/or gofmt clean on adapters/openclaw as applicable to the language chosen in T15.17]  deps: [T15.17, T15.18, T15.19]
 
+## Wave 8b -- Hermes Agent design + map (Wave 37, done+1)
+
+- [x] T15.30 Expand ADR 014 + RFC §8.3 for Hermes Agent (Nous Research)  Owner: pool  Est: 30m  kind: agent  delivers: [docs/adr/014-gateway-style-adapters.md, RFC §8.3 Hermes]  verifies: [UC-036]  lane: agent  acc: [ADR 014 lists Hermes Agent alongside OpenClaw; RFC §8.3 names hermes-agent GitHub URL; adapters/hermes prescribed; n8n/Dify still deferred]  deps: [T15.15]  completed: 2026-09-05
+
+- [ ] T15.23 Map Hermes Agent Gateway surfaces to Handshake/ResolveApproval/Events/ExportLedger  Owner: pool  Est: 75m  kind: agent  delivers: [docs/manual/hermes-capability-map.md]  verifies: [UC-036]  lane: agent  acc: [doc lists each wire RPC and the concrete Hermes API/CLI/config used (or N/A with reason); names reference config fingerprint fields; cites ADR 014 and https://github.com/nousresearch/hermes-agent]  deps: [T15.30]
+
+## Wave 8c -- Hermes adapter (Wave 38, 3 agents)
+
+- [ ] T15.24 Scaffold adapters/hermes unofficial sidecar with Handshake  Owner: pool  Est: 90m  kind: agent  verifies: [UC-036]  acc: [adapters/hermes launches as AgentGavel --adapter sidecar; Handshake returns CapabilityReport with provenance=unofficial and version fields; go test or pytest for Handshake green]  deps: [T15.23, T7.1]
+
+- [ ] T15.25 Map ResolveApproval to Hermes approval/clarify surfaces  Owner: pool  Est: 90m  kind: agent  verifies: [UC-036, UC-021]  acc: [adapter implements ResolveApproval against Hermes approval surface per capability map, OR CapabilityReport.hitl=false with documented N/A and no silent Fail on SEC-002]  deps: [T15.24]
+
+- [ ] T15.26 Emit tool/gate Events and ExportLedger honesty for Hermes  Owner: pool  Est: 90m  kind: agent  verifies: [UC-036]  acc: [Events stream includes tool_invocation and gate_decision when capabilities allow; missing ledger sets ledger=false; unit tests cover event emission or N/A paths]  deps: [T15.24]
+
+## Wave 8d -- Hermes E2E + docs (Wave 39, 3 agents)
+
+- [ ] T15.27 Oracle E2E SEC-002 (or honest all-N/A rubber-stamp path) against Hermes  Owner: pool  Est: 90m  kind: agent  verifies: [UC-036, UC-021]  acc: [go test or documented AgentGavel run --adapter hermes --suite security -run SEC-002 shows Pass/Fail/N/A with oracle; if hitl=false, rubber-stamp exits 1 with not_applicable per ADR 011 and test asserts that]  deps: [T15.25, T15.26, T8.10]
+
+- [ ] T15.28 Hermes adapter README with unofficial provenance and reference config  Owner: pool  Est: 45m  kind: agent  delivers: [adapters/hermes/README.md]  verifies: [UC-036]  lane: agent  acc: [README states unofficial provenance, ADR 014, link to nousresearch/hermes-agent, how to run against a local gateway, fingerprint config fields, and which terminal backends are in/out of the v1.0 reference config]  deps: [T15.24]
+
+- [ ] T15.29 Lint clean on adapters/hermes  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [ruff and/or gofmt clean on adapters/hermes as applicable to the language chosen in T15.24]  deps: [T15.24, T15.25, T15.26]
+
 ## Wave 9 -- quality + ship (Wave 33, 3 agents)
 
-- [ ] T15.12 Add docs/manual/v1.0-smoke.md for sign, verify, Opt-in publish, OpenClaw, bounty links  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/v1.0-smoke.md]  verifies: [UC-032, UC-033, UC-035]  lane: agent  acc: [smoke doc has copy-paste commands for report --sign, verify-entry, check-dashboard, OpenClaw Handshake or SEC-002 path, and local Pages serve, each with expected exit codes]  deps: [T15.6, T15.7, T15.8, T15.20]
+- [ ] T15.12 Add docs/manual/v1.0-smoke.md for sign, verify, Opt-in publish, OpenClaw, Hermes, bounty links  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/v1.0-smoke.md]  verifies: [UC-032, UC-033, UC-035, UC-036]  lane: agent  acc: [smoke doc has copy-paste commands for report --sign, verify-entry, check-dashboard, OpenClaw and Hermes Handshake or SEC-002 paths, and local Pages serve, each with expected exit codes]  deps: [T15.6, T15.7, T15.8, T15.20, T15.27]
 
-- [ ] T15.13 Full make test and make lint green on clean tree (v1.0 gate)  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [make test && make lint && bash scripts/check-dashboard.sh all exit 0 on a clean checkout of the integration branch]  deps: [T15.5, T15.6, T15.4, T15.22]
+- [ ] T15.13 Full make test and make lint green on clean tree (v1.0 gate)  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [make test && make lint && bash scripts/check-dashboard.sh all exit 0 on a clean checkout of the integration branch]  deps: [T15.5, T15.6, T15.4, T15.22, T15.29]
 
-- [ ] T15.14 Cut v1.0.0 GitHub release with GoReleaser assets  Owner: pool  Est: 45m  kind: human  verifies: [infrastructure]  acc: [git tag v1.0.0 exists; gh release view v1.0.0 shows darwin/linux amd64/arm64 binaries + checksums; release notes cite signed Opt-in (ADR 012/013), harness bounty, and unofficial OpenClaw adapter (ADR 014)]  deps: [T15.13, T15.12, T15.9, T15.20, T15.21]  blocked: Founder cuts tag after T15.13 green (same pattern as T14.16)
+- [ ] T15.14 Cut v1.0.0 GitHub release with GoReleaser assets  Owner: pool  Est: 45m  kind: human  verifies: [infrastructure]  acc: [git tag v1.0.0 exists; gh release view v1.0.0 shows darwin/linux amd64/arm64 binaries + checksums; release notes cite signed Opt-in (ADR 012/013), harness bounty, and unofficial OpenClaw + Hermes adapters (ADR 014)]  deps: [T15.13, T15.12, T15.9, T15.20, T15.21, T15.27, T15.28]  blocked: Founder cuts tag after T15.13 green (same pattern as T14.16)
