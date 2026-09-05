@@ -220,6 +220,7 @@ Rules:
 
 ## 9. Progress Log
 
+- 2026-09-05: Wave 29 T15.1 key registry, T15.2 internal/submit, T15.3 report --sign + verify-entry.
 - 2026-09-05: T15.0 expanded E15 to executable (15 tasks, Waves 29-33); ADR 013 Opt-in signature format; UC-032..034.
 - 2026-09-05: Wave 27 T14.15/T14.20/T14.16; E14 complete; `v0.3.0` released.
 - 2026-09-05: Wave 26 T14.21/T14.13/T14.14. E14 21/24.
