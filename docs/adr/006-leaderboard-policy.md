@@ -37,5 +37,6 @@ that a submission came from a maintainer. Therefore in v0.3:
 - Every entry carries the ADR 007 three-way provenance
   (`ratified` / `provisional` / `unofficial`); unratified entries produced by
   `report --publish` copy provenance from the run's Handshake.
-This addendum expires when E15 lands signatures; the CI rule then flips to
-"opt-in requires a verified signature".
+This addendum expires when E15 lands signatures (GitHub-native Opt-in PRs
+per ADR 012); the CI rule then flips to "opt-in requires a verified
+signature".
