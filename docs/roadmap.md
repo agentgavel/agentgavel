@@ -5,6 +5,11 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
+- **Shipped (2026-09-05):** Wave 26 complete — T14.21 `check-dashboard.sh` +
+  CI `dashboard` job, T14.13 `docs/manual/v0.3-smoke.md`, T14.14 gofmt clean
+  on REL/publish packages. E14 21/24. Next: Wave 27 (T14.15, T14.20 verify,
+  T14.16 tag).
+
 - **Shipped (2026-09-05):** T14.20 (partial) — custom domain `agentgavel.dev`
   wired end-to-end: `dashboard/CNAME` + repo Pages `cname` set (#130);
   Cloudflare zone (`agentgavel.dev`, account "Sire") gets 4 apex A records
@@ -21,7 +26,7 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 - **Shipped (2026-09-05):** Wave 25 complete — T14.10 samples (#124), T14.11
   `report --publish` (#126; kazi escalated to agent after worktree infra
-  collisions), T14.12 Pages manual (#125), T14.22 README (#127). Next: Wave 26.
+  collisions), T14.12 Pages manual (#125), T14.22 README (#127).
 
 - **Shipped (2026-09-05):** Wave 24 — T14.8 rubber-stamp manual (#119/#121),
   T14.9 dashboard scaffold (#120/#121), T14.19 pages.yml (#122).
