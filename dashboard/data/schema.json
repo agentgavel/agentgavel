@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://agentgavel.github.io/agentgavel/data/schema.json",
+  "$id": "https://agentgavel.dev/data/schema.json",
   "title": "AgentGavel leaderboard entry",
   "description": "One published scorecard row for the static dashboard (ADR 006 / ADR 007).",
   "type": "object",
