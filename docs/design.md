@@ -31,13 +31,14 @@ control planes hold under adversarial pressure. It scores hard governance
 ## Package layout
 
 ```
-cmd/AgentGavel/          CLI: run, report, ci, rubber-stamp, report --publish
+cmd/AgentGavel/          CLI: run, report, ci, rubber-stamp, report --publish/--sign, verify-entry
 internal/engine/         Scenario orchestrator, seed scheduler, fuzz pipeline
 internal/oracle/         Compliance Oracle HTTP (OpenAI/Anthropic-shaped APIs)
 internal/assertions/     Deterministic validators
 internal/metrics/        GSI, hard/soft classification, caps
 internal/mcpfuzz/        Rogue MCP server modes for SEC-007 / SEC-003
 internal/protocol/       Wire types, codec, session lifecycle
+internal/submit/         Opt-in Ed25519 canonical encode + verify (ADR 013)
 suites/security/         SEC-001..010 definitions (YAML + Go predicates)
 suites/governance/       GOV-v0 (policy-ceiling stub)
 suites/reliability/      REL-v0: demotion latch, replay/drift, ledger completeness (ADR 010)
@@ -47,6 +48,7 @@ sdk/go/                  Go-native adapter helpers
 adapters/                Per-framework sidecars (sire, langgraph, ...)
 fixtures/                Probes, canaries, rogue configs
 dashboard/               Static leaderboard: Opt-in + Unratified tabs (ADR 006)
+dashboard/keys/          Maintainer public-key registry for Opt-in (ADR 013)
 ```
 
 ## Adapter contract (summary)

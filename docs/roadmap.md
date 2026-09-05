@@ -5,10 +5,14 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
+- **Shipped (2026-09-05):** Wave 28 / T15.0 — E15 expanded to executable
+  fidelity (15 tasks, Waves 29–33). ADR 013 pins Ed25519 + key registry for
+  GitHub-native Opt-in (ADR 012). **Next:** Wave 29 (T15.1–T15.3).
+
 - **Shipped (2026-09-05):** Wave 27 / E14 complete — T14.15 quality gate,
   T14.20 live `agentgavel.dev` leaderboard, T14.16 tag
   [`v0.3.0`](https://github.com/agentgavel/agentgavel/releases/tag/v0.3.0)
-  (REL-v0, rubber-stamp, leaderboard). **Next:** T15.0 expand E15.
+  (REL-v0, rubber-stamp, leaderboard).
 
 - **Shipped (2026-09-05):** Wave 26 complete — T14.21 `check-dashboard.sh` +
   CI `dashboard` job, T14.13 `docs/manual/v0.3-smoke.md`, T14.14 gofmt clean
@@ -163,16 +167,12 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 ## Planned
 
 - **v0.2 (E13):** shipped as `v0.2.0` (T13.25).
-- **v0.3 (E14):** executable, 7/24 after Wave 22 — REL-v0 predicates + E2E
-  shipped (ADR 010). Plan refined 2026-09-04: added T14.17 (`run --suite
-  reliability` + REL N/A), T14.18 (REL in resilience pillar), T14.19 (Pages
-  workflow), T14.21 (dashboard CI check), T14.22 (README), T14.23 (governance
-  for REL); ADR 011 pins the `rubber-stamp` verdict (both-N/A exits 1, no
-  GSI); ADR 006 addendum: `report --publish` writes Unratified only until
-  v1.0. Next: Wave 23 (T14.7, T14.17, T14.18, T14.23). Founder gates: T14.20
-  (enable Pages + verify live), T14.16 (tag `v0.3.0`).
-- **v1.0**: Public signed submissions, harness red-team bounty, ratification
-  operations. Epic E15 (outline until T14.16).
+- **v0.3 (E14):** shipped as `v0.3.0` (T14.16) — REL-v0, rubber-stamp,
+  live leaderboard.
+- **v1.0 (E15):** executable (1/15 after T15.0). Waves 29–33: key registry +
+  Ed25519 verify (ADR 013), CI Opt-in flip, signed `report --publish`,
+  bounty docs, ratification ops, `v1.0.0` tag. Human gates: T15.11
+  (provisional sign-off), T15.14 (tag).
 
 ## Done
 
