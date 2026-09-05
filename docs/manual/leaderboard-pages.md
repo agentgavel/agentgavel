@@ -13,12 +13,12 @@ leaderboard at `/leaderboard/`.
 
 | Path | Role |
 | --- | --- |
-| `dashboard/index.html` | Marketing home |
-| `dashboard/site.css` / `site.js` | Marketing layout + mobile menu |
+| `dashboard/index.html` | Marketing home (inline CSS/JS) |
 | `dashboard/leaderboard/index.html` | Two tabs: `#opt-in` and `#unratified` |
 | `dashboard/leaderboard/app.js` / `style.css` | Load `../data/index.json` and render tables |
 | `dashboard/data/index.json` | JSON array of entry filenames |
 | `dashboard/data/<run_id>.json` | One scorecard entry (`data/schema.json`) |
+| `dashboard/CNAME` | Custom domain `agentgavel.dev` |
 
 `AgentGavel report --publish` is the only writer of real entries under
 `data/`. See [dashboard/README.md](../../dashboard/README.md).
@@ -54,14 +54,19 @@ Entry list:
 https://agentgavel.dev/data/index.json
 ```
 
-Until T14.20 enables the repository Pages setting (`build_type=workflow`),
-DNS (four apex A records at the DNS provider pointing to GitHub Pages:
-`185.199.108.153`, `185.199.109.153`, `185.199.110.153`,
-`185.199.111.153`) resolves, and a successful `pages.yml` run completes,
-the domain may not resolve. Do not treat it as live until the founder
-smoke check (`curl` for `/leaderboard/` containing `id="opt-in"` /
-`id="unratified"` and a JSON `index.json`) passes. If the live URL
-differs from the pattern above, record the actual URL here after T14.20.
+**Live (T14.20 verified 2026-09-05):** `build_type=workflow`, CNAME
+`agentgavel.dev`. Smoke:
+
+```bash
+curl -sfL https://agentgavel.dev/ | grep -q 'Governance'
+curl -sfL https://agentgavel.dev/leaderboard/ | grep -E 'id="opt-in"|id="unratified"'
+curl -sfL https://agentgavel.dev/data/index.json   # JSON array of sample entries
+```
+
+HTTPS certificate provisioning / `https_enforced` may still catch up
+asynchronously in GitHub Pages settings; HTTP and TLS via the shared
+edge already serve the site. Flip **Enforce HTTPS** when the custom
+cert shows ready.
 
 ## Opt-in vs Unratified (ADR 006)
 
