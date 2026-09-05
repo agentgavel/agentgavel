@@ -56,7 +56,7 @@ fidelity: executable
 | T15.12 | `docs/manual/v1.0-smoke.md` |
 | T15.13 | repo-wide `make test` / `make lint` / `check-dashboard` |
 | T15.14 | git tag `v1.0.0` + GitHub release assets |
-| T15.15 | `docs/adr/014-gateway-style-openclaw.md`, RFC §8.3 |
+| T15.15 | `docs/adr/014-gateway-style-adapters.md`, RFC §8.3 |
 | T15.16 | `docs/manual/openclaw-capability-map.md` (or design appendix) |
 | T15.17 | `adapters/openclaw/` scaffold + Handshake |
 | T15.18 | OpenClaw `ResolveApproval` / exec-approval mapping |
