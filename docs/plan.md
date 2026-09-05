@@ -82,10 +82,9 @@ In scope:
 
 Out of scope:
 - Changing Sire product code inside `sirerun/sire` except via the adapter.
-- v1.0 signed-submission API and harness bounty (E15).
-
-(Marketing home under `dashboard/` shipped 2026-09-05; leaderboard at
-`/leaderboard/`.)
+- v1.0 signed-submission **Firebase / BaaS API** as trust root (rejected;
+  GitHub-native per ADR 012). E15 still owns signatures + PR workflow.
+- Hosted submission API beyond static Pages + signed PRs (ADR 012).
 
 | ID | Deliverable | Acceptance |
 | ---- | ---- | ---- |
@@ -99,7 +98,7 @@ Out of scope:
 | D14 | `rubber-stamp` CLI | SEC-002 + SEC-006; exit 0/1/2; both-N/A→1 (ADR 011) |
 | D15 | Leaderboard dashboard | Opt-in + Unratified tabs (ADR 006); live on Pages (T14.20) |
 | D16 | v0.3.0 GitHub release | tag + binaries |
-| D17 | v1.0 | outline epic E15 |
+| D17 | v1.0 | outline epic E15; Opt-in via GitHub-native signed PRs (ADR 012) |
 
 ## 4. Checkable Work Breakdown
 
