@@ -132,7 +132,7 @@ Split layout. E1-E13 complete (`fidelity: executable`, all tasks done). E14 is
 
 ### E13 -- v0.2 expansion  -> docs/plans/E13-v02-expansion.md  (26/26)
 
-### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (23/24)
+### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (24/24)
 
 ### E15 -- v1.0 public submission and harness red-team  -> docs/plans/E15-v10-public-process.md  (0/1)
 
@@ -176,8 +176,8 @@ Sync points: T14.7 + T14.17 (CLI surfaces), T14.11 (publish schema), T14.15
 - T14.15, T14.20, T14.16
 
 ## Roadmap
-- **Now:** Wave 27 in flight — T14.15 + T14.20 done; T14.16 `v0.3.0` tag next
-- **Next:** T14.16 `v0.3.0` → T15.0 expands E15 (GitHub-native Opt-in, ADR 012)
+- **Now:** E14 complete (24/24); `v0.3.0` released
+- **Next:** T15.0 expands E15 (GitHub-native Opt-in, ADR 012)
 
 ## 6. Timeline and Milestones
 
