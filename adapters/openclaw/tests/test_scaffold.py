@@ -1,4 +1,4 @@
-"""Smoke tests for the OpenClaw adapter scaffold (T15.17)."""
+"""Smoke tests for the OpenClaw adapter scaffold (T15.17 / T15.18 N/A)."""
 
 from __future__ import annotations
 

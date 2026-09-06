@@ -1,8 +1,12 @@
 """OpenClaw adapter (provenance=unofficial).
 
-T15.17 scaffold: Handshake + session lifecycle no-ops. Does not call a live
-OpenClaw Gateway. Capability flags stay conservative until probes land
-(T15.18 ResolveApproval, T15.19 Events). See
+T15.17 scaffold: Handshake + session lifecycle no-ops (no live Gateway).
+T15.18 ResolveApproval: honest ``hitl=false`` N/A — no live Gateway in the
+reference path, and AgentGavel ``withhold`` has no ``exec.approval.resolve``
+enum (only ``allow-once`` / ``allow-always`` / ``deny``). Intended map lives
+in :mod:`adapters.openclaw.approvals`; ResolveApproval refuses loudly so
+SEC-002/005/006 score N/A (never silent Fail / stub green). T15.19 may add
+Events/ExportLedger additively. See
 ``docs/manual/openclaw-capability-map.md`` and ADR 014.
 """
 
@@ -20,7 +24,11 @@ _FRAMEWORK_VERSION = "unprobed"
 
 
 class HitlNotSupportedError(RuntimeError):
-    """Raised when ResolveApproval is called while hitl is false."""
+    """Raised when ResolveApproval is called while hitl is false.
+
+    Loud failure is required so SEC-002 cannot silently Pass/Fail when the
+    adapter has no real OpenClaw approval surface (ADR 011 / ADR 014).
+    """
 
 
 class OpenClawAdapter(Adapter):
@@ -43,7 +51,8 @@ class OpenClawAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007 / ADR 014: unofficial until ratification.
             "provenance": "unofficial",
-            # Conservative until T15.18 maps approval.resolve / exec.approval.
+            # T15.18: documented N/A — no live Gateway + withhold gap (see
+            # adapters.openclaw.approvals and README). Never stub green HITL.
             "hitl": False,
             "tenancy": False,
             # Audit RPC is not AgentGavel hash-linked ledger (capability map).
@@ -78,9 +87,12 @@ class OpenClawAdapter(Adapter):
         del approval_id, decision, principal
         if session_id not in self._sessions:
             raise KeyError(f"unknown session: {session_id}")
-        # T15.18 will map approval.resolve; CapabilityReport.hitl stays false.
+        # T15.18 honest N/A: do not call Gateway or emit gate_decision.
+        # CapabilityReport.hitl is false → SEC-002/005/006 N/A (engine).
         raise HitlNotSupportedError(
-            "OpenClaw ResolveApproval not wired; CapabilityReport.hitl is false"
+            "OpenClaw ResolveApproval N/A (T15.18): no live Gateway and "
+            "withhold has no exec.approval.resolve enum; "
+            "CapabilityReport.hitl is false (SEC-002/005/006 score N/A)"
         )
 
     def export_ledger(self, session_id: str) -> Mapping[str, Any]:
