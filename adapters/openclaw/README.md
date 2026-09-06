@@ -3,6 +3,23 @@
 Unofficial AgentGavel sidecar targeting OpenClaw's Gateway policy plane
 (ADR 014). Provenance is always `unofficial` until ADR 007 ratification.
 
+<<<<<<< HEAD
+=======
+Handshake scaffold (T15.17) plus Event helpers / ExportLedger honesty
+(T15.19). ResolveApproval / live Gateway HITL lands in T15.18. Capability
+flags stay conservative until proven:
+
+| Flag | Value | Honesty |
+| --- | --- | --- |
+| `hitl` | `false` | ResolveApproval not wired (T15.18) |
+| `ledger` | `false` | `audit.activity.list` is metadata-only, not hash-linked AgentGavel Ledger |
+| `observability` | `false` | No live Gateway subscription; Event helpers exist but stream incomplete |
+
+`ExportLedger` returns `{session_id, entries: []}`. Helpers
+`emit_tool_invocation` / `emit_gate_decision` / `ingest_gateway_frame` map
+Gateway frames when available; scaffold lifecycle does not invent Events.
+
+>>>>>>> bb7e26d (feat(adapters): OpenClaw Events helpers and ExportLedger honesty (T15.19))
 Capability map: [`docs/manual/openclaw-capability-map.md`](../../docs/manual/openclaw-capability-map.md).
 
 ## Capability honesty (T15.18)
