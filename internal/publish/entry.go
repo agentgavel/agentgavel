@@ -1,4 +1,4 @@
-// Package publish writes Unratified leaderboard entries for the static dashboard.
+// Package publish writes Unratified and signed Opt-in leaderboard entries.
 package publish
 
 import (
@@ -37,6 +37,8 @@ type Entry struct {
 	NA             []string           `json:"na"`
 	Fingerprint    map[string]string  `json:"fingerprint"`
 	GeneratedAt    string             `json:"generated_at"`
+	KeyID          string             `json:"key_id,omitempty"`
+	Signature      string             `json:"signature,omitempty"`
 }
 
 // FromDocument builds an Unratified (non-sample) entry from a report scorecard.
@@ -92,7 +94,9 @@ func FromDocument(doc report.Document, framework, adapter string) Entry {
 	}
 }
 
-// Validate checks required fields and ADR 006 / ADR 007 enums.
+// Validate checks required fields and ADR 006 / ADR 007 / ADR 013 enums.
+// Opt-in with sample=false requires key_id and signature present; crypto
+// verification stays in internal/submit and the verify-entry CLI.
 func Validate(e Entry) error {
 	if strings.TrimSpace(e.RunID) == "" {
 		return fmt.Errorf("run_id is required")
@@ -117,7 +121,9 @@ func Validate(e Entry) error {
 		return fmt.Errorf("tab %q is invalid (want opt-in|unratified)", e.Tab)
 	}
 	if e.Tab == TabOptIn && !e.Sample {
-		return fmt.Errorf("tab=opt-in requires sample=true until v1.0 signatures (ADR 006)")
+		if strings.TrimSpace(e.KeyID) == "" || strings.TrimSpace(e.Signature) == "" {
+			return fmt.Errorf("tab=opt-in sample=false requires key_id and signature (ADR 013)")
+		}
 	}
 	if strings.TrimSpace(e.Grade) == "" {
 		return fmt.Errorf("grade is required")

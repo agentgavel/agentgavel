@@ -159,10 +159,85 @@ func TestReportPublishRejectsOptIn(t *testing.T) {
 		t.Fatalf("exit = %d, want 2\n%s", exitErr.ExitCode(), out)
 	}
 	text := string(out)
-	if !strings.Contains(text, "ADR 006") {
-		t.Fatalf("stderr missing ADR 006 citation:\n%s", text)
+	if !strings.Contains(text, "ADR 013") {
+		t.Fatalf("stderr missing ADR 013 citation:\n%s", text)
 	}
 	if !strings.Contains(text, "opt-in") {
 		t.Fatalf("stderr missing opt-in:\n%s", text)
+	}
+}
+
+func TestReportPublishSignedOptIn(t *testing.T) {
+	bin := buildAgentGavel(t)
+	repoRoot := findRepoRoot(t)
+	root, err := filepath.Abs("testdata")
+	if err != nil {
+		t.Fatal(err)
+	}
+	key := filepath.Join(repoRoot, "internal", "submit", "testdata", "example-framework-test-1.priv.b64")
+	registry := filepath.Join(repoRoot, "dashboard", "keys", "registry.json")
+	dash := t.TempDir()
+
+	cmd := exec.Command(bin, "report",
+		"--root", root,
+		"--publish",
+		"--sign",
+		"--key", key,
+		"--key-id", "example-framework-test-1",
+		"--dashboard", dash,
+		"--framework", "Example Framework",
+		"--adapter-name", "example",
+		"--tab", "opt-in",
+		"sample-catastrophic",
+	)
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		t.Fatalf("report --publish --sign --tab opt-in: %v\n%s", err, out)
+	}
+	var written string
+	if err := json.Unmarshal(out, &written); err != nil {
+		t.Fatalf("stdout not JSON path: %v\n%s", err, out)
+	}
+	entryPath := filepath.Join(dash, "data", "sample-catastrophic.json")
+	raw, err := os.ReadFile(entryPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var entry map[string]any
+	if err := json.Unmarshal(raw, &entry); err != nil {
+		t.Fatal(err)
+	}
+	if entry["tab"] != "opt-in" {
+		t.Fatalf("tab = %v, want opt-in", entry["tab"])
+	}
+	if entry["sample"] != false {
+		t.Fatalf("sample = %v, want false", entry["sample"])
+	}
+	if entry["key_id"] != "example-framework-test-1" {
+		t.Fatalf("key_id = %v", entry["key_id"])
+	}
+	if _, ok := entry["signature"].(string); !ok || entry["signature"] == "" {
+		t.Fatalf("missing signature: %v", entry["signature"])
+	}
+	if entry["framework"] != "Example Framework" {
+		t.Fatalf("framework = %v, want Example Framework", entry["framework"])
+	}
+
+	verify := exec.Command(bin, "verify-entry", "--registry", registry, entryPath)
+	verify.Dir = repoRoot
+	if vout, err := verify.CombinedOutput(); err != nil {
+		t.Fatalf("verify-entry on published opt-in: %v\n%s", err, vout)
+	}
+
+	idxRaw, err := os.ReadFile(filepath.Join(dash, "data", "index.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var idx []string
+	if err := json.Unmarshal(idxRaw, &idx); err != nil {
+		t.Fatal(err)
+	}
+	if len(idx) != 1 || idx[0] != "sample-catastrophic.json" {
+		t.Fatalf("index = %#v, want [sample-catastrophic.json]", idx)
 	}
 }

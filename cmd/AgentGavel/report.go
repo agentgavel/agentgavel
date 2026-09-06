@@ -18,29 +18,29 @@ func runReport(args []string) int {
 	fs.SetOutput(os.Stderr)
 	root := fs.String("root", ".", "directory containing results/<run-id>/")
 	asJSON := fs.Bool("json", false, "emit machine-readable scorecard JSON")
-	doPublish := fs.Bool("publish", false, "write an Unratified dashboard entry (ADR 006)")
-	doSign := fs.Bool("sign", false, "sign a dashboard entry with Ed25519 (ADR 013); writes JSON to stdout")
+	doPublish := fs.Bool("publish", false, "write a dashboard entry and update index.json")
+	doSign := fs.Bool("sign", false, "sign a dashboard entry with Ed25519 (ADR 013)")
 	keyPath := fs.String("key", "", "path to base64 Ed25519 private key (for --sign)")
 	keyID := fs.String("key-id", "", "registry key_id to embed (for --sign)")
 	entryPath := fs.String("entry", "", "existing dashboard entry JSON to sign (optional; else build from run)")
-	outPath := fs.String("out", "", "write signed entry to this path instead of stdout")
+	outPath := fs.String("out", "", "write signed entry to this path instead of stdout (sign-only)")
 	dashboard := fs.String("dashboard", "dashboard", "dashboard root directory for --publish")
 	framework := fs.String("framework", "", "framework display name for --publish/--sign")
 	adapterName := fs.String("adapter-name", "", "adapter package/module name for --publish/--sign")
-	tab := fs.String("tab", publish.TabUnratified, "leaderboard tab (v0.3: unratified only; opt-in rejected per ADR 006)")
+	tab := fs.String("tab", publish.TabUnratified, "leaderboard tab (unratified, or opt-in when signed per ADR 013)")
 	fs.Usage = func() {
 		_, _ = fmt.Fprintf(fs.Output(), `Usage: AgentGavel report [flags] <run-id|path>
 
 Render a GSI scorecard from a completed run's results directory.
 Looks for scorecard.json, otherwise computes GSI from summary.json.
 
-With --publish, write <dashboard>/data/<run-id>.json (tab=unratified,
-sample=false) and update index.json. Opt-in publish is rejected until
-v1.0 signatures land in later waves (ADR 006 addendum).
+With --publish, write <dashboard>/data/<run-id>.json and update index.json.
+Default tab is unratified (sample=false). Opt-in publish requires --sign
+with --key and --key-id (ADR 013); unsigned --tab opt-in is rejected.
 
-With --sign, produce a signed entry JSON (ADR 013): either from --entry
-PATH or from a run plus --framework/--adapter-name. Requires --key and
---key-id.
+With --sign alone, produce a signed entry JSON (ADR 013): either from
+--entry PATH or from a run plus --framework/--adapter-name. Requires
+--key and --key-id. Combine with --publish to write a signed Opt-in row.
 
 Flags:
 `)
@@ -50,7 +50,8 @@ Flags:
 		return 2
 	}
 
-	if *doSign {
+	// Sign-only (no publish): existing path.
+	if *doSign && !*doPublish {
 		return runReportSign(fs, *root, *keyPath, *keyID, *entryPath, *outPath, *framework, *adapterName)
 	}
 
@@ -60,8 +61,14 @@ Flags:
 	}
 
 	if *doPublish {
-		if code := rejectPublishTab(*tab); code != 0 {
+		if code := rejectPublishTab(*tab, *doSign); code != 0 {
 			return code
+		}
+		if *doSign {
+			if strings.TrimSpace(*keyPath) == "" || strings.TrimSpace(*keyID) == "" {
+				fmt.Fprintf(os.Stderr, "report: --publish --sign requires --key and --key-id\n")
+				return 2
+			}
 		}
 	}
 
@@ -78,6 +85,18 @@ Flags:
 
 	if *doPublish {
 		entry := publish.FromDocument(doc, *framework, *adapterName)
+		pubTab := strings.TrimSpace(strings.ToLower(*tab))
+		if pubTab == "" {
+			pubTab = publish.TabUnratified
+		}
+		if pubTab == publish.TabOptIn {
+			entry.Tab = publish.TabOptIn
+			entry.Sample = false
+			if err := signPublishEntry(&entry, *keyPath, *keyID); err != nil {
+				fmt.Fprintf(os.Stderr, "report: publish: %v\n", err)
+				return 1
+			}
+		}
 		path, err := publish.Write(*dashboard, entry)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "report: publish: %v\n", err)
@@ -103,6 +122,29 @@ Flags:
 	}
 	fmt.Print(report.FormatText(doc))
 	return 0
+}
+
+func signPublishEntry(entry *publish.Entry, keyPath, keyID string) error {
+	priv, err := submit.LoadPrivateKeyFile(keyPath)
+	if err != nil {
+		return err
+	}
+	raw, err := json.Marshal(entry)
+	if err != nil {
+		return fmt.Errorf("marshal entry for sign: %w", err)
+	}
+	m, err := submit.EntryMapFromJSON(raw)
+	if err != nil {
+		return err
+	}
+	if err := submit.Sign(priv, keyID, m); err != nil {
+		return err
+	}
+	kid, _ := m["key_id"].(string)
+	sig, _ := m["signature"].(string)
+	entry.KeyID = kid
+	entry.Signature = sig
+	return nil
 }
 
 func runReportSign(fs *flag.FlagSet, root, keyPath, keyID, entryPath, outPath, framework, adapterName string) int {
@@ -188,16 +230,20 @@ func runReportSign(fs *flag.FlagSet, root, keyPath, keyID, entryPath, outPath, f
 	return 0
 }
 
-// rejectPublishTab enforces ADR 006: report --publish writes Unratified only.
-func rejectPublishTab(tab string) int {
+// rejectPublishTab enforces ADR 013: unsigned opt-in publish is rejected;
+// signed opt-in (--sign) is allowed; unratified is always allowed.
+func rejectPublishTab(tab string, signed bool) int {
 	t := strings.TrimSpace(strings.ToLower(tab))
 	if t == "" || t == publish.TabUnratified {
 		return 0
 	}
 	if t == publish.TabOptIn {
-		fmt.Fprintf(os.Stderr, "report: --tab opt-in rejected until v1.0 signatures (ADR 006); use unratified\n")
+		if signed {
+			return 0
+		}
+		fmt.Fprintf(os.Stderr, "report: --tab opt-in requires --sign with --key and --key-id (ADR 013); use unratified for unsigned publishes\n")
 		return 2
 	}
-	fmt.Fprintf(os.Stderr, "report: --tab %q invalid (want unratified; opt-in rejected per ADR 006)\n", tab)
+	fmt.Fprintf(os.Stderr, "report: --tab %q invalid (want unratified or signed opt-in per ADR 013)\n", tab)
 	return 2
 }

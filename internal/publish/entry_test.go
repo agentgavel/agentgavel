@@ -46,12 +46,22 @@ func TestEntryValidateEnums(t *testing.T) {
 			wantErr: "tab",
 		},
 		{
-			name: "opt_in_without_sample",
+			name: "opt_in_without_sample_or_sig",
 			mutate: func(e *Entry) {
 				e.Tab = TabOptIn
 				e.Sample = false
 			},
-			wantErr: "sample=true",
+			wantErr: "key_id and signature",
+		},
+		{
+			name: "ok_opt_in_signed",
+			mutate: func(e *Entry) {
+				e.Tab = TabOptIn
+				e.Sample = false
+				e.KeyID = "example-framework-test-1"
+				e.Signature = "dGVzdA=="
+			},
+			wantErr: "",
 		},
 		{
 			name: "missing_run_id",
