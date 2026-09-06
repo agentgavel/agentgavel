@@ -5,14 +5,17 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
+- **Shipped (2026-09-06):** T15.16 OpenClaw + T15.23 Hermes capability maps
+  (`docs/manual/openclaw-capability-map.md`, `hermes-capability-map.md`).
+  E15 8/31. **Next:** Wave 30 Opt-in CI and/or Waves 35/38 scaffolds.
+
 - **Planned (2026-09-05):** v1.0 also includes unofficial **Hermes Agent**
   (https://github.com/nousresearch/hermes-agent) gateway-style adapter
-  (ADR 014 rename, Waves 37-39, T15.23-T15.30). T15.30 done. E15 6/31.
-  **Next:** Wave 30 Opt-in CI and/or T15.16 / T15.23 capability maps.
+  (ADR 014 rename, Waves 37-39, T15.23-T15.30). T15.30 + T15.23 done.
 
 - **Planned (2026-09-05):** v1.0 scope expanded -- unofficial **OpenClaw**
   gateway-style adapter (ADR 014 / RFC §8.3), Waves 34-36 (T15.15-T15.22).
-  T15.15 done.
+  T15.15 + T15.16 done.
 
 - **Shipped (2026-09-05):** Wave 29 — T15.1 `dashboard/keys/` registry, T15.2
   `internal/submit` Ed25519 verify, T15.3 `report --sign` + `verify-entry`.

@@ -114,7 +114,7 @@ fidelity: executable
 
 - [x] T15.15 Accept gateway-style OpenClaw scope (ADR 014 + RFC §8.3)  Owner: pool  Est: 45m  kind: agent  delivers: [docs/adr/014-gateway-style-adapters.md, RFC §8.3]  verifies: [UC-035]  lane: agent  acc: [ADR 014 exists Accepted; RFC-0001 §8 item 4 cites OpenClaw; §8.3 states gateway-style mapping and that n8n/Dify remain deferred]  deps: [T15.0]  completed: 2026-09-05
 
-- [ ] T15.16 Map OpenClaw Gateway surfaces to Handshake/ResolveApproval/Events/ExportLedger  Owner: pool  Est: 75m  kind: agent  delivers: [docs/manual/openclaw-capability-map.md]  verifies: [UC-035]  lane: agent  acc: [doc lists each wire RPC and the concrete OpenClaw API/CLI/config used (or N/A with reason); names reference config fingerprint fields; cites ADR 014]  deps: [T15.15]
+- [x] T15.16 Map OpenClaw Gateway surfaces to Handshake/ResolveApproval/Events/ExportLedger  Owner: pool  Est: 75m  kind: agent  delivers: [docs/manual/openclaw-capability-map.md]  verifies: [UC-035]  lane: agent  acc: [doc lists each wire RPC and the concrete OpenClaw API/CLI/config used (or N/A with reason); names reference config fingerprint fields; cites ADR 014]  deps: [T15.15]  completed: 2026-09-06
 
 ## Wave 7 -- OpenClaw adapter (Wave 35, 3 agents)
 
@@ -136,7 +136,7 @@ fidelity: executable
 
 - [x] T15.30 Expand ADR 014 + RFC §8.3 for Hermes Agent (Nous Research)  Owner: pool  Est: 30m  kind: agent  delivers: [docs/adr/014-gateway-style-adapters.md, RFC §8.3 Hermes]  verifies: [UC-036]  lane: agent  acc: [ADR 014 lists Hermes Agent alongside OpenClaw; RFC §8.3 names hermes-agent GitHub URL; adapters/hermes prescribed; n8n/Dify still deferred]  deps: [T15.15]  completed: 2026-09-05
 
-- [ ] T15.23 Map Hermes Agent Gateway surfaces to Handshake/ResolveApproval/Events/ExportLedger  Owner: pool  Est: 75m  kind: agent  delivers: [docs/manual/hermes-capability-map.md]  verifies: [UC-036]  lane: agent  acc: [doc lists each wire RPC and the concrete Hermes API/CLI/config used (or N/A with reason); names reference config fingerprint fields; cites ADR 014 and https://github.com/nousresearch/hermes-agent]  deps: [T15.30]
+- [x] T15.23 Map Hermes Agent Gateway surfaces to Handshake/ResolveApproval/Events/ExportLedger  Owner: pool  Est: 75m  kind: agent  delivers: [docs/manual/hermes-capability-map.md]  verifies: [UC-036]  lane: agent  acc: [doc lists each wire RPC and the concrete Hermes API/CLI/config used (or N/A with reason); names reference config fingerprint fields; cites ADR 014 and https://github.com/nousresearch/hermes-agent]  deps: [T15.30]  completed: 2026-09-06
 
 ## Wave 8c -- Hermes adapter (Wave 38, 3 agents)
 

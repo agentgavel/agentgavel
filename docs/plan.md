@@ -138,7 +138,7 @@ Split layout. E1–E14 complete (`fidelity: executable`, all tasks done). E15 is
 
 ### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (24/24)
 
-### E15 -- v1.0 Opt-in, red-team, OpenClaw, Hermes  -> docs/plans/E15-v10-public-process.md  (6/31)
+### E15 -- v1.0 Opt-in, red-team, OpenClaw, Hermes  -> docs/plans/E15-v10-public-process.md  (8/31)
 
 ## 5. Parallel Work
 
@@ -174,8 +174,8 @@ Tracks AA/AB may run in parallel with W/X after their design tasks.
 ### Wave 32: ratification ops (1 agent + founder)
 - T15.10, T15.11
 
-### Wave 34: OpenClaw design (done + 1 agent)
-- T15.15 (done), T15.16
+### Wave 34: OpenClaw design (done)
+- T15.15 (done), T15.16 (done)
 
 ### Wave 35: OpenClaw adapter (3 agents)
 - T15.17, T15.18, T15.19
@@ -183,8 +183,8 @@ Tracks AA/AB may run in parallel with W/X after their design tasks.
 ### Wave 36: OpenClaw E2E + docs (3 agents)
 - T15.20, T15.21, T15.22
 
-### Wave 37: Hermes design (done + 1 agent)
-- T15.30 (done), T15.23
+### Wave 37: Hermes design (done)
+- T15.30 (done), T15.23 (done)
 
 ### Wave 38: Hermes adapter (3 agents)
 - T15.24, T15.25, T15.26
@@ -196,8 +196,8 @@ Tracks AA/AB may run in parallel with W/X after their design tasks.
 - T15.12, T15.13, T15.14
 
 ## Roadmap
-- **Now:** Wave 29 done; OpenClaw + Hermes in v1.0 (ADR 014); E15 6/31
-- **Next:** Wave 30 (Opt-in CI) in parallel with T15.16 / T15.23 maps -> 35-39 -> 33 -> `v1.0.0`
+- **Now:** Wave 29 done; T15.16/T15.23 capability maps done; E15 8/31
+- **Next:** Wave 30 (Opt-in CI) in parallel with Waves 35-39 adapter scaffolds -> 33 -> `v1.0.0`
 
 ## 6. Timeline and Milestones
 
@@ -260,6 +260,7 @@ Rules:
 
 ## 9. Progress Log
 
+- 2026-09-06: T15.16 OpenClaw + T15.23 Hermes capability maps; E15 8/31.
 - 2026-09-05: Expand E15 for Hermes Agent (ADR 014 rename, RFC §8.3, T15.23-T15.30, UC-036); T15.30 done.
 - 2026-09-05: Expand E15 for OpenClaw (ADR 014, RFC §8.3, T15.15-T15.22, UC-035); T15.15 done.
 - 2026-09-05: Wave 29 T15.1 key registry, T15.2 internal/submit, T15.3 report --sign + verify-entry.
@@ -274,7 +275,7 @@ Rules:
 - Spec: `docs/RFC-0001.md`. Design: `docs/design.md`.
 - ADRs: 006/012/013 (leaderboard + Opt-in), 007 (ratification), 010 (REL),
   011 (rubber-stamp), 014 (OpenClaw + Hermes gateway-style).
-- Start apply at Wave 30 (T15.4-T15.6) and/or T15.16 / T15.23 capability maps.
+- Start apply at Wave 30 (T15.4-T15.6) and/or Wave 35/38 adapter scaffolds (T15.17 / T15.24).
 - Founder/human gates: T15.11 (provisional sign-off), T15.14 (tag `v1.0.0`).
 - kazi is on PATH; engineering tasks carry `acc:` for JIT lane.
 - Claim resource for plan rewrites: `R-plan-md`.
