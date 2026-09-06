@@ -90,11 +90,11 @@ fidelity: executable
 
 ## Wave 3 -- CI + Opt-in rule flip (Wave 30, 3 agents)
 
-- [ ] T15.4 Add CI job that verifies Opt-in signatures on dashboard/data PRs  Owner: pool  Est: 60m  kind: agent  verifies: [UC-032]  acc: [ci.yml (or scripts/verify-opt-in.sh invoked by CI) fails when an opt-in entry has sample=false and a bad signature, and passes on the committed tree; job runs on pull_request and push to main]  deps: [T15.2, T14.21]
+- [x] T15.4 Add CI job that verifies Opt-in signatures on dashboard/data PRs  Owner: pool  Est: 60m  kind: agent  verifies: [UC-032]  acc: [ci.yml (or scripts/verify-opt-in.sh invoked by CI) fails when an opt-in entry has sample=false and a bad signature, and passes on the committed tree; job runs on pull_request and push to main]  deps: [T15.2, T14.21]  completed: 2026-09-06
 
-- [ ] T15.5 Flip check-dashboard Opt-in rule to sample OR verified signature (ADR 013)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-022, UC-032]  acc: [bash scripts/check-dashboard.sh exits 0 on committed tree; exits 1 for tab=opt-in sample=false without valid signature; exits 0 for tab=opt-in sample=false with valid signature against registry; schema.json documents optional key_id and signature]  deps: [T15.2, T14.21]
+- [x] T15.5 Flip check-dashboard Opt-in rule to sample OR verified signature (ADR 013)  Owner: pool  Est: 60m  kind: agent  verifies: [UC-022, UC-032]  acc: [bash scripts/check-dashboard.sh exits 0 on committed tree; exits 1 for tab=opt-in sample=false without valid signature; exits 0 for tab=opt-in sample=false with valid signature against registry; schema.json documents optional key_id and signature]  deps: [T15.2, T14.21]  completed: 2026-09-06
 
-- [ ] T15.6 Allow report --publish --tab opt-in only when entry is signed  Owner: pool  Est: 75m  kind: agent  verifies: [UC-022, UC-032]  acc: [go test ./cmd/AgentGavel -run ReportPublish -count=1 passes: --tab opt-in without sign exits non-zero citing ADR 013; with --sign (or pre-signed stdin) writes tab=opt-in sample=false and updates index.json; unratified path unchanged]  deps: [T15.3, T14.11]
+- [x] T15.6 Allow report --publish --tab opt-in only when entry is signed  Owner: pool  Est: 75m  kind: agent  verifies: [UC-022, UC-032]  acc: [go test ./cmd/AgentGavel -run ReportPublish -count=1 passes: --tab opt-in without sign exits non-zero citing ADR 013; with --sign (or pre-signed stdin) writes tab=opt-in sample=false and updates index.json; unratified path unchanged]  deps: [T15.3, T14.11]  completed: 2026-09-06
 
 ## Wave 4 -- docs + bounty (Wave 31, 3 agents)
 
