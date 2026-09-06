@@ -98,9 +98,9 @@ fidelity: executable
 
 ## Wave 4 -- docs + bounty (Wave 31, 3 agents)
 
-- [ ] T15.7 Document signed Opt-in PR submission workflow  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/opt-in-submission.md]  verifies: [UC-032]  lane: agent  acc: [doc cites ADR 012 and ADR 013; lists generate scorecard, report --sign, open PR adding dashboard/data entry + index, CI verify, merge->Pages; states samples need no signature]  deps: [T15.3, T15.4]
+- [x] T15.7 Document signed Opt-in PR submission workflow  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/opt-in-submission.md]  verifies: [UC-032]  lane: agent  acc: [doc cites ADR 012 and ADR 013; lists generate scorecard, report --sign, open PR adding dashboard/data entry + index, CI verify, merge->Pages; states samples need no signature]  deps: [T15.3, T15.4]  completed: 2026-09-06
 
-- [ ] T15.8 Publish harness red-team bounty scope and disclosure policy  Owner: pool  Est: 60m  kind: agent  delivers: [SECURITY.md, docs/manual/harness-bounty.md]  verifies: [UC-033]  lane: agent  acc: [SECURITY.md links disclosure path; harness-bounty.md defines in-scope (engine, oracle, scoring, dashboard verify, CI signature checks), out-of-scope (per-framework exploit kits, social engineering), and safe-harbor / coordinated disclosure]  deps: [T15.0]
+- [x] T15.8 Publish harness red-team bounty scope and disclosure policy  Owner: pool  Est: 60m  kind: agent  delivers: [SECURITY.md, docs/manual/harness-bounty.md]  verifies: [UC-033]  lane: agent  acc: [SECURITY.md links disclosure path; harness-bounty.md defines in-scope (engine, oracle, scoring, dashboard verify, CI signature checks), out-of-scope (per-framework exploit kits, social engineering), and safe-harbor / coordinated disclosure]  deps: [T15.0]  completed: 2026-09-06
 
 - [ ] T15.9 Update leaderboard Pages manual and README for v1.0 Opt-in signatures  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/leaderboard-pages.md, README.md]  verifies: [UC-022, UC-032]  lane: agent  acc: [leaderboard-pages.md states ADR 006 addendum expired for signed Opt-in, links opt-in-submission.md and ADR 013; README mentions report --sign / verify-entry and SECURITY.md]  deps: [T15.5, T15.7, T14.12]
 
@@ -118,7 +118,7 @@ fidelity: executable
 
 ## Wave 7 -- OpenClaw adapter (Wave 35, 3 agents)
 
-- [ ] T15.17 Scaffold adapters/openclaw unofficial sidecar with Handshake  Owner: pool  Est: 90m  kind: agent  verifies: [UC-035]  acc: [adapters/openclaw launches as AgentGavel --adapter sidecar; Handshake returns CapabilityReport with provenance=unofficial and version fields; go test or pytest for Handshake green]  deps: [T15.16, T7.1]
+- [x] T15.17 Scaffold adapters/openclaw unofficial sidecar with Handshake  Owner: pool  Est: 90m  kind: agent  verifies: [UC-035]  acc: [adapters/openclaw launches as AgentGavel --adapter sidecar; Handshake returns CapabilityReport with provenance=unofficial and version fields; go test or pytest for Handshake green]  deps: [T15.16, T7.1]  completed: 2026-09-06
 
 - [ ] T15.18 Map ResolveApproval to OpenClaw exec approvals / permission modes  Owner: pool  Est: 90m  kind: agent  verifies: [UC-035, UC-021]  acc: [adapter implements ResolveApproval against OpenClaw approval surface per capability map, OR CapabilityReport.hitl=false with documented N/A and no silent Fail on SEC-002]  deps: [T15.17]
 
@@ -140,7 +140,7 @@ fidelity: executable
 
 ## Wave 8c -- Hermes adapter (Wave 38, 3 agents)
 
-- [ ] T15.24 Scaffold adapters/hermes unofficial sidecar with Handshake  Owner: pool  Est: 90m  kind: agent  verifies: [UC-036]  acc: [adapters/hermes launches as AgentGavel --adapter sidecar; Handshake returns CapabilityReport with provenance=unofficial and version fields; go test or pytest for Handshake green]  deps: [T15.23, T7.1]
+- [x] T15.24 Scaffold adapters/hermes unofficial sidecar with Handshake  Owner: pool  Est: 90m  kind: agent  verifies: [UC-036]  acc: [adapters/hermes launches as AgentGavel --adapter sidecar; Handshake returns CapabilityReport with provenance=unofficial and version fields; go test or pytest for Handshake green]  deps: [T15.23, T7.1]  completed: 2026-09-06
 
 - [ ] T15.25 Map ResolveApproval to Hermes approval/clarify surfaces  Owner: pool  Est: 90m  kind: agent  verifies: [UC-036, UC-021]  acc: [adapter implements ResolveApproval against Hermes approval surface per capability map, OR CapabilityReport.hitl=false with documented N/A and no silent Fail on SEC-002]  deps: [T15.24]
 
