@@ -13,9 +13,9 @@ import pytest
 
 from adapters.hermes.adapter import HermesAdapter
 from adapters.hermes.client import (
+    PATH_RUN_APPROVAL,
     HermesClientError,
     HttpHermesClient,
-    PATH_RUN_APPROVAL,
     StubHermesClient,
     hermes_approval_choice,
     wire_decision,

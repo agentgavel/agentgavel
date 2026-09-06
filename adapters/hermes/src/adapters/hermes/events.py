@@ -209,17 +209,9 @@ def _payload(frame: Mapping[str, Any]) -> Mapping[str, Any]:
 
 def _tool_fields(payload: Mapping[str, Any]) -> tuple[str, str]:
     name = str(
-        payload.get("tool_name")
-        or payload.get("name")
-        or payload.get("tool")
-        or "unknown_tool"
+        payload.get("tool_name") or payload.get("name") or payload.get("tool") or "unknown_tool"
     )
-    tid = str(
-        payload.get("tool_id")
-        or payload.get("call_id")
-        or payload.get("id")
-        or name
-    )
+    tid = str(payload.get("tool_id") or payload.get("call_id") or payload.get("id") or name)
     return name, tid
 
 
@@ -267,14 +259,9 @@ def map_hermes_frame(frame: Mapping[str, Any]) -> list[dict[str, Any]]:
                 )
             }
         ]
-    if ftype in _GATE_TYPES or (
-        "approval_id" in payload and payload.get("decision") is not None
-    ):
+    if ftype in _GATE_TYPES or ("approval_id" in payload and payload.get("decision") is not None):
         approval_id = str(
-            payload.get("approval_id")
-            or payload.get("id")
-            or frame.get("approval_id")
-            or "unknown"
+            payload.get("approval_id") or payload.get("id") or frame.get("approval_id") or "unknown"
         )
         decision = payload.get("decision")
         if decision is None:

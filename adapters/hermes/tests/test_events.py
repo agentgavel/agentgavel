@@ -10,7 +10,6 @@ import time
 from typing import Any
 
 import pytest
-
 from agentgavel_adapter import METHOD_EVENT_NOTIFY, METHOD_START_SESSION, StdioConn
 
 from adapters.hermes.adapter import HermesAdapter, HitlNotSupportedError
@@ -109,7 +108,10 @@ def test_map_hermes_frame_tool_and_gate_shapes() -> None:
     started = map_hermes_frame({"event": "hermes.tool.progress", "name": "terminal", "id": "t1"})
     assert started[0]["tool_invocation"]["phase"] == "before"
     done = map_hermes_frame(
-        {"type": "tool.completed", "data": {"tool_name": "terminal", "tool_id": "t1", "refused": True}}
+        {
+            "type": "tool.completed",
+            "data": {"tool_name": "terminal", "tool_id": "t1", "refused": True},
+        }
     )
     assert done[0]["tool_invocation"]["phase"] == "after"
     assert done[0]["tool_invocation"]["refused"] is True
