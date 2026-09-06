@@ -156,7 +156,7 @@ fidelity: executable
 
 ## Wave 9 -- quality + ship (Wave 33, 3 agents)
 
-- [ ] T15.12 Add docs/manual/v1.0-smoke.md for sign, verify, Opt-in publish, OpenClaw, Hermes, bounty links  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/v1.0-smoke.md]  verifies: [UC-032, UC-033, UC-035, UC-036]  lane: agent  acc: [smoke doc has copy-paste commands for report --sign, verify-entry, check-dashboard, OpenClaw and Hermes Handshake or SEC-002 paths, and local Pages serve, each with expected exit codes]  deps: [T15.6, T15.7, T15.8, T15.20, T15.27]
+- [x] T15.12 Add docs/manual/v1.0-smoke.md for sign, verify, Opt-in publish, OpenClaw, Hermes, bounty links  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/v1.0-smoke.md]  verifies: [UC-032, UC-033, UC-035, UC-036]  lane: agent  acc: [smoke doc has copy-paste commands for report --sign, verify-entry, check-dashboard, OpenClaw and Hermes Handshake or SEC-002 paths, and local Pages serve, each with expected exit codes]  deps: [T15.6, T15.7, T15.8, T15.20, T15.27]  completed: 2026-09-06
 
 - [x] T15.13 Full make test and make lint green on clean tree (v1.0 gate)  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [make test && make lint && bash scripts/check-dashboard.sh all exit 0 on a clean checkout of the integration branch]  deps: [T15.5, T15.6, T15.4, T15.22, T15.29]  completed: 2026-09-06
 
