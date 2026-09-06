@@ -60,7 +60,7 @@ Use cases: 32 total (UC-032..036 including OpenClaw + Hermes). Manifest:
 
 Gaps to close in v1.0 (re-scanned 2026-09-05 after Hermes expand):
 - Maintainer key registry + Ed25519 verify (ADR 013) -- T15.1-3 done.
-- CLI CI verify job; flip `check-dashboard.sh`; signed `--tab opt-in`.
+- CLI CI verify job; flip `check-dashboard.sh`; signed `--tab opt-in` -- Wave 30 done.
 - Opt-in submission manual; Pages/README; bounty + SECURITY.md.
 - Ratification ops + first non-author provisional (human gate).
 - OpenClaw capability map + unofficial sidecar + oracle E2E (ADR 014).
