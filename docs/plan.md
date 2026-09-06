@@ -196,8 +196,8 @@ Tracks AA/AB may run in parallel with W/X after their design tasks.
 - T15.12, T15.13, T15.14
 
 ## Roadmap
-- **Now:** Wave 36/39 mostly shipped (T15.20-22, T15.27, T15.29); Wave 36/39 complete; E15 27/31
-- **Next:** T15.12 smoke; T15.13 quality; human T15.11/T15.14
+- **Now:** Wave 36/39 mostly shipped (T15.20-22, T15.27, T15.29); T15.12/13 shipped; E15 29/31 — only human T15.11/T15.14 remain
+- **Next:** human T15.11 provisional + T15.14 tag v1.0.0
 
 ## 6. Timeline and Milestones
 
@@ -260,6 +260,7 @@ Rules:
 
 ## 9. Progress Log
 
+- 2026-09-06: Wave 33 — T15.12 v1.0 smoke (#172), T15.13 quality gate (#173). E15 29/31; human gates T15.11/T15.14 remain.
 - 2026-09-06: Wave 36/39 — T15.20 OpenClaw SEC-002 E2E, T15.21 README, T15.22 lint, T15.27 Hermes SEC-002 E2E, T15.29 lint shipped; T15.28 README shipped — Wave 36/39 complete.
 - 2026-09-06: Wave 30 T15.4-T15.6 Opt-in CI + signed publish; T15.16/T15.23 capability maps; E15 11/31.
 - 2026-09-05: Expand E15 for Hermes Agent (ADR 014 rename, RFC §8.3, T15.23-T15.30, UC-036); T15.30 done.

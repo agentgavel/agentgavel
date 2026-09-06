@@ -5,6 +5,8 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
+- **Shipped (2026-09-06):** T15.12  (#172), T15.13 quality gate (#173). E15 29/31. **Blocked on human:** T15.11 provisional provenance; T15.14  tag.
+
 - **Shipped (2026-09-06):** T15.13 v1.0 quality gate — `make test` + `make lint` +
   `scripts/check-dashboard.sh` green on clean `origin/main` checkout; no code
   fixes required. E15 28/31. **Next:** T15.12 smoke; human T15.11/T15.14.
