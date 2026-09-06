@@ -8,15 +8,29 @@ in :mod:`adapters.openclaw.approvals`; ResolveApproval refuses loudly so
 SEC-002/005/006 score N/A (never silent Fail / stub green). T15.19 may add
 Events/ExportLedger additively. See
 ``docs/manual/openclaw-capability-map.md`` and ADR 014.
+
+T15.19: Event builders + ExportLedger honesty. Without a live Gateway
+subscription the Events stream is incomplete → ``observability=false``.
+Audit activity is not AgentGavel hash-linked → ``ledger=false``. ResolveApproval
+remains owned by T15.18 (hitl=false / HitlNotSupportedError until wired).
 """
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, MutableMapping, Sequence
 from typing import Any
 from uuid import uuid4
 
 from agentgavel_adapter.adapter import Adapter
+
+from adapters.openclaw.events import (
+    GATE_SOURCE_HARNESS,
+    build_gate_decision,
+    build_tool_invocation,
+    empty_ledger,
+    make_event,
+    map_gateway_frame,
+)
 
 _ADAPTER_VERSION = "0.0.1"
 # No live Gateway probe yet — do not invent a package version.
@@ -37,6 +51,9 @@ class OpenClawAdapter(Adapter):
     def __init__(self) -> None:
         super().__init__()
         self._sessions: dict[str, dict[str, Any]] = {}
+        self._seq: dict[str, int] = {}
+        # Buffered Events for tests / future Gateway subscription (T15.19).
+        self.emitted: list[MutableMapping[str, Any]] = []
 
     def handshake(
         self,
@@ -57,7 +74,8 @@ class OpenClawAdapter(Adapter):
             "tenancy": False,
             # Audit RPC is not AgentGavel hash-linked ledger (capability map).
             "ledger": False,
-            # Conservative until T15.19 wires Gateway event frames.
+            # No live Gateway event subscription yet: helpers can emit shapes,
+            # but before/after completeness is unproven → observability penalty.
             "observability": False,
             "context_mode": "none",
             "framework_name": "openclaw",
@@ -74,6 +92,7 @@ class OpenClawAdapter(Adapter):
         if session_id not in self._sessions:
             raise KeyError(f"unknown session: {session_id}")
         # Scaffold no-op: live Gateway sessions.send lands with later probes.
+        # No tool_invocation Events without a Gateway subscription (N/A path).
         del task
 
     def resolve_approval(
@@ -98,8 +117,110 @@ class OpenClawAdapter(Adapter):
     def export_ledger(self, session_id: str) -> Mapping[str, Any]:
         if session_id not in self._sessions:
             raise KeyError(f"unknown session: {session_id}")
-        # Honest empty: no hash-linked ledger projection yet (ledger=false).
-        return {"session_id": session_id, "entries": []}
+        # Honest empty: OpenClaw audit.activity.list is metadata-only and not a
+        # hash-linked AgentGavel Ledger (ledger=false; SEC-009/010 N/A).
+        ledger = empty_ledger(session_id)
+        entries = ledger.get("entries")
+        if not isinstance(entries, Sequence) or isinstance(entries, (str, bytes)):
+            raise TypeError("export_ledger() entries must be a sequence")
+        return {"session_id": session_id, "entries": list(entries)}
 
     def stop_session(self, session_id: str) -> None:
         self._sessions.pop(session_id, None)
+
+    # --- T15.19 Events helpers (additive; T15.18 owns ResolveApproval body) ---
+
+    def _next_seq(self, session_id: str) -> int:
+        n = self._seq.get(session_id, 0) + 1
+        self._seq[session_id] = n
+        return n
+
+    def _buffer_and_emit(self, event: MutableMapping[str, Any]) -> None:
+        self.emitted.append(event)
+        if self._transport is not None:
+            self.emit(event)
+
+    def emit_tool_invocation(
+        self,
+        session_id: str,
+        tool_name: str,
+        tool_id: str,
+        phase: str,
+        *,
+        arguments: Mapping[str, Any] | None = None,
+        outcome: str | None = None,
+        error: str | None = None,
+        refused: bool = False,
+    ) -> Mapping[str, Any]:
+        """Buffer (and transport-emit) a ``tool_invocation`` Event.
+
+        Used when a live Gateway ``session.tool`` frame is available. Scaffold
+        lifecycle does not call this (observability stays false).
+        """
+        if session_id not in self._sessions:
+            raise KeyError(f"unknown session: {session_id}")
+        inv = build_tool_invocation(
+            tool_name,
+            tool_id,
+            phase,
+            arguments=arguments,
+            outcome=outcome,
+            error=error,
+            refused=refused,
+        )
+        event = make_event(
+            session_id,
+            self._next_seq(session_id),
+            tool_invocation_payload=inv,
+        )
+        self._buffer_and_emit(event)
+        return event
+
+    def emit_gate_decision(
+        self,
+        session_id: str,
+        approval_id: str,
+        decision: str | int,
+        *,
+        source: str = GATE_SOURCE_HARNESS,
+        principal: str | None = None,
+        genuine_hitl: bool = False,
+    ) -> Mapping[str, Any]:
+        """Buffer (and transport-emit) a ``gate_decision`` Event.
+
+        Intended for T15.18 ResolveApproval and Gateway approval frames.
+        Does not change CapabilityReport.hitl by itself.
+        """
+        if session_id not in self._sessions:
+            raise KeyError(f"unknown session: {session_id}")
+        gate = build_gate_decision(
+            approval_id,
+            decision,
+            source=source,
+            principal=principal,
+            genuine_hitl=genuine_hitl,
+        )
+        event = make_event(
+            session_id,
+            self._next_seq(session_id),
+            gate_decision_payload=gate,
+        )
+        self._buffer_and_emit(event)
+        return event
+
+    def ingest_gateway_frame(
+        self,
+        session_id: str,
+        frame: Mapping[str, Any],
+    ) -> Mapping[str, Any] | None:
+        """Map a Gateway event frame into the Events stream, or None if N/A."""
+        if session_id not in self._sessions:
+            raise KeyError(f"unknown session: {session_id}")
+        # Peek seq only when the frame maps; avoid burning seq on N/A frames.
+        provisional = self._seq.get(session_id, 0) + 1
+        event = map_gateway_frame(session_id, provisional, frame)
+        if event is None:
+            return None
+        self._seq[session_id] = provisional
+        self._buffer_and_emit(event)
+        return event
