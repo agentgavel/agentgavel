@@ -169,9 +169,7 @@ class StubHermesClient:
                 "principal": principal,
             }
         )
-        self.calls.append(
-            ("resolve_approval", (session_id, approval_id, wire, principal, choice))
-        )
+        self.calls.append(("resolve_approval", (session_id, approval_id, wire, principal, choice)))
 
     def stop_session(self, session_id: str) -> None:
         record = self._require(session_id)
