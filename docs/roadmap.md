@@ -5,7 +5,11 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **Shipped (2026-09-06):** Wave 36/39 partial — T15.20 OpenClaw rubber-stamp N/A SEC-002 (#164), T15.21 OpenClaw README (#163), T15.22 OpenClaw lint (#168), T15.27 Hermes SEC-002 E2E (#170), T15.29 Hermes lint (#162). T15.28 Hermes README (#169). E15 27/31. **Next:** T15.12 smoke; T15.13; human T15.11/T15.14.
+- **Shipped (2026-09-06):** T15.13 v1.0 quality gate — `make test` + `make lint` +
+  `scripts/check-dashboard.sh` green on clean `origin/main` checkout; no code
+  fixes required. E15 28/31. **Next:** T15.12 smoke; human T15.11/T15.14.
+
+- **Shipped (2026-09-06):** Wave 36/39 partial — T15.20 OpenClaw rubber-stamp N/A SEC-002 (#164), T15.21 OpenClaw README (#163), T15.22 OpenClaw lint (#168), T15.27 Hermes SEC-002 E2E (#170), T15.29 Hermes lint (#162). T15.28 Hermes README (#169). E15 27/31.
 
 
 - **Shipped (2026-09-06):** T15.9 Opt-in Pages/README (#154), T15.10
