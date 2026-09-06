@@ -169,7 +169,7 @@ Tracks AA/AB may run in parallel with W/X after their design tasks.
 - T15.4, T15.5, T15.6
 
 ### Wave 31: docs + bounty (3 agents)
-- T15.7 (done), T15.8 (done), T15.9
+- T15.7 (done), T15.8 (done), T15.9 (done)
 
 ### Wave 32: ratification ops (1 agent + founder)
 - T15.10, T15.11
@@ -178,7 +178,7 @@ Tracks AA/AB may run in parallel with W/X after their design tasks.
 - T15.15 (done), T15.16 (done)
 
 ### Wave 35: OpenClaw adapter (3 agents)
-- T15.17 (done), T15.18, T15.19
+- T15.17 (done), T15.18 (done), T15.19 (done)
 
 ### Wave 36: OpenClaw E2E + docs (3 agents)
 - T15.20, T15.21, T15.22
@@ -187,7 +187,7 @@ Tracks AA/AB may run in parallel with W/X after their design tasks.
 - T15.30 (done), T15.23 (done)
 
 ### Wave 38: Hermes adapter (3 agents)
-- T15.24 (done), T15.25, T15.26
+- T15.24 (done), T15.25 (done), T15.26 (done)
 
 ### Wave 39: Hermes E2E + docs (3 agents)
 - T15.27, T15.28, T15.29
@@ -196,8 +196,8 @@ Tracks AA/AB may run in parallel with W/X after their design tasks.
 - T15.12, T15.13, T15.14
 
 ## Roadmap
-- **Now:** Wave 31 partial + scaffolds done (#148-151); E15 15/31
-- **Next:** T15.9 + T15.10; Wave 35/38 ResolveApproval+Events (T15.18/19, T15.25/26)
+- **Now:** T15.9/10/18/19/25/26 shipped; E15 21/31
+- **Next:** Wave 36/39 E2E+READMEs (T15.20-22, T15.27-29); human T15.11/T15.14
 
 ## 6. Timeline and Milestones
 
