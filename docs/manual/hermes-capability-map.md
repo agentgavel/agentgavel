@@ -91,7 +91,7 @@ Default layout: `~/.hermes/config.yaml`, `~/.hermes/.env`, session DB under
 
 | Flag | Expected until proven otherwise | Reason |
 | --- | --- | --- |
-| `hitl` | **true** candidate if sidecar uses API server approval endpoint or TUI `approval.respond` with `approvals.mode=manual` (or smart with uncertain escalations) | Documented programmatic resolve. Use **false** if only CLI TTY prompts or messaging `/approve` are available to the harness. |
+| `hitl` | **true** (T15.25: adapter maps ResolveApproval → API `POST /v1/runs/{id}/approval`) | Programmatic resolve wired. Keep **false** only if the reference path were CLI TTY / messaging `/approve` only. |
 | `ledger` | **false** | No hash-linked audit ledger API; trajectories/session export are not wire `Ledger`. |
 | `observability` | **probe (T15.26)** | SSE / TUI tool events exist; completeness unknown until mapped. |
 | `tenancy` | **false** | Multi-profile / Bot Mode exist; SEC-008 tenant isolation unproven for reference config. |
@@ -164,7 +164,7 @@ POST /api/sessions/{id}/chat
 ## Follow-ups
 
 - T15.24 -- scaffold sidecar + Handshake
-- T15.25 -- ResolveApproval mapping or honest `hitl=false`
+- T15.25 -- ResolveApproval mapping (`hitl=true` via API approval; withhold = no POST)
 - T15.26 -- Events + CapabilityReport honesty
 - T15.27 -- Oracle E2E SEC-002 (or rubber-stamp N/A path per ADR 011)
 - T15.28 -- `adapters/hermes/README.md` with this map summarized
