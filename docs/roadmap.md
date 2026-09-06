@@ -7,8 +7,7 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 - **Shipped (2026-09-06):** Wave 31 partial + scaffolds — T15.7 opt-in submission
   (#148), T15.8 harness bounty/SECURITY.md (#149), T15.17 OpenClaw Handshake
-  (#150), T15.24 Hermes Handshake (#151). E15 15/31. **Next:** T15.9 README/
-  Pages docs; T15.10 ratification checklist; T15.18/19 + T15.25/26 adapter RPCs.
+  (#150), T15.24 Hermes Handshake (#151). E15 15/31. **Next:** T15.9 README/Pages docs; T15.18/19 + T15.25/26 adapter RPCs. T15.10 shipped (#153).
 
 - **Shipped (2026-09-06):** Wave 30 — T15.4 verify-opt-in CI, T15.5 check-dashboard
   Opt-in flip, T15.6 signed report --publish --tab opt-in; plus T15.16/T15.23
