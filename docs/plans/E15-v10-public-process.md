@@ -102,7 +102,7 @@ fidelity: executable
 
 - [x] T15.8 Publish harness red-team bounty scope and disclosure policy  Owner: pool  Est: 60m  kind: agent  delivers: [SECURITY.md, docs/manual/harness-bounty.md]  verifies: [UC-033]  lane: agent  acc: [SECURITY.md links disclosure path; harness-bounty.md defines in-scope (engine, oracle, scoring, dashboard verify, CI signature checks), out-of-scope (per-framework exploit kits, social engineering), and safe-harbor / coordinated disclosure]  deps: [T15.0]  completed: 2026-09-06
 
-- [ ] T15.9 Update leaderboard Pages manual and README for v1.0 Opt-in signatures  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/leaderboard-pages.md, README.md]  verifies: [UC-022, UC-032]  lane: agent  acc: [leaderboard-pages.md states ADR 006 addendum expired for signed Opt-in, links opt-in-submission.md and ADR 013; README mentions report --sign / verify-entry and SECURITY.md]  deps: [T15.5, T15.7, T14.12]
+- [x] T15.9 Update leaderboard Pages manual and README for v1.0 Opt-in signatures  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/leaderboard-pages.md, README.md]  verifies: [UC-022, UC-032]  lane: agent  acc: [leaderboard-pages.md states ADR 006 addendum expired for signed Opt-in, links opt-in-submission.md and ADR 013; README mentions report --sign / verify-entry and SECURITY.md]  deps: [T15.5, T15.7, T14.12]  completed: 2026-09-06
 
 ## Wave 5 -- ratification ops (Wave 32, 2 agents)
 
@@ -120,9 +120,9 @@ fidelity: executable
 
 - [x] T15.17 Scaffold adapters/openclaw unofficial sidecar with Handshake  Owner: pool  Est: 90m  kind: agent  verifies: [UC-035]  acc: [adapters/openclaw launches as AgentGavel --adapter sidecar; Handshake returns CapabilityReport with provenance=unofficial and version fields; go test or pytest for Handshake green]  deps: [T15.16, T7.1]  completed: 2026-09-06
 
-- [ ] T15.18 Map ResolveApproval to OpenClaw exec approvals / permission modes  Owner: pool  Est: 90m  kind: agent  verifies: [UC-035, UC-021]  acc: [adapter implements ResolveApproval against OpenClaw approval surface per capability map, OR CapabilityReport.hitl=false with documented N/A and no silent Fail on SEC-002]  deps: [T15.17]
+- [x] T15.18 Map ResolveApproval to OpenClaw exec approvals / permission modes  Owner: pool  Est: 90m  kind: agent  verifies: [UC-035, UC-021]  acc: [adapter implements ResolveApproval against OpenClaw approval surface per capability map, OR CapabilityReport.hitl=false with documented N/A and no silent Fail on SEC-002]  deps: [T15.17]  completed: 2026-09-06
 
-- [ ] T15.19 Emit tool/gate Events and ExportLedger honesty for OpenClaw  Owner: pool  Est: 90m  kind: agent  verifies: [UC-035]  acc: [Events stream includes tool_invocation and gate_decision when capabilities allow; missing ledger sets ledger=false; unit tests cover event emission or N/A paths]  deps: [T15.17]
+- [x] T15.19 Emit tool/gate Events and ExportLedger honesty for OpenClaw  Owner: pool  Est: 90m  kind: agent  verifies: [UC-035]  acc: [Events stream includes tool_invocation and gate_decision when capabilities allow; missing ledger sets ledger=false; unit tests cover event emission or N/A paths]  deps: [T15.17]  completed: 2026-09-06
 
 ## Wave 8 -- OpenClaw E2E + docs (Wave 36, 3 agents)
 
@@ -142,9 +142,9 @@ fidelity: executable
 
 - [x] T15.24 Scaffold adapters/hermes unofficial sidecar with Handshake  Owner: pool  Est: 90m  kind: agent  verifies: [UC-036]  acc: [adapters/hermes launches as AgentGavel --adapter sidecar; Handshake returns CapabilityReport with provenance=unofficial and version fields; go test or pytest for Handshake green]  deps: [T15.23, T7.1]  completed: 2026-09-06
 
-- [ ] T15.25 Map ResolveApproval to Hermes approval/clarify surfaces  Owner: pool  Est: 90m  kind: agent  verifies: [UC-036, UC-021]  acc: [adapter implements ResolveApproval against Hermes approval surface per capability map, OR CapabilityReport.hitl=false with documented N/A and no silent Fail on SEC-002]  deps: [T15.24]
+- [x] T15.25 Map ResolveApproval to Hermes approval/clarify surfaces  Owner: pool  Est: 90m  kind: agent  verifies: [UC-036, UC-021]  acc: [adapter implements ResolveApproval against Hermes approval surface per capability map, OR CapabilityReport.hitl=false with documented N/A and no silent Fail on SEC-002]  deps: [T15.24]  completed: 2026-09-06
 
-- [ ] T15.26 Emit tool/gate Events and ExportLedger honesty for Hermes  Owner: pool  Est: 90m  kind: agent  verifies: [UC-036]  acc: [Events stream includes tool_invocation and gate_decision when capabilities allow; missing ledger sets ledger=false; unit tests cover event emission or N/A paths]  deps: [T15.24]
+- [x] T15.26 Emit tool/gate Events and ExportLedger honesty for Hermes  Owner: pool  Est: 90m  kind: agent  verifies: [UC-036]  acc: [Events stream includes tool_invocation and gate_decision when capabilities allow; missing ledger sets ledger=false; unit tests cover event emission or N/A paths]  deps: [T15.24]  completed: 2026-09-06
 
 ## Wave 8d -- Hermes E2E + docs (Wave 39, 3 agents)
 
