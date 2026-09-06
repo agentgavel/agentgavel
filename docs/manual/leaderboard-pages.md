@@ -1,9 +1,14 @@
 # Leaderboard GitHub Pages
 
 How the static Opt-in / Unratified leaderboard in `dashboard/` reaches
-the public web. Policy: [ADR 006](../adr/006-leaderboard-policy.md)
-(including the v0.3 addendum). Provenance badges:
-[ADR 007](../adr/007-adapter-ratification.md). Use case: UC-022.
+the public web. Policy: [ADR 006](../adr/006-leaderboard-policy.md).
+The ADR 006 **v0.3 addendum** (unsigned Opt-in blocked; samples only)
+**expired** when E15 landed signed Opt-in — CI rule is now ADR 013
+(`tab=opt-in` ⇒ sample **or** verified signature). Signature format and
+key registry: [ADR 013](../adr/013-opt-in-signature-format.md). Maintainer
+submission walkthrough: [opt-in-submission.md](opt-in-submission.md).
+Provenance badges: [ADR 007](../adr/007-adapter-ratification.md). Use
+cases: UC-022 (Pages publish), UC-032 (signed Opt-in).
 
 ## What gets published
 
@@ -74,12 +79,18 @@ Two tabs stay separate on purpose:
 
 | Tab | Who appears | Provenance rule |
 | --- | --- | --- |
-| **Opt-in** | Maintainer-signed submissions (v1.0+) | Bound to registered maintainer keys |
+| **Opt-in** | Maintainer-signed submissions | Bound to registered maintainer keys ([ADR 013](../adr/013-opt-in-signature-format.md)) |
 | **Unratified** | AgentGavel-operated / unsolicited runs against public releases | Never on the primary tab; show honest provenance |
 
-Unsolicited runs never appear on Opt-in. Malicious auto-submissions are
-rejected once signatures land (v1.0). Until then, the ADR 006 **addendum**
-applies (see below).
+Unsolicited runs never appear on Opt-in. Unsigned or forged Opt-in
+entries fail CI (`scripts/check-dashboard.sh` +
+`scripts/verify-opt-in.sh`). How maintainers sign and open a PR:
+[opt-in-submission.md](opt-in-submission.md).
+
+**ADR 006 addendum status:** the v0.3 interim (reject `--tab opt-in`;
+Opt-in = samples only) is **expired**. Real Opt-in rows require an
+Ed25519 signature that verifies against an **active** key in
+`dashboard/keys/registry.json` (ADR 013).
 
 ## Provenance badges (ADR 007)
 
@@ -94,20 +105,14 @@ Every entry carries one of three labels:
 Author-affiliated adapters cannot skip to `ratified` via the provisional
 path. The dashboard UI must keep the three-way distinction obvious.
 
-## `report --publish` in v0.3 (until v1.0)
+## `report --publish` and signed Opt-in
 
-Until the v1.0 signed submission process exists
-([ADR 006](../adr/006-leaderboard-policy.md) addendum):
+**Unratified (default publish path):**
 
-- `AgentGavel report --publish` writes **`tab: "unratified"` only**.
-- `--tab opt-in` is rejected (exit `2`, cites ADR 006).
-- Published entries copy `provenance` from the run Handshake (typically
+- `AgentGavel report --publish` (without `--sign`) writes
+  **`tab: "unratified"`**.
+- Entries copy `provenance` from the run Handshake (typically
   `unofficial` for unsolicited FakeAdapter / public-release runs).
-- Real Opt-in rows wait for E15 signatures; the CI rule then flips to
-  "opt-in requires a verified signature".
-
-Example (after a security suite run has produced a scorecard under
-`results/<run-id>/`):
 
 ```bash
 ./AgentGavel report --publish --dashboard dashboard <run-id>
@@ -117,19 +122,41 @@ Stdout is the path of the written `dashboard/data/<run-id>.json`. The
 command also updates `dashboard/data/index.json`. Merge that change to
 `main` before it can appear on Pages.
 
+**Opt-in (signed, ADR 013):**
+
+- `--tab opt-in` requires `--sign` with `--key` / `--key-id` (exit `2`
+  without a signature; cites ADR 013).
+- Full maintainer flow (sign → verify → PR → CI → Pages):
+  [opt-in-submission.md](opt-in-submission.md).
+
+```bash
+./AgentGavel report --publish --sign --tab opt-in \
+  --key /path/to/maintainer.priv.b64 \
+  --key-id your-org-2026-09 \
+  --framework "Exact Framework Display Name" \
+  --adapter-name your.adapter.module \
+  --dashboard dashboard \
+  <run-id>
+./AgentGavel verify-entry \
+  --registry dashboard/keys/registry.json \
+  dashboard/data/<run-id>.json
+```
+
 ## Samples are labeled
 
 Committed demo rows under `dashboard/data/` carry `sample: true` and a
 framework name that includes `(sample)`:
 
 - Opt-in demo: `sample-example-opt-in.json` — shows the Opt-in tab shape;
-  not a real ratification.
+  not a real ratification (no signature required).
 - Unratified demo: `sample-fakeadapter-unratified.json` — derived from a
   FakeAdapter run; `provenance: unofficial`.
 
 The dashboard tags sample entries visibly as **sample**. CI
-(`scripts/check-dashboard.sh`) enforces `tab=opt-in ⇒ sample=true` so a
-real run cannot be promoted onto Opt-in by editing JSON in v0.3.
+(`scripts/check-dashboard.sh`) enforces ADR 013:
+`tab=opt-in` ⇒ (`sample=true` **or** signature verifies against an
+**active** registry key). Samples stay unsigned; real Opt-in rows must
+verify.
 
 ## Unmerged drafts do not appear
 
