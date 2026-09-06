@@ -63,7 +63,16 @@ jobs:
 
   dashboard:
     runs-on: ubuntu-latest
+    env:
+      GOWORK: "off"
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: build AgentGavel
+        run: go build -o AgentGavel ./cmd/AgentGavel
       - name: dashboard data checks
         run: bash scripts/check-dashboard.sh
+      - name: verify Opt-in signatures
+        run: bash scripts/verify-opt-in.sh

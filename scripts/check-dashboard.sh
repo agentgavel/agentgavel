@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
-# Validate dashboard/data entries and leaderboard HTML (ADR 006 / ADR 007).
+# Validate dashboard/data entries and leaderboard HTML (ADR 006 / ADR 007 / ADR 013).
 # Usage: bash scripts/check-dashboard.sh [dashboard-dir]
 # Default dashboard-dir: dashboard
 # Exits 0 on success, 1 on validation failure.
+#
+# Opt-in rule (ADR 013): tab=opt-in => sample=true OR signature verifies
+# against an active key in dashboard/keys/registry.json.
 set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -10,6 +13,7 @@ cd "$root"
 
 dash="${1:-dashboard}"
 data_dir="$dash/data"
+registry="$dash/keys/registry.json"
 # Leaderboard tables live under leaderboard/ after the marketing home landed;
 # fall back to dash/index.html for older layouts.
 html=""
@@ -29,7 +33,8 @@ if [[ -z "$html" ]]; then
   exit 1
 fi
 
-python3 - "$data_dir" "$html" <<'PY'
+# Collect non-sample opt-in paths that need crypto verify (one path per line).
+opt_in_to_verify="$(python3 - "$data_dir" "$html" <<'PY'
 import json
 import os
 import sys
@@ -56,6 +61,7 @@ PROVENANCE = {"ratified", "provisional", "unofficial"}
 TABS = {"opt-in", "unratified"}
 
 errors = []
+need_verify = []
 
 index_path = os.path.join(data_dir, "index.json")
 if not os.path.isfile(index_path):
@@ -112,8 +118,15 @@ for name in index:
         errors.append(f"{name}: provenance must be one of {sorted(PROVENANCE)}")
     if "tab" in entry and entry["tab"] not in TABS:
         errors.append(f"{name}: tab must be one of {sorted(TABS)}")
+    # ADR 013: non-sample opt-in must carry key_id+signature and verify in bash.
     if entry.get("tab") == "opt-in" and entry.get("sample") is not True:
-        errors.append(f"{name}: tab=opt-in requires sample=true (v0.3 ADR 006 addendum)")
+        kid = entry.get("key_id")
+        sig = entry.get("signature")
+        if not isinstance(kid, str) or not kid.strip():
+            errors.append(f"{name}: tab=opt-in sample!=true requires key_id (ADR 013)")
+        if not isinstance(sig, str) or not sig.strip():
+            errors.append(f"{name}: tab=opt-in sample!=true requires signature (ADR 013)")
+        need_verify.append(path)
     if "sample" in entry and not isinstance(entry["sample"], bool):
         errors.append(f"{name}: sample must be boolean")
     if "gsi" in entry and not isinstance(entry["gsi"], (int, float)):
@@ -126,6 +139,10 @@ for name in index:
         errors.append(f"{name}: na must be an array")
     if "fingerprint" in entry and not isinstance(entry["fingerprint"], dict):
         errors.append(f"{name}: fingerprint must be an object")
+    if "key_id" in entry and entry["key_id"] is not None and not isinstance(entry["key_id"], str):
+        errors.append(f"{name}: key_id must be a string when present")
+    if "signature" in entry and entry["signature"] is not None and not isinstance(entry["signature"], str):
+        errors.append(f"{name}: signature must be a string when present")
 
 # Also validate entry files not listed in index (so a stray bad file fails).
 for name in entry_files:
@@ -146,4 +163,35 @@ if errors:
     sys.exit(1)
 
 print(f"dashboard ok: {len(entry_files)} entr(y/ies), html={html_path}")
+for path in need_verify:
+    print(path)
 PY
+)"
+
+# First line is the ok summary; remaining lines (if any) are paths to verify.
+ok_line="$(printf '%s\n' "$opt_in_to_verify" | head -n 1)"
+echo "$ok_line"
+
+run_verify_entry() {
+  local entry_path="$1"
+  if [[ -n "${AGENTGAVEL_BIN:-}" ]]; then
+    "$AGENTGAVEL_BIN" verify-entry --registry "$registry" "$entry_path"
+  elif [[ -x "$root/AgentGavel" ]]; then
+    "$root/AgentGavel" verify-entry --registry "$registry" "$entry_path"
+  else
+    GOWORK=off go run ./cmd/AgentGavel verify-entry --registry "$registry" "$entry_path"
+  fi
+}
+
+while IFS= read -r entry_path; do
+  [[ -z "$entry_path" ]] && continue
+  if [[ ! -f "$registry" ]]; then
+    echo "check-dashboard: missing registry for Opt-in verify: $registry" >&2
+    exit 1
+  fi
+  name="$(basename "$entry_path")"
+  if ! run_verify_entry "$entry_path"; then
+    echo "check-dashboard: $name: Opt-in signature verify failed (ADR 013)" >&2
+    exit 1
+  fi
+done < <(printf '%s\n' "$opt_in_to_verify" | tail -n +2)

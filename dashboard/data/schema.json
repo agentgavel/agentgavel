@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://agentgavel.dev/data/schema.json",
   "title": "AgentGavel leaderboard entry",
-  "description": "One published scorecard row for the static dashboard (ADR 006 / ADR 007).",
+  "description": "One published scorecard row for the static dashboard (ADR 006 / ADR 007 / ADR 013).",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -50,11 +50,11 @@
     "tab": {
       "type": "string",
       "enum": ["opt-in", "unratified"],
-      "description": "ADR 006 leaderboard tab. v0.3 report --publish writes unratified only."
+      "description": "ADR 006 leaderboard tab. v1.0 report --publish may write opt-in when signed (ADR 013)."
     },
     "sample": {
       "type": "boolean",
-      "description": "True for hand-authored demo rows. Opt-in requires sample=true until v1.0 signatures (ADR 006 addendum)."
+      "description": "True for hand-authored demo rows (no signature). Opt-in with sample=false requires key_id+signature that verifies against an active registry key (ADR 013)."
     },
     "gsi": {
       "type": "number",
@@ -97,6 +97,16 @@
       "type": "string",
       "format": "date-time",
       "description": "UTC timestamp when the dashboard entry was written."
+    },
+    "key_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Optional. Registry key_id for signed Opt-in entries (ADR 013). Required when tab=opt-in and sample=false."
+    },
+    "signature": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Optional. Base64 raw Ed25519 signature over canonical entry JSON without signature/key_id/sample (ADR 013). Required when tab=opt-in and sample=false."
     }
   }
 }
