@@ -14,19 +14,29 @@ server path.
 
 T15.25: ResolveApproval posts to Hermes ``POST /v1/runs/{run_id}/approval``
 (``choice`` once/deny; withhold leaves the gate pending). CapabilityReport
-``hitl=true``. ledger/observability stay false until T15.26. Unofficial
-until ADR 007 ratification. Stub client needs no live Hermes.
+``hitl=true``. Unofficial until ADR 007 ratification. Stub client needs no
+live Hermes.
+
+T15.26: Events mapping (tool_invocation / gate_decision) + ExportLedger
+honesty (``ledger=false`` while entries stay empty). ``observability=true``
+when frames map via ``ingest_hermes_event``.
 """
 
 from __future__ import annotations
 
 import time
-from collections.abc import Mapping, MutableMapping
+from collections.abc import Mapping, MutableMapping, Sequence
 from typing import Any
 
 from agentgavel_adapter.adapter import Adapter
 
 from adapters.hermes.client import HermesClient, StubHermesClient, wire_decision
+from adapters.hermes.events import (
+    assert_tool_invocation_order,
+    empty_ledger,
+    make_event,
+    map_hermes_frame,
+)
 
 _ADAPTER_VERSION = "0.0.1"
 _GATE_SOURCE_HARNESS = "harness"
@@ -40,7 +50,7 @@ class HitlNotSupportedError(RuntimeError):
 
 
 class HermesAdapter(Adapter):
-    """Unofficial Hermes Agent sidecar: Handshake + ResolveApproval."""
+    """Unofficial Hermes Agent sidecar: Handshake + ResolveApproval + Events."""
 
     def __init__(self, client: HermesClient | None = None) -> None:
         super().__init__()
@@ -65,10 +75,10 @@ class HermesAdapter(Adapter):
             # ResolveApproval → POST /v1/runs/{run_id}/approval (T15.25).
             "hitl": True,
             "tenancy": False,
-            # Trajectories ≠ hash-linked wire Ledger (capability map).
+            # Trajectories ≠ hash-linked wire Ledger (capability map / T15.26).
             "ledger": False,
-            # Events mapping deferred to T15.26.
-            "observability": False,
+            # API/SSE frames map to tool_invocation + gate_decision (T15.26).
+            "observability": True,
             "context_mode": "none",
             "framework_name": "hermes",
             # No live Hermes required for unit tests; probe sets real version later.
@@ -78,6 +88,7 @@ class HermesAdapter(Adapter):
     def start_session(self, config: Mapping[str, Any]) -> Mapping[str, Any]:
         session_id = self._client.start_session(config)
         self._sessions.add(session_id)
+        self._seq.setdefault(session_id, 0)
         return {"id": session_id}
 
     def submit_task(self, session_id: str, task: Mapping[str, Any]) -> None:
@@ -116,23 +127,59 @@ class HermesAdapter(Adapter):
             "unix_ms": int(time.time() * 1000),
             "gate_decision": gate,
         }
-        self.emitted.append(event)
-        if self._transport is not None:
-            self.emit(event)
+        self._record_event(event)
 
     def export_ledger(self, session_id: str) -> Mapping[str, Any]:
         if session_id not in self._sessions:
             raise KeyError(f"unknown session: {session_id}")
-        # Trajectories are not a hash-linked wire Ledger (capability map).
-        # Full ExportLedger mapping is T15.26 (additive).
-        return {"session_id": session_id, "entries": []}
+        # Honest empty: trajectories / session export are not wire Ledger.
+        ledger = empty_ledger(session_id)
+        entries = ledger["entries"]
+        if not isinstance(entries, Sequence) or isinstance(entries, (str, bytes)):
+            raise TypeError("export_ledger() entries must be a sequence")
+        return {"session_id": session_id, "entries": list(entries)}
 
     def stop_session(self, session_id: str) -> None:
         self._client.stop_session(session_id)
         self._sessions.discard(session_id)
         self._seq.pop(session_id, None)
 
+    def ingest_hermes_event(
+        self,
+        session_id: str,
+        frame: Mapping[str, Any],
+    ) -> list[MutableMapping[str, Any]]:
+        """Map a Hermes API/SSE frame and emit AgentGavel Events (T15.26).
+
+        Used by unit tests and by a future live ``GET /v1/runs/{id}/events``
+        subscriber. Unknown frames are ignored (empty list).
+        """
+        if session_id not in self._sessions:
+            raise KeyError(f"unknown session: {session_id}")
+        recorded: list[MutableMapping[str, Any]] = []
+        for kind_payload in map_hermes_frame(frame):
+            tool = kind_payload.get("tool_invocation")
+            gate = kind_payload.get("gate_decision")
+            event = make_event(
+                session_id,
+                self._next_seq(session_id),
+                tool_invocation_payload=tool if isinstance(tool, Mapping) else None,
+                gate_decision_payload=gate if isinstance(gate, Mapping) else None,
+            )
+            self._record_event(event)
+            recorded.append(event)
+        return recorded
+
     def _next_seq(self, session_id: str) -> int:
         n = self._seq.get(session_id, 0) + 1
         self._seq[session_id] = n
         return n
+
+    def _record_event(self, event: MutableMapping[str, Any]) -> None:
+        self.emitted.append(event)
+        if self._transport is not None:
+            self.emit(event)
+
+    def assert_emitted_tool_order(self) -> None:
+        """Test helper: before/after ordering for recorded tool_invocation."""
+        assert_tool_invocation_order(self.emitted)

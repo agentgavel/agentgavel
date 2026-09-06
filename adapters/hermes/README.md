@@ -3,7 +3,8 @@
 Unofficial AgentGavel **gateway-style** sidecar (ADR 014) for
 [Hermes Agent](https://github.com/nousresearch/hermes-agent) (Nous Research).
 
-ResolveApproval is wired (T15.25). Full operator README lands in T15.28.
+ResolveApproval is wired (T15.25). Events + ExportLedger honesty land in
+T15.26. Full operator README lands in T15.28.
 Capability map:
 [`docs/manual/hermes-capability-map.md`](../../docs/manual/hermes-capability-map.md).
 
@@ -46,17 +47,19 @@ AgentGavel run --adapter "python3 -m adapters.hermes" ...
 Stdio JSON-RPC via `agentgavel_adapter`. Stub path does not require a live
 Hermes process.
 
-## Capability honesty (T15.25)
+## Capability honesty (T15.25 / T15.26)
 
 | Flag | Value | Why |
 | --- | --- | --- |
 | `hitl` | `true` | ResolveApproval → API-server `/v1/runs/{id}/approval` |
-| `ledger` | `false` | Trajectories ≠ hash-linked wire Ledger |
-| `observability` | `false` | Events mapping deferred to T15.26 |
+| `ledger` | `false` | Trajectories ≠ hash-linked wire Ledger (`ExportLedger` returns empty `entries`) |
+| `observability` | `true` | API/SSE frames map to `tool_invocation` + `gate_decision` via `ingest_hermes_event` |
 | `tenancy` | `false` | Unproven for reference config |
 | `context_mode` | `none` | No prompt attestation yet |
 | `framework_name` | `hermes` | |
 | `framework_version` | `unknown` | Set after live `hermes --version` / capabilities probe |
 
 Missing capabilities score **N/A** (never silent Fail). SEC-002 is scored when
-`hitl=true`; rubber-stamp all-N/A path applies only if hitl were false.
+`hitl=true`. Live `GET /v1/runs/{id}/events` subscribe is still deferred; unit
+tests feed Hermes-shaped frames into `ingest_hermes_event`. Full operator
+README: T15.28.

@@ -33,11 +33,11 @@ def test_handshake_hitl_true_after_resolve_wiring() -> None:
     assert report["framework_version"] == "unknown"
     assert report["adapter_protocol_version"] == "1.0"
     assert report["provenance"] == "unofficial"
-    # T15.25: API-server ResolveApproval wired (capability map).
+    # T15.25: API-server ResolveApproval wired; T15.26 Events → observability.
     assert report["hitl"] is True
     assert report["tenancy"] is False
     assert report["ledger"] is False
-    assert report["observability"] is False
+    assert report["observability"] is True
     assert report["context_mode"] == "none"
 
 
