@@ -150,7 +150,7 @@ fidelity: executable
 
 - [x] T15.27 Oracle E2E SEC-002 (or honest all-N/A rubber-stamp path) against Hermes  Owner: pool  Est: 90m  kind: agent  verifies: [UC-036, UC-021]  acc: [go test or documented AgentGavel run --adapter hermes --suite security -run SEC-002 shows Pass/Fail/N/A with oracle; if hitl=false, rubber-stamp exits 1 with not_applicable per ADR 011 and test asserts that]  deps: [T15.25, T15.26, T8.10]  completed: 2026-09-06
 
-- [ ] T15.28 Hermes adapter README with unofficial provenance and reference config  Owner: pool  Est: 45m  kind: agent  delivers: [adapters/hermes/README.md]  verifies: [UC-036]  lane: agent  acc: [README states unofficial provenance, ADR 014, link to nousresearch/hermes-agent, how to run against a local gateway, fingerprint config fields, and which terminal backends are in/out of the v1.0 reference config]  deps: [T15.24]
+- [x] T15.28 Hermes adapter README with unofficial provenance and reference config  Owner: pool  Est: 45m  kind: agent  delivers: [adapters/hermes/README.md]  verifies: [UC-036]  lane: agent  acc: [README states unofficial provenance, ADR 014, link to nousresearch/hermes-agent, how to run against a local gateway, fingerprint config fields, and which terminal backends are in/out of the v1.0 reference config]  deps: [T15.24]  completed: 2026-09-06
 
 - [x] T15.29 Lint clean on adapters/hermes  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [ruff and/or gofmt clean on adapters/hermes as applicable to the language chosen in T15.24]  deps: [T15.24, T15.25, T15.26]  completed: 2026-09-06
 
