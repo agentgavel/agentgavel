@@ -196,8 +196,8 @@ Tracks AA/AB may run in parallel with W/X after their design tasks.
 - T15.12, T15.13, T15.14
 
 ## Roadmap
-- **Now:** T15.9/10/18/19/25/26 shipped; E15 21/31
-- **Next:** Wave 36/39 E2E+READMEs (T15.20-22, T15.27-29); human T15.11/T15.14
+- **Now:** Wave 36/39 mostly shipped (T15.20-22, T15.27, T15.29); T15.28 README pending merge; E15 26/31
+- **Next:** T15.28 merge; T15.12 smoke; T15.13 quality; human T15.11/T15.14
 
 ## 6. Timeline and Milestones
 
@@ -260,6 +260,7 @@ Rules:
 
 ## 9. Progress Log
 
+- 2026-09-06: Wave 36/39 — T15.20 OpenClaw SEC-002 E2E, T15.21 README, T15.22 lint, T15.27 Hermes SEC-002 E2E, T15.29 lint shipped; T15.28 README in flight.
 - 2026-09-06: Wave 30 T15.4-T15.6 Opt-in CI + signed publish; T15.16/T15.23 capability maps; E15 11/31.
 - 2026-09-05: Expand E15 for Hermes Agent (ADR 014 rename, RFC §8.3, T15.23-T15.30, UC-036); T15.30 done.
 - 2026-09-05: Expand E15 for OpenClaw (ADR 014, RFC §8.3, T15.15-T15.22, UC-035); T15.15 done.

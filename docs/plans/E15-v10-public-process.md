@@ -126,11 +126,11 @@ fidelity: executable
 
 ## Wave 8 -- OpenClaw E2E + docs (Wave 36, 3 agents)
 
-- [ ] T15.20 Oracle E2E SEC-002 (or honest all-N/A rubber-stamp path) against OpenClaw  Owner: pool  Est: 90m  kind: agent  verifies: [UC-035, UC-021]  acc: [go test or documented AgentGavel run --adapter openclaw --suite security -run SEC-002 shows Pass/Fail/N/A with oracle; if hitl=false, rubber-stamp exits 1 with not_applicable per ADR 011 and test asserts that]  deps: [T15.18, T15.19, T8.10]
+- [x] T15.20 Oracle E2E SEC-002 (or honest all-N/A rubber-stamp path) against OpenClaw  Owner: pool  Est: 90m  kind: agent  verifies: [UC-035, UC-021]  acc: [go test or documented AgentGavel run --adapter openclaw --suite security -run SEC-002 shows Pass/Fail/N/A with oracle; if hitl=false, rubber-stamp exits 1 with not_applicable per ADR 011 and test asserts that]  deps: [T15.18, T15.19, T8.10]  completed: 2026-09-06
 
-- [ ] T15.21 OpenClaw adapter README with unofficial provenance and reference config  Owner: pool  Est: 45m  kind: agent  delivers: [adapters/openclaw/README.md]  verifies: [UC-035]  lane: agent  acc: [README states unofficial provenance, ADR 014, how to run against a local Gateway, fingerprint config fields, and that nested Codex/Claude/Copilot plugins are out of scope for v1.0]  deps: [T15.17]
+- [x] T15.21 OpenClaw adapter README with unofficial provenance and reference config  Owner: pool  Est: 45m  kind: agent  delivers: [adapters/openclaw/README.md]  verifies: [UC-035]  lane: agent  acc: [README states unofficial provenance, ADR 014, how to run against a local Gateway, fingerprint config fields, and that nested Codex/Claude/Copilot plugins are out of scope for v1.0]  deps: [T15.17]  completed: 2026-09-06
 
-- [ ] T15.22 Lint clean on adapters/openclaw  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [ruff and/or gofmt clean on adapters/openclaw as applicable to the language chosen in T15.17]  deps: [T15.17, T15.18, T15.19]
+- [x] T15.22 Lint clean on adapters/openclaw  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [ruff and/or gofmt clean on adapters/openclaw as applicable to the language chosen in T15.17]  deps: [T15.17, T15.18, T15.19]  completed: 2026-09-06
 
 ## Wave 8b -- Hermes Agent design + map (Wave 37, done+1)
 
@@ -148,11 +148,11 @@ fidelity: executable
 
 ## Wave 8d -- Hermes E2E + docs (Wave 39, 3 agents)
 
-- [ ] T15.27 Oracle E2E SEC-002 (or honest all-N/A rubber-stamp path) against Hermes  Owner: pool  Est: 90m  kind: agent  verifies: [UC-036, UC-021]  acc: [go test or documented AgentGavel run --adapter hermes --suite security -run SEC-002 shows Pass/Fail/N/A with oracle; if hitl=false, rubber-stamp exits 1 with not_applicable per ADR 011 and test asserts that]  deps: [T15.25, T15.26, T8.10]
+- [x] T15.27 Oracle E2E SEC-002 (or honest all-N/A rubber-stamp path) against Hermes  Owner: pool  Est: 90m  kind: agent  verifies: [UC-036, UC-021]  acc: [go test or documented AgentGavel run --adapter hermes --suite security -run SEC-002 shows Pass/Fail/N/A with oracle; if hitl=false, rubber-stamp exits 1 with not_applicable per ADR 011 and test asserts that]  deps: [T15.25, T15.26, T8.10]  completed: 2026-09-06
 
 - [ ] T15.28 Hermes adapter README with unofficial provenance and reference config  Owner: pool  Est: 45m  kind: agent  delivers: [adapters/hermes/README.md]  verifies: [UC-036]  lane: agent  acc: [README states unofficial provenance, ADR 014, link to nousresearch/hermes-agent, how to run against a local gateway, fingerprint config fields, and which terminal backends are in/out of the v1.0 reference config]  deps: [T15.24]
 
-- [ ] T15.29 Lint clean on adapters/hermes  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [ruff and/or gofmt clean on adapters/hermes as applicable to the language chosen in T15.24]  deps: [T15.24, T15.25, T15.26]
+- [x] T15.29 Lint clean on adapters/hermes  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [ruff and/or gofmt clean on adapters/hermes as applicable to the language chosen in T15.24]  deps: [T15.24, T15.25, T15.26]  completed: 2026-09-06
 
 ## Wave 9 -- quality + ship (Wave 33, 3 agents)
 
