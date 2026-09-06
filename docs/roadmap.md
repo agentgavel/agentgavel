@@ -5,6 +5,8 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
+- **In flight (2026-09-06):** Wave 36/39 claimed — T15.20/21/22 OpenClaw E2E+README+lint; T15.27/28/29 Hermes E2E+README+lint. OpenClaw README conflict markers on main are in T15.21 scope. Human gates remain T15.11 / T15.14.
+
 - **Shipped (2026-09-06):** T15.9 Opt-in Pages/README (#154), T15.10
   ratification checklist (#153/#156), T15.18 OpenClaw HITL N/A (#155),
   T15.19 OpenClaw Events (#157), T15.25 Hermes ResolveApproval (#158).
