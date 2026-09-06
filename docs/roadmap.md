@@ -184,7 +184,7 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 - **v0.2 (E13):** shipped as `v0.2.0` (T13.25).
 - **v0.3 (E14):** shipped as `v0.3.0` (T14.16) — REL-v0, rubber-stamp,
   live leaderboard.
-- **v1.0 (E15):** executable (6/31 after Hermes expand). Tracks: Opt-in
+- **v1.0 (E15):** executable (8/31 after capability maps). Tracks: Opt-in
   signatures, ratification, OpenClaw (34-36), Hermes (37-39), ship (33).
   Human gates: T15.11, T15.14. `v1.0.0` waits on T15.20 and T15.27.
 
