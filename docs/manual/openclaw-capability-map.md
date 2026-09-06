@@ -77,7 +77,7 @@ WebSocket for the sidecar unless probe shows otherwise.
 | **Handshake** | `openclaw --version` / `openclaw gateway status` / `openclaw health`; Gateway `connect` + advertised method list; optional `agents.list` | CapabilityReport: `framework_name=openclaw`, version fields, `provenance=unofficial`. Set `hitl` / `ledger` / `observability` only after probe confirms the mappings below. |
 | **StartSession** | Gateway `sessions.create` (optional nested initial message); CLI: `openclaw sessions` family / Control UI session create | Map returned session key / id into AgentGavel `SessionId`. Point model binding at Compliance Oracle via OpenClaw model config for the reference agent (`SessionConfig.model_base_url`). MCP fixtures: OpenClaw `mcp` CLI / Gateway MCP config -- **probe (T15.17)** for mounting engine-started fixture endpoints. |
 | **SubmitTask** | Gateway `sessions.send` or `chat.send` with task prompt; CLI: `openclaw message send` / agent chat paths | Prefer session-scoped send so Events and approvals correlate to one `sessionKey`. `agent.wait` can block for terminal snapshot after submit. |
-| **ResolveApproval** | Gateway `approval.resolve` (kind-agnostic) or `exec.approval.resolve`; events `exec.approval.requested` / `session.approval` via `sessions.messages.subscribe` with `includeApprovals: true`; CLI: channel `/approve`, Control UI; policy: `openclaw approvals get|set`, `openclaw exec-policy show|set|preset` | Requires operator scope `operator.approvals` (write scope does **not** subsume it). First-answer-wins. Maps harness Decision approve/deny/withhold onto Gateway decision enums -- **probe (T15.18)** for withhold / timeout semantics vs SEC-002/005/006. |
+| **ResolveApproval** | Gateway `approval.resolve` (kind-agnostic) or `exec.approval.resolve`; events `exec.approval.requested` / `session.approval` via `sessions.messages.subscribe` with `includeApprovals: true`; CLI: channel `/approve`, Control UI; policy: `openclaw approvals get|set`, `openclaw exec-policy show|set|preset` | Requires operator scope `operator.approvals` (write scope does **not** subsume it). First-answer-wins. Intended map: approve→`allow-once`, deny→`deny`; **withhold unmapped** (no Gateway enum). **T15.18 probe:** no live Gateway in reference path + withhold gap → Handshake **`hitl=false`** (documented N/A); `ResolveApproval` raises `HitlNotSupportedError` (SEC-002/005/006 N/A, never silent Fail). |
 | **ExportLedger** | Gateway `audit.activity.list` (preferred) or legacy `audit.list`; CLI: `openclaw audit`; related: `audit.run.inspect`, task ledger `tasks.list` | Activity ledger is **metadata-only** (no prompts, tool args, or bodies), 30-day / 100k-record cap, best-effort (may drop). Not a hash-linked AgentGavel `Ledger` (`prev_hash` / `hash`). Until an honest projection exists, Handshake **`ledger=false`** (SEC-009/010 N/A). Do not invent hash linkage. |
 | **StopSession** | Gateway `sessions.abort` (cancel active work); archive via `sessions.patch` with `archived: true` + `expectedSessionId`; optional `sessions.delete` / `sessions.reset` | Prefer abort then archive for clean teardown. Confirm which call leaves no live run -- **probe (T15.17)**. |
 | **Events** | Gateway event frames: `session.tool`, `session.message`, `session.operation`, `session.approval`, `exec.approval.requested` / `exec.approval.resolved`, `plugin.approval.*`; subscribe: `sessions.subscribe`, `sessions.messages.subscribe` | Map to wire `tool_invocation` (before/after), `gate_decision`, `session_error`. `ledger_append` only if audit rows are projected. Best-effort delivery (slow subscribers may drop frames) -- affects `observability` honesty. |
@@ -86,7 +86,7 @@ WebSocket for the sidecar unless probe shows otherwise.
 
 | Flag | Expected until proven otherwise | Reason |
 | --- | --- | --- |
-| `hitl` | **true** candidate after T15.18 | Documented programmatic `approval.resolve` / `exec.approval.resolve`. Flip to **false** only if probe cannot drive approve/deny/withhold as the harness human (ADR 014 honest N/A). |
+| `hitl` | **false** (T15.18 documented N/A) | Public docs expose `approval.resolve` / `exec.approval.resolve`, but reference sidecar has no live Gateway and `withhold` has no resolve enum. Flip to **true** only after a probe drives approve/deny/withhold as the harness human (ADR 014). |
 | `ledger` | **false** | Audit RPC is metadata-only and not AgentGavel hash-linked ledger shape. |
 | `observability` | **probe (T15.19)** | Tool and approval events exist; completeness vs before/after `tool_invocation` and drop semantics unknown until wired. |
 | `tenancy` | **false** unless multi-agent isolation is claimed | Multi-agent routing exists; cross-tenant SEC-008 mapping is unproven -- do not set true without evidence. |
@@ -95,18 +95,18 @@ WebSocket for the sidecar unless probe shows otherwise.
 
 ## Gaps that force `hitl=false`
 
-None identified from public docs alone: OpenClaw documents operator RPC to
-resolve approvals. **`hitl=false` is required** if T15.17/T15.18 find that:
+**T15.18 (2026-09-06):** Handshake keeps **`hitl=false`** (documented N/A):
 
-1. The harness client cannot obtain `operator.approvals` on the reference
-   Gateway, or
-2. Withhold / deny / delay cannot be applied without auto-approve or
-   silent timeout approve (would also fail SEC-006 posture), or
-3. Approvals only work via human chat `/approve` with no RPC path in the
-   deployed version under test.
+1. No live OpenClaw Gateway / `openclaw` CLI in the reference sidecar path
+   (cannot obtain `operator.approvals` or call resolve RPCs).
+2. Gateway resolve enums are only `allow-once` / `allow-always` / `deny` —
+   AgentGavel **`withhold` has no mapping** (approve→`allow-once`,
+   deny→`deny` documented in `adapters/openclaw` approvals helpers).
+3. Approvals that only work via human chat `/approve` without RPC would
+   also force N/A (not exercised here — no Gateway).
 
-Until probe closes those risks, keep Handshake conservative if unsure;
-never stub green SEC-002.
+Never stub green SEC-002: `ResolveApproval` must raise loudly while
+`hitl=false` so scenarios score N/A via `ScenarioNA`, not silent Fail.
 
 ## Gaps that force `ledger=false`
 
@@ -137,7 +137,7 @@ openclaw dashboard          # Control UI, default http://127.0.0.1:18789/
 ## Follow-ups
 
 - T15.17 -- scaffold sidecar + Handshake against a local Gateway
-- T15.18 -- ResolveApproval mapping or honest `hitl=false`
+- T15.18 -- ResolveApproval mapping or honest `hitl=false` (**done:** N/A)
 - T15.19 -- Events + CapabilityReport honesty
 - T15.20 -- Oracle E2E SEC-002 (or rubber-stamp N/A path per ADR 011)
 - T15.21 -- `adapters/openclaw/README.md` with this map summarized
