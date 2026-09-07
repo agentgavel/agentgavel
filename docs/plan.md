@@ -138,7 +138,7 @@ Split layout. E1–E14 complete (`fidelity: executable`, all tasks done). E15 is
 
 ### E14 -- v0.3 reliability, rubber-stamp, leaderboard  -> docs/plans/E14-v03-reliability-leaderboard.md  (24/24)
 
-### E15 -- v1.0 Opt-in, red-team, OpenClaw, Hermes  -> docs/plans/E15-v10-public-process.md  (11/31)
+### E15 -- v1.0 Opt-in, red-team, OpenClaw, Hermes  -> docs/plans/E15-v10-public-process.md  (30/31)
 
 ## 5. Parallel Work
 
@@ -196,8 +196,8 @@ Tracks AA/AB may run in parallel with W/X after their design tasks.
 - T15.12, T15.13, T15.14
 
 ## Roadmap
-- **Now:** Wave 36/39 mostly shipped (T15.20-22, T15.27, T15.29); T15.12/13 shipped; E15 29/31 — only human T15.11/T15.14 remain
-- **Next:** human T15.11 provisional + T15.14 tag v1.0.0
+- **Now:** `v1.0.0` tagged (T15.14); E15 30/31 — only human T15.11 remains
+- **Next:** human T15.11 provisional after 2026-10-06 (#175)
 
 ## 6. Timeline and Milestones
 
