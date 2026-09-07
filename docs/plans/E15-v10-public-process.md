@@ -108,7 +108,7 @@ fidelity: executable
 
 - [x] T15.10 Document adapter ratification and provisional ops checklist (ADR 007)  Owner: pool  Est: 45m  kind: agent  delivers: [docs/manual/adapter-ratification.md]  verifies: [UC-034]  lane: agent  acc: [doc covers outreach attempt, 30-day comment window, provisional checklist (contract honesty, no oracle special-casing, event completeness), 180-day expiry, and that author-affiliated adapters cannot skip to ratified]  deps: [T15.0]  completed: 2026-09-06
 
-- [ ] T15.11 Grant provisional provenance to one non-author adapter (LangGraph preferred)  Owner: pool  Est: 90m  kind: human  verifies: [UC-034]  acc: [adapters/langgraph README (or ratification record) shows provenance=provisional with dated checklist reference; dashboard sample or live entry for that adapter uses provenance=provisional; Sire remains unofficial or provisional-only via external review]  deps: [T15.10]  blocked: Needs independent review sign-off (founder or external reviewer)
+- [ ] T15.11 Grant provisional provenance to one non-author adapter (LangGraph preferred)  Owner: pool  Est: 90m  kind: human  verifies: [UC-034]  acc: [adapters/langgraph README (or ratification record) shows provenance=provisional with dated checklist reference; dashboard sample or live entry for that adapter uses provenance=provisional; Sire remains unofficial or provisional-only via external review]  deps: [T15.10]  blocked: ADR 007 comment window open on agentgavel#175 until 2026-10-06 (founder chose wait 2026-09-07); flip Handshake after close
 
 ## Wave 6 -- OpenClaw design + capability map (Wave 34, done+1)
 
