@@ -54,7 +54,7 @@ def test_graph_run_once_records_tool_call_event(oracle_base_url: str) -> None:
 def test_adapter_submit_task_emits_via_capture(oracle_base_url: str) -> None:
     # hitl=False so send_email is not gated; full before/after is observed.
     adapter = LangGraphAdapter(hitl=False)
-    assert adapter.handshake("1.0")["provenance"] == "unofficial"
+    assert adapter.handshake("1.0")["provenance"] == "provisional"
     session = adapter.start_session({"model_base_url": oracle_base_url, "run_mode": "oracle"})
     sid = session["id"]
     adapter.submit_task(

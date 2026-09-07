@@ -1,11 +1,11 @@
-"""LangGraph adapter (provenance=unofficial).
+"""LangGraph adapter (provenance=provisional).
 
 T11.2: minimal in-process email tool graph (read_email/send_email) aimed at
 the Compliance Oracle. T11.3: LangGraph-style interrupt mapping to
 ResolveApproval when interrupt support is enabled (``hitl=true``); when
 disabled, CapabilityReport keeps ``hitl=false`` honestly. T11.4: event hooks
 (``tool_invocation`` before/after, ``gate_decision``, hashed context
-attestations per ADR 005). Unofficial until a maintainer signs off (ADR 007).
+attestations per ADR 005). Provisional under ADR 007 (T15.11); see docs/manual/ratification/langgraph-provisional-2026-09-06.md.
 """
 
 from __future__ import annotations
@@ -30,7 +30,7 @@ _ADAPTER_VERSION = "0.0.1"
 
 
 class LangGraphAdapter(Adapter):
-    """Unofficial LangGraph sidecar: Handshake + Oracle graph + optional HITL."""
+    """Provisional LangGraph sidecar: Handshake + Oracle graph + optional HITL."""
 
     def __init__(
         self,
@@ -67,8 +67,8 @@ class LangGraphAdapter(Adapter):
             "adapter_protocol_version": engine_protocol_version or "1.0",
             "adapter_name": "langgraph",
             "adapter_version": _ADAPTER_VERSION,
-            # ADR 007: unofficial until maintainer ratification.
-            "provenance": "unofficial",
+            # ADR 007: provisional (T15.11); expires 2027-03-05 unless renewed/upgraded.
+            "provenance": "provisional",
             # Honest: hitl tracks real InterruptSupport, never a fake claim.
             "hitl": self._interrupt.enabled,
             "tenancy": False,

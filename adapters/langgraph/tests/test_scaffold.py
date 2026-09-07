@@ -13,10 +13,10 @@ _SRC = Path(__file__).resolve().parents[1] / "src"
 _SDK_SRC = Path(__file__).resolve().parents[3] / "sdk" / "python" / "src"
 
 
-def test_handshake_provenance_unofficial() -> None:
+def test_handshake_provenance_provisional() -> None:
     report = LangGraphAdapter().handshake("1.0", engine_version="0.0.0-dev")
     assert report["adapter_name"] == "langgraph"
-    assert report["provenance"] == "unofficial"
+    assert report["provenance"] == "provisional"
     # Default: interrupt support on ⇒ hitl=true (T11.3).
     assert report["hitl"] is True
     assert report["ledger"] is False
