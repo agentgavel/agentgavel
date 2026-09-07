@@ -1,52 +1,52 @@
 # LangGraph provisional ratification record (T15.11)
 
-Dated checklist and outreach package for granting
-`provenance=provisional` on `adapters/langgraph/` under
+Dated checklist and outreach package for a future
+`provenance=provisional` grant on `adapters/langgraph/` under
 [ADR 007](../../adr/007-adapter-ratification.md) and
 [adapter-ratification ops](../adapter-ratification.md).
+
+**Founder ruling (2026-09-07):** wait. Hold the Handshake flip until the
+public comment window closes. Do not grant provisional early.
 
 | Field | Value |
 | --- | --- |
 | Adapter | `langgraph` (`adapters/langgraph/`) |
 | Author-affiliated? | **No** (non-author §8.1 target; Sire remains author-affiliated) |
-| Grant date | 2026-09-06 (effective on founder merge of the T15.11 PR) |
-| Expires | 2027-03-05 (grant + 180 days) unless renewed or upgraded to `ratified` |
+| Current Handshake | `provenance=unofficial` |
 | Outreach / comment issue | https://github.com/agentgavel/agentgavel/issues/175 |
-| Reviewer | AgentGavel core / founder sign-off (merge = grant) |
+| Window opened | 2026-09-06 |
+| Window closes | **2026-10-06** |
+| Provisional grant date | *not yet* — earliest 2026-10-06 if no blocking objection |
+| Expires (once granted) | grant date + 180 days unless renewed or upgraded to `ratified` |
+| Reviewer (checklist prep) | AgentGavel core / agent prep 2026-09-06; founder chose wait |
 
 ## ADR 007 ops checklist
 
 - [x] Documented outreach attempt — issue [#175](https://github.com/agentgavel/agentgavel/issues/175) (2026-09-06; public GitHub; LangGraph maintainers invited; outcome pending)
-- [ ] 30-day public comment window — **opened 2026-09-06, closes 2026-10-06** on #175
-- [ ] Comment window closed with no unresolved blocking objections
+- [x] 30-day public comment window opened (start: 2026-09-06)
+- [ ] Comment window closed with no unresolved blocking objections (due **2026-10-06**)
 - [x] Checklist: contract honesty — pass (see below; agent prep 2026-09-06)
 - [x] Checklist: no oracle special-casing — pass (see below)
 - [x] Checklist: event completeness — pass (see below)
 - [x] Author-affiliated? **No** — core maintainer provisional path applies; Sire stays `unofficial`
-- [ ] `provenance=provisional` set in Handshake + dashboard sample (lands with founder-approved PR)
-- [ ] Adapter README cites this record + expiry
+- [ ] `provenance=provisional` set in Handshake + dashboard sample (blocked until window closes)
+- [x] Adapter README cites this record + window dates (unofficial until flip)
 
-### Founder clock decision (required)
+### After 2026-10-06
 
-ADR 007 requires the comment window to **close** before provisional is
-granted. Issue #175 opened the window on 2026-09-06.
+If #175 has no unresolved blocking objection:
 
-Choose one when merging the T15.11 PR:
+1. Flip Handshake to `provenance=provisional`.
+2. Add `dashboard/data/sample-langgraph-provisional.json` and index it.
+3. Set grant date = flip date; expiry = grant + 180 days.
+4. Mark T15.11 complete in `docs/plans/E15-v10-public-process.md`.
 
-1. **Wait** — merge only after 2026-10-06 (and update this section to mark
-   the window closed). Do not flip Handshake before then.
-2. **Clock exception** — founder (core maintainer) accepts provisional
-   grant on 2026-09-06 with the window still open, documenting that
-   outreach is public on #175 and objections filed there remain binding
-   (provisional may be reverted if a blocking objection lands). Sign by
-   merging the T15.11 PR with the provenance flip included.
-
-Until one of those lands, treat this record as **prep only**.
+If a blocking objection stands, keep `unofficial` and record the deferral
+on #175.
 
 ## Independent review findings (prep)
 
-Reviewed against `adapters/langgraph/` on `main` as of 2026-09-06
-(`fb29b33` lineage).
+Reviewed against `adapters/langgraph/` on `main` as of 2026-09-06.
 
 ### Contract honesty — PASS
 
@@ -57,8 +57,7 @@ Reviewed against `adapters/langgraph/` on `main` as of 2026-09-06
   `tool_invocation` / `gate_decision` / `context_attestation` events.
 - `framework_version` is the stub (`stub-0.0.1`); README states the
   package does not depend on PyPI `langgraph`.
-- Provenance string was `unofficial` pending this grant; not overstated
-  as ratified.
+- Provenance remains `unofficial` until the window closes (this wait).
 
 ### No oracle special-casing — PASS
 
@@ -80,10 +79,10 @@ Reviewed against `adapters/langgraph/` on `main` as of 2026-09-06
 
 `adapters/sire` remains `provenance=unofficial`. ADR 007 forbids
 core-only ratification of author-affiliated adapters; this LangGraph
-grant does not change Sire.
+package does not change Sire.
 
-## Renewal / upgrade
+## v1.0 note
 
-- Renew before 2027-03-05 with a fresh checklist pass, or
-- Upgrade to `ratified` when LangGraph maintainers review/contribute, or
-- Revert published provenance to `unofficial` after expiry.
+v1.0 may ship while this window is open: release notes should disclose
+that LangGraph is still `unofficial` and that the first ratification
+window closes 2026-10-06 (#175).

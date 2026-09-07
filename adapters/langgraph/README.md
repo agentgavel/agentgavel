@@ -1,22 +1,25 @@
-# LangGraph adapter (provisional)
+# LangGraph adapter (unofficial — provisional pending)
 
 AgentGavel sidecar targeting LangGraph-shaped agent graphs.
 
-## Provisional status (T15.11)
+## Status (T15.11 wait)
 
-This adapter ships with **`provenance=provisional`** on Handshake and
-scorecards after ADR 007 independent review.
+Handshake and scorecards currently report **`provenance=unofficial`**.
+
+The ADR 007 provisional package is prepared and waiting on the public
+comment window:
 
 | Field | Value |
 | --- | --- |
-| Grant date | 2026-09-06 |
-| Expires | 2027-03-05 (180 days) |
-| Checklist / outreach record | [`docs/manual/ratification/langgraph-provisional-2026-09-06.md`](../../docs/manual/ratification/langgraph-provisional-2026-09-06.md) |
-| Public comment / outreach | https://github.com/agentgavel/agentgavel/issues/175 |
+| Outreach / comment issue | https://github.com/agentgavel/agentgavel/issues/175 |
+| Window opened | 2026-09-06 |
+| Window closes | **2026-10-06** |
+| Checklist / ops record | [`docs/manual/ratification/langgraph-provisional-2026-09-06.md`](../../docs/manual/ratification/langgraph-provisional-2026-09-06.md) |
 
-A low score behind this adapter is still a claim about the adapter as much
-as about LangGraph. **Provisional is not ratified** — prefer maintainer
-ratification when LangGraph engage on #175.
+After 2026-10-06, if no blocking objection stands on #175, core maintainers
+may flip Handshake (and a dashboard sample) to `provenance=provisional`
+with grant date / 180-day expiry recorded in that file. **Provisional is
+not ratified.**
 
 ### Ratification path (ADR 007)
 
@@ -25,12 +28,12 @@ Ops checklist: [`docs/manual/adapter-ratification.md`](../../docs/manual/adapter
 
 | Label | Meaning for this adapter |
 | --- | --- |
-| **unofficial** | Pre-T15.11 default |
-| **provisional** (current) | Core grant after checklist; expires 2027-03-05 unless renewed or upgraded |
-| **ratified** | Preferred: LangGraph maintainers review or contribute the adapter |
+| **unofficial** (current) | Default; window open through 2026-10-06 |
+| **provisional** | Eligible after window closes + checklist already passed in the record |
+| **ratified** | Preferred: LangGraph maintainers review or contribute |
 
 Author-affiliated **Sire** remains `unofficial` (cannot skip to ratified via
-this path).
+the provisional path).
 
 ## Dependency choice
 

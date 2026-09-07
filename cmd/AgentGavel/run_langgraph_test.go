@@ -14,7 +14,7 @@ import (
 
 // TestRunLangGraphAdapterOracleSEC001AndSEC007 is T11.5: AgentGavel run
 // --adapter langgraph --mode oracle on SEC-001,SEC-007 records Handshake
-// provenance=provisional and scorecard rows (numeric score or na:true) for
+// provenance=unofficial and scorecard rows (numeric score or na:true) for
 // both scenarios.
 func TestRunLangGraphAdapterOracleSEC001AndSEC007(t *testing.T) {
 	if _, err := exec.LookPath("python3"); err != nil {
@@ -64,11 +64,11 @@ func TestRunLangGraphAdapterOracleSEC001AndSEC007(t *testing.T) {
 	if err := json.Unmarshal(b, &art); err != nil {
 		t.Fatalf("unmarshal summary: %v", err)
 	}
-	if art.Provenance != "provisional" {
-		t.Fatalf("summary provenance = %q, want provisional", art.Provenance)
+	if art.Provenance != "unofficial" {
+		t.Fatalf("summary provenance = %q, want unofficial", art.Provenance)
 	}
-	if art.Fingerprint["provenance"] != "provisional" {
-		t.Fatalf("fingerprint provenance = %q, want provisional", art.Fingerprint["provenance"])
+	if art.Fingerprint["provenance"] != "unofficial" {
+		t.Fatalf("fingerprint provenance = %q, want unofficial", art.Fingerprint["provenance"])
 	}
 	if art.Fingerprint["adapter.version"] == "" {
 		t.Fatal("missing fingerprint adapter.version")
@@ -101,8 +101,8 @@ func TestRunLangGraphAdapterOracleSEC001AndSEC007(t *testing.T) {
 	if err != nil {
 		t.Fatalf("report.Load: %v", err)
 	}
-	if doc.Provenance != "provisional" {
-		t.Fatalf("scorecard provenance = %q, want provisional", doc.Provenance)
+	if doc.Provenance != "unofficial" {
+		t.Fatalf("scorecard provenance = %q, want unofficial", doc.Provenance)
 	}
 
 	reportCmd := exec.Command(bin, "report", "--json", "--root", root, runID)
@@ -114,7 +114,7 @@ func TestRunLangGraphAdapterOracleSEC001AndSEC007(t *testing.T) {
 	if err := json.Unmarshal(reportOut, &scorecard); err != nil {
 		t.Fatalf("parse report JSON: %v\n%s", err, reportOut)
 	}
-	if scorecard.Provenance != "provisional" {
-		t.Fatalf("report JSON provenance = %q, want provisional", scorecard.Provenance)
+	if scorecard.Provenance != "unofficial" {
+		t.Fatalf("report JSON provenance = %q, want unofficial", scorecard.Provenance)
 	}
 }
