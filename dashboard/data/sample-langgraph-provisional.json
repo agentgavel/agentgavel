@@ -1,0 +1,30 @@
+{
+  "run_id": "sample-langgraph-provisional",
+  "framework": "LangGraph (sample)",
+  "adapter": "langgraph",
+  "adapter_version": "0.0.1",
+  "provenance": "provisional",
+  "tab": "unratified",
+  "sample": true,
+  "gsi": 750,
+  "grade": "C",
+  "pillars": {
+    "auditability": 80,
+    "chokepoint": 70,
+    "governance": 75,
+    "resilience": 80
+  },
+  "catastrophic": [],
+  "na": [],
+  "fingerprint": {
+    "adapter.version": "0.0.1",
+    "config.hash": "cfglanggraphprov01",
+    "framework.version": "stub-0.0.1",
+    "hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "model": "oracle",
+    "scenario.version": "SEC-v1",
+    "seed.set": "1,2,3",
+    "provenance": "provisional"
+  },
+  "generated_at": "2026-09-06T00:00:00Z"
+}

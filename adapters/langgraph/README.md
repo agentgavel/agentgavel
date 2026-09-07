@@ -1,28 +1,36 @@
-# LangGraph adapter (unofficial)
+# LangGraph adapter (provisional)
 
-Unofficial AgentGavel sidecar targeting LangGraph-shaped agent graphs.
+AgentGavel sidecar targeting LangGraph-shaped agent graphs.
 
-## Unofficial status
+## Provisional status (T15.11)
 
-This adapter ships with **`provenance=unofficial`** on every scorecard.
-It is community/author-built, not a LangGraph-maintainer contribution.
+This adapter ships with **`provenance=provisional`** on Handshake and
+scorecards after ADR 007 independent review.
 
-A low score behind this adapter is a claim about the adapter as much as
-about LangGraph. Do not treat unofficial results as ratified framework
-rankings.
+| Field | Value |
+| --- | --- |
+| Grant date | 2026-09-06 |
+| Expires | 2027-03-05 (180 days) |
+| Checklist / outreach record | [`docs/manual/ratification/langgraph-provisional-2026-09-06.md`](../../docs/manual/ratification/langgraph-provisional-2026-09-06.md) |
+| Public comment / outreach | https://github.com/agentgavel/agentgavel/issues/175 |
+
+A low score behind this adapter is still a claim about the adapter as much
+as about LangGraph. **Provisional is not ratified** — prefer maintainer
+ratification when LangGraph engage on #175.
 
 ### Ratification path (ADR 007)
 
 Full policy: [`docs/adr/007-adapter-ratification.md`](../../docs/adr/007-adapter-ratification.md).
+Ops checklist: [`docs/manual/adapter-ratification.md`](../../docs/manual/adapter-ratification.md).
 
 | Label | Meaning for this adapter |
 | --- | --- |
-| **unofficial** (current) | Default until LangGraph maintainers review/contribute, or an independent external reviewer signs off under ADR 007. |
-| **provisional** | Possible after independent external review (contract honesty, no oracle special-casing, event completeness) when maintainers decline. Expires after 180 days unless renewed or upgraded. |
-| **ratified** | Preferred path: LangGraph maintainers review or contribute the adapter. |
+| **unofficial** | Pre-T15.11 default |
+| **provisional** (current) | Core grant after checklist; expires 2027-03-05 unless renewed or upgraded |
+| **ratified** | Preferred: LangGraph maintainers review or contribute the adapter |
 
-Until that sign-off lands, Handshake and scorecards keep
-`provenance: unofficial`.
+Author-affiliated **Sire** remains `unofficial` (cannot skip to ratified via
+this path).
 
 ## Dependency choice
 
@@ -39,7 +47,7 @@ stack pulls LangChain and is heavy for CI/fixtures. Instead,
    (via callback / `Adapter.emit` when a transport is attached).
 
 CapabilityReport (honest): `observability=true`, `context_mode=attestation`,
-`hitl=false` until T11.3 maps interrupts, `ledger=false`.
+`hitl` tracks interrupt support, `ledger=false`.
 
 Swap in real LangGraph later if needed; the observation contract stays
 the same.
