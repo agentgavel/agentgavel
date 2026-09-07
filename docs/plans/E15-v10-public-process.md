@@ -160,4 +160,5 @@ fidelity: executable
 
 - [x] T15.13 Full make test and make lint green on clean tree (v1.0 gate)  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  acc: [make test && make lint && bash scripts/check-dashboard.sh all exit 0 on a clean checkout of the integration branch]  deps: [T15.5, T15.6, T15.4, T15.22, T15.29]  completed: 2026-09-06
 
-- [ ] T15.14 Cut v1.0.0 GitHub release with GoReleaser assets  Owner: pool  Est: 45m  kind: human  verifies: [infrastructure]  acc: [git tag v1.0.0 exists; gh release view v1.0.0 shows darwin/linux amd64/arm64 binaries + checksums; release notes cite signed Opt-in (ADR 012/013), harness bounty, and unofficial OpenClaw + Hermes adapters (ADR 014)]  deps: [T15.13, T15.12, T15.9, T15.20, T15.21, T15.27, T15.28]  blocked: Founder cuts tag after T15.13 green (same pattern as T14.16)
+- [x] T15.14 Cut v1.0.0 GitHub release with GoReleaser assets  Owner: pool  Est: 45m  kind: human  verifies: [infrastructure]  acc: [git tag v1.0.0 exists; gh release view v1.0.0 shows darwin/linux amd64/arm64 binaries + checksums; release notes cite signed Opt-in (ADR 012/013), harness bounty, and unofficial OpenClaw + Hermes adapters (ADR 014)]  deps: [T15.13, T15.12, T15.9, T15.20, T15.21, T15.27, T15.28]  completed: 2026-09-07
+  - Tag `v1.0.0` + 5 GoReleaser assets: https://github.com/agentgavel/agentgavel/releases/tag/v1.0.0

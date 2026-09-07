@@ -5,7 +5,9 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
-- **Shipped (2026-09-06):** T15.12  (#172), T15.13 quality gate (#173). E15 29/31. **Blocked on human:** T15.11 provisional after #175 window closes 2026-10-06 (wait); T15.14  tag.
+- **Shipped (2026-09-07):** T15.14 tag [`v1.0.0`](https://github.com/agentgavel/agentgavel/releases/tag/v1.0.0). E15 30/31. **Blocked on human:** T15.11 provisional after #175 window closes 2026-10-06 (wait).
+
+- **Shipped (2026-09-06):** T15.12  (#172), T15.13 quality gate (#173). E15 was 29/31.
 
 - **Shipped (2026-09-06):** T15.13 v1.0 quality gate — `make test` + `make lint` +
   `scripts/check-dashboard.sh` green on clean `origin/main` checkout; no code
