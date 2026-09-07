@@ -30,3 +30,7 @@ __pycache__/
 .DS_Store
 *.swp
 *~
+
+# Cross-harness project gossip (dec-0943): local-only in public repos
+ajent.social
+ajent.social.*
