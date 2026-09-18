@@ -8,23 +8,29 @@ Dated checklist and outreach package for a future
 **Founder ruling (2026-09-07):** wait. Hold the Handshake flip until the
 public comment window closes. Do not grant provisional early.
 
+**Outreach correction (2026-09-18):** The 2026-09-06 “outreach” on
+agentgavel#175 was only a self-hosted comment record. Real
+maintainer-visible contact is langchain-ai/langgraph#8992. The 30-day
+window **restarts** from that date.
+
 | Field | Value |
 | --- | --- |
 | Adapter | `langgraph` (`adapters/langgraph/`) |
 | Author-affiliated? | **No** (non-author §8.1 target; Sire remains author-affiliated) |
 | Current Handshake | `provenance=unofficial` |
-| Outreach / comment issue | https://github.com/agentgavel/agentgavel/issues/175 |
-| Window opened | 2026-09-06 |
-| Window closes | **2026-10-06** |
-| Provisional grant date | *not yet* — earliest 2026-10-06 if no blocking objection |
+| Outreach artifact | https://github.com/langchain-ai/langgraph/issues/8992 |
+| Comment / objections | https://github.com/agentgavel/agentgavel/issues/175 |
+| Window opened | 2026-09-18 |
+| Window closes | **2026-10-18** |
+| Provisional grant date | *not yet* — earliest 2026-10-18 if no blocking objection |
 | Expires (once granted) | grant date + 180 days unless renewed or upgraded to `ratified` |
-| Reviewer (checklist prep) | AgentGavel core / agent prep 2026-09-06; founder chose wait |
+| Reviewer (checklist prep) | AgentGavel core / agent prep 2026-09-06; founder chose wait; outreach fixed 2026-09-18 |
 
 ## ADR 007 ops checklist
 
-- [x] Documented outreach attempt — issue [#175](https://github.com/agentgavel/agentgavel/issues/175) (2026-09-06; public GitHub; LangGraph maintainers invited; outcome pending)
-- [x] 30-day public comment window opened (start: 2026-09-06)
-- [ ] Comment window closed with no unresolved blocking objections (due **2026-10-06**)
+- [x] Documented outreach attempt — [langchain-ai/langgraph#8992](https://github.com/langchain-ai/langgraph/issues/8992) (2026-09-18; sender `@dndungu`; outcome pending). Prior #175-only claim (2026-09-06) was not maintainer-visible and does not count.
+- [x] 30-day public comment window opened (start: **2026-09-18**; tracking [#175](https://github.com/agentgavel/agentgavel/issues/175))
+- [ ] Comment window closed with no unresolved blocking objections (due **2026-10-18**)
 - [x] Checklist: contract honesty — pass (see below; agent prep 2026-09-06)
 - [x] Checklist: no oracle special-casing — pass (see below)
 - [x] Checklist: event completeness — pass (see below)
@@ -32,9 +38,9 @@ public comment window closes. Do not grant provisional early.
 - [ ] `provenance=provisional` set in Handshake + dashboard sample (blocked until window closes)
 - [x] Adapter README cites this record + window dates (unofficial until flip)
 
-### After 2026-10-06
+### After 2026-10-18
 
-If #175 has no unresolved blocking objection:
+If #175 / #8992 have no unresolved blocking objection:
 
 1. Flip Handshake to `provenance=provisional`.
 2. Add `dashboard/data/sample-langgraph-provisional.json` and index it.
@@ -83,6 +89,6 @@ package does not change Sire.
 
 ## v1.0 note
 
-v1.0 may ship while this window is open: release notes should disclose
-that LangGraph is still `unofficial` and that the first ratification
-window closes 2026-10-06 (#175).
+v1.0 shipped while an earlier (invalid) window was open. Release notes
+and this record now disclose that LangGraph remains `unofficial` and that
+the first valid ratification window closes **2026-10-18** (#175 / #8992).

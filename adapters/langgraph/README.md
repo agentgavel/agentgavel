@@ -7,19 +7,20 @@ AgentGavel sidecar targeting LangGraph-shaped agent graphs.
 Handshake and scorecards currently report **`provenance=unofficial`**.
 
 The ADR 007 provisional package is prepared and waiting on the public
-comment window:
+comment window (restarted after real maintainer outreach):
 
 | Field | Value |
 | --- | --- |
-| Outreach / comment issue | https://github.com/agentgavel/agentgavel/issues/175 |
-| Window opened | 2026-09-06 |
-| Window closes | **2026-10-06** |
+| Outreach (LangGraph) | https://github.com/langchain-ai/langgraph/issues/8992 |
+| Comment / objections | https://github.com/agentgavel/agentgavel/issues/175 |
+| Window opened | 2026-09-18 |
+| Window closes | **2026-10-18** |
 | Checklist / ops record | [`docs/manual/ratification/langgraph-provisional-2026-09-06.md`](../../docs/manual/ratification/langgraph-provisional-2026-09-06.md) |
 
-After 2026-10-06, if no blocking objection stands on #175, core maintainers
-may flip Handshake (and a dashboard sample) to `provenance=provisional`
-with grant date / 180-day expiry recorded in that file. **Provisional is
-not ratified.**
+After 2026-10-18, if no blocking objection stands on #175 / #8992, core
+maintainers may flip Handshake (and a dashboard sample) to
+`provenance=provisional` with grant date / 180-day expiry recorded in
+that file. **Provisional is not ratified.**
 
 ### Ratification path (ADR 007)
 
@@ -28,7 +29,7 @@ Ops checklist: [`docs/manual/adapter-ratification.md`](../../docs/manual/adapter
 
 | Label | Meaning for this adapter |
 | --- | --- |
-| **unofficial** (current) | Default; window open through 2026-10-06 |
+| **unofficial** (current) | Default; window open through 2026-10-18 |
 | **provisional** | Eligible after window closes + checklist already passed in the record |
 | **ratified** | Preferred: LangGraph maintainers review or contribute |
 
