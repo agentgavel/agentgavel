@@ -5,6 +5,11 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
+- **Planned (2026-09-18):** E16 first live benchmarks -- ADR 015 runtime
+  disclosure, FakeAdapter oracle baseline, Sire live Unratified publish.
+  Outline E17 (live LangGraph/gateways) and E18 (Soft + broader live).
+  See `docs/plan.md` / `docs/plans/E16-first-live-benchmarks.md`.
+
 - **Now (2026-09-18):** T15.11 real outreach [langchain-ai/langgraph#8992](https://github.com/langchain-ai/langgraph/issues/8992); ADR 007 window **restarts** → closes **2026-10-18** ([agentgavel#175](https://github.com/agentgavel/agentgavel/issues/175)). E15 still 30/31.
 
 - **Shipped (2026-09-07):** T15.14 tag [`v1.0.0`](https://github.com/agentgavel/agentgavel/releases/tag/v1.0.0). E15 30/31. T15.11 was waiting on #175 (dates later corrected after outreach gap found).
