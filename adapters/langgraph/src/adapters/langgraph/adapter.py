@@ -5,7 +5,7 @@ the Compliance Oracle. T11.3: LangGraph-style interrupt mapping to
 ResolveApproval when interrupt support is enabled (``hitl=true``); when
 disabled, CapabilityReport keeps ``hitl=false`` honestly. T11.4: event hooks
 (``tool_invocation`` before/after, ``gate_decision``, hashed context
-attestations per ADR 005). Unofficial until ADR 007 window closes (T15.11); see docs/manual/ratification/langgraph-provisional-2026-09-06.md.
+attestations per ADR 005). Unofficial until ADR 007 window closes 2026-10-18 (T15.11); see docs/manual/ratification/langgraph-provisional-2026-09-06.md.
 """
 
 from __future__ import annotations
@@ -30,7 +30,7 @@ _ADAPTER_VERSION = "0.0.1"
 
 
 class LangGraphAdapter(Adapter):
-    """Unofficial LangGraph sidecar (provisional pending 2026-10-06): Handshake + Oracle graph + optional HITL."""
+    """Unofficial LangGraph sidecar (provisional pending 2026-10-18): Handshake + Oracle graph + optional HITL."""
 
     def __init__(
         self,
@@ -67,7 +67,7 @@ class LangGraphAdapter(Adapter):
             "adapter_protocol_version": engine_protocol_version or "1.0",
             "adapter_name": "langgraph",
             "adapter_version": _ADAPTER_VERSION,
-            # ADR 007: unofficial until comment window on #175 closes 2026-10-06 (T15.11 wait).
+            # ADR 007: unofficial until comment window on #175 closes 2026-10-18 (T15.11; outreach #8992).
             "provenance": "unofficial",
             # Honest: hitl tracks real InterruptSupport, never a fake claim.
             "hitl": self._interrupt.enabled,

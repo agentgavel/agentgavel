@@ -197,7 +197,7 @@ Tracks AA/AB may run in parallel with W/X after their design tasks.
 
 ## Roadmap
 - **Now:** `v1.0.0` tagged (T15.14); E15 30/31 — only human T15.11 remains
-- **Next:** human T15.11 provisional after 2026-10-06 (#175)
+- **Next:** human T15.11 provisional after 2026-10-18 (#175 / langgraph#8992)
 
 ## 6. Timeline and Milestones
 
@@ -260,7 +260,8 @@ Rules:
 
 ## 9. Progress Log
 
-- 2026-09-07: T15.11 founder chose wait — hold provisional flip until 2026-10-06 (#175); artifacts land without Handshake change.
+- 2026-09-18: T15.11 real outreach — langchain-ai/langgraph#8992; 30-day window restarts → closes 2026-10-18 (#175).
+- 2026-09-07: T15.11 founder chose wait — hold provisional flip until window closes (#175); artifacts land without Handshake change.
 - 2026-09-06: Wave 33 — T15.12 v1.0 smoke (#172), T15.13 quality gate (#173). E15 29/31; human gates T15.11/T15.14 remain.
 - 2026-09-06: Wave 36/39 — T15.20 OpenClaw SEC-002 E2E, T15.21 README, T15.22 lint, T15.27 Hermes SEC-002 E2E, T15.29 lint shipped; T15.28 README shipped — Wave 36/39 complete.
 - 2026-09-06: Wave 30 T15.4-T15.6 Opt-in CI + signed publish; T15.16/T15.23 capability maps; E15 11/31.
