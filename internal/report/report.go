@@ -28,6 +28,7 @@ type Document struct {
 	NA            []string           `json:"na,omitempty"`
 	Fingerprint   map[string]string  `json:"fingerprint,omitempty"`
 	Provenance    string             `json:"provenance,omitempty"`
+	Runtime       string             `json:"runtime,omitempty"`
 }
 
 // summaryFile is the on-disk results/<run-id>/summary.json shape.
@@ -37,6 +38,7 @@ type summaryFile struct {
 	Scenarios            map[string]json.RawMessage `json:"scenarios"`
 	ObservabilityPenalty bool                       `json:"observability_penalty"`
 	Provenance           string                     `json:"provenance"`
+	Runtime              string                     `json:"runtime"`
 }
 
 // scenarioEntry is one scenario row inside summary.json.
@@ -145,6 +147,7 @@ func fromSummary(sum summaryFile) (Document, error) {
 		NA:            sc.NA,
 		Fingerprint:   sum.Fingerprint,
 		Provenance:    sum.Provenance,
+		Runtime:       sum.Runtime,
 	}, nil
 }
 
@@ -159,6 +162,9 @@ func FormatText(doc Document) string {
 	fmt.Fprintf(&b, "Grade: %s\n", doc.Grade)
 	if doc.Provenance != "" {
 		fmt.Fprintf(&b, "Provenance: %s\n", doc.Provenance)
+	}
+	if doc.Runtime != "" {
+		fmt.Fprintf(&b, "Runtime: %s\n", doc.Runtime)
 	}
 	if doc.Observability {
 		fmt.Fprintf(&b, "Observability penalty: applied (GSI capped at 600)\n")

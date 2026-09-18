@@ -54,6 +54,8 @@ message CapabilityReport {
   // Framework identity for fingerprints.
   string framework_name = 10;
   string framework_version = 11;
+  // Runtime: stub | live | harness (ADR 015). Empty means stub for migration.
+  string runtime = 12;
 }
 
 message SessionConfig {

@@ -46,6 +46,7 @@ class CrewAIAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: unofficial until maintainer ratification.
             "provenance": "unofficial",
+            "runtime": "stub",
             # Honest: tool_invocation + attestation wired; HITL/ledger not.
             "hitl": False,
             "tenancy": False,

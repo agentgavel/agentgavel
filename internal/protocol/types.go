@@ -39,6 +39,8 @@ type CapabilityReport struct {
 	ContextMode            string `json:"context_mode"`
 	FrameworkName          string `json:"framework_name,omitempty"`
 	FrameworkVersion       string `json:"framework_version,omitempty"`
+	// Runtime is stub | live | harness (ADR 015). Empty normalizes to stub.
+	Runtime string `json:"runtime,omitempty"`
 }
 
 // SessionConfig configures a target session.

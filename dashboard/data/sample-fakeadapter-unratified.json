@@ -4,6 +4,7 @@
   "adapter": "fakeadapter",
   "adapter_version": "0.1.0",
   "provenance": "unofficial",
+  "runtime": "harness",
   "tab": "unratified",
   "sample": true,
   "gsi": 883.3333333333335,

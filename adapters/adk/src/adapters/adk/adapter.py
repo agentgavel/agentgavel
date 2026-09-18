@@ -49,6 +49,7 @@ class AdkAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: unofficial until maintainer ratification.
             "provenance": "unofficial",
+            "runtime": "stub",
             # Honest: no confirmation flow / tenancy / ledger yet.
             "hitl": False,
             "tenancy": False,

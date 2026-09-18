@@ -48,6 +48,7 @@ class OpenAIAgentsAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: unofficial until maintainer / external ratification.
             "provenance": "unofficial",
+            "runtime": "stub",
             # Honest: needs_approval / interrupt → ResolveApproval not wired.
             "hitl": False,
             "tenancy": False,

@@ -30,7 +30,10 @@ _ADAPTER_VERSION = "0.0.1"
 
 
 class LangGraphAdapter(Adapter):
-    """Unofficial LangGraph sidecar (provisional pending 2026-10-18): Handshake + Oracle graph + optional HITL."""
+    """Unofficial LangGraph sidecar (provisional pending 2026-10-18).
+
+    Handshake + Oracle graph + optional HITL.
+    """
 
     def __init__(
         self,
@@ -67,8 +70,9 @@ class LangGraphAdapter(Adapter):
             "adapter_protocol_version": engine_protocol_version or "1.0",
             "adapter_name": "langgraph",
             "adapter_version": _ADAPTER_VERSION,
-            # ADR 007: unofficial until comment window on #175 closes 2026-10-18 (T15.11; outreach #8992).
+            # ADR 007: unofficial until #175 closes 2026-10-18 (T15.11 / #8992).
             "provenance": "unofficial",
+            "runtime": "stub",
             # Honest: hitl tracks real InterruptSupport, never a fake claim.
             "hitl": self._interrupt.enabled,
             "tenancy": False,

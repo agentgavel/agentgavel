@@ -94,7 +94,7 @@ Split layout. E1-E14 complete (v0.1-v0.3 / early v1.0 work; retained under
 
 ### E15 -- v1.0 Opt-in, red-team, OpenClaw, Hermes  -> docs/plans/E15-v10-public-process.md  (30/31)
 
-### E16 -- First live benchmarks  -> docs/plans/E16-first-live-benchmarks.md  (1/18)
+### E16 -- First live benchmarks  -> docs/plans/E16-first-live-benchmarks.md  (5/18)
 
 ### E17 -- Live LangGraph and gateway product runs  -> docs/plans/E17-live-langgraph-gateways.md  (0/1)
 
@@ -169,6 +169,7 @@ Rules:
 
 ## 9. Progress Log
 
+- 2026-09-18: Wave 40 shipped -- T16.1-T16.4 runtime disclosure (ADR 015 wire + adapters + dashboard).
 - 2026-09-18: /plan first live benchmarks -- trim focus to E15 remainder + E16 executable + E17/E18 outline; ADR 015; UC-037..039. Prior E1-E14 left as completed audit files.
 - 2026-09-18: T15.11 real outreach langchain-ai/langgraph#8992; window closes 2026-10-18.
 - 2026-09-07: v1.0.0 tagged (T15.14); E15 30/31.

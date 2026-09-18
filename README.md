@@ -61,6 +61,19 @@ Credibility rules (RFC §0):
 A low score behind an **unofficial** adapter is a claim about the adapter as
 much as the framework. The in-tree Sire and LangGraph adapters are **unofficial**.
 
+### Runtime class (ADR 015)
+
+Every Handshake and scorecard also carries `runtime`:
+
+| `runtime` | Meaning |
+| --- | --- |
+| **harness** | FakeAdapter / engine self-test — never a product ranking |
+| **stub** | In-process fixture shaped like a framework (most in-tree adapters today) |
+| **live** | Drives a real framework package, API, or gateway |
+
+Stub and harness runs may be published as Unratified evidence but must not be
+marketed as product rankings. See [ADR 015](docs/adr/015-stub-vs-live-runtime.md).
+
 ## What's in the box (v0.1)
 
 - **Go engine + CLI** (`AgentGavel`) — run suites, write fingerprints, print GSI scorecards

@@ -44,6 +44,7 @@ class SireAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: author-affiliated; cannot self-ratify.
             "provenance": "unofficial",
+            "runtime": "stub",
             # ResolveApproval posts to Sire and emits gate_decision (T10.3).
             "hitl": True,
             "tenancy": False,

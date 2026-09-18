@@ -37,6 +37,9 @@ func TestLaunchFakeAdapter(t *testing.T) {
 	if rep.AdapterName != "fake" || rep.AdapterProtocolVersion != "1.0" {
 		t.Fatalf("capability report %#v", rep)
 	}
+	if rep.Runtime != protocol.RuntimeHarness {
+		t.Fatalf("runtime = %q, want harness", rep.Runtime)
+	}
 
 	if err := sess.StopSession(ctx, protocol.SessionID{ID: "sess-1"}); err != nil {
 		t.Fatal(err)

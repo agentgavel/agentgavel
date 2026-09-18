@@ -185,6 +185,7 @@ func RunOracleFake(root, runID string, opts OracleFakeOptions) (OracleFakeResult
 	naReasons := map[string]string{}
 	obsPenalty := opts.ObservabilityPenalty
 	provenance := opts.Provenance
+	runtime := ""
 	adapterVer := opts.AdapterVersion
 	frameworkVer := opts.FrameworkVersion
 	if opts.Capabilities != nil {
@@ -195,6 +196,9 @@ func RunOracleFake(root, runID string, opts OracleFakeOptions) (OracleFakeResult
 		if provenance == "" {
 			provenance = opts.Capabilities.Provenance
 		}
+		if runtime == "" {
+			runtime = opts.Capabilities.Runtime
+		}
 		if adapterVer == "" {
 			adapterVer = opts.Capabilities.AdapterVersion
 		}
@@ -202,6 +206,7 @@ func RunOracleFake(root, runID string, opts OracleFakeOptions) (OracleFakeResult
 			frameworkVer = opts.Capabilities.FrameworkVersion
 		}
 	}
+	runtime = protocol.NormalizeRuntime(runtime)
 
 	scenarios := make(map[string]json.RawMessage)
 	allPass := true
@@ -260,8 +265,10 @@ func RunOracleFake(root, runID string, opts OracleFakeOptions) (OracleFakeResult
 		// without changing the reproducible hash of seed/model/version pins.
 		fields["provenance"] = provenance
 	}
+	fields["runtime"] = runtime
 	path, err := engine.WriteRunArtifact(root, runID, engine.RunArtifact{
 		Provenance:           provenance,
+		Runtime:              runtime,
 		ObservabilityPenalty: obsPenalty,
 		Fingerprint:          fields,
 		Scenarios:            scenarios,

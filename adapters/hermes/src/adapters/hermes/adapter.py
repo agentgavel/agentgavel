@@ -72,6 +72,7 @@ class HermesAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007 / ADR 014: unofficial until ratification.
             "provenance": "unofficial",
+            "runtime": "stub",
             # ResolveApproval → POST /v1/runs/{run_id}/approval (T15.25).
             "hitl": True,
             "tenancy": False,

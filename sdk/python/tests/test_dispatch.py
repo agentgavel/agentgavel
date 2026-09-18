@@ -39,6 +39,7 @@ class _RecordingAdapter(Adapter):
             "adapter_name": "recording",
             "adapter_version": "0.0.1",
             "provenance": "unofficial",
+            "runtime": "harness",
             "hitl": True,
             "tenancy": False,
             "ledger": True,

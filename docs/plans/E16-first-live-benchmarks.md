@@ -9,13 +9,13 @@ fidelity: executable
 
 - [x] T16.0 Document ADR 015 stub/live/harness runtime in design + protocol notes  Owner: pool  Est: 30m  kind: agent  verifies: [UC-037]  lane: agent  delivers: [docs/adr/015-stub-vs-live-runtime.md referenced from design.md]  deps: []  acc: [docs/adr/015-stub-vs-live-runtime.md exists and design.md invariant lists runtime stub|live|harness]  completed: 2026-09-18
 
-- [ ] T16.1 Add CapabilityReport.runtime to proto + Go/Python wire types  Owner: pool  Est: 75m  kind: agent  verifies: [UC-037]  deps: [T16.0]  acc: [go test ./internal/protocol and pytest sdk/python cover Handshake decoding runtime=stub|live|harness; missing runtime rejected or defaulted per ADR 015 migration rule]
+- [x] T16.1 Add CapabilityReport.runtime to proto + Go/Python wire types  Owner: pool  Est: 75m  kind: agent  verifies: [UC-037]  deps: [T16.0]  acc: [go test ./internal/protocol and pytest sdk/python cover Handshake decoding runtime=stub|live|harness; missing runtime rejected or defaulted per ADR 015 migration rule]  completed: 2026-09-18
 
-- [ ] T16.2 Copy runtime into fingerprint + report/publish scorecard JSON  Owner: pool  Est: 60m  kind: agent  verifies: [UC-037, UC-038]  deps: [T16.1]  acc: [AgentGavel report --json includes runtime; dashboard schema accepts runtime; check-dashboard.sh exits 0 on committed tree]
+- [x] T16.2 Copy runtime into fingerprint + report/publish scorecard JSON  Owner: pool  Est: 60m  kind: agent  verifies: [UC-037, UC-038]  deps: [T16.1]  acc: [AgentGavel report --json includes runtime; dashboard schema accepts runtime; check-dashboard.sh exits 0 on committed tree]  completed: 2026-09-18
 
-- [ ] T16.3 Set runtime on FakeAdapter (harness) and all in-tree adapters (stub or documented live)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-037]  deps: [T16.1]  acc: [FakeAdapter Handshake runtime=harness; sire/langgraph/openclaw/hermes and §8.1 stubs report runtime=stub until live wiring; go test FakeAdapter Handshake asserts harness]
+- [x] T16.3 Set runtime on FakeAdapter (harness) and all in-tree adapters (stub or documented live)  Owner: pool  Est: 90m  kind: agent  verifies: [UC-037]  deps: [T16.1]  acc: [FakeAdapter Handshake runtime=harness; sire/langgraph/openclaw/hermes and §8.1 stubs report runtime=stub until live wiring; go test FakeAdapter Handshake asserts harness]  completed: 2026-09-18
 
-- [ ] T16.4 Lint/format protocol + adapter Handshake changes  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  deps: [T16.2, T16.3]  acc: [gofmt and ruff clean on touched trees]
+- [x] T16.4 Lint/format protocol + adapter Handshake changes  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  deps: [T16.2, T16.3]  acc: [gofmt and ruff clean on touched trees]  completed: 2026-09-18
 
 ## Wave 41 -- Harness baseline runs
 
