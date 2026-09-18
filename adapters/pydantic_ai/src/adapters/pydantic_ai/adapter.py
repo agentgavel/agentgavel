@@ -45,6 +45,7 @@ class PydanticAIAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: unofficial until maintainer ratification.
             "provenance": "unofficial",
+            "runtime": "stub",
             # Honest stubs — HITL/ledger/observability land in later tasks.
             # Missing capabilities score N/A (never silent Fail).
             "hitl": False,

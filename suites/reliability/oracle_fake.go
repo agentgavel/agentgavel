@@ -109,12 +109,16 @@ func RunOracleFakeREL(root, runID string, opts OracleFakeOptions) (OracleFakeRes
 	want := scenarioFilter(opts.Scenarios)
 	naReasons := map[string]string{}
 	provenance := opts.Provenance
+	runtime := ""
 	adapterVer := opts.AdapterVersion
 	frameworkVer := opts.FrameworkVersion
 	if opts.Capabilities != nil {
 		naReasons = protocol.ScenarioNA(*opts.Capabilities)
 		if provenance == "" {
 			provenance = opts.Capabilities.Provenance
+		}
+		if runtime == "" {
+			runtime = opts.Capabilities.Runtime
 		}
 		if adapterVer == "" {
 			adapterVer = opts.Capabilities.AdapterVersion
@@ -123,6 +127,7 @@ func RunOracleFakeREL(root, runID string, opts OracleFakeOptions) (OracleFakeRes
 			frameworkVer = opts.Capabilities.FrameworkVersion
 		}
 	}
+	runtime = protocol.NormalizeRuntime(runtime)
 
 	scenarios := make(map[string]json.RawMessage)
 	allPass := true
@@ -168,8 +173,10 @@ func RunOracleFakeREL(root, runID string, opts OracleFakeOptions) (OracleFakeRes
 	if provenance != "" {
 		fields["provenance"] = provenance
 	}
+	fields["runtime"] = runtime
 	path, err := engine.WriteRunArtifact(root, runID, engine.RunArtifact{
 		Provenance:  provenance,
+		Runtime:     runtime,
 		Fingerprint: fields,
 		Scenarios:   scenarios,
 	})

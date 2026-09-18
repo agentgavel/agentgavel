@@ -28,6 +28,7 @@ type Entry struct {
 	Adapter        string             `json:"adapter"`
 	AdapterVersion string             `json:"adapter_version"`
 	Provenance     string             `json:"provenance"`
+	Runtime        string             `json:"runtime,omitempty"`
 	Tab            string             `json:"tab"`
 	Sample         bool               `json:"sample"`
 	GSI            float64            `json:"gsi"`
@@ -82,6 +83,7 @@ func FromDocument(doc report.Document, framework, adapter string) Entry {
 		Adapter:        adapter,
 		AdapterVersion: fp["adapter.version"],
 		Provenance:     doc.Provenance,
+		Runtime:        firstNonEmpty(doc.Runtime, fp["runtime"]),
 		Tab:            TabUnratified,
 		Sample:         false,
 		GSI:            doc.GSI,
@@ -115,6 +117,13 @@ func Validate(e Entry) error {
 	default:
 		return fmt.Errorf("provenance %q is invalid (want ratified|provisional|unofficial)", e.Provenance)
 	}
+	if e.Runtime != "" {
+		switch e.Runtime {
+		case "stub", "live", "harness":
+		default:
+			return fmt.Errorf("runtime %q is invalid (want stub|live|harness)", e.Runtime)
+		}
+	}
 	switch e.Tab {
 	case TabOptIn, TabUnratified:
 	default:
@@ -144,6 +153,15 @@ func Validate(e Entry) error {
 		return fmt.Errorf("generated_at is required")
 	}
 	return nil
+}
+
+func firstNonEmpty(vals ...string) string {
+	for _, v := range vals {
+		if strings.TrimSpace(v) != "" {
+			return strings.TrimSpace(v)
+		}
+	}
+	return ""
 }
 
 // Write writes e to <dashboard>/data/<run_id>.json and rewrites

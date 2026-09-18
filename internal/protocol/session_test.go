@@ -117,6 +117,7 @@ func runFakeAdapter(t *testing.T, conn *StdioConn) {
 				AdapterName:            "fake",
 				AdapterVersion:         "0.0.1",
 				Provenance:             "unofficial",
+				Runtime:                "harness",
 				HITL:                   true,
 				Ledger:                 true,
 				Observability:          true,

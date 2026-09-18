@@ -105,14 +105,20 @@ Every entry carries one of three labels:
 Author-affiliated adapters cannot skip to `ratified` via the provisional
 path. The dashboard UI must keep the three-way distinction obvious.
 
+## Runtime class (ADR 015)
+
+Entries SHOULD carry `runtime` (`stub` | `live` | `harness`). Omitted
+values display as `stub`. FakeAdapter samples use `harness`. Stub and
+harness rows are not product rankings; prefer `live` for framework claims.
+
 ## `report --publish` and signed Opt-in
 
 **Unratified (default publish path):**
 
 - `AgentGavel report --publish` (without `--sign`) writes
   **`tab: "unratified"`**.
-- Entries copy `provenance` from the run Handshake (typically
-  `unofficial` for unsolicited FakeAdapter / public-release runs).
+- Entries copy `provenance` and `runtime` from the run Handshake
+  (typically `unofficial` + `stub`/`harness` for fixture adapters).
 
 ```bash
 ./AgentGavel report --publish --dashboard dashboard <run-id>

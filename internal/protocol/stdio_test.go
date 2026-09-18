@@ -34,6 +34,7 @@ func TestStdio(t *testing.T) {
 			AdapterName:            "fake",
 			AdapterVersion:         "0.0.1",
 			Provenance:             "unofficial",
+			Runtime:                "harness",
 			HITL:                   true,
 			Observability:          true,
 			ContextMode:            "raw",

@@ -47,6 +47,11 @@
       "enum": ["ratified", "provisional", "unofficial"],
       "description": "ADR 007 three-way provenance badge."
     },
+    "runtime": {
+      "type": "string",
+      "enum": ["stub", "live", "harness"],
+      "description": "ADR 015 runtime class. Omitted rows display as stub."
+    },
     "tab": {
       "type": "string",
       "enum": ["opt-in", "unratified"],

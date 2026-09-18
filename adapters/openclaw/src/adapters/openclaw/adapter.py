@@ -68,6 +68,7 @@ class OpenClawAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007 / ADR 014: unofficial until ratification.
             "provenance": "unofficial",
+            "runtime": "stub",
             # T15.18: documented N/A — no live Gateway + withhold gap (see
             # adapters.openclaw.approvals and README). Never stub green HITL.
             "hitl": False,

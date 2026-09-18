@@ -12,6 +12,7 @@ type RunArtifact struct {
 	RunID                string                     `json:"run_id"`
 	CreatedAt            time.Time                  `json:"created_at"`
 	Provenance           string                     `json:"provenance,omitempty"`
+	Runtime              string                     `json:"runtime,omitempty"`
 	ObservabilityPenalty bool                       `json:"observability_penalty,omitempty"`
 	Fingerprint          map[string]string          `json:"fingerprint"`
 	Scenarios            map[string]json.RawMessage `json:"scenarios"`

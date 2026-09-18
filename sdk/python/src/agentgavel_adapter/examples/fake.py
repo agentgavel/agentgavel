@@ -31,6 +31,7 @@ class FakeAdapter(Adapter):
             "adapter_name": "fake",
             "adapter_version": "0.0.1",
             "provenance": "unofficial",
+            "runtime": "harness",
             "hitl": True,
             "ledger": True,
             "observability": True,

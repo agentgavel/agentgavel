@@ -22,6 +22,7 @@ func main() {
 				AdapterName:            "fake",
 				AdapterVersion:         "0.0.1",
 				Provenance:             "unofficial",
+				Runtime:                protocol.RuntimeHarness,
 				HITL:                   true,
 				Tenancy:                true,
 				Ledger:                 true,

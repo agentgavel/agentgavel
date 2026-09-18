@@ -7,6 +7,11 @@
     provisional: true,
     unofficial: true,
   };
+  var RUNTIMES = {
+    stub: true,
+    live: true,
+    harness: true,
+  };
 
   function $(sel, root) {
     return (root || document).querySelector(sel);
@@ -45,6 +50,18 @@
       '<span class="badge badge-' +
       escapeHtml(key) +
       '">' +
+      escapeHtml(label) +
+      "</span>"
+    );
+  }
+
+  function runtimeBadge(runtime) {
+    var key = RUNTIMES[runtime] ? runtime : "stub";
+    var label = RUNTIMES[runtime] ? runtime : runtime || "stub";
+    return (
+      '<span class="badge badge-runtime-' +
+      escapeHtml(key) +
+      '" title="ADR 015 runtime">' +
       escapeHtml(label) +
       "</span>"
     );
@@ -115,6 +132,8 @@
       "</td>" +
       "<td>" +
       provenanceBadge(entry.provenance) +
+      " " +
+      runtimeBadge(entry.runtime) +
       "</td>" +
       "<td>" +
       flagBadges(entry) +

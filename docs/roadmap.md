@@ -5,10 +5,15 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
+- **Shipped (2026-09-18):** Wave 40 / E16 runtime disclosure (ADR 015) —
+  `CapabilityReport.runtime`, fingerprint + publish + dashboard samples,
+  FakeAdapter `harness`, in-tree adapters `stub`.
+
 - **Planned (2026-09-18):** E16 first live benchmarks -- ADR 015 runtime
   disclosure, FakeAdapter oracle baseline, Sire live Unratified publish.
   Outline E17 (live LangGraph/gateways) and E18 (Soft + broader live).
-  See `docs/plan.md` / `docs/plans/E16-first-live-benchmarks.md`.
+  See `docs/plan.md` / `docs/plans/E16-first-live-benchmarks.md`. Wave 40 done;
+  next Wave 41 (FakeAdapter baseline manual).
 
 - **Now (2026-09-18):** T15.11 real outreach [langchain-ai/langgraph#8992](https://github.com/langchain-ai/langgraph/issues/8992); ADR 007 window **restarts** → closes **2026-10-18** ([agentgavel#175](https://github.com/agentgavel/agentgavel/issues/175)). E15 still 30/31.
 

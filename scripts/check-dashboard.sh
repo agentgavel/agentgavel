@@ -59,6 +59,7 @@ REQUIRED = [
 ]
 PROVENANCE = {"ratified", "provisional", "unofficial"}
 TABS = {"opt-in", "unratified"}
+RUNTIMES = {"stub", "live", "harness"}
 
 errors = []
 need_verify = []
@@ -116,6 +117,8 @@ for name in index:
             errors.append(f"{name}: missing required key {key}")
     if "provenance" in entry and entry["provenance"] not in PROVENANCE:
         errors.append(f"{name}: provenance must be one of {sorted(PROVENANCE)}")
+    if "runtime" in entry and entry["runtime"] not in RUNTIMES:
+        errors.append(f"{name}: runtime must be one of {sorted(RUNTIMES)} (ADR 015)")
     if "tab" in entry and entry["tab"] not in TABS:
         errors.append(f"{name}: tab must be one of {sorted(TABS)}")
     # ADR 013: non-sample opt-in must carry key_id+signature and verify in bash.

@@ -22,6 +22,7 @@ class _HandshakeAdapter(Adapter):
             "adapter_name": "fake-python",
             "adapter_version": "0.0.1",
             "provenance": "unofficial",
+            "runtime": "harness",
             "hitl": True,
             "tenancy": False,
             "ledger": False,

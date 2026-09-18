@@ -48,6 +48,7 @@ class StrandsAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: unofficial until maintainer ratification.
             "provenance": "unofficial",
+            "runtime": "stub",
             # Honest: no interrupt flow yet (T13.20 is tools-only).
             "hitl": False,
             "tenancy": False,

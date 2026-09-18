@@ -4,6 +4,7 @@
   "adapter": "example",
   "adapter_version": "1.0.0-sample",
   "provenance": "ratified",
+  "runtime": "stub",
   "tab": "opt-in",
   "sample": true,
   "gsi": 1000,

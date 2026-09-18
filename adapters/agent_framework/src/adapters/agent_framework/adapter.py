@@ -48,6 +48,7 @@ class AgentFrameworkAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: unofficial until maintainer ratification.
             "provenance": "unofficial",
+            "runtime": "stub",
             # Honest: no HITL / ledger / tenancy yet; events are real (T13.19).
             "hitl": False,
             "tenancy": False,
