@@ -5,7 +5,8 @@ the Compliance Oracle. T11.3: LangGraph-style interrupt mapping to
 ResolveApproval when interrupt support is enabled (``hitl=true``); when
 disabled, CapabilityReport keeps ``hitl=false`` honestly. T11.4: event hooks
 (``tool_invocation`` before/after, ``gate_decision``, hashed context
-attestations per ADR 005). Unofficial until ADR 007 window closes 2026-10-18 (T15.11); see docs/manual/ratification/langgraph-provisional-2026-09-06.md.
+attestations per ADR 005). Unofficial until ADR 007 window closes 2026-10-18
+(T15.11); see docs/manual/ratification/langgraph-provisional-2026-09-06.md.
 """
 
 from __future__ import annotations
