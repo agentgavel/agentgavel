@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import argparse
 
-from adapters.pydantic_ai.adapter import PydanticAIAdapter
+from adapters.pydantic_ai.runtime_env import adapter_from_env
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -12,7 +12,8 @@ def _build_parser() -> argparse.ArgumentParser:
         prog="python -m adapters.pydantic_ai",
         description=(
             "Unofficial AgentGavel Pydantic AI adapter (stdio JSON-RPC). "
-            "Provenance is always unofficial (ADR 007)."
+            "Provenance is always unofficial (ADR 007). "
+            "Set AGENTGAVEL_PYDANTIC_AI_RUNTIME=live after pip install '.[live]'."
         ),
     )
     parser.add_argument(
@@ -26,8 +27,7 @@ def _build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> None:
     """Parse argv; ``--help`` prints usage, otherwise start stdio serve()."""
     _build_parser().parse_args(argv)
-    # Matches FakeAdapter / LangGraphAdapter default: module entry starts stdio serve.
-    PydanticAIAdapter().serve()
+    adapter_from_env().serve()
 
 
 if __name__ == "__main__":

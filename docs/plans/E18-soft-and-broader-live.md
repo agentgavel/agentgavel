@@ -33,7 +33,8 @@ Learnings from E16/E17:
 
 - [ ] T18.4 Run Soft security suite ≥25 seeds against one live/harness target; record summary + Wilson  Owner: pool  Est: 120m  kind: agent  verifies: [UC-042]  deps: [T18.2, T18.3]  acc: [summary has Soft rates with intervals; runtime honest; path cited in scratch/devlog]
 
-- [ ] T18.5 Publish or defer Soft Unratified with explicit cost rationale in Progress Log  Owner: pool  Est: 45m  kind: agent  verifies: [UC-038, UC-042]  deps: [T18.4]  acc: [dashboard sample OR plan Progress Log defers Soft publish with cost reason]
+- [x] T18.5 Publish or defer Soft Unratified with explicit cost rationale in Progress Log  Owner: pool  Est: 45m  kind: agent  verifies: [UC-038, UC-042]  deps: [T18.4]  acc: [dashboard sample OR plan Progress Log defers Soft publish with cost reason]  completed: 2026-09-19
+  note: Deferred — Soft CLI not implemented; founder model API (T18.3) unset; Hard/oracle + LangGraph live Unratified already ships product-comparable evidence without Soft spend.
 
 ## Wave 51 -- Broader live §8.1 promotions
 

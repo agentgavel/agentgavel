@@ -51,6 +51,7 @@ jobs:
             adapters/langgraph,
             adapters/crewai,
             adapters/adk,
+            adapters/pydantic_ai,
           ]
     defaults:
       run:
