@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 
 from adapters.sire.adapter import SireAdapter
+from adapters.sire.client import client_from_env
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -12,7 +13,9 @@ def _build_parser() -> argparse.ArgumentParser:
         prog="python -m adapters.sire",
         description=(
             "Unofficial AgentGavel Sire adapter (stdio JSON-RPC). "
-            "Provenance is always unofficial (ADR 007)."
+            "Provenance is always unofficial (ADR 007). "
+            "Set AGENTGAVEL_SIRE_TOKEN + AGENTGAVEL_SIRE_WORKER_ID for live HTTP "
+            "(runtime=live); otherwise StubSireClient (runtime=stub)."
         ),
     )
     parser.add_argument(
@@ -26,8 +29,7 @@ def _build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> None:
     """Parse argv; ``--help`` prints usage, otherwise start stdio serve()."""
     _build_parser().parse_args(argv)
-    # Matches FakeAdapter default: module entry starts the stdio serve loop.
-    SireAdapter().serve()
+    SireAdapter(client=client_from_env()).serve()
 
 
 if __name__ == "__main__":

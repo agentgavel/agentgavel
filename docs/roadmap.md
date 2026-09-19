@@ -5,6 +5,8 @@ Living progress story for AgentGavel (RFC 0001). Detailed tasks live in
 
 ## Now (frontier)
 
+- **Shipped (2026-09-18):** Wave 41 FakeAdapter oracle baselines + `docs/manual/benchmark-ops.md`; Wave 42 Sire `client_from_env` live bootstrap (`runtime=live`). **Blocked:** T16.10 founder credentials → live SEC/REL publish (T16.12-16).
+
 - **Shipped (2026-09-18):** Wave 40 / E16 runtime disclosure (ADR 015) —
   `CapabilityReport.runtime`, fingerprint + publish + dashboard samples,
   FakeAdapter `harness`, in-tree adapters `stub`.
