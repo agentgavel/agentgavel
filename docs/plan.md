@@ -69,7 +69,7 @@ Out of scope:
 
 ### E17 -- Live LangGraph and gateway product runs  -> docs/plans/E17-live-langgraph-gateways.md  (13/14; T17.11 human gateway open)
 
-### E18 -- Soft model-mode and broader live adapter set  -> docs/plans/E18-soft-and-broader-live.md  (4/10)
+### E18 -- Soft model-mode and broader live adapter set  -> docs/plans/E18-soft-and-broader-live.md  (5/10)
 
 Completed earlier epics (audit): E1–E14 under `docs/plans/`.
 
