@@ -171,6 +171,24 @@ Expect Handshake / summary: `runtime=live`, `provenance=unofficial`,
 
 Without `[live]` installed, `AGENTGAVEL_LANGGRAPH_RUNTIME=live` fails closed.
 
+## Live runtime env vars (ADR 015)
+
+Stub is the CI default for every adapter below. Setting the env to `live`
+without the optional package (or a successful gateway probe) **fails closed**.
+
+| Adapter | Env | Extra / probe |
+| --- | --- | --- |
+| langgraph | `AGENTGAVEL_LANGGRAPH_RUNTIME` | `pip install -e 'adapters/langgraph[live]'` |
+| crewai | `AGENTGAVEL_CREWAI_RUNTIME` | `adapters/crewai[live]` |
+| adk | `AGENTGAVEL_ADK_RUNTIME` | `adapters/adk[live]` |
+| pydantic_ai | `AGENTGAVEL_PYDANTIC_AI_RUNTIME` | `adapters/pydantic_ai[live]` |
+| openai_agents | `AGENTGAVEL_OPENAI_AGENTS_RUNTIME` | `adapters/openai_agents[live]` |
+| strands | `AGENTGAVEL_STRANDS_RUNTIME` | `adapters/strands[live]` |
+| agent_framework | `AGENTGAVEL_AGENT_FRAMEWORK_RUNTIME` | `adapters/agent_framework[live]` |
+| openclaw | `AGENTGAVEL_OPENCLAW_GATEWAY_URL` | HTTP health probe (`hitl` stays false) |
+| hermes | `AGENTGAVEL_HERMES_API_BASE` | `GET /v1/capabilities` probe |
+| sire | `AGENTGAVEL_SIRE_TOKEN` + `AGENTGAVEL_SIRE_WORKER_ID` | HttpSireClient (founder T16.10) |
+
 ## Soft model-mode (opt-in, E18)
 
 Hard/oracle runs above are the default CI and dogfood path. Soft
