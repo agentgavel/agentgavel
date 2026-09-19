@@ -37,7 +37,7 @@ Learnings from E16/E17:
 
 ## Wave 51 -- Broader live §8.1 promotions
 
-- [ ] T18.6 Promote one additional stub adapter (CrewAI or ADK) to optional live bootstrap pattern  Owner: pool  Est: 120m  kind: agent  verifies: [UC-043]  deps: [T17.3]  acc: [adapter has stub default + env live path; Handshake runtime flips only on proven live; pytest covers]
+- [x] T18.6 Promote one additional stub adapter (CrewAI or ADK) to optional live bootstrap pattern  Owner: pool  Est: 120m  kind: agent  verifies: [UC-043]  deps: [T17.3]  acc: [adapter has stub default + env live path; Handshake runtime flips only on proven live; pytest covers]  completed: 2026-09-19
 
 - [x] T18.7 CI ruff matrix covers all Python adapter trees touched by live work  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  deps: [T18.6]  acc: [ci.yml ruff matrix includes langgraph hermes openclaw sdk]  completed: 2026-09-19
 

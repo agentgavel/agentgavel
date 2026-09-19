@@ -26,8 +26,19 @@ class HitlNotSupportedError(RuntimeError):
 class CrewAIAdapter(Adapter):
     """Unofficial CrewAI sidecar: Handshake + Oracle crew tools."""
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        *,
+        runtime: str = "stub",
+        framework_version: str | None = None,
+    ) -> None:
         super().__init__()
+        if runtime not in ("stub", "live"):
+            raise ValueError(f"runtime must be stub|live, got {runtime!r}")
+        self._runtime = runtime
+        self._framework_version = framework_version or (
+            "stub-0.0.1" if runtime == "stub" else "unknown"
+        )
         self._sessions: dict[str, dict[str, Any]] = {}
         self._seq: dict[str, int] = {}
         self.emitted: list[MutableMapping[str, Any]] = []
@@ -46,7 +57,8 @@ class CrewAIAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: unofficial until maintainer ratification.
             "provenance": "unofficial",
-            "runtime": "stub",
+            # ADR 015: live only when optional crewai package is loaded (T18.6).
+            "runtime": self._runtime,
             # Honest: tool_invocation + attestation wired; HITL/ledger not.
             "hitl": False,
             "tenancy": False,
@@ -54,7 +66,7 @@ class CrewAIAdapter(Adapter):
             "observability": True,
             "context_mode": "attestation",
             "framework_name": "crewai",
-            "framework_version": "stub-0.0.1",
+            "framework_version": self._framework_version,
         }
 
     def start_session(self, config: Mapping[str, Any]) -> Mapping[str, Any]:
