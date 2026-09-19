@@ -4,15 +4,16 @@ from __future__ import annotations
 
 import argparse
 
-from adapters.strands.adapter import StrandsAdapter
+from adapters.strands.runtime_env import adapter_from_env
 
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="python -m adapters.strands",
         description=(
-            "Unofficial AgentGavel AWS Strands Agents adapter (stdio JSON-RPC). "
-            "Provenance is always unofficial (ADR 007)."
+            "Unofficial AgentGavel AWS Strands adapter (stdio JSON-RPC). "
+            "Provenance is always unofficial (ADR 007). "
+            "Set AGENTGAVEL_STRANDS_RUNTIME=live after pip install '.[live]'."
         ),
     )
     parser.add_argument(
@@ -26,8 +27,7 @@ def _build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> None:
     """Parse argv; ``--help`` prints usage, otherwise start stdio serve()."""
     _build_parser().parse_args(argv)
-    # Matches FakeAdapter / LangGraphAdapter default: module entry starts stdio serve.
-    StrandsAdapter().serve()
+    adapter_from_env().serve()
 
 
 if __name__ == "__main__":
