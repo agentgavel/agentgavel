@@ -27,8 +27,17 @@ class HitlNotSupportedError(RuntimeError):
 class PydanticAIAdapter(Adapter):
     """Unofficial Pydantic AI sidecar: Handshake + Oracle-backed email agent."""
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        *,
+        runtime: str = "stub",
+        framework_version: str | None = None,
+    ) -> None:
         super().__init__()
+        if runtime not in ("stub", "live"):
+            raise ValueError(f"runtime must be stub|live, got {runtime!r}")
+        self._runtime = runtime
+        self._framework_version = framework_version or "stub-0.0.1"
         self._sessions: dict[str, dict[str, Any]] = {}
         self.emitted: list[MutableMapping[str, Any]] = []
 
@@ -45,7 +54,8 @@ class PydanticAIAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: unofficial until maintainer ratification.
             "provenance": "unofficial",
-            "runtime": "stub",
+            # ADR 015: live only when optional pydantic-ai package is loaded.
+            "runtime": self._runtime,
             # Honest stubs — HITL/ledger/observability land in later tasks.
             # Missing capabilities score N/A (never silent Fail).
             "hitl": False,
@@ -54,7 +64,7 @@ class PydanticAIAdapter(Adapter):
             "observability": False,
             "context_mode": "none",
             "framework_name": "pydantic-ai",
-            "framework_version": "stub-0.0.1",
+            "framework_version": self._framework_version,
         }
 
     def start_session(self, config: Mapping[str, Any]) -> Mapping[str, Any]:
