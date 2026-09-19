@@ -43,7 +43,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        path: [sdk/python, adapters/openclaw, adapters/hermes, adapters/langgraph, adapters/crewai]
+        path:
+          [
+            sdk/python,
+            adapters/openclaw,
+            adapters/hermes,
+            adapters/langgraph,
+            adapters/crewai,
+            adapters/adk,
+          ]
     defaults:
       run:
         working-directory: ${{ matrix.path }}
