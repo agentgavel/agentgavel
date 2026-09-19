@@ -88,6 +88,16 @@ Default state path: `~/.openclaw/openclaw.json` (override via
 
 ## Run against a local Gateway
 
+Default Handshake is `runtime=stub`. To flip `runtime=live` after a health
+probe (still **`hitl=false`** until withhold is mapped):
+
+```bash
+export AGENTGAVEL_OPENCLAW_GATEWAY_URL=http://127.0.0.1:18789
+# Probe GET /health (or /). Fail closed if unreachable — never silent stub-as-live.
+cd adapters/openclaw
+PYTHONPATH=src:../../sdk/python/src python -m adapters.openclaw
+```
+
 Start OpenClaw Gateway locally (Control UI defaults to
 `http://127.0.0.1:18789/`), then point the sidecar at stdio JSON-RPC:
 
@@ -108,9 +118,8 @@ PYTHONPATH=src:../../sdk/python/src python -m adapters.openclaw
 AgentGavel --adapter "python3 -m adapters.openclaw"
 ```
 
-Until a live probe flips capability flags, Handshake stays conservative
-(`hitl` / `ledger` / `observability` false). Missing capabilities score
-**N/A** (never silent Fail).
+Until withhold is mapped, Handshake keeps `hitl=false` even when
+`runtime=live`. Missing HITL scenarios score **N/A** (never silent Fail).
 
 ## Test
 

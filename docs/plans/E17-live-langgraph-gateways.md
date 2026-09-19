@@ -46,9 +46,9 @@ Learnings from E16 (inform T17.*):
 
 ## Wave 47 -- Gateway live probes (optional if no operated gateway)
 
-- [ ] T17.9 OpenClaw live probe scaffolding: env-gated Gateway client; hitl stays false until withhold map exists  Owner: pool  Est: 90m  kind: agent  verifies: [UC-041]  deps: [T17.0]  acc: [without AGENTGAVEL_OPENCLAW_GATEWAY_URL, stub/runtime=stub; with URL + health fail, fail closed; CapabilityReport never claims hitl=true until withhold mapped]
+- [x] T17.9 OpenClaw live probe scaffolding: env-gated Gateway client; hitl stays false until withhold map exists  Owner: pool  Est: 90m  kind: agent  verifies: [UC-041]  deps: [T17.0]  acc: [without AGENTGAVEL_OPENCLAW_GATEWAY_URL, stub/runtime=stub; with URL + health fail, fail closed; CapabilityReport never claims hitl=true until withhold mapped]  completed: 2026-09-19
 
-- [ ] T17.10 Hermes live probe scaffolding mirroring T17.9 honesty rules  Owner: pool  Est: 75m  kind: agent  verifies: [UC-041]  deps: [T17.9]  acc: [Hermes Handshake runtime=live only after successful probe; otherwise stub; pytest covers both]
+- [x] T17.10 Hermes live probe scaffolding mirroring T17.9 honesty rules  Owner: pool  Est: 75m  kind: agent  verifies: [UC-041]  deps: [T17.9]  acc: [Hermes Handshake runtime=live only after successful probe; otherwise stub; pytest covers both]  completed: 2026-09-19
 
 - [ ] T17.11 Human: operate or point at a reference OpenClaw/Hermes gateway for one live run  Owner: founder  Est: 60m  kind: human  verifies: [UC-041]  deps: [T17.9]  delivers: [scratch pointer to gateway URL; never commit secrets]  blocked: needs operated gateway
 
@@ -58,4 +58,4 @@ Learnings from E16 (inform T17.*):
 
 - [x] T17.13 Update README Quick Start / runtime section for live LangGraph  Owner: pool  Est: 30m  kind: agent  verifies: [UC-040]  lane: agent  deps: [T17.5, T17.7]  acc: [README links LangGraph live ops and ADR 015; stub default still documented]  completed: 2026-09-19
 
-- [ ] T17.14 Mark E17 complete in plan.md when exit criteria met  Owner: pool  Est: 15m  kind: agent  verifies: [infrastructure]  deps: [T17.12, T17.13]  acc: [plan.md frontier advances; E17 checkbox count reflects done; Progress Log notes first non-Sire live Unratified]
+- [x] T17.14 Mark E17 complete in plan.md when exit criteria met  Owner: pool  Est: 15m  kind: agent  verifies: [infrastructure]  deps: [T17.12, T17.13]  acc: [plan.md frontier advances; E17 checkbox count reflects done; Progress Log notes first non-Sire live Unratified]  completed: 2026-09-19

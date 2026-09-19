@@ -30,7 +30,7 @@ def test_handshake_hitl_true_after_resolve_wiring() -> None:
     assert report["adapter_name"] == "hermes"
     assert report["adapter_version"] == "0.0.1"
     assert report["framework_name"] == "hermes"
-    assert report["framework_version"] == "unknown"
+    assert report["framework_version"] == "stub"
     assert report["adapter_protocol_version"] == "1.0"
     assert report["provenance"] == "unofficial"
     # T15.25: API-server ResolveApproval wired; T15.26 Events → observability.

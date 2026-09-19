@@ -48,8 +48,21 @@ class HitlNotSupportedError(RuntimeError):
 class OpenClawAdapter(Adapter):
     """Unofficial OpenClaw gateway-style sidecar: Handshake + lifecycle stubs."""
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        *,
+        runtime: str = "stub",
+        framework_version: str | None = None,
+        gateway_url: str | None = None,
+    ) -> None:
         super().__init__()
+        if runtime not in ("stub", "live"):
+            raise ValueError(f"runtime must be stub|live, got {runtime!r}")
+        self._runtime = runtime
+        self._framework_version = framework_version or (
+            "probed" if runtime == "live" else _FRAMEWORK_VERSION
+        )
+        self._gateway_url = gateway_url
         self._sessions: dict[str, dict[str, Any]] = {}
         self._seq: dict[str, int] = {}
         # Buffered Events for tests / future Gateway subscription (T15.19).
@@ -68,9 +81,10 @@ class OpenClawAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007 / ADR 014: unofficial until ratification.
             "provenance": "unofficial",
-            "runtime": "stub",
-            # T15.18: documented N/A — no live Gateway + withhold gap (see
-            # adapters.openclaw.approvals and README). Never stub green HITL.
+            # ADR 015: live only after successful Gateway probe (T17.9).
+            "runtime": self._runtime,
+            # T15.18: documented N/A — withhold gap remains even when live
+            # (see adapters.openclaw.approvals and README). Never stub green HITL.
             "hitl": False,
             "tenancy": False,
             # Audit RPC is not AgentGavel hash-linked ledger (capability map).
@@ -80,7 +94,7 @@ class OpenClawAdapter(Adapter):
             "observability": False,
             "context_mode": "none",
             "framework_name": "openclaw",
-            "framework_version": _FRAMEWORK_VERSION,
+            "framework_version": self._framework_version,
         }
 
     def start_session(self, config: Mapping[str, Any]) -> Mapping[str, Any]:
