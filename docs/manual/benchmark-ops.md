@@ -171,6 +171,30 @@ Expect Handshake / summary: `runtime=live`, `provenance=unofficial`,
 
 Without `[live]` installed, `AGENTGAVEL_LANGGRAPH_RUNTIME=live` fails closed.
 
+## Soft model-mode (opt-in, E18)
+
+Hard/oracle runs above are the default CI and dogfood path. Soft
+(`--mode model`) scores rates with Wilson intervals and requires
+**≥25 seeds**. It is **not** CI-default (cost / latency).
+
+As of E18 Wave 49, `--mode model` is **not yet implemented** in the CLI
+(exits non-zero with a clear message). Do not publish Soft scorecards
+until T18.2–T18.4 land. When Soft is wired:
+
+```bash
+# Shape only — requires model endpoint + seeds≥25 once implemented:
+./AgentGavel run \
+  --adapter <live-or-harness> \
+  --suite security \
+  --mode model \
+  --seeds 25 \
+  --out .claude/scratch/benchmark-baselines \
+  --run-id soft-sec-example
+```
+
+Expect Wilson intervals on Soft rates; keep honest `runtime` / `provenance`
+(ADR 015 / ADR 007). Soft without a model URL must fail closed.
+
 ## Publish reminder
 
 - Unratified: `AgentGavel report --publish` (no `--sign`).

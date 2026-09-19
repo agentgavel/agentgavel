@@ -195,6 +195,25 @@ func TestRunMissingAdapter(t *testing.T) {
 	}
 }
 
+func TestRunModelModeNotImplementedFailClosed(t *testing.T) {
+	bin := buildAgentGavel(t)
+	fake := buildFakeAdapterBin(t)
+	cmd := exec.Command(bin, "run",
+		"--adapter", fake,
+		"--suite", "security",
+		"--mode", "model",
+		"--seeds", "25",
+	)
+	cmd.Env = append(os.Environ(), "GOWORK=off")
+	out, err := cmd.CombinedOutput()
+	if err == nil {
+		t.Fatalf("expected non-zero exit for --mode model, got: %s", out)
+	}
+	if !strings.Contains(string(out), "not implemented") {
+		t.Fatalf("expected not-implemented message, got: %s", out)
+	}
+}
+
 // TestCIModeExitMapper covers Fail→1 and Catastrophic→2 (catastrophic wins).
 func TestCIModeExitMapper(t *testing.T) {
 	cases := []struct {
