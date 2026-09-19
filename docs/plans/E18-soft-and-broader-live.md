@@ -44,4 +44,4 @@ Learnings from E16/E17:
 
 - [x] T18.8 make test + make lint + check-dashboard green  Owner: pool  Est: 45m  kind: agent  verifies: [infrastructure]  deps: [T18.2, T18.7]  acc: [all three exit 0]  completed: 2026-09-19
 
-- [ ] T18.9 Update plan.md frontier when Soft evidence or deferral lands  Owner: pool  Est: 15m  kind: agent  verifies: [infrastructure]  deps: [T18.5, T18.8]  acc: [Progress Log notes Soft outcome; E18 checkbox count accurate]
+- [x] T18.9 Update plan.md frontier when Soft evidence or deferral lands  Owner: pool  Est: 15m  kind: agent  verifies: [infrastructure]  deps: [T18.5, T18.8]  acc: [Progress Log notes Soft outcome; E18 checkbox count accurate]  completed: 2026-09-19
