@@ -19,21 +19,21 @@ fidelity: executable
 
 ## Wave 41 -- Harness baseline runs
 
-- [ ] T16.5 Add docs/manual/benchmark-ops.md for FakeAdapter full SEC+REL oracle baseline  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001, UC-038]  lane: agent  deps: [T16.2]  acc: [manual has copy-paste make build, FakeAdapter build, run --suite security and reliability --mode oracle, report, and states runtime=harness is not a product ranking]
+- [x] T16.5 Add docs/manual/benchmark-ops.md for FakeAdapter full SEC+REL oracle baseline  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001, UC-038]  lane: agent  deps: [T16.2]  acc: [manual has copy-paste make build, FakeAdapter build, run --suite security and reliability --mode oracle, report, and states runtime=harness is not a product ranking]  completed: 2026-09-18
 
-- [ ] T16.6 Record FakeAdapter oracle baseline summary under results/ or gitignored path + pointer in benchmark-ops  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001]  deps: [T16.3, T16.5]  acc: [documented commands exit 0; summary.json lists SEC and REL rows; path cited in benchmark-ops.md]
+- [x] T16.6 Record FakeAdapter oracle baseline summary under results/ or gitignored path + pointer in benchmark-ops  Owner: pool  Est: 60m  kind: agent  verifies: [UC-001]  deps: [T16.3, T16.5]  acc: [documented commands exit 0; summary.json lists SEC and REL rows; path cited in benchmark-ops.md]  completed: 2026-09-18
 
-- [ ] T16.7 Optional: publish FakeAdapter Unratified sample labeled harness (not a framework row)  Owner: pool  Est: 45m  kind: agent  verifies: [UC-038]  deps: [T16.2, T16.6]  acc: [dashboard sample or docs state FakeAdapter harness-only; check-dashboard.sh exits 0]  lane: agent
+- [x] T16.7 Optional: publish FakeAdapter Unratified sample labeled harness (not a framework row)  Owner: pool  Est: 45m  kind: agent  verifies: [UC-038]  deps: [T16.2, T16.6]  acc: [dashboard sample or docs state FakeAdapter harness-only; check-dashboard.sh exits 0]  lane: agent  completed: 2026-09-18
 
 ## Wave 42 -- Sire live wiring
 
-- [ ] T16.8 Env/bootstrap HttpSireClient (token + worker id + base URL) without changing stub default  Owner: pool  Est: 90m  kind: agent  verifies: [UC-039]  deps: [T16.3]  acc: [documented env vars switch python -m adapters.sire to HttpSireClient; without env, stub remains; pytest covers stub default and live construction with fake requester]
+- [x] T16.8 Env/bootstrap HttpSireClient (token + worker id + base URL) without changing stub default  Owner: pool  Est: 90m  kind: agent  verifies: [UC-039]  deps: [T16.3]  acc: [documented env vars switch python -m adapters.sire to HttpSireClient; without env, stub remains; pytest covers stub default and live construction with fake requester]  completed: 2026-09-18
 
-- [ ] T16.9 When live, set runtime=live and probe framework_version; keep ledger/observability honesty  Owner: pool  Est: 60m  kind: agent  verifies: [UC-037, UC-039]  deps: [T16.8]  acc: [Handshake runtime=live only on HttpSireClient path; ledger=false and observability=false unless code proves otherwise; unit test asserts]
+- [x] T16.9 When live, set runtime=live and probe framework_version; keep ledger/observability honesty  Owner: pool  Est: 60m  kind: agent  verifies: [UC-037, UC-039]  deps: [T16.8]  acc: [Handshake runtime=live only on HttpSireClient path; ledger=false and observability=false unless code proves otherwise; unit test asserts]  completed: 2026-09-18
 
 - [ ] T16.10 Human: provision Sire worker + API token for Oracle-pointed dogfood (non-prod)  Owner: founder  Est: 60m  kind: human  verifies: [UC-039]  deps: [T16.8]  delivers: [scratch credential pointer + worker id for local runs; never commit secrets]  blocked: needs founder Sire account access
 
-- [ ] T16.11 Lint/format Sire adapter live bootstrap  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  deps: [T16.8, T16.9]  acc: [ruff clean on adapters/sire]
+- [x] T16.11 Lint/format Sire adapter live bootstrap  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  deps: [T16.8, T16.9]  acc: [ruff clean on adapters/sire]  completed: 2026-09-18
 
 ## Wave 43 -- First live Sire benchmarks + publish
 
@@ -49,6 +49,6 @@ fidelity: executable
 
 ## Wave 44 -- Close E16 quality gate
 
-- [ ] T16.17 make test + make lint + check-dashboard green on E16 branch  Owner: pool  Est: 45m  kind: agent  verifies: [infrastructure]  deps: [T16.4, T16.11, T16.15]  acc: [make test && make lint && bash scripts/check-dashboard.sh all exit 0]
+- [x] T16.17 make test + make lint + check-dashboard green on E16 branch  Owner: pool  Est: 45m  kind: agent  verifies: [infrastructure]  deps: [T16.4, T16.11, T16.15]  acc: [make test && make lint && bash scripts/check-dashboard.sh all exit 0]  completed: 2026-09-18
 
-- [ ] T16.18 Update README Quick Start with benchmark-ops link and stub vs live warning  Owner: pool  Est: 30m  kind: agent  verifies: [UC-037]  lane: agent  deps: [T16.5, T16.15]  acc: [README links docs/manual/benchmark-ops.md and ADR 015]
+- [x] T16.18 Update README Quick Start with benchmark-ops link and stub vs live warning  Owner: pool  Est: 30m  kind: agent  verifies: [UC-037]  lane: agent  deps: [T16.5, T16.15]  acc: [README links docs/manual/benchmark-ops.md and ADR 015]  completed: 2026-09-18

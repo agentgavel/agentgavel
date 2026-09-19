@@ -1,3 +1,14 @@
+## 2026-09-18 -- E16 Waves 41-42 (harness baseline + Sire live bootstrap)
+
+FakeAdapter oracle SEC+REL baselines recorded under gitignored
+`.claude/scratch/benchmark-baselines/results/` (`runtime=harness`, GSI AAA on
+oracle FakeAdapter). Operator manual: `docs/manual/benchmark-ops.md`.
+
+Sire adapter: `client_from_env()` switches to `HttpSireClient` when
+`AGENTGAVEL_SIRE_TOKEN` + `AGENTGAVEL_SIRE_WORKER_ID` are set; Handshake reports
+`runtime=live` with ledger/observability still false. Live SEC/REL Unratified
+publish waits on founder T16.10 credentials.
+
 ## 2026-09-03 -- v0.1 plan execution (stub)
 
 Stub for the RFC-0001 / `docs/plan.md` v0.1 execution pass across epics E1–E12.

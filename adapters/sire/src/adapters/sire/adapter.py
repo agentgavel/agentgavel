@@ -38,13 +38,18 @@ class SireAdapter(Adapter):
         engine_version: str | None = None,
     ) -> Mapping[str, Any]:
         del engine_version  # reserved for future negotiation
+        runtime = getattr(self._client, "runtime_class", "stub")
+        if runtime not in ("stub", "live", "harness"):
+            runtime = "stub"
+        framework_version = getattr(self._client, "framework_version", None) or "unknown"
         return {
             "adapter_protocol_version": engine_protocol_version or "1.0",
             "adapter_name": "sire",
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: author-affiliated; cannot self-ratify.
             "provenance": "unofficial",
-            "runtime": "stub",
+            # ADR 015: stub unless HttpSireClient / client_from_env live path.
+            "runtime": runtime,
             # ResolveApproval posts to Sire and emits gate_decision (T10.3).
             "hitl": True,
             "tenancy": False,
@@ -55,7 +60,7 @@ class SireAdapter(Adapter):
             "observability": False,
             "context_mode": "none",
             "framework_name": "sire",
-            "framework_version": "unknown",
+            "framework_version": framework_version,
         }
 
     def start_session(self, config: Mapping[str, Any]) -> Mapping[str, Any]:

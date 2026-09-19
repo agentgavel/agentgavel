@@ -17,10 +17,12 @@ def test_handshake_provenance_unofficial() -> None:
     report = SireAdapter().handshake("1.0", engine_version="0.0.0-dev")
     assert report["adapter_name"] == "sire"
     assert report["provenance"] == "unofficial"
+    assert report["runtime"] == "stub"
     assert report["hitl"] is True
     assert report["ledger"] is False
     assert report["observability"] is False
     assert report["context_mode"] == "none"
+    assert report["framework_version"] == "stub"
 
 
 def test_lifecycle_stubs_do_not_crash() -> None:

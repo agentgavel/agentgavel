@@ -103,6 +103,11 @@ Oracle, SEC-001…007, CLI, unofficial Sire + LangGraph adapters, CI). The tagge
 **Requirements:** Go 1.26+, `python3` on `PATH`. If a parent `go.work` lists
 unrelated modules, keep `GOWORK=off` (Makefile default).
 
+Operator baseline (FakeAdapter harness + stub vs live warning):
+[docs/manual/benchmark-ops.md](docs/manual/benchmark-ops.md). Runtime labels:
+[ADR 015](docs/adr/015-stub-vs-live-runtime.md). Stub and harness runs are
+**not** product rankings.
+
 ```bash
 git clone https://github.com/agentgavel/agentgavel.git
 cd agentgavel

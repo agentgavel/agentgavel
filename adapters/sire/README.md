@@ -58,14 +58,36 @@ tenant-scoped and are **not** a session hash-linked AgentGavel ledger, so
 When a real session-scoped ledger export exists and returns meaningful
 entries, flip `ledger` to `true` in the same change.
 
-Default construction uses `StubSireClient` so the sidecar starts without Sire.
+Default construction uses `StubSireClient` so the sidecar starts without Sire
+(`runtime=stub`).
+
+## Live HTTP (env bootstrap)
+
+When both a bearer token and worker id are set, `python -m adapters.sire`
+uses `HttpSireClient` + stdlib Bearer requester (`runtime=live`). Without
+them, the stub remains the default.
+
+| Env | Required | Notes |
+| --- | --- | --- |
+| `AGENTGAVEL_SIRE_TOKEN` or `SIRE_API_TOKEN` | for live | Never commit |
+| `AGENTGAVEL_SIRE_WORKER_ID` or `SIRE_WORKER_ID` | for live | Worker id |
+| `AGENTGAVEL_SIRE_API_BASE` or `SIRE_API_BASE` | no | Default `https://api.sire.run/api/v1` |
+
+Point the worker model `base_url` at a Compliance Oracle. Handshake keeps
+`ledger=false` and `observability=false` until a real session ledger and
+event sink exist. See [`docs/manual/benchmark-ops.md`](../../docs/manual/benchmark-ops.md).
 
 ## Run
 
 ```bash
 # From adapters/sire after editable install, or with PYTHONPATH:
 PYTHONPATH=src:../../sdk/python/src python -m adapters.sire --help
-PYTHONPATH=src:../../sdk/python/src python -m adapters.sire   # stdio serve
+PYTHONPATH=src:../../sdk/python/src python -m adapters.sire   # stdio serve (stub)
+
+# Live (credentials in env only):
+# export AGENTGAVEL_SIRE_TOKEN=...
+# export AGENTGAVEL_SIRE_WORKER_ID=...
+PYTHONPATH=src:../../sdk/python/src python -m adapters.sire
 
 cd adapters/sire && PYTHONPATH=src:../../sdk/python/src pytest
 ```

@@ -24,6 +24,10 @@ and CapabilityReport keeps ``ledger=false`` (SEC-009/010 N/A) plus
 
 from __future__ import annotations
 
+import json
+import os
+import urllib.error
+import urllib.request
 from collections.abc import Mapping, MutableMapping, Sequence
 from typing import Any, Protocol
 from uuid import uuid4
@@ -142,9 +146,12 @@ class StubSireClient:
     Records start/submit/stop so tests can assert ordering without Sire.
     """
 
+    runtime_class = "stub"
+
     def __init__(self) -> None:
         self.sessions: dict[str, dict[str, Any]] = {}
         self.calls: list[tuple[str, tuple[Any, ...]]] = []
+        self.framework_version = "stub"
 
     def start_session(self, config: Mapping[str, Any]) -> str:
         session_id = f"sire-sess-{uuid4().hex[:12]}"
@@ -205,12 +212,14 @@ class StubSireClient:
 
 
 class HttpSireClient:
-    """Documented HTTP mapping. Does not ship a live urllib default.
+    """Documented HTTP mapping. Prefer :func:`client_from_env` for live runs.
 
     Inject a :class:`Requester` that attaches ``Authorization: Bearer`` and
     targets ``DEFAULT_SIRE_API_BASE`` (or a local Sire). Without a requester,
     calls fail loudly instead of fabricating success.
     """
+
+    runtime_class = "live"
 
     def __init__(
         self,
@@ -223,6 +232,7 @@ class HttpSireClient:
         self._worker_id = worker_id
         self.api_base = api_base.rstrip("/")
         self._sessions: dict[str, MutableMapping[str, Any]] = {}
+        self.framework_version = "live-unprobed"
 
     def start_session(self, config: Mapping[str, Any]) -> str:
         requester = self._require_requester()
@@ -233,6 +243,7 @@ class HttpSireClient:
             raise SireClientError(
                 f"GET {path} must return a worker object; got {type(body).__name__}"
             )
+        self._probe_framework_version(body)
         session_id = f"sire-sess-{uuid4().hex[:12]}"
         self._sessions[session_id] = {
             "worker_id": worker_id,
@@ -323,3 +334,107 @@ class HttpSireClient:
             return self._sessions[session_id]
         except KeyError as exc:
             raise UnknownSessionError(session_id) from exc
+
+    def _probe_framework_version(self, worker: Mapping[str, Any]) -> None:
+        """Best-effort version from a Worker object; keep live-unprobed if absent."""
+        for key in ("version", "engineVersion", "engine_version", "sireVersion"):
+            val = worker.get(key)
+            if isinstance(val, str) and val.strip():
+                self.framework_version = val.strip()
+                return
+        meta = worker.get("metadata")
+        if isinstance(meta, Mapping):
+            for key in ("version", "sire_version"):
+                val = meta.get(key)
+                if isinstance(val, str) and val.strip():
+                    self.framework_version = val.strip()
+                    return
+
+
+class UrllibBearerRequester:
+    """stdlib HTTP JSON client with Bearer auth for live Sire calls."""
+
+    def __init__(self, api_base: str, token: str, *, timeout_s: float = 30.0) -> None:
+        self._api_base = api_base.rstrip("/")
+        self._token = token
+        self._timeout_s = timeout_s
+
+    def request(
+        self,
+        method: str,
+        path: str,
+        *,
+        json: Mapping[str, Any] | None = None,
+    ) -> Mapping[str, Any] | None:
+        if not path.startswith("/"):
+            path = "/" + path
+        url = self._api_base + path
+        data = None
+        headers = {
+            "Authorization": f"Bearer {self._token}",
+            "Accept": "application/json",
+        }
+        payload = json
+        if payload is not None:
+            data = json_dumps(payload).encode("utf-8")
+            headers["Content-Type"] = "application/json"
+        req = urllib.request.Request(url, data=data, headers=headers, method=method.upper())
+        try:
+            with urllib.request.urlopen(req, timeout=self._timeout_s) as resp:
+                raw = resp.read()
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode("utf-8", errors="replace")
+            raise SireClientError(f"{method.upper()} {path} -> HTTP {exc.code}: {body}") from exc
+        except urllib.error.URLError as exc:
+            raise SireClientError(f"{method.upper()} {path} failed: {exc}") from exc
+        if not raw:
+            return None
+        try:
+            parsed = json_loads(raw.decode("utf-8"))
+        except ValueError as exc:
+            raise SireClientError(f"{method.upper()} {path} returned non-JSON") from exc
+        if parsed is None:
+            return None
+        if isinstance(parsed, Mapping):
+            return parsed
+        if isinstance(parsed, Sequence) and not isinstance(parsed, (str, bytes)):
+            return {"items": list(parsed)}
+        raise SireClientError(
+            f"{method.upper()} {path} must return JSON object/array; got {type(parsed).__name__}"
+        )
+
+
+def json_dumps(obj: Mapping[str, Any]) -> str:
+    return json.dumps(obj, separators=(",", ":"), ensure_ascii=False)
+
+
+def json_loads(raw: str) -> Any:
+    return json.loads(raw)
+
+
+def client_from_env() -> SireClient:
+    """Build StubSireClient unless token + worker id env vars are both set.
+
+    Env (first match wins):
+
+    * ``AGENTGAVEL_SIRE_TOKEN`` or ``SIRE_API_TOKEN``
+    * ``AGENTGAVEL_SIRE_WORKER_ID`` or ``SIRE_WORKER_ID``
+    * ``AGENTGAVEL_SIRE_API_BASE`` or ``SIRE_API_BASE`` (optional)
+    """
+    token = (
+        os.environ.get("AGENTGAVEL_SIRE_TOKEN") or os.environ.get("SIRE_API_TOKEN") or ""
+    ).strip()
+    worker = (
+        os.environ.get("AGENTGAVEL_SIRE_WORKER_ID")
+        or os.environ.get("SIRE_WORKER_ID")
+        or ""
+    ).strip()
+    if not token or not worker:
+        return StubSireClient()
+    base = (
+        os.environ.get("AGENTGAVEL_SIRE_API_BASE")
+        or os.environ.get("SIRE_API_BASE")
+        or DEFAULT_SIRE_API_BASE
+    ).strip()
+    requester = UrllibBearerRequester(base, token)
+    return HttpSireClient(requester, worker_id=worker, api_base=base)
