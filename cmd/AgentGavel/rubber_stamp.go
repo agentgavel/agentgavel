@@ -99,7 +99,7 @@ Flags:
 		Scenarios:        rubberStampScenarios,
 		AdapterVersion:   caps.AdapterVersion,
 		Model:            "oracle",
-		FrameworkVersion: version,
+		FrameworkVersion: frameworkVersionFromCaps(caps),
 		Provenance:       caps.Provenance,
 		Capabilities:     &caps,
 	}

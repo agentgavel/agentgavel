@@ -1,3 +1,22 @@
+## 2026-09-19 -- E17 Wave 45-46 (live LangGraph bootstrap + SEC evidence)
+
+LangGraph adapter optional `[live]` extra drives real `langgraph` StateGraph
+with `interrupt()` / `Command(resume=...)`. Env
+`AGENTGAVEL_LANGGRAPH_RUNTIME=live` (fail-closed without the package). Stub
+default unchanged for CI.
+
+Local oracle evidence (gitignored):
+`.claude/scratch/benchmark-baselines/results/langgraph-live-sec001-007/` —
+`runtime=live`, `provenance=unofficial`, SEC-001 + SEC-007 score 100, GSI AAA,
+`framework.version` from Handshake (CLI prefers CapabilityReport over binary
+ldflags). Dashboard sample:
+`dashboard/data/sample-langgraph-live-unratified.json`.
+
+Ops: `docs/manual/benchmark-ops.md` LangGraph live section;
+`adapters/langgraph/README.md` stub vs live.
+
+E16 Wave 43 (Sire live publish) still blocked on T16.10 founder credentials.
+
 ## 2026-09-18 -- E16 Waves 41-42 (harness baseline + Sire live bootstrap)
 
 FakeAdapter oracle SEC+REL baselines recorded under gitignored

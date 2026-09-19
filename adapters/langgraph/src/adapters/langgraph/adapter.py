@@ -5,15 +5,17 @@ the Compliance Oracle. T11.3: LangGraph-style interrupt mapping to
 ResolveApproval when interrupt support is enabled (``hitl=true``); when
 disabled, CapabilityReport keeps ``hitl=false`` honestly. T11.4: event hooks
 (``tool_invocation`` before/after, ``gate_decision``, hashed context
-attestations per ADR 005). Unofficial until ADR 007 window closes 2026-10-18
-(T15.11); see docs/manual/ratification/langgraph-provisional-2026-09-06.md.
+attestations per ADR 005). T17.x: optional ``runtime=live`` path uses the real
+``langgraph`` package (ADR 015). Unofficial until ADR 007 window closes
+2026-10-18 (T15.11); see
+docs/manual/ratification/langgraph-provisional-2026-09-06.md.
 """
 
 from __future__ import annotations
 
 import time
 from collections.abc import Mapping, MutableMapping
-from typing import Any
+from typing import Any, Literal
 from uuid import uuid4
 
 from agentgavel_adapter.adapter import Adapter
@@ -25,15 +27,20 @@ from adapters.langgraph.interrupt import (
     InterruptSupport,
     disabled_interrupt_support,
     gate_decision_event,
+    wire_decision,
 )
 
 _ADAPTER_VERSION = "0.0.1"
+
+RuntimeClass = Literal["stub", "live"]
 
 
 class LangGraphAdapter(Adapter):
     """Unofficial LangGraph sidecar (provisional pending 2026-10-18).
 
-    Handshake + Oracle graph + optional HITL.
+    Handshake + Oracle graph + optional HITL. Default ``runtime=stub`` keeps
+    CI free of the ``langgraph`` PyPI dependency; set ``runtime=live`` (via
+    constructor or :func:`adapter_from_env`) to drive a real StateGraph.
     """
 
     def __init__(
@@ -41,16 +48,26 @@ class LangGraphAdapter(Adapter):
         *,
         hitl: bool = True,
         interrupt_support: InterruptSupport | None = None,
+        runtime: RuntimeClass = "stub",
+        framework_version: str | None = None,
     ) -> None:
         super().__init__()
+        if runtime not in ("stub", "live"):
+            raise ValueError(f"runtime must be stub|live, got {runtime!r}")
         if interrupt_support is not None:
             self._interrupt = interrupt_support
         elif hitl:
             self._interrupt = InterruptSupport(enabled=True)
         else:
             self._interrupt = disabled_interrupt_support()
+        self._runtime: RuntimeClass = runtime
+        if runtime == "live":
+            self._framework_version = framework_version or "unknown"
+        else:
+            self._framework_version = framework_version or "stub-0.0.1"
         self._sessions: dict[str, dict[str, Any]] = {}
         self._seq: dict[str, int] = {}
+        self._live_graphs: dict[str, Any] = {}
         self.emitted: list[MutableMapping[str, Any]] = []
         # Last graph interrupt result per session (for resume / tests).
         self.last_task_result: dict[str, Mapping[str, Any]] = {}
@@ -59,6 +76,10 @@ class LangGraphAdapter(Adapter):
     def hitl_supported(self) -> bool:
         """True when interrupt→ResolveApproval mapping is active."""
         return self._interrupt.enabled
+
+    @property
+    def runtime(self) -> RuntimeClass:
+        return self._runtime
 
     def handshake(
         self,
@@ -73,7 +94,8 @@ class LangGraphAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: unofficial until #175 closes 2026-10-18 (T15.11 / #8992).
             "provenance": "unofficial",
-            "runtime": "stub",
+            # ADR 015: stub unless live StateGraph path is selected.
+            "runtime": self._runtime,
             # Honest: hitl tracks real InterruptSupport, never a fake claim.
             "hitl": self._interrupt.enabled,
             "tenancy": False,
@@ -82,7 +104,7 @@ class LangGraphAdapter(Adapter):
             "observability": True,
             "context_mode": "attestation",
             "framework_name": "langgraph",
-            "framework_version": "stub-0.0.1",
+            "framework_version": self._framework_version,
         }
 
     def start_session(self, config: Mapping[str, Any]) -> Mapping[str, Any]:
@@ -103,6 +125,37 @@ class LangGraphAdapter(Adapter):
         directive = meta.get("probe_directive") if isinstance(meta, Mapping) else None
         if directive is not None and not isinstance(directive, Mapping):
             raise TypeError("task.metadata.probe_directive must be a mapping")
+
+        if self._runtime == "live":
+            from adapters.langgraph.live_graph import LiveEmailGraph
+
+            graph = LiveEmailGraph(
+                model_base_url=base_url,
+                session_id=session_id,
+                on_event=self._record_event,
+                gated_tools=(
+                    self._interrupt.gated_tools if self._interrupt.enabled else frozenset()
+                ),
+            )
+            result = graph.run(
+                str(task.get("prompt") or ""),
+                probe_directive=directive,
+            )
+            if result.get("status") == "interrupted":
+                # Mirror stub: register pending so ResolveApproval can resume.
+                aid = str(result.get("approval_id") or "")
+                if aid and self._interrupt.enabled:
+                    self._interrupt.request(
+                        session_id,
+                        str(result.get("tool_name") or ""),
+                        result.get("arguments") or {},
+                        str(result.get("call_id") or ""),
+                        approval_id=aid,
+                    )
+                self._live_graphs[session_id] = graph
+            self.last_task_result[session_id] = result
+            return
+
         graph = MinimalEmailGraph(
             model_base_url=base_url,
             session_id=session_id,
@@ -129,6 +182,37 @@ class LangGraphAdapter(Adapter):
             )
         if session_id not in self._sessions:
             raise KeyError(f"unknown session: {session_id}")
+
+        if self._runtime == "live":
+            live = self._live_graphs.get(session_id)
+            if live is None:
+                raise KeyError(f"no live interrupt for session: {session_id}")
+            if live.pending_approval_id != approval_id:
+                raise KeyError(
+                    f"approval mismatch: got {approval_id!r}, want {live.pending_approval_id!r}"
+                )
+            wire = wire_decision(decision)
+            # Mark InterruptSupport resolved for consistency with stub path.
+            self._interrupt.resolve(
+                session_id,
+                approval_id,
+                wire,
+                principal=principal,
+            )
+            event = gate_decision_event(
+                session_id=session_id,
+                seq=0,
+                unix_ms=int(time.time() * 1000),
+                approval_id=approval_id,
+                decision=wire,
+                principal=principal,
+            )
+            self._record_event(event)
+            result = live.resume(wire)
+            self.last_task_result[session_id] = result
+            self._live_graphs.pop(session_id, None)
+            return
+
         pending = self._interrupt.resolve(
             session_id,
             approval_id,
@@ -171,6 +255,7 @@ class LangGraphAdapter(Adapter):
     def stop_session(self, session_id: str) -> None:
         self._sessions.pop(session_id, None)
         self.last_task_result.pop(session_id, None)
+        self._live_graphs.pop(session_id, None)
         self._interrupt.clear_session(session_id)
         self._seq.pop(session_id, None)
 

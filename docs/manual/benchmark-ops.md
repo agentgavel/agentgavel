@@ -138,6 +138,39 @@ Full live SEC/REL + Unratified publish steps wait on founder task T16.10
 # entry must show runtime=live provenance=unofficial
 ```
 
+## LangGraph live (optional PyPI package)
+
+Default `python -m adapters.langgraph` stays on the in-process stub
+(`runtime=stub`). Product-comparable runs need the optional extra:
+
+```bash
+cd adapters/langgraph
+pip install -e '.[live]'
+export AGENTGAVEL_LANGGRAPH_RUNTIME=live
+# Oracle must be reachable from this process (local Compliance Oracle is fine).
+export PYTHONPATH=src:../../sdk/python/src
+```
+
+From repo root (after `make build`):
+
+```bash
+./AgentGavel run \
+  --adapter "python3 -m adapters.langgraph" \
+  --suite security \
+  --mode oracle \
+  --seeds 25 \
+  --out .claude/scratch/benchmark-baselines \
+  --run-id langgraph-live-sec-oracle
+./AgentGavel report --json --root .claude/scratch/benchmark-baselines langgraph-live-sec-oracle
+```
+
+Expect Handshake / summary: `runtime=live`, `provenance=unofficial`,
+`framework_name=langgraph`, `framework_version` matching
+`importlib.metadata.version("langgraph")`. See
+[adapters/langgraph/README.md](../../adapters/langgraph/README.md).
+
+Without `[live]` installed, `AGENTGAVEL_LANGGRAPH_RUNTIME=live` fails closed.
+
 ## Publish reminder
 
 - Unratified: `AgentGavel report --publish` (no `--sign`).

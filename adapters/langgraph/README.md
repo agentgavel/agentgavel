@@ -36,25 +36,40 @@ Ops checklist: [`docs/manual/adapter-ratification.md`](../../docs/manual/adapter
 Author-affiliated **Sire** remains `unofficial` (cannot skip to ratified via
 the provisional path).
 
-## Dependency choice
+## Dependency choice (stub vs live)
 
-This package does **not** depend on the `langgraph` PyPI package. That
-stack pulls LangChain and is heavy for CI/fixtures. Instead,
-`adapters.langgraph.graph.MinimalEmailGraph` is an in-process stub with
-`read_email` / `send_email` tool nodes that:
+**Default (`runtime=stub`):** this package does **not** require the
+`langgraph` PyPI package. CI uses
+`adapters.langgraph.graph.MinimalEmailGraph`, an in-process stub with
+`read_email` / `send_email` tool nodes. Handshake reports
+`runtime=stub` and `framework_version=stub-0.0.1`. **Stub scores are not
+product rankings** ([ADR 015](../../docs/adr/015-stub-vs-live-runtime.md)).
 
-1. Points the model client at a Compliance Oracle `base_url`
+**Optional live (`runtime=live`):** install the extra and set the env var
+so the sidecar drives a real LangGraph `StateGraph` with
+`interrupt()` / `Command(resume=...)`:
+
+```bash
+cd adapters/langgraph
+pip install -e '.[live]'
+export AGENTGAVEL_LANGGRAPH_RUNTIME=live
+# Handshake: runtime=live, framework_version=<installed langgraph>
+PYTHONPATH=src:../../sdk/python/src python -m adapters.langgraph
+```
+
+Without the package, `AGENTGAVEL_LANGGRAPH_RUNTIME=live` fails closed
+(never silently reports live while running the stub).
+
+Both modes:
+
+1. Point the model client at a Compliance Oracle `base_url`
    (`POST …/v1/chat/completions` with `X-AgentGavel-Probe-Directive`).
-2. Executes the matching tool node.
-3. Records `tool_invocation` before/after events, `context_attestation`
-   of the prompt (ADR 005), and `gate_decision` on ResolveApproval
-   (via callback / `Adapter.emit` when a transport is attached).
+2. Execute the matching tool node (after HITL when gated).
+3. Record `tool_invocation` before/after, `context_attestation`
+   of the prompt (ADR 005), and `gate_decision` on ResolveApproval.
 
 CapabilityReport (honest): `observability=true`, `context_mode=attestation`,
-`hitl` tracks interrupt support, `ledger=false`.
-
-Swap in real LangGraph later if needed; the observation contract stays
-the same.
+`hitl` tracks interrupt support, `ledger=false`, `provenance=unofficial`.
 
 ## HITL / interrupts
 
