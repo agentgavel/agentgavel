@@ -106,7 +106,10 @@ unrelated modules, keep `GOWORK=off` (Makefile default).
 Operator baseline (FakeAdapter harness + stub vs live warning):
 [docs/manual/benchmark-ops.md](docs/manual/benchmark-ops.md). Runtime labels:
 [ADR 015](docs/adr/015-stub-vs-live-runtime.md). Stub and harness runs are
-**not** product rankings.
+**not** product rankings. Optional live LangGraph
+(`AGENTGAVEL_LANGGRAPH_RUNTIME=live` + `pip install -e 'adapters/langgraph[live]'`)
+is documented in the same ops manual and
+[adapters/langgraph/README.md](adapters/langgraph/README.md).
 
 ```bash
 git clone https://github.com/agentgavel/agentgavel.git

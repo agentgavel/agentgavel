@@ -25,6 +25,8 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0", "ruff>=0.8"]
+# ADR 015 live runtime — optional so CI stub path stays light.
+live = ["langgraph>=0.6,<2"]
 
 [project.urls]
 Homepage = "https://github.com/agentgavel/agentgavel"

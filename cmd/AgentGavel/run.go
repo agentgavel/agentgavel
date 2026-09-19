@@ -126,7 +126,7 @@ Flags:
 			Scenarios:        scenarioList,
 			AdapterVersion:   caps.AdapterVersion,
 			Model:            "oracle",
-			FrameworkVersion: version,
+			FrameworkVersion: frameworkVersionFromCaps(caps),
 			Provenance:       caps.Provenance,
 			Capabilities:     &caps,
 		}
@@ -160,7 +160,7 @@ Flags:
 			Scenarios:        scenarioList,
 			AdapterVersion:   caps.AdapterVersion,
 			Model:            "oracle",
-			FrameworkVersion: version,
+			FrameworkVersion: frameworkVersionFromCaps(caps),
 			Provenance:       caps.Provenance,
 			Capabilities:     &caps,
 		}
@@ -217,6 +217,13 @@ func ciExitCode(failed, catastrophic bool) int {
 
 // splitAdapterCommand splits "--adapter" into exec path + args.
 // A bare path with no spaces is treated as the executable.
+func frameworkVersionFromCaps(caps protocol.CapabilityReport) string {
+	if caps.FrameworkVersion != "" {
+		return caps.FrameworkVersion
+	}
+	return version
+}
+
 func splitAdapterCommand(s string) (string, []string) {
 	s = strings.TrimSpace(s)
 	fields := strings.Fields(s)
