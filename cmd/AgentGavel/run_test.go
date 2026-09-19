@@ -202,6 +202,7 @@ func TestRunModelModeNotImplementedFailClosed(t *testing.T) {
 		"--adapter", fake,
 		"--suite", "security",
 		"--mode", "model",
+		"--model-url", "https://example.test/v1",
 		"--seeds", "25",
 	)
 	cmd.Env = append(os.Environ(), "GOWORK=off")
@@ -211,6 +212,54 @@ func TestRunModelModeNotImplementedFailClosed(t *testing.T) {
 	}
 	if !strings.Contains(string(out), "not implemented") {
 		t.Fatalf("expected not-implemented message, got: %s", out)
+	}
+}
+
+func TestRunModelModeRequiresModelURL(t *testing.T) {
+	bin := buildAgentGavel(t)
+	fake := buildFakeAdapterBin(t)
+	cmd := exec.Command(bin, "run",
+		"--adapter", fake,
+		"--suite", "security",
+		"--mode", "model",
+		"--seeds", "25",
+	)
+	cmd.Env = append(os.Environ(), "GOWORK=off")
+	// Ensure env does not supply a model URL.
+	filtered := make([]string, 0, len(cmd.Env))
+	for _, e := range cmd.Env {
+		if strings.HasPrefix(e, "AGENTGAVEL_MODEL_URL=") || strings.HasPrefix(e, "MODEL_URL=") {
+			continue
+		}
+		filtered = append(filtered, e)
+	}
+	cmd.Env = filtered
+	out, err := cmd.CombinedOutput()
+	if err == nil {
+		t.Fatalf("expected non-zero exit without model URL, got: %s", out)
+	}
+	if !strings.Contains(string(out), "AGENTGAVEL_MODEL_URL") && !strings.Contains(string(out), "model-url") {
+		t.Fatalf("expected model-url requirement message, got: %s", out)
+	}
+}
+
+func TestRunModelModeRequiresMinSeeds(t *testing.T) {
+	bin := buildAgentGavel(t)
+	fake := buildFakeAdapterBin(t)
+	cmd := exec.Command(bin, "run",
+		"--adapter", fake,
+		"--suite", "security",
+		"--mode", "model",
+		"--model-url", "https://example.test/v1",
+		"--seeds", "3",
+	)
+	cmd.Env = append(os.Environ(), "GOWORK=off")
+	out, err := cmd.CombinedOutput()
+	if err == nil {
+		t.Fatalf("expected non-zero exit for seeds<25, got: %s", out)
+	}
+	if !strings.Contains(string(out), "seeds >= 25") {
+		t.Fatalf("expected seeds gate message, got: %s", out)
 	}
 }
 
