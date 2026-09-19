@@ -67,7 +67,7 @@ Out of scope:
 
 ### E16 -- First live benchmarks  -> docs/plans/E16-first-live-benchmarks.md  (13/18)
 
-### E17 -- Live LangGraph and gateway product runs  -> docs/plans/E17-live-langgraph-gateways.md  (11/14)
+### E17 -- Live LangGraph and gateway product runs  -> docs/plans/E17-live-langgraph-gateways.md  (13/14; T17.11 human gateway open)
 
 ### E18 -- Soft model-mode and broader live adapter set  -> docs/plans/E18-soft-and-broader-live.md  (0/1)
 
@@ -123,6 +123,7 @@ gofmt/ruff, rebase PRs.
 
 ## 9. Progress Log
 
+- 2026-09-19: Wave 47 scaffolding — OpenClaw Gateway health probe + Hermes capabilities probe (env-gated, fail-closed); hitl stays false on OpenClaw. T17.11 human gateway + T16.10 Sire creds still open.
 - 2026-09-19: Waves 45–46 — live LangGraph bootstrap + SEC-001/007 oracle evidence + Unratified sample (`runtime=live`). E17 9/14; Wave 47 gateway probes next; E16 Wave 43 still blocked on T16.10.
 - 2026-09-19: T17.0 — E17 expanded to executable (14 tasks, waves 45–48); frontier shifts to live LangGraph while E16 Wave 43 waits on T16.10.
 - 2026-09-18: Waves 41-42 + quality gate landed (benchmark-ops, FakeAdapter baselines, Sire env live bootstrap). T16.10/T16.12-16 blocked on founder Sire credentials.
@@ -133,9 +134,9 @@ gofmt/ruff, rebase PRs.
 
 ## 10. Hand off Notes
 
-- Next /apply: Wave 45 (T17.1–T17.4) live LangGraph bootstrap.
+- Next /apply: E16 Wave 43 when T16.10 Sire creds appear; E18 Soft outline expand; T17.11 gateway when operated.
 - Founder: T16.10 Sire creds (unblocks Wave 43); T17.11 gateway when ready; T15.11 after 2026-10-18.
-- Autonomous 16h window: prefer E17 over idle-waiting on T16.10.
+- Autonomous 16h window: E17 LangGraph live + gateway scaffolding shipped (PR); idle-poll T16.10.
 
 ## 11. Appendix
 

@@ -124,6 +124,9 @@ class Requester(Protocol):
 class StubHermesClient:
     """In-memory default. No network; enough for Handshake and unit tests."""
 
+    runtime_class = "stub"
+    framework_version = "stub"
+
     def __init__(self) -> None:
         self.sessions: dict[str, dict[str, Any]] = {}
         self.calls: list[tuple[str, tuple[Any, ...]]] = []
@@ -191,15 +194,19 @@ class HttpHermesClient:
     fail loudly instead of fabricating success.
     """
 
+    runtime_class = "live"
+
     def __init__(
         self,
         requester: Requester | None = None,
         *,
         api_base: str = DEFAULT_HERMES_API_BASE,
+        framework_version: str = "live-unprobed",
     ) -> None:
         self._requester = requester
         self.api_base = api_base.rstrip("/")
         self._sessions: dict[str, MutableMapping[str, Any]] = {}
+        self.framework_version = framework_version
 
     def start_session(self, config: Mapping[str, Any]) -> str:
         # Full POST /api/sessions is out of T15.25 scope; bind locally and
@@ -273,3 +280,95 @@ class HttpHermesClient:
             return self._sessions[session_id]
         except KeyError as exc:
             raise UnknownSessionError(session_id) from exc
+
+
+class UrllibHermesRequester:
+    """stdlib HTTP JSON client for live Hermes API-server calls."""
+
+    def __init__(
+        self,
+        api_base: str,
+        *,
+        api_key: str | None = None,
+        timeout_s: float = 10.0,
+    ) -> None:
+        import urllib.request
+
+        self._urllib = urllib.request
+        self._api_base = api_base.rstrip("/")
+        self._api_key = api_key
+        self._timeout_s = timeout_s
+
+    def request(
+        self,
+        method: str,
+        path: str,
+        *,
+        json: Mapping[str, Any] | None = None,
+    ) -> Mapping[str, Any] | None:
+        import json as json_mod
+        import urllib.error
+        import urllib.request
+
+        if not path.startswith("/"):
+            path = "/" + path
+        url = self._api_base + path
+        data = None
+        headers = {"Accept": "application/json"}
+        if self._api_key:
+            headers["Authorization"] = f"Bearer {self._api_key}"
+        if json is not None:
+            data = json_mod.dumps(dict(json)).encode("utf-8")
+            headers["Content-Type"] = "application/json"
+        req = urllib.request.Request(url, data=data, headers=headers, method=method.upper())
+        try:
+            with urllib.request.urlopen(req, timeout=self._timeout_s) as resp:
+                raw = resp.read()
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")
+            raise HermesClientError(f"HTTP {exc.code} {method} {path}: {detail}") from exc
+        except urllib.error.URLError as exc:
+            raise HermesClientError(f"unreachable {url}: {exc}") from exc
+        if not raw:
+            return None
+        try:
+            payload = json_mod.loads(raw.decode("utf-8"))
+        except json_mod.JSONDecodeError as exc:
+            raise HermesClientError(f"non-JSON response from {path}") from exc
+        if payload is None:
+            return None
+        if not isinstance(payload, Mapping):
+            raise HermesClientError(f"expected JSON object from {path}")
+        return dict(payload)
+
+
+def probe_hermes_capabilities(requester: Requester) -> str:
+    """GET /v1/capabilities; return a version string or raise."""
+    body = requester.request("GET", "/v1/capabilities")
+    if not isinstance(body, Mapping):
+        raise HermesClientError("GET /v1/capabilities must return a JSON object")
+    version = (
+        body.get("version") or body.get("hermes_version") or body.get("server_version") or "probed"
+    )
+    return str(version)
+
+
+def client_from_env() -> HermesClient:
+    """Stub by default; live when AGENTGAVEL_HERMES_API_BASE is set and probes.
+
+    Optional ``AGENTGAVEL_HERMES_API_KEY`` / ``HERMES_API_KEY`` for Bearer auth.
+    Fail closed if the base URL is set but the capabilities probe fails.
+    """
+    import os
+
+    base = (
+        os.environ.get("AGENTGAVEL_HERMES_API_BASE") or os.environ.get("HERMES_API_BASE") or ""
+    ).strip()
+    if not base:
+        return StubHermesClient()
+    key = (
+        os.environ.get("AGENTGAVEL_HERMES_API_KEY") or os.environ.get("HERMES_API_KEY") or ""
+    ).strip() or None
+    requester = UrllibHermesRequester(base, api_key=key)
+    version = probe_hermes_capabilities(requester)
+    return HttpHermesClient(requester, api_base=base, framework_version=version)

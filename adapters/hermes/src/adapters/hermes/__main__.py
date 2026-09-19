@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 
 from adapters.hermes.adapter import HermesAdapter
+from adapters.hermes.client import client_from_env
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -13,7 +14,7 @@ def _build_parser() -> argparse.ArgumentParser:
         description=(
             "Unofficial AgentGavel Hermes Agent adapter (stdio JSON-RPC). "
             "Provenance is always unofficial (ADR 007 / ADR 014). "
-            "Control plane: OpenAI-compatible API server."
+            "Set AGENTGAVEL_HERMES_API_BASE for live capabilities probe."
         ),
     )
     parser.add_argument(
@@ -27,8 +28,7 @@ def _build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> None:
     """Parse argv; ``--help`` prints usage, otherwise start stdio serve()."""
     _build_parser().parse_args(argv)
-    # Matches FakeAdapter / LangGraphAdapter default: module entry starts stdio serve.
-    HermesAdapter().serve()
+    HermesAdapter(client=client_from_env()).serve()
 
 
 if __name__ == "__main__":

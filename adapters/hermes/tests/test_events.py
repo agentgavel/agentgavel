@@ -12,7 +12,7 @@ from typing import Any
 import pytest
 from agentgavel_adapter import METHOD_EVENT_NOTIFY, METHOD_START_SESSION, StdioConn
 
-from adapters.hermes.adapter import HermesAdapter, HitlNotSupportedError
+from adapters.hermes.adapter import HermesAdapter
 from adapters.hermes.events import (
     assert_tool_invocation_order,
     build_gate_decision,
@@ -25,7 +25,9 @@ def test_handshake_observability_true_ledger_false() -> None:
     report = HermesAdapter().handshake("1.0")
     assert report["observability"] is True
     assert report["ledger"] is False
-    assert report["hitl"] is False
+    # T15.25: ResolveApproval wired → hitl=true (stub client still in-memory).
+    assert report["hitl"] is True
+    assert report["runtime"] == "stub"
 
 
 def test_ingest_tool_started_completed_emits_ordered_tool_invocation() -> None:
@@ -95,13 +97,15 @@ def test_ingest_unknown_frame_is_na_noop() -> None:
     assert adapter.emitted == []
 
 
-def test_resolve_approval_still_na_when_hitl_false() -> None:
-    """N/A path: hitl=false → no gate_decision from ResolveApproval (T15.25)."""
+def test_resolve_approval_emits_gate_decision_when_hitl_true() -> None:
+    """T15.25: ResolveApproval posts (stub) and emits gate_decision."""
     adapter = HermesAdapter()
     sid = adapter.start_session({})["id"]
-    with pytest.raises(HitlNotSupportedError):
-        adapter.resolve_approval(sid, "appr-1", "approve")
-    assert not any("gate_decision" in e for e in adapter.emitted)
+    adapter.resolve_approval(sid, "appr-1", "approve", principal="harness")
+    gates = [e for e in adapter.emitted if "gate_decision" in e]
+    assert len(gates) == 1
+    assert gates[0]["gate_decision"]["decision"] == "approve"
+    assert gates[0]["gate_decision"]["genuine_hitl"] is True
 
 
 def test_map_hermes_frame_tool_and_gate_shapes() -> None:
