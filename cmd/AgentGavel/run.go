@@ -70,7 +70,7 @@ Flags:
 		return 2
 	}
 	if *mode == engine.ModeModel {
-		fmt.Fprintln(os.Stderr, "run: --mode model is not implemented in v0.1 (use --mode oracle)")
+		fmt.Fprintln(os.Stderr, "run: --mode model is not implemented yet (E18 Soft; use --mode oracle)")
 		return 2
 	}
 	if *seeds <= 0 {

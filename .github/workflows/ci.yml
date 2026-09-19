@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        path: [sdk/python, adapters/openclaw]
+        path: [sdk/python, adapters/openclaw, adapters/hermes, adapters/langgraph]
     defaults:
       run:
         working-directory: ${{ matrix.path }}

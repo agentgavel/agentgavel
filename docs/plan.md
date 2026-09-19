@@ -69,7 +69,7 @@ Out of scope:
 
 ### E17 -- Live LangGraph and gateway product runs  -> docs/plans/E17-live-langgraph-gateways.md  (13/14; T17.11 human gateway open)
 
-### E18 -- Soft model-mode and broader live adapter set  -> docs/plans/E18-soft-and-broader-live.md  (0/1)
+### E18 -- Soft model-mode and broader live adapter set  -> docs/plans/E18-soft-and-broader-live.md  (4/10)
 
 Completed earlier epics (audit): E1–E14 under `docs/plans/`.
 
@@ -123,6 +123,7 @@ gofmt/ruff, rebase PRs.
 
 ## 9. Progress Log
 
+- 2026-09-19: E18 expanded (Soft runbook + model-mode fail-closed test + CI ruff matrix for langgraph/hermes). Soft implementation still blocked on T18.3 model creds; T18.6 CrewAI/ADK live pending.
 - 2026-09-19: Wave 47 scaffolding — OpenClaw Gateway health probe + Hermes capabilities probe (env-gated, fail-closed); hitl stays false on OpenClaw. T17.11 human gateway + T16.10 Sire creds still open.
 - 2026-09-19: Waves 45–46 — live LangGraph bootstrap + SEC-001/007 oracle evidence + Unratified sample (`runtime=live`). E17 9/14; Wave 47 gateway probes next; E16 Wave 43 still blocked on T16.10.
 - 2026-09-19: T17.0 — E17 expanded to executable (14 tasks, waves 45–48); frontier shifts to live LangGraph while E16 Wave 43 waits on T16.10.
