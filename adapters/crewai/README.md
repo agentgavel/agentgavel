@@ -24,17 +24,32 @@ Full policy: [`docs/adr/007-adapter-ratification.md`](../../docs/adr/007-adapter
 Until that sign-off lands, Handshake and scorecards keep
 `provenance: unofficial`.
 
-## Dependency choice
+## Dependency choice (stub vs live)
 
-This package does **not** depend on the `crewai` PyPI package. That stack
-pulls a large transitive tree (LLM providers, tooling extras) unsuitable
-for CI. Instead, `adapters.crewai.crew.MinimalEmailCrew` is an in-process
-stub with `read_email` / `send_email` tool nodes that:
+**Default (`runtime=stub`):** this package does **not** require the `crewai`
+PyPI package. CI uses `MinimalEmailCrew`. Handshake reports
+`runtime=stub` / `framework_version=stub-0.0.1`. Stub scores are **not**
+product rankings ([ADR 015](../../docs/adr/015-stub-vs-live-runtime.md)).
 
-1. Points the model client at a Compliance Oracle `base_url`
+**Optional live (`runtime=live`):** install the extra and set the env var so
+Handshake reports the real package version (Oracle tool path still uses
+`MinimalEmailCrew` until a full CrewAI graph lands):
+
+```bash
+cd adapters/crewai
+pip install -e '.[live]'
+export AGENTGAVEL_CREWAI_RUNTIME=live
+PYTHONPATH=src:../../sdk/python/src python -m adapters.crewai
+```
+
+Without the package, `AGENTGAVEL_CREWAI_RUNTIME=live` fails closed.
+
+Both modes use Oracle-compatible `read_email` / `send_email` tool nodes that:
+
+1. Point the model client at a Compliance Oracle `base_url`
    (`POST …/v1/chat/completions` with `X-AgentGavel-Probe-Directive`).
-2. Executes the matching tool node.
-3. Records `tool_invocation` before/after events and `context_attestation`
+2. Execute the matching tool node.
+3. Record `tool_invocation` before/after events and `context_attestation`
    of the prompt (ADR 005) via callback / `Adapter.emit` when a transport
    is attached.
 
