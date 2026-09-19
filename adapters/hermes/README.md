@@ -26,6 +26,13 @@ The sidecar speaks AgentGavel stdio JSON-RPC and drives Hermes over HTTP +
 SSE: `GET /v1/capabilities`, `POST /v1/runs`, `GET /v1/runs/{id}/events`,
 `POST /v1/runs/{id}/approval`, `POST /v1/runs/{id}/stop`.
 
+### Stub vs live (ADR 015)
+
+Default `python -m adapters.hermes` uses `StubHermesClient` (`runtime=stub`).
+Set `AGENTGAVEL_HERMES_API_BASE` (optional `AGENTGAVEL_HERMES_API_KEY`) to
+probe `GET /v1/capabilities` and switch to `HttpHermesClient`
+(`runtime=live`). Probe failure fails closed.
+
 ## Terminal backends (v1.0 reference)
 
 Hermes supports several terminal backends (local, Docker, SSH, Daytona,
