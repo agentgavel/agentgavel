@@ -69,7 +69,7 @@ Out of scope:
 
 ### E17 -- Live LangGraph and gateway product runs  -> docs/plans/E17-live-langgraph-gateways.md  (13/14; T17.11 human gateway open)
 
-### E18 -- Soft model-mode and broader live adapter set  -> docs/plans/E18-soft-and-broader-live.md  (7/10)
+### E18 -- Soft model-mode and broader live adapter set  -> docs/plans/E18-soft-and-broader-live.md  (8/10; Soft runs blocked on T18.3)
 
 Completed earlier epics (audit): E1–E14 under `docs/plans/`.
 
@@ -123,6 +123,7 @@ gofmt/ruff, rebase PRs.
 
 ## 9. Progress Log
 
+- 2026-09-19: T18.9 — frontier updated. Soft deferred (T18.5); all §8.1 Python adapters have optional live env bootstrap (langgraph/crewai/adk/pydantic_ai/openai_agents/strands/agent_framework + openclaw/hermes probes). Remaining agent work blocked on founder: T16.10 Sire, T17.11 gateway, T18.3 Soft model API.
 - 2026-09-19: Soft Unratified deferred (T18.5) — `--mode model` not implemented; no model API creds; Hard/oracle LangGraph live sample already covers non-Sire Unratified without Soft spend. Pydantic AI live env bootstrap added.
 - 2026-09-19: E18 expanded (Soft runbook + model-mode fail-closed test + CI ruff matrix for langgraph/hermes). Soft implementation still blocked on T18.3 model creds; T18.6 CrewAI/ADK live pending.
 - 2026-09-19: Wave 47 scaffolding — OpenClaw Gateway health probe + Hermes capabilities probe (env-gated, fail-closed); hitl stays false on OpenClaw. T17.11 human gateway + T16.10 Sire creds still open.
@@ -136,9 +137,9 @@ gofmt/ruff, rebase PRs.
 
 ## 10. Hand off Notes
 
-- Next /apply: E16 Wave 43 when T16.10 Sire creds appear; E18 Soft outline expand; T17.11 gateway when operated.
-- Founder: T16.10 Sire creds (unblocks Wave 43); T17.11 gateway when ready; T15.11 after 2026-10-18.
-- Autonomous 16h window: E17 LangGraph live + gateway scaffolding shipped (PR); idle-poll T16.10.
+- Next /apply: E16 Wave 43 when T16.10 Sire creds appear; Soft T18.4 when T18.3 model API exists; T17.11 gateway when operated.
+- Founder: T16.10 Sire creds; T17.11 gateway URL; T18.3 Soft model endpoint; T15.11 after 2026-10-18.
+- PR #182 holds E17/E18 live bootstrap work (CI green). Merge when ready.
 
 ## 11. Appendix
 
