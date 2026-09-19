@@ -195,9 +195,10 @@ Hard/oracle runs above are the default CI and dogfood path. Soft
 (`--mode model`) scores rates with Wilson intervals and requires
 **≥25 seeds**. It is **not** CI-default (cost / latency).
 
-As of E18 Wave 49, `--mode model` is **not yet implemented** in the CLI
-(exits non-zero with a clear message). Do not publish Soft scorecards
-until T18.2–T18.4 land. When Soft is wired:
+As of E18, `--mode model` fail-closes unless `--model-url` (or
+`AGENTGAVEL_MODEL_URL`) is set **and** `--seeds >= 25`. Soft scoring itself
+is still not implemented (exits non-zero after those gates). Do not publish
+Soft scorecards until T18.4 lands. When Soft is wired:
 
 ```bash
 # Shape only — requires model endpoint + seeds≥25 once implemented:

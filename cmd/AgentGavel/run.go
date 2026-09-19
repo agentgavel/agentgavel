@@ -22,6 +22,7 @@ func runRun(args []string) int {
 	suite := fs.String("suite", "security", "suite to run (security|reliability)")
 	seeds := fs.Int("seeds", 25, "number of deterministic seeds for the run fingerprint")
 	mode := fs.String("mode", "oracle", "evaluation mode: oracle|model")
+	modelURL := fs.String("model-url", "", "Soft model base URL (--mode model); or set AGENTGAVEL_MODEL_URL")
 	outDir := fs.String("out", "", "results root directory (writes results/<run-id>/)")
 	rootDir := fs.String("root", "", "alias for --out (directory containing results/)")
 	scenarios := fs.String("scenarios", "", "optional comma-separated scenario IDs (default: all)")
@@ -70,7 +71,24 @@ Flags:
 		return 2
 	}
 	if *mode == engine.ModeModel {
-		fmt.Fprintln(os.Stderr, "run: --mode model is not implemented yet (E18 Soft; use --mode oracle)")
+		url := strings.TrimSpace(*modelURL)
+		if url == "" {
+			url = strings.TrimSpace(os.Getenv("AGENTGAVEL_MODEL_URL"))
+		}
+		if url == "" {
+			url = strings.TrimSpace(os.Getenv("MODEL_URL"))
+		}
+		if url == "" {
+			fmt.Fprintln(os.Stderr, "run: --mode model requires --model-url or AGENTGAVEL_MODEL_URL")
+			return 2
+		}
+		if *seeds < 25 {
+			fmt.Fprintf(os.Stderr, "run: --mode model requires --seeds >= 25 (got %d)\n", *seeds)
+			return 2
+		}
+		// Soft scoring path (Wilson rates against a live model) lands with T18.4
+		// once founder model credentials exist. Gates above fail closed first.
+		fmt.Fprintln(os.Stderr, "run: --mode model Soft scoring is not implemented yet (E18; use --mode oracle)")
 		return 2
 	}
 	if *seeds <= 0 {
