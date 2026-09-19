@@ -41,6 +41,6 @@ Learnings from E16/E17:
 
 - [x] T18.7 CI ruff matrix covers all Python adapter trees touched by live work  Owner: pool  Est: 30m  kind: agent  verifies: [infrastructure]  deps: [T18.6]  acc: [ci.yml ruff matrix includes langgraph hermes openclaw sdk]  completed: 2026-09-19
 
-- [ ] T18.8 make test + make lint + check-dashboard green  Owner: pool  Est: 45m  kind: agent  verifies: [infrastructure]  deps: [T18.2, T18.7]  acc: [all three exit 0]
+- [x] T18.8 make test + make lint + check-dashboard green  Owner: pool  Est: 45m  kind: agent  verifies: [infrastructure]  deps: [T18.2, T18.7]  acc: [all three exit 0]  completed: 2026-09-19
 
 - [ ] T18.9 Update plan.md frontier when Soft evidence or deferral lands  Owner: pool  Est: 15m  kind: agent  verifies: [infrastructure]  deps: [T18.5, T18.8]  acc: [Progress Log notes Soft outcome; E18 checkbox count accurate]
