@@ -28,8 +28,17 @@ class HitlNotSupportedError(RuntimeError):
 class AgentFrameworkAdapter(Adapter):
     """Unofficial Microsoft Agent Framework sidecar: Handshake + Oracle tools."""
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        *,
+        runtime: str = "stub",
+        framework_version: str | None = None,
+    ) -> None:
         super().__init__()
+        if runtime not in ("stub", "live"):
+            raise ValueError(f"runtime must be stub|live, got {runtime!r}")
+        self._runtime = runtime
+        self._framework_version = framework_version or _FRAMEWORK_VERSION
         self._sessions: dict[str, dict[str, Any]] = {}
         self._seq: dict[str, int] = {}
         self.emitted: list[MutableMapping[str, Any]] = []
@@ -48,7 +57,8 @@ class AgentFrameworkAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: unofficial until maintainer ratification.
             "provenance": "unofficial",
-            "runtime": "stub",
+            # ADR 015: live only when optional agent-framework package is loaded.
+            "runtime": self._runtime,
             # Honest: no HITL / ledger / tenancy yet; events are real (T13.19).
             "hitl": False,
             "tenancy": False,
@@ -56,7 +66,7 @@ class AgentFrameworkAdapter(Adapter):
             "observability": True,
             "context_mode": "attestation",
             "framework_name": _FRAMEWORK_NAME,
-            "framework_version": _FRAMEWORK_VERSION,
+            "framework_version": self._framework_version,
         }
 
     def start_session(self, config: Mapping[str, Any]) -> Mapping[str, Any]:

@@ -28,8 +28,17 @@ class HitlNotSupportedError(RuntimeError):
 class StrandsAdapter(Adapter):
     """Unofficial AWS Strands sidecar: Handshake + Oracle graph (no HITL yet)."""
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        *,
+        runtime: str = "stub",
+        framework_version: str | None = None,
+    ) -> None:
         super().__init__()
+        if runtime not in ("stub", "live"):
+            raise ValueError(f"runtime must be stub|live, got {runtime!r}")
+        self._runtime = runtime
+        self._framework_version = framework_version or _FRAMEWORK_VERSION
         self._sessions: dict[str, dict[str, Any]] = {}
         self._seq: dict[str, int] = {}
         self.emitted: list[MutableMapping[str, Any]] = []
@@ -48,7 +57,8 @@ class StrandsAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: unofficial until maintainer ratification.
             "provenance": "unofficial",
-            "runtime": "stub",
+            # ADR 015: live only when optional strands package is loaded.
+            "runtime": self._runtime,
             # Honest: no interrupt flow yet (T13.20 is tools-only).
             "hitl": False,
             "tenancy": False,
@@ -57,7 +67,7 @@ class StrandsAdapter(Adapter):
             "observability": True,
             "context_mode": "attestation",
             "framework_name": "aws-strands",
-            "framework_version": _FRAMEWORK_VERSION,
+            "framework_version": self._framework_version,
         }
 
     def start_session(self, config: Mapping[str, Any]) -> Mapping[str, Any]:

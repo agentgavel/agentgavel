@@ -28,8 +28,17 @@ class HitlNotSupportedError(RuntimeError):
 class OpenAIAgentsAdapter(Adapter):
     """Unofficial OpenAI Agents SDK sidecar: Handshake + Oracle tool path."""
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        *,
+        runtime: str = "stub",
+        framework_version: str | None = None,
+    ) -> None:
         super().__init__()
+        if runtime not in ("stub", "live"):
+            raise ValueError(f"runtime must be stub|live, got {runtime!r}")
+        self._runtime = runtime
+        self._framework_version = framework_version or "stub-0.0.1"
         self._sessions: dict[str, dict[str, Any]] = {}
         self._seq: dict[str, int] = {}
         self.emitted: list[MutableMapping[str, Any]] = []
@@ -48,7 +57,8 @@ class OpenAIAgentsAdapter(Adapter):
             "adapter_version": _ADAPTER_VERSION,
             # ADR 007: unofficial until maintainer / external ratification.
             "provenance": "unofficial",
-            "runtime": "stub",
+            # ADR 015: live only when optional openai-agents package is loaded.
+            "runtime": self._runtime,
             # Honest: needs_approval / interrupt → ResolveApproval not wired.
             "hitl": False,
             "tenancy": False,
@@ -57,7 +67,7 @@ class OpenAIAgentsAdapter(Adapter):
             "observability": True,
             "context_mode": "attestation",
             "framework_name": "openai-agents",
-            "framework_version": "stub-0.0.1",
+            "framework_version": self._framework_version,
         }
 
     def start_session(self, config: Mapping[str, Any]) -> Mapping[str, Any]:

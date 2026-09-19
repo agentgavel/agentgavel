@@ -52,6 +52,9 @@ jobs:
             adapters/crewai,
             adapters/adk,
             adapters/pydantic_ai,
+            adapters/openai_agents,
+            adapters/strands,
+            adapters/agent_framework,
           ]
     defaults:
       run:
